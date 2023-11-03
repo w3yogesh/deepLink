@@ -1,9 +1,15 @@
 import './App.css';
+import { Route, Routes } from "react-router-dom";
+import { Signup, Login } from "./pages";
+
 
 function App() {
   return (
     <div className="App">
-      <h1>DeepLink</h1>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 }
