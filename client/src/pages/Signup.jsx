@@ -1,120 +1,115 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { useNavigate,Link, Navigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import '../styles/SignUpForm.css';
 
-
-function Signup() {
+const Signup = () => {
   const navigate = useNavigate();
-
-  const[values,setValues] = useState({
-    username:"",
-    email:"",
-    password:"",
-    confirmPassword:"",
-  })
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
+  const [inputValue, setInputValue] = useState({
+    email: "",
+    password: "",
+    confirm_password: "",
+    username: "",
+  });
+  const { email, password, username } = inputValue;
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
   };
 
-  const handleChange = (event)=>{
-    setValues({...values,[event.target.name]:event.target.value});
-  }
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-right",
+    });
 
-  const handleValidation = ()=>{
-    const{username,email,password,confirmPassword} = values;
-    if(password!==confirmPassword){
-      toast.error("password and confirm should be same.",
-      toastOptions)
-      return false;
-    } else if(username.length<4){
-      toast.error(
-        "Username should be greater than 3 characters.",
-        toastOptions
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/signup",
+        {
+          ...inputValue,
+        },
+        { withCredentials: true }
       );
-      return false;
-    }else if(password.length<4){
-      toast.error(
-        "Password should be equal or greater than 8 characters.",
-        toastOptions
-      );
-      return false;
-    }else if (email === "") {
-      toast.error("Email is required.", toastOptions);
-      return false;
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    return true;
-  }
-
-const handleSubmit = async(event)=>{
-  event.preventDefault();
-  if(handleValidation()){
-    const  {username,email,password} = values;
-    const formData = new FormData();
-      formData.append('username', username); // Add other form fields to FormData
-      formData.append('email', email);
-      formData.append('password', password);
-    const {data} = await axios.post(`http://localhost:4000/signup`,formData)
-    if(data.status===false){
-      toast.error(data.msg,toastOptions);
-    }
-    // if(data.status===true){
-    //   sessionStorage.setItem("signupdata",data.user);
-    //   <Navigate to="/login"/>
-      
-    // }
-    navigate("/dashboard")
-
-  }
-  
-}
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+      username: "",
+    });
+  };
 
   return (
-    <div>
-
-  <title>Signup Page</title>
-
-  <div className="container">
-    <h2>Signup</h2>
-    <form onSubmit={(event)=>handleSubmit(event)} >
-      <div className="form-group">
-        <label htmlFor="username">Username</label>
-        <input type="text"  id="username" placeholder="Enter your username" name='username'
-        onChange={(event)=>handleChange(event)}/>
-      </div>
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <input type="email"  id="email" placeholder="Enter your email" name='email'
-        onChange={(event)=>handleChange(event)}/>
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input type="password"  id="password" placeholder="Enter your password" name='password'
-        onChange={(event)=>handleChange(event)}/>
-      </div>
-      <div className="form-group">
-        <label htmlFor="confirmPassword">ConfirmPassword</label>
-        <input type="password"  id="confirmPassword" placeholder="Enter your password again" name='confirmPassword'
-        onChange={(event)=>handleChange(event)}/>
-      </div>
-      <div className="form-group">
-        <button  type="submit">signup</button>
+    <div className="form_container">
+      <h2>Signup Account</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            placeholder="Enter your email"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Username</label>
+          <input
+            type="text"
+            name="username"
+            value={username}
+            placeholder="Enter your username"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Enter your password"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Confirm Password</label>
+          <input
+            type="password"
+            name="confirm_password"
+            placeholder="Enter your confirm password"
+            onChange={handleOnChange}
+          />
+        </div>
+        <button type="submit">Submit</button>
         <span>
-          already have an account <Link to="/login">login here</Link>
+          Already have an account? <Link to={"/login"}>Login</Link>
         </span>
-      </div>
-    </form>
-  </div>
-  <ToastContainer/>
+      </form>
+      <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
-export  default Signup
+export default Signup;
