@@ -10,6 +10,8 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
+    const [Data, setData] = useState("");
+
     useEffect(() => {
       const verifyCookie = async () => {
         // if (!cookies.token) {
@@ -20,7 +22,8 @@ const Dashboard = () => {
           {},
           { withCredentials: true }
         );
-        const { status, user } = data;
+        const { status, user} = data;
+        setData(data);
         setUsername(user);
         return status
           ? toast(`Hello ${user}`, {
@@ -39,10 +42,13 @@ const Dashboard = () => {
         return(<div>not login</div>)
     }else{
         return (
+          
             <>
+                <h1>{Data.email}</h1>
+
                 <button onClick={Logout}>LOGOUT</button>
                     
-
+              
 
                 <ToastContainer />
             </>
