@@ -6,7 +6,15 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-const Dashboard = () => {
+import ProfilePicture from './ProfilePicture';
+import Header from './Header';
+import Summary from './Summary';
+import Experience from './Experience';
+import Education from './Education';
+import Skills from './Skills';
+
+
+const Profile = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
@@ -44,6 +52,14 @@ const Dashboard = () => {
         return (
           
             <>
+              <div className="profile">
+        <ProfilePicture />
+        <Header />
+        <Summary />
+        <Experience />
+        <Education />
+        <Skills />
+      </div>
                 <h1>{Data.email}</h1>
 
                 <button onClick={Logout}>LOGOUT</button>
@@ -58,4 +74,4 @@ const Dashboard = () => {
  
 }
 
-export default Dashboard;
+export default Profile;
