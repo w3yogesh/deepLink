@@ -4,6 +4,8 @@ const app = express()
 const connectDB = require('./config/dbConnect');
 require("dotenv").config();
 
+const authRoute = require("./routes/AuthRoutes");
+
 connectDB()
   .then(() => {
     const port = process.env.PORT || 4000;
@@ -15,6 +17,4 @@ connectDB()
     console.error('Failed to start the server:', error);
   });
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use("/", authRoute);

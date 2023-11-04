@@ -9,17 +9,11 @@ import '../styles/SignUpForm.css';
 function Signup() {
   const navigate = useNavigate();
 
-  const [photo, setphoto] = useState(null);
-
-  const handleFileChange = (event) => {
-    setphoto(event.target.files[0]);
-  };
   const[values,setValues] = useState({
     username:"",
     email:"",
     password:"",
     confirmPassword:"",
-    photo:"",
   })
 
   const toastOptions = {
@@ -64,7 +58,6 @@ const handleSubmit = async(event)=>{
   if(handleValidation()){
     const  {username,email,password} = values;
     const formData = new FormData();
-    formData.append('photo', photo);
       formData.append('username', username); // Add other form fields to FormData
       formData.append('email', email);
       formData.append('password', password);
@@ -110,11 +103,6 @@ const handleSubmit = async(event)=>{
         <label htmlFor="confirmPassword">ConfirmPassword</label>
         <input type="password"  id="confirmPassword" placeholder="Enter your password again" name='confirmPassword'
         onChange={(event)=>handleChange(event)}/>
-      </div>
-      <div className="form-group">
-        <label htmlFor="photo">upload your photo</label>
-        <input type="file"  id="photo"  name='file'
-        onChange={(event)=>handleFileChange(event)}/>
       </div>
       <div className="form-group">
         <button  type="submit">signup</button>
