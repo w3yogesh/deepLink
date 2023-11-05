@@ -31,8 +31,8 @@ const SignupStep1 = ({ formData, updateForm }) => {
         type="password"
         variant="outlined"
         fullWidth
-        name="confirmPassword"
-        value={formData.confirmPassword}
+        name="confirm_password"
+        value={formData.confirm_password}
         onChange={handleChange}
       />
     </div>
