@@ -18,7 +18,6 @@ const Profile = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
     const [userProfile, setUserProfile] = useState("");
-
     useEffect(() => {
       const loadProfileData = async () => {
         if (!cookies.token) {
@@ -52,6 +51,37 @@ const Profile = () => {
       removeCookie("token");
       navigate("/");
     };
+
+    const [updatedName, setUpdatedName] = useState('');
+    //const [updatedEmail, setUpdatedEmail] = useState('');
+
+  const handleUpdateUserProfile = async () => {
+    try {
+      // Make a PUT or PATCH request to update the user's data
+      const response = await axios.put('http://localhost:4000/updateUserProfile', {
+        // name: updatedName,
+        NewName: updatedName,
+        userId: userProfile._id,
+      });
+      
+      if (response.data.success) {
+        toast(response.data.message, {
+          position: "top-right",
+        })
+      } else {
+        console.log(response.data.message);
+        toast(response.data.message, {
+          position: "top-right",
+        })
+      }
+    } catch (error) {
+      toast("Server error", {
+        position: "top-right",
+      })
+    }
+  };
+
+  
     return (
       
         <>
@@ -63,9 +93,25 @@ const Profile = () => {
             <Education />
             <Skills />
           </div> */}
-            <h1>{userProfile.username}</h1>
+            <h1>{userProfile._id}</h1>
             <h1>{userProfile.email}</h1>
+            <h1>{userProfile.name}</h1>
+
             <button onClick={Logout}>LOGOUT</button>
+
+            <div>
+      <input
+        type="text"
+        value={updatedName}
+        onChange={(e) => setUpdatedName(e.target.value)}
+      />
+      {/* <input
+        type="text"
+        value={setUpdatedName}
+        onChange={(e) => setUpdatedName(e.target.value)}
+      /> */}
+      <button onClick={handleUpdateUserProfile}>Update Profile</button>
+    </div>
             <ToastContainer />
         </>
         
