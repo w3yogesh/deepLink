@@ -95,7 +95,7 @@ const Profile = () => {
           </div> */}
             <h1>{userProfile._id}</h1>
             <h1>{userProfile.email}</h1>
-            <h1>{userProfile.name}</h1>
+            <h1>{userProfile.firstName} {userProfile.lastName}</h1>
 
             <button onClick={Logout}>LOGOUT</button>
 
