@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-    firstName: {
+      firstName: {
         type: String,
         trim: true,
       },
@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
       password: {
         type: String,
         required: true,
+      },
+      headline : {
+        type : String,
+        trim: true,
       },
       createdAt: {
         type: Date,

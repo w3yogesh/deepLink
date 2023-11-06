@@ -6,6 +6,8 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
+import "../styles/profile.css"
+
 // import ProfilePicture from './ProfilePicture';
 // import Header from './Header';
 // import Summary from './Summary';
@@ -93,9 +95,23 @@ const Profile = () => {
             <Education />
             <Skills />
           </div> */}
-            <h1>{userProfile._id}</h1>
-            <h1>{userProfile.email}</h1>
-            <h1>{userProfile.firstName} {userProfile.lastName}</h1>
+     <div className="profile-container">
+        <div className="profile-photo">
+          <img src="/images/user-profile-photo.svg" alt="User Profile Photo" />
+        </div>
+        <h1 className="user-name">{userProfile.firstName} {userProfile.lastName}</h1>
+        <p className="user-headline">MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist</p>
+        <p className="user-location">Rajasthan, India</p>
+        <p className="user-conections">646 followers * 500+ connections</p>
+
+        <button className="edit-button" id="edit-button" onclick="toggleEditForm()">Edit</button>
+        <form className="edit-form" id="edit-form">
+          <input type="text" id="edit-name" placeholder="New Name" />
+          <input type="text" id="edit-title" placeholder="New Title" />
+          <input type="text" id="edit-location" placeholder="New Location" />
+          <button className="save-button" id="save-button" onclick="saveChanges()">Save</button>
+        </form>
+      </div>
 
             <button onClick={Logout}>LOGOUT</button>
 
@@ -105,18 +121,16 @@ const Profile = () => {
         value={updatedName}
         onChange={(e) => setUpdatedName(e.target.value)}
       />
-      {/* <input
-        type="text"
-        value={setUpdatedName}
-        onChange={(e) => setUpdatedName(e.target.value)}
-      /> */}
-      <button onClick={handleUpdateUserProfile}>Update Profile</button>
-    </div>
-            <ToastContainer />
+        {/* <input
+          type="text"
+          value={setUpdatedName}
+          onChange={(e) => setUpdatedName(e.target.value)}
+        /> */}
+        <button onClick={handleUpdateUserProfile}>Update Profile</button>
+      </div>
+              <ToastContainer />
         </>
         
       )
  
 }
-
-export default Profile;
