@@ -6,10 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
-    username: "",
+    email: "",
     password: "",
   });
-  const { username, password } = inputValue;
+  const { email, password } = inputValue;
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -42,7 +42,7 @@ const Login = () => {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/profile");
         }, 1000);
       } else {
         handleError(message);
@@ -62,12 +62,12 @@ const Login = () => {
       <h2>Login Account</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Email</label>
+          <label htmlFor="email">Email</label>
           <input
-            type="username"
-            name="username"
-            value={username}
-            placeholder="Enter your username"
+            type="email"
+            name="email"
+            value={email}
+            placeholder="Enter your email"
             onChange={handleOnChange}
           />
         </div>
