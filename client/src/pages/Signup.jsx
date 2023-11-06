@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/SignUpForm.css";
-import SignupStep1 from "../components/SignupStep1";
-import SignupStep2 from "../components/SignupStep2";
-import SignupStep3 from "../components/SignupStep3";
-import SignupStep4 from "../components/SignupStep4";
+import SignupStep1 from "../components/SignupFormComponent/SignupStep1";
+import SignupStep2 from "../components/SignupFormComponent/SignupStep2";
+import SignupStep3 from "../components/SignupFormComponent/SignupStep3";
+import SignupStep4 from "../components/SignupFormComponent/SignupStep4";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -31,7 +31,13 @@ const Signup = () => {
       city: "",
       zipCode: "",
     },
-    institution: "",
+    education: {
+      institution: "",
+      degree: "",
+      field: "",
+      startDate: "",
+      endDate: "",
+    },
   });
 
   const updateForm = (newData) => {
@@ -48,47 +54,62 @@ const Signup = () => {
     });
 
   const goNext = () => {
-    // email validation
-    if (!formData.email) {
-      toast.error("email is required")
-      setCurr(0)
-    } 
-    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)) {
-      toast.error("Invalid email address")
-      setCurr(0)
-    }
-    // password and confirm password matching
-    else if (formData.password !== formData.confirm_password) {
-      toast.error("password and confirm password not matching");
-      setCurr(0)
-    }
-    // password validation
-    else if(!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
-      toast.error('Password should contain one Capital , one small, one special char, minlen=6, maxlen=12')
-      setCurr(0)
-    }
-    
-    // firstname and lastname required
-    else if(formData.firstName === "" || formData.lastName === "")  {
-      toast.error('required field');
-      setCurr(1);
+
+    if (curr === 0) {
+
+      // email validation
+      if (!formData.email) {
+        toast.error("email is required");
+        setCurr(0)
+        return;
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)) {
+        toast.error("Invalid email address");
+        setCurr(0);
+        return;
+      }
+
+      // password and confirm password matching
+      else if (formData.password !== formData.confirm_password) {
+        toast.error("password and confirm password not matching");
+        setCurr(0);
+        return;
+      }
+
+      // password validation
+      else if (!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
+        toast.error("Password should contain one Capital , one small, one special char, minlen=6, maxlen=12");
+        setCurr(0);
+        return;
+      }
     }
 
-    // address is required
-    else if(formData.address.country === "")  {
-      toast.error('required field');
-      setCurr(2);
+    if (curr === 1) {
+      // firstname and lastname required
+      if (formData.firstName === "" || formData.lastName === "") {
+        toast.error("required field");
+        setCurr(1);
+        return;
+      }
     }
 
-    else if(formData.institution === " ")  {
-      toast.error('required field');
-      setCurr(3);
+    if (curr === 2) {
+      // address is required
+      if (formData.address.country === "") {
+        toast.error("required field");
+        setCurr(2);
+        return;
+      }
     }
-    
-    // all fields are correct
-    else {
-      setCurr((prev) => prev + 1);
+
+    if (curr === 3) {
+      if (formData.education.institution === " " || formData.education.degree === " ") {
+        toast.error("required field");
+        setCurr(3);
+        return;
+      }
     }
+
+    setCurr((prev) => prev + 1);
   };
 
   const steps = ["step 1", "step 2", "step 3", "step 4"];
@@ -102,27 +123,27 @@ const Signup = () => {
     event.preventDefault();
     // Send the formData to the backend API here
     console.log("Submitting form data to the backend:", formData);
-      try {
-        const { data } = await axios.post(
-          "http://localhost:4000/signup",
-          {
-            formData
-          },
-          { withCredentials: true }
-        );
-        console.log("After Api");
-        const { success, message } = data;
-        if (success) {
-          handleSuccess(message);
-          setTimeout(() => {
-            navigate("/profile");
-          }, 1000);
-        } else {
-          handleError(message);
-        }
-      } catch (error) {
-        console.log(error);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/signup",
+        {
+          formData,
+        },
+        { withCredentials: true }
+      );
+      console.log("After Api");
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1000);
+      } else {
+        handleError(message);
       }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
