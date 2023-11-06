@@ -1,4 +1,5 @@
 import '../styles/home.css';
+import TypingEffect from './TypingEffect'; 
 
 
 
@@ -18,7 +19,25 @@ const Home = () => {
           </ul>
           </div>
         </nav>
+        
+        <div className="job-seeker-homepage">
+      <div className="glass-background">
+        <div className="content">
+          
+        <h1> <TypingEffect text="Helping you Land a Job and Live your Dreams." speed={60}/></h1>
        
+          <div className="search-box">
+            <input type="text" placeholder="Search for jobs" />
+            <button>Search</button>
+          </div>
+          <div className="trust-section">
+        <h2>People Who Trust Us</h2>
+        
+      </div>
+        <button className="upload-cv-button">Upload CV</button>
+        </div>
+      </div>
+    </div>
 
     </>
   );
