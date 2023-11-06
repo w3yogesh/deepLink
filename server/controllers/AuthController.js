@@ -13,7 +13,7 @@ module.exports.Signup = async (req, res, next) => {
       confirm_password,
       createdAt,
       address: { country, state, city, zipCode },
-      institution
+      education : {institution, degree, field, startDate, endDate},
     } = req.body.formData;
 
       if (password === confirm_password) {
@@ -29,7 +29,7 @@ module.exports.Signup = async (req, res, next) => {
         lastName,
         password,
         address: { country, state, city, zipCode },
-        institution,
+        education : {institution, degree, field, startDate, endDate},
         createdAt
       });
       const token = createSecretToken(user._id);
