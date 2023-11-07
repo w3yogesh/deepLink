@@ -7,7 +7,11 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 import "../styles/profile.css"
+
 import PostComponent from '../components/PostComponent';
+
+import ProfileUpdateForm from './ProfileUpdateForm';
+
 
 // import ProfilePicture from './ProfilePicture';
 // import Header from './Header';
@@ -21,6 +25,13 @@ const Profile = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
     const [userProfile, setUserProfile] = useState("");
+    const [showForm, setShowForm] = useState(false)
+    const [userData, setUserData] = useState({
+      firstName : "",
+      lastName : "",
+      email : ""
+    })
+
     useEffect(() => {
       const loadProfileData = async () => {
         if (!cookies.token) {
@@ -41,6 +52,10 @@ const Profile = () => {
           }, 2000);
         }else{
           setUserProfile(user);
+          setUserData({
+            firstName : user.firstName,
+            lastName : user.lastName,
+          })
         }
         return status
           ? toast(`Hello ${user.username}`, {
@@ -58,35 +73,51 @@ const Profile = () => {
     const [updatedName, setUpdatedName] = useState('');
     //const [updatedEmail, setUpdatedEmail] = useState('');
 
-  const handleUpdateUserProfile = async () => {
-    try {
-      // Make a PUT or PATCH request to update the user's data
-      const response = await axios.put('http://localhost:4000/updateUserProfile', {
-        // name: updatedName,
-        NewName: updatedName,
-        userId: userProfile._id,
-      });
+  // const handleUpdateUserProfile = async () => {
+  //   try {
+  //     // Make a PUT or PATCH request to update the user's data
+  //     const response = await axios.put('http://localhost:4000/updateUserProfile', {
+  //       // name: updatedName,
+  //       NewName: updatedName,
+  //       userId: userProfile._id,
+  //     });
       
-      if (response.data.success) {
-        toast(response.data.message, {
-          position: "top-right",
-        })
-      } else {
-        console.log(response.data.message);
-        toast(response.data.message, {
-          position: "top-right",
-        })
-      }
-    } catch (error) {
-      toast("Server error", {
-        position: "top-right",
-      })
-    }
-  };
+  //     if (response.data.success) {
+  //       toast(response.data.message, {
+  //         position: "top-right",
+  //       })
+  //     } else {
+  //       console.log(response.data.message);
+  //       toast(response.data.message, {
+  //         position: "top-right",
+  //       })
+  //     }
+  //   } catch (error) {
+  //     toast("Server error", {
+  //       position: "top-right",
+  //     })
+  //   }
+  // };
 
-  
+
+    const handleUpdateUserProfile = ()=> {
+      setUserData({
+        firstName : userProfile.firstName,
+        lastName : userProfile.lastName,
+      })
+      setShowForm(true);
+    }
+
+    if(showForm) {
+      return (
+        <>
+          <ProfileUpdateForm userId = {userProfile._id} userData = {userData} setUserData = {setUserData} setShowForm = {setShowForm}/>
+        </>
+      )
+    }
+
+    else  {
     return (
-      
         <>
           {/* <div className="profile">
             <ProfilePicture />
@@ -100,17 +131,17 @@ const Profile = () => {
         <div className="profile-photo">
           <img src="/images/user-profile-photo.svg" alt="User Profile Photo" />
         </div>
-        <h1 className="user-name">{userProfile.firstName} {userProfile.lastName}</h1>
+        <h1 className="user-name">{userData.firstName} {userData.lastName}</h1>
         <p className="user-headline">MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist</p>
         <p className="user-location">Rajasthan, India</p>
         <p className="user-conections">646 followers * 500+ connections</p>
 
-        <button className="edit-button" id="edit-button" onclick="toggleEditForm()">Edit</button>
+        <button className="edit-button" id="edit-button" onClick="toggleEditForm()">Edit</button>
         <form className="edit-form" id="edit-form">
           <input type="text" id="edit-name" placeholder="New Name" />
           <input type="text" id="edit-title" placeholder="New Title" />
           <input type="text" id="edit-location" placeholder="New Location" />
-          <button className="save-button" id="save-button" onclick="saveChanges()">Save</button>
+          <button className="save-button" id="save-button" onClick="saveChanges()">Save</button>
         </form>
       </div>
 
@@ -135,9 +166,11 @@ const Profile = () => {
     </div>
             <ToastContainer />
         </>
-        
       )
  
 }
 
+
+      }
+}
 export default Profile;
