@@ -19,7 +19,7 @@ const Home = () => {
           </ul>
           </div>
         </nav>
-        
+{/*         
         <div className="job-seeker-homepage">
       <div className="glass-background">
         <div className="content">
@@ -37,7 +37,7 @@ const Home = () => {
         <button className="upload-cv-button">Upload CV</button>
         </div>
       </div>
-    </div>
+    </div> */}
 
     </>
   );

@@ -1,8 +1,6 @@
 const Post = require("../models/PostModel");
 
-const bcrypt = require("bcryptjs");
-
-// signup
+//Post page for user
 module.exports.Posts = async (req, res, next) => {
   try {
     const {

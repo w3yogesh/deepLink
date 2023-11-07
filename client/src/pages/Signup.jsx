@@ -76,11 +76,11 @@ const Signup = () => {
       }
 
       // password validation
-      else if (!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
-        toast.error("Password should contain one Capital , one small, one special char, minlen=6, maxlen=12");
-        setCurr(0);
-        return;
-      }
+      // else if (!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
+      //   toast.error("Password should contain one Capital , one small, one special char, minlen=6, maxlen=12");
+      //   setCurr(0);
+      //   return;
+      // }
     }
 
     if (curr === 1) {
