@@ -43,6 +43,7 @@ const Login = () => {
         handleSuccess(message);
         setTimeout(() => {
           navigate("/profile");
+          
         }, 1000);
       } else {
         handleError(message);

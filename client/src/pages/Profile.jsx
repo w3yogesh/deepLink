@@ -7,7 +7,11 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 import "../styles/profile.css"
+
+import PostComponent from '../components/PostComponent';
+
 import ProfileUpdateForm from './ProfileUpdateForm';
+
 
 // import ProfilePicture from './ProfilePicture';
 // import Header from './Header';
@@ -143,23 +147,30 @@ const Profile = () => {
 
             <button onClick={Logout}>LOGOUT</button>
 
+            
             <div>
       <input
         type="text"
         value={updatedName}
         onChange={(e) => setUpdatedName(e.target.value)}
       />
-        {/* <input
-          type="text"
-          value={setUpdatedName}
-          onChange={(e) => setUpdatedName(e.target.value)}
-        /> */}
-        <button onClick={handleUpdateUserProfile}>Update Profile</button>
-      </div>
-              <ToastContainer />
+      {/* <input
+        type="text"
+        value={setUpdatedName}
+        onChange={(e) => setUpdatedName(e.target.value)}
+      /> */}
+      <button onClick={handleUpdateUserProfile}>Update Profile</button>
+
+      <PostComponent userEmail={userProfile.email}/>
+
+    </div>
+            <ToastContainer />
         </>
       )
-      }
+ 
 }
 
-export default Profile
+
+      }
+}
+export default Profile;
