@@ -5,11 +5,12 @@ require("dotenv").config();
 
 exports.updateUserProfile = async (req, res) => {
   try {
-    const {NewName,userId} = req.body;
+    const {userId, firstName, lastName} = req.body;
     
     const updatedUser = await UserModel.findOneAndUpdate(
       { _id: userId },
-      { firstName :NewName },
+      { firstName : firstName },
+      { lastName : lastName },
       { new: true }
     );
     if (updatedUser) {

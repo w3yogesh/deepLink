@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Login, Signup, Home } from "./pages";
-import Dashboard from "./pages/Dashboard";
-import Image from "./pages/Image";
+// import Dashboard from "./pages/Dashboard";
+// import Image from "./pages/Image";
 import Profile from "./pages/Profile"
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         
       </Routes>
     </div>
