@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import PostComponent from '../components/PostComponent';
 
 // import ProfilePicture from './ProfilePicture';
 // import Header from './Header';
@@ -99,6 +100,7 @@ const Profile = () => {
 
             <button onClick={Logout}>LOGOUT</button>
 
+            
             <div>
       <input
         type="text"
@@ -111,6 +113,9 @@ const Profile = () => {
         onChange={(e) => setUpdatedName(e.target.value)}
       /> */}
       <button onClick={handleUpdateUserProfile}>Update Profile</button>
+
+      <PostComponent userEmail={userProfile.email}/>
+
     </div>
             <ToastContainer />
         </>
@@ -118,3 +123,5 @@ const Profile = () => {
       )
  
 }
+
+export default Profile;

@@ -1,8 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Login, Signup, Home } from "./pages";
-import Dashboard from "./pages/Dashboard";
-import Image from "./pages/Image";
 import Profile from "./pages/Profile"
+import PostComponent from "./components/PostComponent";
 
 function App() {
   return (
@@ -13,8 +12,7 @@ function App() {
         <Route path="/profile" element={< Profile />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
-
-        <Route path="/dashboard" element={<Dashboard />} />
+       
         
       </Routes>
     </div>
