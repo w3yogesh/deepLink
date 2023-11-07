@@ -13,17 +13,21 @@ import MyConnections from "../components/MyConnections";
 
 import "../styles/profile.css";
 
-// import ProfilePicture from './ProfilePicture';
-// import Header from './Header';
-// import Summary from './Summary';
-// import Experience from './Experience';
-// import Education from './Education';
-// import Skills from './Skills';
+import PostComponent from "../components/PostComponent";
+
+import ProfileUpdateForm from "./ProfileUpdateForm";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [userProfile, setUserProfile] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
   useEffect(() => {
     const loadProfileData = async () => {
       if (!cookies.token) {
@@ -44,6 +48,10 @@ const Profile = () => {
         }, 2000);
       } else {
         setUserProfile(user);
+        setUserData({
+          firstName: user.firstName,
+          lastName: user.lastName,
+        });
       }
       return status
         ? toast(`Hello ${user.username}`, {
@@ -59,7 +67,7 @@ const Profile = () => {
   };
 
   const [updatedName, setUpdatedName] = useState("");
-  //const [updatedEmail, setUpdatedEmail] = useState('');
+  const [updatedEmail, setUpdatedEmail] = useState("");
 
   const handleUpdateUserProfile = async () => {
     try {
@@ -67,7 +75,6 @@ const Profile = () => {
       const response = await axios.put(
         "http://localhost:4000/updateUserProfile",
         {
-          // name: updatedName,
           NewName: updatedName,
           userId: userProfile._id,
         }
@@ -90,126 +97,78 @@ const Profile = () => {
     }
   };
 
-  // Component Load when click on button
-  const [showConnectionRequest, setShowConnectionRequest] = useState(false);
+  // const handleUpdateUserProfile = ()=> {
+  //   setUserData({
+  //     firstName : userProfile.firstName,
+  //     lastName : userProfile.lastName,
+  //   })
+  //   setShowForm(true);
+  // }
 
-  const showRequestConnections = () => {
-    setShowConnectionRequest(true);
-  };
 
-  const [showConnectionSent, setShowConnectionSent] = useState(false);
 
-  const showSentConnections = () => {
-    setShowConnectionSent(true);
-  };
+    return (
+      <>
+        
+          <ProfileUpdateForm
+            userId={userProfile._id}
+            userData={userData}
+            setUserData={setUserData}
+            setShowForm={setShowForm}
+          />
 
-  const [showMyConnection, setShowMyConnection] = useState(false);
+        <div className="profile">
+          <div className="profile-container">
+            <div className="profile-photo">
+              <img
+                src="/images/user-profile-photo.svg"
+                alt="User Profile Photo"
+              />
+            </div>
+            <h1 className="user-name">
+              {userProfile.firstName} {userProfile.lastName}
+            </h1>
+            <p className="user-headline">
+              MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist
+            </p>
+            <p className="user-location">Rajasthan, India</p>
+            <p className="user-conections">646 followers * 500+ connections</p>
+            <button
+              className="edit-button"
+              id="edit-button"
+              onclick="toggleEditForm()"
+            >
+              Edit
+            </button>
+            <form className="edit-form" id="edit-form">
+              <input type="text" id="edit-name" placeholder="New Name" />
+              <input type="text" id="edit-title" placeholder="New Title" />
+              <input
+                type="text"
+                id="edit-location"
+                placeholder="New Location"
+              />
+              <button
+                className="save-button"
+                id="save-button"
+                onclick="saveChanges()"
+              >
+                Save
+              </button>
+            </form>
+          </div>
 
-  const showMyConnections = () => {
-    setShowMyConnection(true);
-  };
-
-  // const handleSendConnectRequest = async () => {
-  //   try {
-  //     const response = await axios.post('/connect', { userId, requestId });
-
-  //     if (response.data.message === 'Connection accepted') {
-  //       onAccept();
-  //     }
-  //   } catch (error) {
-  //     // Handle error
-  //   }
-  // };
-
-  // const handleAcceptConnection = async () => {
-  //   try {
-  //     const response = await axios.post('/accept-connection', { requestId });
-  //     if (response.data.message === 'Connection accepted') {
-  //       onAccept();
-  //     }
-  //   } catch (error) {
-  //     // Handle error
-  //   }
-  // };
-
-  return (
-    <>
-      {/* <div className="profile">
-            <ProfilePicture />
-            <Header />
-            <Summary />
-            <Experience />
-            <Education />
-            <Skills />
-          </div> */}
-      <div className="profile-container">
-        <div className="profile-photo">
-          <img src="/images/user-profile-photo.svg" alt="User Profile Photo" />
+          <button onClick={Logout}>LOGOUT</button>
         </div>
-        <h1 className="user-name">
-          {userProfile.firstName} {userProfile.lastName}
-        </h1>
-        <p className="user-headline">
-          MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist
-        </p>
-        <p className="user-location">Rajasthan, India</p>
-        <p className="user-conections">646 followers * 500+ connections</p>
 
-        <button
-          className="edit-button"
-          id="edit-button"
-          onclick="toggleEditForm()"
-        >
-          Edit
-        </button>
-        <form className="edit-form" id="edit-form">
-          <input type="text" id="edit-name" placeholder="New Name" />
-          <input type="text" id="edit-title" placeholder="New Title" />
-          <input type="text" id="edit-location" placeholder="New Location" />
-          <button
-            className="save-button"
-            id="save-button"
-            onclick="saveChanges()"
-          >
-            Save
-          </button>
-        </form>
-      </div>
+          <PostComponent userEmail={userProfile.email} />
+        <UserListComponent senderId={userProfile._id} />
+        {/* <ConnectionRequest senderId={userProfile._id} />
+        <ConnectionSent senderId={userProfile._id} />
+        <MyConnections senderId={userProfile._id} /> */}
 
-      {/* <button onClick={handleSendConnectRequest}>Connect</button>
-
-      <button onClick={handleAcceptConnection}>Accept Connection</button> */}
-
-      <button onClick={Logout}>LOGOUT</button>
-
-      <div>
-        <input
-          type="text"
-          value={updatedName}
-          onChange={(e) => setUpdatedName(e.target.value)}
-        />
-        {/* <input
-          type="text"
-          value={setUpdatedName}
-          onChange={(e) => setUpdatedName(e.target.value)}
-        /> */}
-        <button onClick={handleUpdateUserProfile}>Update Profile</button>
-      </div>
-      <UserListComponent senderId={userProfile._id}/>
-
-      <button onClick={showRequestConnections}>Receive Connection</button>
-      {showConnectionRequest && (
-        <ConnectionRequest senderId={userProfile._id} />
-      )}
-
-      <button onClick={showSentConnections}>Sent Connections</button>
-      {showConnectionSent && <ConnectionSent senderId={userProfile._id} />}
-
-      <button onClick={showMyConnections}>My Connection</button>
-      {showMyConnection && <MyConnections senderId={userProfile._id} />}
-      <ToastContainer />
-    </>
-  );
-};
-
+        <ToastContainer />
+      </>
+    );
+  };
 export default Profile;

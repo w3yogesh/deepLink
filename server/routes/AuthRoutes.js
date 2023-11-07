@@ -6,11 +6,16 @@ const {updateUserProfile} = require("../controllers/updateUserProfile")
 
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections,users } = require('../controllers/userController');
 
+const {Posts} = require("../controllers/PostControl");
+
+
+
 const router = require("express").Router();
 
 
 router.post("/signup", Signup);
 router.post("/login",Login);
+router.post("/post",Posts);
 router.post('/',userVerification);
 router.post('/profile',getUserProfile);
 router.put("/updateUserProfile",updateUserProfile)

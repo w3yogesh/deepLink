@@ -13,7 +13,7 @@ module.exports.Signup = async (req, res, next) => {
       confirm_password,
       createdAt,
       address: { country, state, city, zipCode },
-      institution
+      education : {institution, degree, field, startDate, endDate},
     } = req.body.formData;
 
       if (password === confirm_password) {
@@ -29,12 +29,12 @@ module.exports.Signup = async (req, res, next) => {
         lastName,
         password,
         address: { country, state, city, zipCode },
-        institution,
+        education : {institution, degree, field, startDate, endDate},
         createdAt
       });
       const token = createSecretToken(user._id);
       res.cookie("token", token, {
-        maxAge: 600 * 1000, // in sec
+        maxAge: 20 * 1000, // in sec
         withCredentials: true,
         httpOnly: false,
       });
@@ -67,7 +67,7 @@ module.exports.Login = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
-      maxAge: 600 * 1000, // in sec
+      maxAge: 20 * 1000, // in sec
       withCredentials: true,
       httpOnly: false,
     });
