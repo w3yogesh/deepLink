@@ -1,8 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Login, Signup, Home } from "./pages";
-// import Dashboard from "./pages/Dashboard";
-// import Image from "./pages/Image";
 import Profile from "./pages/Profile"
+import PostComponent from "./components/PostComponent";
 import Feed from "./pages/Feed";
 
 function App() {
@@ -15,9 +14,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/feed" element={<Feed />} />
-
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-        
       </Routes>
     </div>
   );
