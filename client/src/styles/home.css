@@ -35,34 +35,9 @@
     width: 100vw;
     z-index: 10;
   }
-  
-  .nav-wrapper {
-    margin: auto;
-    text-align: center;
-    width: 70%;
-  } @media(max-width: 768px) {
-      .nav-wrapper {
-        width: 90%;
-      }
-    } @media(max-width: 638px) {
-        .nav-wrapper {
-          width: 100%;
-        }
-      } 
+ 
   
   
-  .logo {
-    float: left;
-    margin-left: 28px;
-    font-size: 1.5em;
-    height: 60px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  } @media(max-width: 768px) {
-      .logo {
-  /*       margin-left: 5px; */
-      }
-    }
   
   #navbar ul {
     display: inline-block;
