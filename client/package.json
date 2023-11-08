@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.16",
     "@mui/x-date-pickers": "^6.18.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -15,6 +16,7 @@
     "dayjs": "^1.11.10",
     "mdb-react-ui-kit": "^6.3.0",
     "react": "^18.2.0",
+    "react-activity-feed": "^1.4.0",
     "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",

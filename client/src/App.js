@@ -3,6 +3,7 @@ import { Login, Signup, Home } from "./pages";
 // import Dashboard from "./pages/Dashboard";
 // import Image from "./pages/Image";
 import Profile from "./pages/Profile"
+import Feed from "./pages/Feed";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/profile" element={< Profile />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/feed" element={<Feed />} />
 
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         
