@@ -27,9 +27,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  receive_pending_connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  sent_pending_connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true }],
+  sent_pending_connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true }],
+  receive_pending_connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true }],
   createdAt: {
     type: Date,
     default: new Date(),

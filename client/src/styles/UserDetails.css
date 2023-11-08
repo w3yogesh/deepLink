@@ -1,0 +1,18 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+    box-sizing: border-box;
+}
+.main-container {
+    width: 65vw;
+}
+
+.user-detail-container {
+    padding: 10px;
+}
+
+.bg-img-container {
+    width: 100%;
+    height: auto;
+}

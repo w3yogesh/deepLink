@@ -18,7 +18,7 @@ const PostComponent = ({ userEmail }) => {
       const now = new Date();
       const timestamp = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
       const newPost = {
-        userEmail: userEmail, // Pass the user's email
+        userEmail: userEmail,
         text: newPostText
       };
       // console.log(newPost);

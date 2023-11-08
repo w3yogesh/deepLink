@@ -33,7 +33,7 @@ module.exports.Signup = async (req, res, next) => {
         createdAt
       });
       const token = createSecretToken(user._id);
-      res.cookie("token", token, {
+      res.cookie("token", token, {  
         maxAge: 20 * 1000, // in sec
         withCredentials: true,
         httpOnly: false,

@@ -161,8 +161,8 @@ const Profile = () => {
           <button onClick={Logout}>LOGOUT</button>
         </div>
 
-          <PostComponent userEmail={userProfile.email} />
-        <UserListComponent senderId={userProfile._id} />
+          {/* <PostComponent userEmail={userProfile.email} /> */}
+        {/* <UserListComponent senderId={userProfile._id} /> */}
         {/* <ConnectionRequest senderId={userProfile._id} />
         <ConnectionSent senderId={userProfile._id} />
         <MyConnections senderId={userProfile._id} /> */}
