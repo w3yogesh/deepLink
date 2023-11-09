@@ -1,33 +1,28 @@
 import React from "react";
-import "../styles/navbar.css"
+import "../styles/Navbar.css"
 
 export default function Navbar() {
   return (
     <>
       <header className="site-header">
         <div className="navbar-wrapper">
-          <div className="navbar">
             <div className="logo-container">
-              <h1 className="logo">
-                <img
+                <a href="/">
+                <img className="logo"
                   src="https://www.deeplink.ai/wp-content/uploads/2020/11/cropped-Logo-Transparent-Noir-Jaune.png"
                   alt="deeplink"
                 />
-                DeepLink
-              </h1>
+</a>
             </div>
             <div className="nav-wrapper">
-              <div className="nav">
                 <ul className="nav-menu">
-                  <li className="nav-menu-item">Home</li>
-                  <li className="nav-menu-item">My Network</li>
-                  <li className="nav-menu-item">Jobs</li>
-                  <li className="nav-menu-item">Messages</li>
-                  <li className="nav-menu-item">Notification</li>
+                  <li className="nav-menu-item"><a href="/">Home</a></li>
+                  <li className="nav-menu-item"><a href="/mynetwork">My Network</a></li>
+                  <li className="nav-menu-item"><a href="/jobs">Jobs</a></li>
+                  <li className="nav-menu-item"><a href="/messaging">Messages</a></li>
+                  <li className="nav-menu-item"><a href="/notifications">Notification</a></li>
                 </ul>
-              </div>
             </div>
-          </div>
         </div>
       </header>
     </>

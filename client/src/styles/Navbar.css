@@ -1,5 +1,37 @@
 .site-header {
-    background-color: var(--base-3);
     position: relative;
-    box-shadow: 0 1px 0 0 rgb(239 239 239);
+    width: 100vw;
+}
+.navbar-wrapper {
+    background: #f4efef;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 70px;
+}
+
+.logo-container, .logo-container a{
+    display: contents;
+}
+
+.nav-wrapper {
+    display: inline;
+}
+
+.nav-menu{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    list-style-type: none;
+}
+.nav-menu-item{
+    padding: 0 16px;
+}
+
+.logo {
+    width: 12%;
 }
