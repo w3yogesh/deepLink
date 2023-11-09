@@ -18,6 +18,8 @@ import PostComponent from "../components/PostComponent";
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import Navbar from "../components/Navbar";
 
+import Button from '@mui/material/Button';
+
 const Profile = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -69,6 +71,11 @@ const Profile = () => {
 
   const [updatedName, setUpdatedName] = useState("");
   const [updatedEmail, setUpdatedEmail] = useState("");
+
+  const [showAllUser, setShowAllUser] = useState(false)
+  const [showConnectionRequest, setShowConnectionRequest] = useState(false)
+  const [showConnectionSent, setShowConnectionSent] = useState(false)
+  const [showMyConnections, setShowMyConnections] = useState(false)
 
   const handleUpdateUserProfile = async () => {
     try {
@@ -171,9 +178,22 @@ const Profile = () => {
 
         </div>
 
-          <PostComponent userEmail={userProfile._id} />
-        {/* <UserListComponent senderId={userProfile._id} /> 
-        <ConnectionRequest senderId={userProfile._id} />
+      <PostComponent userEmail={userProfile.email} />
+      
+      <Button variant="contained" onClick={()=>{setShowAllUser(!showAllUser)}}> All User </Button>
+      { showAllUser && <UserListComponent senderId={userProfile._id} />}
+
+      <Button variant="contained" onClick={()=>{setShowConnectionRequest(!showConnectionRequest)}}> recieved </Button>
+      {showConnectionRequest && <ConnectionRequest senderId={userProfile._id} />}
+
+      <Button variant="contained" onClick={()=>{setShowConnectionSent(!showConnectionSent)}}> sent </Button>
+      {showConnectionSent && <ConnectionSent senderId={userProfile._id} />}
+
+      <Button variant="contained" onClick={()=>{setShowMyConnections(!showMyConnections)}}> Connections </Button>
+      {showMyConnections && <MyConnections senderId={userProfile._id} />}
+          {/* <PostComponent userEmail={userProfile.email} /> */}
+        {/* <UserListComponent senderId={userProfile._id} /> */}
+        {/* <ConnectionRequest senderId={userProfile._id} />
         <ConnectionSent senderId={userProfile._id} />
         <MyConnections senderId={userProfile._id} /> */}
 
