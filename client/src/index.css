@@ -6,125 +6,113 @@
   margin: 0;
 }
 
-label {
-  font-size: 1.2rem;
-  color: #656262;
+
+:root {
+  --text-primary: #333;
+  --text-secondary: #666; 
+  --text-light: #999; 
+  --text-link: #007BFF; 
+
+
+  --background-primary: #fff; 
+  --background-secondary: #f5f5f5; 
+
+
+  --button-primary-bg: #007BFF; 
+  --button-primary-text: #fff; 
+  --button-secondary-bg: #6c757d; 
+  --button-secondary-text: #fff; 
 }
 
-html,
-body {
-  height: 100%;
-  width: 100%;
+
+html{
+  font-family: ans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+
+}
+body{
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.775;
+  text-transform: none;
+  overflow-x: hidden;
+  background-color: var(--base-2);
+  color: var(--contrast);
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans,Roboto,Ubuntu,Helvetica,sans-serif;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(143, 187, 204, 1) 35%,
-    rgba(0, 212, 255, 1) 100%
-  );
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+h1,h2,h3,h4,h5,h6 {
+  font-family: inherit;
+  font-size: 100%;
+  font-style: inherit;
+  font-weight: 600
 }
 
-.form_container {
-  background-color: #fff;
-  padding: 2rem 3rem;
-  border-radius: 0.5rem;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  line-height: 1.2em;
+  text-transform: none
 }
 
-.form_container > h2 {
-  margin-block: 1rem;
-  padding-block: 0.6rem;
-  color: rgba(0, 212, 255, 1);
+h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  line-height: 1.2em;
+  text-transform: none
 }
 
-.form_container > form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
+h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  line-height: 1.2em;
+  text-transform: none
 }
 
-.form_container div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+h4 {
+  font-size: 20px
 }
 
-.form_container input {
-  border: none;
-  padding: 0.5rem;
-  border-bottom: 1px solid gray;
-  font-size: 1.1rem;
-  outline: none;
+h5 {
+  font-size: 18px
 }
 
-.form_container input::placeholder {
-  font-size: 0.9rem;
-  font-style: italic;
+h4,h5,h6 {
+  margin-bottom: 20px
 }
-
-.form_container button {
-  background-color: rgba(0, 212, 255, 1);
+.primary-button {
+  background-color: #007BFF;
   color: #fff;
+  padding: 10px 20px; 
   border: none;
-  padding: 0.6rem;
-  font-size: 1rem;
+  border-radius: 4px; 
   cursor: pointer;
-  border-radius: 0.3rem;
+  transition: background-color 0.3s ease; 
 }
 
-span a {
-  text-decoration: none;
-  color: rgba(0, 212, 255, 1);
+.primary-button:hover {
+  background-color: #0056b3; 
 }
 
-.home_page {
-  height: 100vh;
-  width: 100vw;
-  background: #000;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  font-size: 3rem;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.home_page span {
-  color: rgba(0, 212, 255, 1);
-}
-
-.home_page button {
-  background-color: rgb(27, 73, 83);
-  color: #fff;
-  cursor: pointer;
-  padding: 1rem 3rem;
-  font-size: 2rem;
-  border-radius: 2rem;
-  transition: ease-in 0.3s;
+.secondary-button {
+  background-color: #6c757d; 
+  color: #fff; 
+  padding: 10px 20px; 
   border: none;
+  border-radius: 4px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
-.home_page button:hover {
-  background-color: rgba(0, 212, 255, 1);
+.secondary-button:hover {
+  background-color: #495057;
 }
 
 
-@media only screen and (max-width: 1200px){
-  .home_page{
-    font-size: 1.5rem;
-  }
-  .home_page button {
-    padding: 0.6rem 1rem;
-    font-size: 1.5rem;
-  }
-}
+
+
+
+
+

@@ -181,6 +181,11 @@ const Profile = () => {
 
       <Button variant="contained" onClick={()=>{setShowMyConnections(!showMyConnections)}}> Connections </Button>
       {showMyConnections && <MyConnections senderId={userProfile._id} />}
+          {/* <PostComponent userEmail={userProfile.email} /> */}
+        {/* <UserListComponent senderId={userProfile._id} /> */}
+        {/* <ConnectionRequest senderId={userProfile._id} />
+        <ConnectionSent senderId={userProfile._id} />
+        <MyConnections senderId={userProfile._id} /> */}
 
         <ToastContainer />
       </>
