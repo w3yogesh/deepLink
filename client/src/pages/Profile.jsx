@@ -11,11 +11,12 @@ import ConnectionRequest from "../components/ConnectionRequests";
 import ConnectionSent from "../components/ConnectionSent";
 import MyConnections from "../components/MyConnections";
 
-import "../styles/profile.css";
+import "../styles/Profile.css";
 
 import PostComponent from "../components/PostComponent";
 
 import ProfileUpdateForm from "./ProfileUpdateForm";
+import Navbar from "../components/Navbar";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -109,61 +110,70 @@ const Profile = () => {
 
     return (
       <>
-        
-          <ProfileUpdateForm
+          <Navbar/>
+          {/* <ProfileUpdateForm
             userId={userProfile._id}
             userData={userData}
             setUserData={setUserData}
             setShowForm={setShowForm}
-          />
-
-        <div className="profile">
-          <div className="profile-container">
-            <div className="profile-photo">
-              <img
-                src="/images/user-profile-photo.svg"
-                alt="User Profile Photo"
-              />
-            </div>
-            <h1 className="user-name">
-              {userProfile.firstName} {userProfile.lastName}
-            </h1>
-            <p className="user-headline">
-              MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist
-            </p>
-            <p className="user-location">Rajasthan, India</p>
-            <p className="user-conections">646 followers * 500+ connections</p>
-            <button
-              className="edit-button"
-              id="edit-button"
-              onclick="toggleEditForm()"
-            >
-              Edit
-            </button>
-            <form className="edit-form" id="edit-form">
-              <input type="text" id="edit-name" placeholder="New Name" />
-              <input type="text" id="edit-title" placeholder="New Title" />
-              <input
-                type="text"
-                id="edit-location"
-                placeholder="New Location"
-              />
+          /> */}
+        <div className="main-container">
+          <div className="profile">
+            <div className="profile-container">
+              <div className="profile-photo">
+                <img
+                  src="/images/user-profile-photo.svg"
+                  alt="User Profile Photo"
+                />
+              </div>
+              <h1 className="user-name">
+                {userProfile.firstName} {userProfile.lastName}
+              </h1>
+              <p className="user-headline">
+                MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist
+              </p>
+              <p className="user-location">Rajasthan, India</p>
+              <p className="user-conections">646 followers * 500+ connections</p>
               <button
-                className="save-button"
-                id="save-button"
-                onclick="saveChanges()"
+                className="edit-button"
+                id="edit-button"
+                onclick="toggleEditForm()"
               >
-                Save
+                Edit
               </button>
-            </form>
+              <form className="edit-form" id="edit-form">
+                <input type="text" id="edit-name" placeholder="New Name" />
+                <input type="text" id="edit-title" placeholder="New Title" />
+                <input
+                  type="text"
+                  id="edit-location"
+                  placeholder="New Location"
+                />
+                <button
+                  className="save-button"
+                  id="save-button"
+                  onclick="saveChanges()"
+                >
+                  Save
+                </button>
+              </form>
+            </div>
+
+            <button onClick={Logout}>LOGOUT</button>
+          </div>
+          <div className="main-body">
+            <div className="user-detail-form">
+              <form action="">
+                
+              </form>
+            </div>
           </div>
 
-          <button onClick={Logout}>LOGOUT</button>
         </div>
 
-          {/* <PostComponent userEmail={userProfile.email} /> */}
-        {/* <UserListComponent senderId={userProfile._id} /> */}
-        {/* <ConnectionRequest senderId={userProfile._id} />
+          <PostComponent userEmail={userProfile._id} />
+        {/* <UserListComponent senderId={userProfile._id} /> 
+        <ConnectionRequest senderId={userProfile._id} />
         <ConnectionSent senderId={userProfile._id} />
         <MyConnections senderId={userProfile._id} /> */}
 
