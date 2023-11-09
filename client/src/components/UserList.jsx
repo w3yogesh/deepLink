@@ -2,13 +2,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import Button from '@mui/material/Button';
 
 
 function UserList(props) {
     const [users, setUsers] = useState([]);
+
+    const [sentConnect, setSentConnect] = useState([])
+
     const senderId = props.senderId;
     function handleSendConnectRequest(senderId,recipientId) {
-      console.log(senderId);
+      console.log(`senderId : ${senderId}`);
+      console.log(`recipientId : ${recipientId}`);
        
         // Use an async function to perform the POST request
         const sendConnectRequest = async () => {
@@ -16,9 +21,10 @@ function UserList(props) {
           try {
             const response = await axios.post('http://localhost:4000/connect', { senderId, recipientId });
             //console.log(response.data); // Log the response data
-            if (response.data.message === 'Connection accepted') {
+            if (response.data.message === 'Connection Pending') {
               // Handle the case when the connection is accepted
               // You can call a function like onAccept() here if needed
+              setSentConnect(prev => [...prev, recipientId])
             }
           } catch (error) {
             // Handle any errors
@@ -55,10 +61,12 @@ function UserList(props) {
             <br/>
             Email: {user.email}
             <br/>
-            <button onClick={()=>handleSendConnectRequest(senderId,user._id)}>Connect</button>
+            {sentConnect.includes(user._id) && <Button variant="contained" disabled> Pending </Button>}
+            {!sentConnect.includes(user._id) && <Button variant="contained" onClick={()=>handleSendConnectRequest(senderId,user._id)}>Connect</Button>}
           </li>
         ))}
       </ul>
+      <Button variant="contained" onClick={()=>{console.log(sentConnect)}}> console </Button>
     </div>
   );
 }
