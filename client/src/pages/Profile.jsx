@@ -17,6 +17,8 @@ import PostComponent from "../components/PostComponent";
 
 import ProfileUpdateForm from "./ProfileUpdateForm";
 
+import Button from '@mui/material/Button';
+
 const Profile = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -68,6 +70,11 @@ const Profile = () => {
 
   const [updatedName, setUpdatedName] = useState("");
   const [updatedEmail, setUpdatedEmail] = useState("");
+
+  const [showAllUser, setShowAllUser] = useState(false)
+  const [showConnectionRequest, setShowConnectionRequest] = useState(false)
+  const [showConnectionSent, setShowConnectionSent] = useState(false)
+  const [showMyConnections, setShowMyConnections] = useState(false)
 
   const handleUpdateUserProfile = async () => {
     try {
@@ -122,7 +129,7 @@ const Profile = () => {
             <div className="profile-photo">
               <img
                 src="/images/user-profile-photo.svg"
-                alt="User Profile Photo"
+                alt="User Profile Photoo"
               />
             </div>
             <h1 className="user-name">
@@ -161,11 +168,19 @@ const Profile = () => {
           <button onClick={Logout}>LOGOUT</button>
         </div>
 
-          <PostComponent userEmail={userProfile.email} />
-        <UserListComponent senderId={userProfile._id} />
-        {/* <ConnectionRequest senderId={userProfile._id} />
-        <ConnectionSent senderId={userProfile._id} />
-        <MyConnections senderId={userProfile._id} /> */}
+      <PostComponent userEmail={userProfile.email} />
+      
+      <Button variant="contained" onClick={()=>{setShowAllUser(!showAllUser)}}> All User </Button>
+      { showAllUser && <UserListComponent senderId={userProfile._id} />}
+
+      <Button variant="contained" onClick={()=>{setShowConnectionRequest(!showConnectionRequest)}}> recieved </Button>
+      {showConnectionRequest && <ConnectionRequest senderId={userProfile._id} />}
+
+      <Button variant="contained" onClick={()=>{setShowConnectionSent(!showConnectionSent)}}> sent </Button>
+      {showConnectionSent && <ConnectionSent senderId={userProfile._id} />}
+
+      <Button variant="contained" onClick={()=>{setShowMyConnections(!showMyConnections)}}> Connections </Button>
+      {showMyConnections && <MyConnections senderId={userProfile._id} />}
 
         <ToastContainer />
       </>

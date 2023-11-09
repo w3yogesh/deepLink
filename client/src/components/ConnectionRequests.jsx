@@ -25,6 +25,7 @@ function ConnectionRequest(props) {
       if (response.data.message === 'Connection accepted') {
         // Handle the case when the connection is accepted
         // You can call a function like onAccept() here if needed
+        setUsers(prev => prev.filter(user => user._id !== receiverId))
       }
     } catch (error) {
       // Handle any errors
@@ -36,10 +37,14 @@ function ConnectionRequest(props) {
     try {
       const response = await axios.post('http://localhost:4000/ignore-connection', { receiverId, senderId });
       //console.log(response.data); // Log the response data
-      if (response.data.message === 'Connection accepted') {
+      if (response.data.message === 'ignore Successfully') {
         console.log(response.data);
         // Handle the case when the connection is accepted
         // You can call a function like onAccept() here if needed
+        setUsers(prev => prev.filter(user => user._id !== receiverId))
+      }
+      else  {
+        console.log('not ignored');
       }
     } catch (error) {
       // Handle any errors
