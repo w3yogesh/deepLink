@@ -11,7 +11,7 @@ import ConnectionRequest from "../components/ConnectionRequests";
 import ConnectionSent from "../components/ConnectionSent";
 import MyConnections from "../components/MyConnections";
 
-import "../styles/Profile.css";
+// import "../styles/Profile.css";
 
 import PostComponent from "../components/PostComponent";
 
