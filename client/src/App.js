@@ -6,6 +6,8 @@ import UserDetails from "./pages/UserDetails";
 import PostComponent from "./components/PostComponent";
 import Feed from "./pages/Feed";
 
+import MyConnections from "./components/MyConnections";
+
 function App() {
   return (
     <div className="App">
@@ -16,6 +18,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/user" element={<UserDetails/>}/>
+
+        <Route path="/mynetwork" element={<MyConnections/>}/>
 
         <Route path="/feed" element={<Feed />} />
       </Routes>

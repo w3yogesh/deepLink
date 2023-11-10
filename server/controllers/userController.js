@@ -144,6 +144,7 @@ exports.myConnections = async (req, res) => {
   }
 };
 
+//Show all Users list
 exports.users = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // Fetch all users

@@ -1,18 +1,14 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-   titel:{
-    type : String,
-    required: true,  
-   },
-   content : {
-    type: String,
-    required: true,
-   },
-    author: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+   content : {
+    type: String,
+    require: true,
+   },
     createdAt: {
         type: Date,
         default: Date.now,
