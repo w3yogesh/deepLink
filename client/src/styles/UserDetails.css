@@ -7,15 +7,29 @@
 .user-info-container.right {
     width: 60%;
 }
-.edit-details svg {height: 50%;width: 50%;}
-.edit-details {
+
+.edit-details-wrapper {
     float: right;
-    display: flex;
-    background: #6fcc8a;
-    height: 100%;
-    padding: 10px 0px;
-    border-radius: 50px;
-    justify-content: center;
+}
+.add-details {
+    border: 1px solid;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 100px;
+    display: inline-flex;
+    padding: 10px;
+    margin: 0 10px 0 0;
+}
+.edit-details {
+    border: 1px solid;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 100px;
+    display: inline-flex;
+    padding: 10px;
+}
+.edit-details-wrapper svg {
+    font-size: 20px;
 }
 .details {
     border: 1px solid #222;

@@ -8,7 +8,6 @@ const Feed = () => {
   const [allPostObj, setPosts] = useState([]);
 
 
-
   // const allPostObj = [
   //   {
   //     title : 'Post Title',
@@ -49,14 +48,16 @@ const Feed = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get("http://localhost:4000/api/fetchposts");
-        setPosts(response.data);
-        //console.log(posts[0]._id);
+        const postsData = response.data;
+        setPosts(postsData);
+        console.log(postsData);
       } catch (error) {
         console.log(error);
       }
     
     }
     fetchPosts();
+    setPosts(allPostObj);
   }, [])
   
 

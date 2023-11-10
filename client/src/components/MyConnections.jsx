@@ -5,6 +5,15 @@ function MyConnections(props) {
     const [users, setUsers] = useState([]);
     const userId = props.senderId;
 
+    const handleDeleteMyConnection = async (senderId, receiverId)=>{
+      try {
+        const response = await axios.post("http://localhost:4000/deleteMyConnection", {senderId, receiverId});
+         console.log(response.data);
+        
+      } catch (error) {
+        
+      }
+    }
   useEffect(() => {
     const fetchMyConnections = async () => {
       try {
@@ -27,7 +36,7 @@ function MyConnections(props) {
             <br />
             Name: {users.firstName}
             <br/>
-            <button>Drop</button>
+            <button onClick={()=>{handleDeleteMyConnection(userId,users._id)}}>Drop</button>
           </li>
         ))}
       </ul>

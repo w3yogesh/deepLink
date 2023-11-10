@@ -4,10 +4,10 @@ const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");
 const {updateUserProfile} = require("../controllers/updateUserProfile")
 
-const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections,users } = require('../controllers/userController');
+const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 //Post Controller
-const {createPost,fetchPosts} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike,PostComment} = require("../controllers/PostControl");
 
 
 
@@ -32,11 +32,16 @@ router.post('/accept-connection', acceptConnection);
 router.post('/ignore-connection', ignoreConnection);
 router.post('/drop-connection', dropConnection);
 router.get('/myConnections:userId', myConnections);
+router.put('/deleteMyConnection', deleteMyConnection);
+
 
 
 //Post Controller
 router.post("/post",createPost);
 router.get('/api/fetchposts', fetchPosts);
+router.put('/api/postLike', Postlike);
+router.put('/api/postComment', PostComment);
+
 
 
 

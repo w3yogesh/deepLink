@@ -64,28 +64,27 @@ exports.acceptConnection = async (req, res) => {
     const targetUserID = targetUser._id;
 
     //console.log(requestingUserID,targetUserID);
-
+    console.log(requestingUserID,targetUserID);
+    // Update requestingUser
+    await User.updateOne(
+      {_id: requestingUserID},
+      {
+        $push: { connections: targetUserID },
+        $pull: { sent_pending_connections: receiverId },
+        
+      }
+    );
+    // Update targetUser
+    await User.updateOne(
+      {_id: targetUserID},
+      {
+        $push: { connections: requestingUserID },
+        $pull: { receive_pending_connections: senderId },
+       
+      }
+    );
+    console.log("Connected");
     
-// Update requestingUser
-await User.findByIdAndUpdate(
-  requestingUserID,
-  {
-    $addToSet: { connections: targetUserID },
-    $pull: { sent_pending_connections: targetUserID },
-  },
-  { new: true }
-);
-
-// Update targetUser
-await User.findByIdAndUpdate(
-  targetUserID,
-  {
-    $addToSet: { connections: requestingUserID },
-    $pull: { receive_pending_connections: requestingUserID },
-  },
-  { new: true }
-);
-   console.log("Connected");
     res.json({ message: "Connection accepted" });
   } catch (error) {
     res.status(500).json({ error: "Failed to accept connection" });
@@ -98,11 +97,11 @@ exports.ignoreConnection = async (req, res) => {
 
   const receiver = await User.findById(receiverId);
   const sender = await User.findById(senderId);
-  
+
   if (!sender || !receiver) {
     return res.status(400).json({ error: "Users not found" });
   }
-  
+
   await User.updateOne(
     { _id: receiver._id },
     {
@@ -111,21 +110,23 @@ exports.ignoreConnection = async (req, res) => {
   );
   console.log(sender._id);
   await User.updateOne(
-    { _id: sender._id}, 
-    { $pull: { sent_pending_connections: receiver._id }
-  });
+    { _id: sender._id },
+    { $pull: { sent_pending_connections: receiver._id } }
+  );
   return res.json("ignore Successfully");
 };
 
-exports.dropConnection = async(req, res) => {
-  const{senderId, receiverId} = req.body;
+exports.dropConnection = async (req, res) => {
+  const { senderId, receiverId } = req.body;
 
-  await User.findByIdAndUpdate(senderId,{$pull:{ sent_pending_connections: receiverId }});
-  await User.findByIdAndUpdate(receiverId,{$pull:{ receive_pending_connections: senderId }});
+  await User.findByIdAndUpdate(senderId, {
+    $pull: { sent_pending_connections: receiverId },
+  });
+  await User.findByIdAndUpdate(receiverId, {
+    $pull: { receive_pending_connections: senderId },
+  });
   return res.json("drop Successfully");
-
-
-}
+};
 
 // Show My connections
 exports.myConnections = async (req, res) => {
@@ -142,6 +143,19 @@ exports.myConnections = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to get connections" });
   }
+};
+
+exports.deleteMyConnection = async (req, res) => {
+  const { senderId, receiverId } = req.body;
+  try {
+    await User.findByIdAndUpdate(senderId, {
+      $pull: {connections: receiverId },
+    });
+    await User.findByIdAndUpdate(receiverId, {
+      $pull: { connections: senderId },
+    });
+    return res.json("delete succesfully")
+  } catch (error) {}
 };
 
 //Show all Users list
