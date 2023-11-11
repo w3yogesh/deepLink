@@ -20,6 +20,11 @@ import Navbar from "../components/Navbar";
 
 import Button from "@mui/material/Button";
 
+
+import { Link } from "react-router-dom";
+
+import Chat from "./Chat"
+
 const Profile = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -223,6 +228,9 @@ const Profile = () => {
 
       <PostComponent senderId={userProfile._id} />
 
+      <Link to="/chat">
+        <button>Open Chat</button>
+      </Link>
       {/* <PostComponent userEmail={userProfile.email} /> */}
       {/* <UserListComponent senderId={userProfile._id} /> */}
       {/* <ConnectionRequest senderId={userProfile._id} />

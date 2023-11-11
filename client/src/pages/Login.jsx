@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-
-import "../styles/LoginForm.css"
+import { useEffect } from "react";
+import "../styles/LoginForm.css";
+import "../styles/login-singup.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -59,6 +60,18 @@ const Login = () => {
       password: "",
     });
   };
+
+
+  useEffect(() => {
+    // Add a class to the body element to apply specific styles
+    document.body.classList.add("login-body");
+  
+    // Remove the class when the component unmounts
+    return () => {
+      document.body.classList.remove("login-body");
+    };
+  }, []);
+
 
   return (
     <div className="form_container">

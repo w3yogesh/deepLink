@@ -1,5 +1,5 @@
 import '../styles/home.css';
-import TypingEffect from './TypingEffect'; 
+
 
 
 
@@ -12,32 +12,68 @@ const Home = () => {
               <a href="#home">Logo</a>
           </div>
           <ul id="menu">
-              <li><a href="/user">UserDetails</a></li>
+              <li><a href="/">Home</a></li>
               <li><a href="/portfolio">portfolio</a></li>
               <li><a href="/signup">Signup</a></li>
               <li><a href="/login">Login</a></li>
           </ul>
           </div>
         </nav>
-{/*         
-        <div className="job-seeker-homepage">
-      <div className="glass-background">
-        <div className="content">
-          
-        <h1> <TypingEffect text="Helping you Land a Job and Live your Dreams." speed={60}/></h1>
-       
-          <div className="search-box">
-            <input type="text" placeholder="Search for jobs" />
-            <button>Search</button>
-          </div>
-          <div className="trust-section">
-        <h2>People Who Trust Us</h2>
         
-      </div>
-        <button className="upload-cv-button">Upload CV</button>
+        
+
+       <div className='container'>
+
+        <div className='left'>
+
+        <h2 className='head-text'>Lorem ipsum dolor sit amet.lorem5 Lorem ipsum dolor sit amet.</h2>
+
+
+        <div class="btn-container">
+  <div>
+    <button class="log">Login</button>
+    <button class="reg">Sign up</button>
+    <p>Made with Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem vitae numquam quod at consequatur non soluta magnam fuga aliquid eius.</p>
+  </div>
+</div>
         </div>
-      </div>
-    </div> */}
+
+        <div className='right1'>
+        </div>
+
+
+       </div>
+
+        <div className='second-container'>
+
+        <div className='box1'>
+
+        </div>
+
+        <div className="box2">
+
+        </div>
+
+        <div className="box3">
+
+        </div>
+
+        <div className="box4">
+
+        </div>
+        
+        <div className="box5">
+
+        </div>
+
+        <div className="box6">
+
+        </div>
+
+
+        </div>
+
+      
 
     </>
   );
