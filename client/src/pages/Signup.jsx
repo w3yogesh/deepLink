@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect } from "react";
 import {
   Button,
   Stepper,
@@ -17,8 +16,6 @@ import SignupStep1 from "../components/SignupFormComponent/SignupStep1";
 import SignupStep2 from "../components/SignupFormComponent/SignupStep2";
 import SignupStep3 from "../components/SignupFormComponent/SignupStep3";
 import SignupStep4 from "../components/SignupFormComponent/SignupStep4";
-// import "../styles/login-singup.css";
-// import "../styles/SignUpForm.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -42,17 +39,6 @@ const Signup = () => {
       endDate: "",
     },
   });
-
-
-  useEffect(() => {
-    // Add a class to the body element to apply specific styles
-    document.body.classList.add("login-body");
-  
-    // Remove the class when the component unmounts
-    return () => {
-      document.body.classList.remove("login-body");
-    };
-  }, []);
 
   const updateForm = (newData) => {
     setFormData({ ...formData, ...newData });

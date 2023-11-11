@@ -125,8 +125,9 @@ const Chat = () => {
               )}
               <Divider />
               <Grid container style={{ padding: '10px' }}>
-                <Grid item xs={11}>
+                <Grid className='c1' item xs={11}>
                   <TextField
+                  
                     id="outlined-basic-email"
                     label="Type Something"
                     fullWidth
@@ -134,7 +135,7 @@ const Chat = () => {
                     onChange={handleMessageInputChange}
                   />
                 </Grid>
-                <Grid xs={1} align="right">
+                <Grid className='c2' xs={1} align="right">
                   <Fab color="primary" aria-label="add" onClick={handleSendMessage}>
                     <SendIcon />
                   </Fab>
