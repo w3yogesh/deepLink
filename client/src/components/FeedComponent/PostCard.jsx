@@ -15,6 +15,9 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import CloseIcon from "@mui/icons-material/Close";
+import Avatar from '@mui/material/Avatar';
+import { red } from '@mui/material/colors';
+
 
 const PostCard = ({ postObj }) => {
   const [postId, setPostId] = useState("");
@@ -55,13 +58,13 @@ const PostCard = ({ postObj }) => {
     }
   };
 
-  const handleAddComment = () => {
+  const handleAddComment = async(postObjId) => {
     setShowComment(true);
   };
 
   const handleNewComment = async (postId) => {
     if (newComment.trim() !== "") {
-      const comment = newComment; 
+      const comment = newComment;
       // const userId='6545fa65389a9cf8a2aa5757';
 
       // console.log(userId);
@@ -87,6 +90,17 @@ const PostCard = ({ postObj }) => {
           height="200"
           image={postObj.imageSrc}
         /> */}
+
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              R
+            </Avatar>
+          }
+          title="Shrimp and Chorizo Paella"
+          subheader="September 14, 2016"
+        />
+
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {postObj.content}
@@ -110,8 +124,8 @@ const PostCard = ({ postObj }) => {
             </Button>
           )}
           {!showComment && (
-            <Button startIcon={<CommentIcon />} onClick={handleAddComment}>
-              Add Comment
+            <Button startIcon={<CommentIcon />} onClick={()=>handleAddComment(postObj._id)}>
+              Comment
             </Button>
           )}
         </CardActions>
@@ -120,10 +134,10 @@ const PostCard = ({ postObj }) => {
             <Typography variant="h6" gutterBottom>
               Comments
             </Typography>
-            {comments.map((comment, index) => (
+            {comments.map((Postcomment, index) => (
               <div key={index}>
                 <Typography variant="body2" gutterBottom>
-                  {comment.user}: {comment.content}
+                  {Postcomment.firstName}: {Postcomment.comment}
                 </Typography>
               </div>
             ))}
@@ -139,7 +153,7 @@ const PostCard = ({ postObj }) => {
               variant="contained"
               color="primary"
             >
-              Add Comment
+              Comment
             </Button>
           </>
         )}

@@ -49,15 +49,32 @@ module.exports.PostComment = async(req, res, next) => {
     });
     const commentId = response._id;
     await Post.updateOne({_id: postId},{$push: {comments :  commentId}});
-    // return res.json(commentId);
+    return res.json("Commented");
   } catch (error) {
     
   }
 }
 
+module.exports.fatchComments = async (req, res, next) =>{
+  const { postId } = req.params;
+  try {
+    const PostCommentId = await Post.findById(postId).populate('comments', 'userId comment createdAt');
+    const allComments = PostCommentId.comments;
+    const UserDetails = await Comments.findById(allComments).populate('userId', 'firstName username');
+    return res.json(UserDetails);
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 exports.fetchPosts = async (req, res) => {
   try {
-    const posts = await Post.find().select("-__v");
+    const posts = await Post.find().populate({path:"comments"}, populate({path:"userId"}));
+    // {path: "comments", populate:({path:"userId",}
+   
+    // const allComments =  posts.select("-content");
+    // const PostData = await Comments.find(allComments).populate('userId', 'firstName username')
     res.json(posts);
   } catch (error) {
     console.error(error);

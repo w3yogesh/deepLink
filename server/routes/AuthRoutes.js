@@ -7,7 +7,7 @@ const {updateUserProfile} = require("../controllers/updateUserProfile")
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 //Post Controller
-const {createPost, fetchPosts, Postlike,PostComment} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require("../controllers/PostControl");
 
 
 
@@ -41,6 +41,7 @@ router.post("/post",createPost);
 router.get('/api/fetchposts', fetchPosts);
 router.put('/api/postLike', Postlike);
 router.put('/api/postComment', PostComment);
+
 
 
 
