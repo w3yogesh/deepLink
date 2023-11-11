@@ -4,7 +4,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import { useEffect } from "react";
 const SignupStep4 = ({ formData, updateForm }) => {
   
   const handleChange = (event) => {
@@ -16,6 +16,17 @@ const SignupStep4 = ({ formData, updateForm }) => {
       },
     });
   };
+
+
+  useEffect(() => {
+    // Add a class to the body element to apply specific styles
+    document.body.classList.add("login-body");
+  
+    // Remove the class when the component unmounts
+    return () => {
+      document.body.classList.remove("login-body");
+    };
+  }, []);
 
   return (
     <div>

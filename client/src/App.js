@@ -7,7 +7,7 @@ import PostComponent from "./components/PostComponent";
 import Feed from "./pages/Feed";
 
 import MyConnections from "./components/MyConnections";
-
+import Chat from "./pages/Chat";
 function App() {
   return (
     <div className="App">
@@ -22,6 +22,7 @@ function App() {
         <Route path="/mynetwork" element={<MyConnections/>}/>
 
         <Route path="/feed" element={<Feed />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>
   );
