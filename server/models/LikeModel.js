@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const likeSchema = new mongoose.Schema({
-  post: {
+  postId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "post", // this is the refference to the post model
+    ref: 'Post',
   },
-  user: {
-    type: String,
-    required: true,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
   createdAt: {
     type: Date,

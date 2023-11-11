@@ -11,14 +11,14 @@ import ConnectionRequest from "../components/ConnectionRequests";
 import ConnectionSent from "../components/ConnectionSent";
 import MyConnections from "../components/MyConnections";
 
-import "../styles/Profile.css";
+// import "../styles/Profile.css";
 
 import PostComponent from "../components/PostComponent";
 
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import Navbar from "../components/Navbar";
 
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -72,10 +72,10 @@ const Profile = () => {
   const [updatedName, setUpdatedName] = useState("");
   const [updatedEmail, setUpdatedEmail] = useState("");
 
-  const [showAllUser, setShowAllUser] = useState(false)
-  const [showConnectionRequest, setShowConnectionRequest] = useState(false)
-  const [showConnectionSent, setShowConnectionSent] = useState(false)
-  const [showMyConnections, setShowMyConnections] = useState(false)
+  const [showAllUser, setShowAllUser] = useState(false);
+  const [showConnectionRequest, setShowConnectionRequest] = useState(false);
+  const [showConnectionSent, setShowConnectionSent] = useState(false);
+  const [showMyConnections, setShowMyConnections] = useState(false);
 
   const handleUpdateUserProfile = async () => {
     try {
@@ -113,19 +113,17 @@ const Profile = () => {
   //   setShowForm(true);
   // }
 
-
-
-    return (
-      <>
-          <Navbar/>
-          {/* <ProfileUpdateForm
+  return (
+    <>
+      <Navbar />
+      {/* <ProfileUpdateForm
             userId={userProfile._id}
             userData={userData}
             setUserData={setUserData}
             setShowForm={setShowForm}
           /> */}
-        <div className="main-container">
-          <div className="profile">
+      <div className="main-container">
+        {/* <div className="profile">
             <div className="profile-container">
               <div className="profile-photo">
                 <img
@@ -167,38 +165,72 @@ const Profile = () => {
             </div>
 
             <button onClick={Logout}>LOGOUT</button>
+          </div> */}
+        <div className="main-body">
+          <div className="user-detail-form">
+            <form action=""></form>
           </div>
-          <div className="main-body">
-            <div className="user-detail-form">
-              <form action="">
-                
-              </form>
-            </div>
-          </div>
-
         </div>
 
-      <PostComponent userEmail={userProfile.email} />
-      
-      <Button variant="contained" onClick={()=>{setShowAllUser(!showAllUser)}}> All User </Button>
-      { showAllUser && <UserListComponent senderId={userProfile._id} />}
+        <div className="actions">
+          <Button
+            variant="contained"
+            onClick={() => {
+              setShowAllUser(!showAllUser);
+            }}
+          >
+            {" "}
+            All User{" "}
+          </Button>
+          {showAllUser && <UserListComponent senderId={userProfile._id} />}
 
-      <Button variant="contained" onClick={()=>{setShowConnectionRequest(!showConnectionRequest)}}> recieved </Button>
-      {showConnectionRequest && <ConnectionRequest senderId={userProfile._id} />}
+          <Button
+            variant="contained"
+            onClick={() => {
+              setShowConnectionRequest(!showConnectionRequest);
+            }}
+          >
+            {" "}
+            recieved{" "}
+          </Button>
+          {showConnectionRequest && (
+            <ConnectionRequest senderId={userProfile._id} />
+          )}
 
-      <Button variant="contained" onClick={()=>{setShowConnectionSent(!showConnectionSent)}}> sent </Button>
-      {showConnectionSent && <ConnectionSent senderId={userProfile._id} />}
+          <Button
+            variant="contained"
+            onClick={() => {
+              setShowConnectionSent(!showConnectionSent);
+            }}
+          >
+            {" "}
+            sent{" "}
+          </Button>
+          {showConnectionSent && <ConnectionSent senderId={userProfile._id} />}
 
-      <Button variant="contained" onClick={()=>{setShowMyConnections(!showMyConnections)}}> Connections </Button>
-      {showMyConnections && <MyConnections senderId={userProfile._id} />}
-          {/* <PostComponent userEmail={userProfile.email} /> */}
-        {/* <UserListComponent senderId={userProfile._id} /> */}
-        {/* <ConnectionRequest senderId={userProfile._id} />
+          <Button
+            variant="contained"
+            onClick={() => {
+              setShowMyConnections(!showMyConnections);
+            }}
+          >
+            {" "}
+            Connections{" "}
+          </Button>
+          {showMyConnections && <MyConnections senderId={userProfile._id} />}
+        </div>
+      </div>
+
+      <PostComponent senderId={userProfile._id} />
+
+      {/* <PostComponent userEmail={userProfile.email} /> */}
+      {/* <UserListComponent senderId={userProfile._id} /> */}
+      {/* <ConnectionRequest senderId={userProfile._id} />
         <ConnectionSent senderId={userProfile._id} />
         <MyConnections senderId={userProfile._id} /> */}
 
-        <ToastContainer />
-      </>
-    );
-  };
+      <ToastContainer />
+    </>
+  );
+};
 export default Profile;

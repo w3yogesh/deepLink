@@ -2,32 +2,26 @@ import React, { useState } from 'react';
 import "../styles/PostComponent.css"
 import axios from "axios";
 
-const PostComponent = ({ userId }) => {
-  const [postBody, setPostBody] = useState(['']);
-
+const PostComponent = (props) => {
+  const [content, setContent] = useState(['']);
+  const user = props.senderId;
 
   const handlePostBodyChange = (e) => {
-    setPostBody(e.target.value);
+    setContent(e.target.value);
   };
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    if (postBody.trim() !== '') {
-      const newPost = {
-        user: userId,
-        content: postBody
-      };
-       console.log(newPost);
-
+    if (content.trim() !== '') {
+      // const newPost = {
+      //   user: userId,
+      //   content: postBody
+      // };
+      
       try {
-        const response = await axios.post(
-          "http://localhost:4000/post",
-          {
-            newPost
-          }
-          );
+        const response = await axios.post("http://localhost:4000/post",{user, content,});
+          
           console.log(response.data);
-          // console.log("After Api");
         // const { success, message } = data;
         // if (success) {
         //   console.log("data printed successfully")
@@ -37,7 +31,7 @@ const PostComponent = ({ userId }) => {
       } catch (error) {
         console.log(error);
       }
-      setPostBody('');
+      setContent('');
     }
   };
 
@@ -47,8 +41,8 @@ const PostComponent = ({ userId }) => {
         <textarea
           rows="4"
           cols="60"
-          name="postBody"
-          value={postBody}
+          name="content"
+          value={content}
           onChange={handlePostBodyChange}
           placeholder="What's on your mind?"
         />

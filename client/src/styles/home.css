@@ -101,8 +101,7 @@
 
 
   .job-seeker-homepage {
-    background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
-      url('glass-bg.jpg'); /* Replace with your glass-like background image */
+    background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)); /* Replace with your glass-like background image */
     background-size: cover;
     height: 100vh;
     width: 100%;
