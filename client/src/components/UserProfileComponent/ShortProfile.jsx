@@ -1,9 +1,16 @@
 //SideBar user Profile
 
-import React from 'react'
+import React, { useState } from 'react'
 import "../../styles/userProfileComponent/ShortProfile.css"
 
-export const ShortProfile = () => {
+const ShortProfile = ({userData, setUserData }) => {
+  const city = (userData && userData.address && userData.address.length > 0
+    ? userData.address[0].city 
+    : '');
+  const country = ( (userData && userData.address && userData.address.length > 0
+    ? userData.address[0].country
+    : ''));
+
   return (
     <div className="profile-container left">
             <div className="profile-photo">
@@ -12,12 +19,11 @@ export const ShortProfile = () => {
                 alt="User Profile Photo"
               />
             </div>
-            <h1 className="user-name">Yogesh Kumar Sai</h1>
-            <p className="user-headline">
-              MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist
-            </p>
-            <p className="user-location">Rajasthan, India</p>
+            <h1 className="user-name">{userData.firstName} {userData.lastName}</h1>
+            <p className="user-headline">{userData.headline}</p>
+            <p className="user-location">{city} {country}</p>
             <p className="user-conections">646 followers * 500+ connections</p>
           </div>
   )
 }
+export default ShortProfile;

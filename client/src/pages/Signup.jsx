@@ -27,9 +27,7 @@ const Signup = () => {
     lastName: "",
     address: {
       country: "",
-      state: "",
       city: "",
-      zipCode: "",
     },
     education: {
       institution: "",

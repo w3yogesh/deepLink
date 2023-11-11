@@ -15,7 +15,7 @@ const EducationDetails = ({ userData, setUserData }) => {
     startDate: "",
     endDate: "",
   });
-
+  console.log(userData);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewEducation((prev) => ({

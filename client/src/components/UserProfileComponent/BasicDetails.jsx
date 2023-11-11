@@ -79,7 +79,7 @@ const BasicDetails = ({ userData, setUserData }) => {
                     disabled={!isEditMode}
                   >
                     <option value="male">Male</option>
-                    <option value="gemale">Female</option>
+                    <option value="female">Female</option>
                     <option value="transgender">Transgender</option>
                   </select>
                 </div>
@@ -87,8 +87,8 @@ const BasicDetails = ({ userData, setUserData }) => {
                   <label htmlFor="mobile">Mobile Number</label>
                   <input
                     type="text"
-                    name="mobileNo"
-                    value={userData.mobileNo}
+                    name="phoneNumber"
+                    value={userData.phoneNumber}
                     onChange={handleChange}
                     disabled={!isEditMode}
                   />
@@ -111,7 +111,7 @@ const BasicDetails = ({ userData, setUserData }) => {
                   <input
                     type="text"
                     name="userName"
-                    value={userData.userName}
+                    value={userData.username}
                     onChange={handleChange}
                     disabled
                   />
@@ -137,7 +137,9 @@ const BasicDetails = ({ userData, setUserData }) => {
                 <input
                   type="text"
                   name="address.country"
-                  value={userData.address.country}
+                  value={userData && userData.address && userData.address.length > 0
+                    ? userData.address[0].country
+                    : ''}
                   onChange={handleChange}
                   disabled={!isEditMode}
                   required
@@ -148,7 +150,9 @@ const BasicDetails = ({ userData, setUserData }) => {
                 <input
                   type="text"
                   name="address.city"
-                  value={userData.address.city}
+                  value={userData && userData.address && userData.address.length > 0
+                    ? userData.address[0].city
+                    : ''}
                   onChange={handleChange}
                   disabled={!isEditMode}
                   required
