@@ -70,7 +70,7 @@ module.exports.fatchComments = async (req, res, next) =>{
 
 exports.fetchPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate({path:"comments"}, populate({path:"userId"}));
+    const posts = await Post.find().populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"username firstName email"})});
     // {path: "comments", populate:({path:"userId",}
    
     // const allComments =  posts.select("-content");
