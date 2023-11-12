@@ -1,24 +1,13 @@
+import Navbar from '../components/Navbar';
 import '../styles/home.css';
-
+import { Link } from 'react-router-dom';
 
 
 
 const Home = () => {
   return (
     <>
-        <nav id="navbar" className="">
-          <div className="nav-wrapper">
-          <div className="logo">
-              <a href="#home">Logo</a>
-          </div>
-          <ul id="menu">
-              <li><a href="/">Home</a></li>
-              <li><a href="/portfolio">portfolio</a></li>
-              <li><a href="/signup">Signup</a></li>
-              <li><a href="/login">Login</a></li>
-          </ul>
-          </div>
-        </nav>
+       <Navbar/>
         
         
 
@@ -31,8 +20,8 @@ const Home = () => {
 
         <div class="btn-container">
   <div>
-    <button class="log">Login</button>
-    <button class="reg">Sign up</button>
+   <Link to="/login"><button class="log" >Login</button></Link> 
+   <Link to="/signup"><button class="reg">Sign up</button></Link> 
     <p>Made with Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem vitae numquam quod at consequatur non soluta magnam fuga aliquid eius.</p>
   </div>
 </div>

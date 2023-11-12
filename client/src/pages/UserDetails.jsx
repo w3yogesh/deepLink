@@ -84,7 +84,7 @@ const UserDetails = (props) => {
         <div className="user-detail-container">
           <ShortProfile userData={userData} setUserData={setUserData}/>
           <div className="user-info-container right">
-            <BasicDetails userData={userData} setUserData={setUserData} />
+            <BasicDetails userData={userData} />
             <EducationDetails userData={userData} setUserData={setUserData} />
             <SkillDetails userData={userData} setUserData={setUserData} />
           </div>

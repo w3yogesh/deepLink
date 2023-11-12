@@ -24,6 +24,9 @@ const ShortProfile = ({userData, setUserData }) => {
             <p className="user-location">{city} {country}</p>
             <p className="user-conections">646 followers * 500+ connections</p>
           </div>
+         
+    
+        
   )
 }
 export default ShortProfile;
