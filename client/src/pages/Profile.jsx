@@ -36,6 +36,10 @@ const Profile = () => {
     email: "",
   });
 
+
+
+
+
   useEffect(() => {
     const loadProfileData = async () => {
       if (!cookies.token) {
@@ -117,6 +121,40 @@ const Profile = () => {
   //   })
   //   setShowForm(true);
   // }
+
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/search?query=${searchTerm}`
+      );
+
+      if (response.data.success) {
+        setSearchResults(response.data.results);
+      } else {
+        console.log(response.data.message);
+        toast(response.data.message, {
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      toast("Server error", {
+        position: "top-right",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (searchTerm.trim() !== "") {
+      handleSearch();
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchTerm]);
+
 
   return (
     <>
@@ -228,9 +266,29 @@ const Profile = () => {
 
       <PostComponent senderId={userProfile._id} />
 
-      <Link to="/chat">
-        <button>Open Chat</button>
-      </Link>
+    
+
+
+
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Search users by name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <ul>
+          {searchResults.map((user) => (
+            <li key={user._id}>
+                <Link to={`/userprofileview`}>
+                {user.firstName} {user.lastName}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+
       {/* <PostComponent userEmail={userProfile.email} /> */}
       {/* <UserListComponent senderId={userProfile._id} /> */}
       {/* <ConnectionRequest senderId={userProfile._id} />

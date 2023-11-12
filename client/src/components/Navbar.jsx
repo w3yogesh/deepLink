@@ -19,7 +19,7 @@ export default function Navbar() {
                   <li className="nav-menu-item"><a href="/">Home</a></li>
                   <li className="nav-menu-item"><a href="/mynetwork">My Network</a></li>
                   <li className="nav-menu-item"><a href="/jobs">Jobs</a></li>
-                  <li className="nav-menu-item"><a href="/messaging">Messages</a></li>
+                 <li className="nav-menu-item"><a href="/chat">Messages</a></li>
                   <li className="nav-menu-item"><a href="/notifications">Notification</a></li>
                 </ul>
             </div>

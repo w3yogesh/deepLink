@@ -1,10 +1,12 @@
 //SideBar user Profile
 
 import React from 'react'
-import "../../styles/userProfileComponent/ShortProfile.css"
+import "../../styles/userProfileComponent/ShortProfile2.css"
 
 export const ShortProfile = () => {
   return (
+    <>
+    <div className="containermain">
     <div className="profile-container left">
             <div className="profile-photo">
               <img
@@ -19,7 +21,12 @@ export const ShortProfile = () => {
             <p className="user-location">Rajasthan, India</p>
             <p className="user-conections">646 followers * 500+ connections</p>
           </div>
-         
+          <div className="buttons-container">
+        <button className="connect-button">Connect</button>
+        <button className="message-button">Message</button>
+      </div>
+          </div>
+         </>
     
         
   )
