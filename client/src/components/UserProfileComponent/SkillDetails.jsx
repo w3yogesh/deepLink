@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import axios from "axios";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -20,14 +21,20 @@ const SkillDetails = ({ userData, setUserData }) => {
     }));
   };
 
-  const handleAddSkill = () => {
+  const handleAddSkill = async() => {
     if (newSkill.name === "" || newSkill.level === "") return;
     setUserData((prev) => ({
       ...prev,
       skill: [...prev.skill, newSkill],
     }));
-    // console.log(`new user : ${newEducation}`);
-    console.log(userData.skill);
+
+    const response = await axios.put("http://localhost:4000/updateSkill",{
+      userId: userData._id,
+      skillName: newSkill.skillName,
+      lavel: newSkill.level,
+    })
+    console.log(response.data);
+    console.log(newSkill.name);
   };
 
   return (
@@ -105,26 +112,29 @@ const SkillDetails = ({ userData, setUserData }) => {
                   </div>
                   <div className="form-data">
                     <label htmlFor="skill_level">Skill Level</label>
-                    <input
-                      type="text"
+                    <select
                       name="level"
-                      value={newSkill.level}
                       onChange={handleChange}
+                      value={newSkill.level}
                       disabled={!isEditMode}
                       required
-                    />
+                    >
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </form>
           </div>
           <div className="all-educations">
-            {userData.skill.map((skl, index) => (
+            {/* {userData.skill.map((skl, index) => (
               <div key={index} style={{ border: "1px solid black" }}>
                 <h5>Skill: {skl.name}</h5>
                 <p>Level: {skl.level}</p>
               </div>
-            ))}
+            ))} */}
           </div>
         </>
       )}

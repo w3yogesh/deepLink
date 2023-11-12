@@ -1,7 +1,7 @@
 //SideBar user Profile
 
 import React from 'react'
-import "../../styles/userProfileComponent/ShortProfile2.css"
+// import "../../styles/userProfileComponent/ShortProfile2.css"
 
 export const ShortProfile = () => {
   return (

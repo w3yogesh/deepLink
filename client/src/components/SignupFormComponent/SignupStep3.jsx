@@ -33,27 +33,11 @@ const SignupStep3 = ({ formData, updateForm }) => {
         onChange={handleChange}
       />
       <TextField
-        label="State"
-        variant="outlined"
-        fullWidth
-        name="state"
-        value={formData.address.state}
-        onChange={handleChange}
-      />
-      <TextField
         label="City"
         variant="outlined"
         fullWidth
         name="city"
         value={formData.address.city}
-        onChange={handleChange}
-      />
-      <TextField
-        label="Zip Code"
-        variant="outlined"
-        fullWidth
-        name="zipCode"
-        value={formData.address.zipCode}
         onChange={handleChange}
       />
     </div>

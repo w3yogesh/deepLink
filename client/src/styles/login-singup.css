@@ -1,24 +1,5 @@
-*,
-::before,
-::after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
 
-label {
-  font-size: 1.2rem;
-  color: #656262;
-}
-
-html,
-body.login-body  {
-  height: 100%;
-  width: 100%;
-}
-
-body.login-body {
-  display: flex;
+body.login-body {  display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(

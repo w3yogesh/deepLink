@@ -2,7 +2,7 @@ const { Signup, Login} = require("../controllers/AuthController");
 
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");
-const {updateUserProfile} = require("../controllers/updateUserProfile")
+const {updateUserProfile, updateEducation, deleteEducation, updateSkill} = require("../controllers/updateUserProfile")
 
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
@@ -20,7 +20,15 @@ router.post("/signup", Signup);
 router.post("/login",Login);
 router.post('/',userVerification);
 router.post('/profile',getUserProfile);
-router.put("/updateUserProfile",updateUserProfile)
+router.put("/updateUserProfile",updateUserProfile);
+
+router.put("/updateEducation",updateEducation);
+// router.delete("/deleteEducation:educationId",deleteEducation);
+
+router.put("/updateSkill",updateSkill);
+// router.delete("/deleteSkill",deleteSkill);
+
+
 
 router.get('/api/users', users);
 

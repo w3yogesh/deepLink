@@ -137,7 +137,7 @@ const PostCard = ({ postObj }) => {
             {comments.map((Postcomment, index) => (
               <div key={index}>
                 <Typography variant="body2" gutterBottom>
-                  {Postcomment.firstName}: {Postcomment.comment}
+                  {Postcomment.Postcomment.userId.firstName}: {Postcomment.comment}
                 </Typography>
               </div>
             ))}

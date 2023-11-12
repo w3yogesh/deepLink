@@ -1,0 +1,30 @@
+const mongoose = require("mongoose");
+
+const educationSchema = new mongoose.Schema({
+      institution: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      degree: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      field: {
+        type: String,
+        trim: true,
+      },
+      grade: {
+        type: String,
+        trim: true,
+      },
+      startDate: {
+        type: Date,
+        required: true,
+      },
+      endDate: {
+        type: Date,
+      },
+});
+module.exports = mongoose.model("Education", educationSchema);
