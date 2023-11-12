@@ -5,14 +5,17 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     trim: true,
-    trim: true,
 
   },
   lastName: {
     type: String,
     trim: true,
-    trim: true,
 
+  },
+  gender:{
+    type: String,
+    enum: ['Male', 'Female', 'transgender', 'None',],
+    default: 'None',
   },
   username: {
     type: String,
@@ -37,22 +40,25 @@ const userSchema = new mongoose.Schema({
   },
   address: [
     {
-      city: {
-        type: String,
-        trim: true,
-      },
-      country: {
-        type: String,
-        trim: true,
-      },
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Address", 
+      unique: true,
     }
   ],
   education: [
     { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: "Education", 
-      unique: true 
+      unique: true,
     },
+  ],
+  skill:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Skill",
+      unique: true,
+
+    }
   ],
   connections: [
     { 
@@ -78,7 +84,7 @@ const userSchema = new mongoose.Schema({
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Post",
       unique: true,
     },
   ],

@@ -12,7 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
-import SendIcon from '@material-ui/icons/Send';
+// import SendIcon from '@material-ui/icons/Send';
 import '../styles/chat.css'
 
 const useStyles = makeStyles({
@@ -137,7 +137,7 @@ const Chat = () => {
                 </Grid>
                 <Grid className='c2' xs={1} align="right">
                   <Fab color="primary" aria-label="add" onClick={handleSendMessage}>
-                    <SendIcon />
+                    {/* <SendIcon /> */}
                   </Fab>
                 </Grid>
               </Grid>

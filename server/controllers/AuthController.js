@@ -1,5 +1,6 @@
-const EducationModel = require("../models/EducationModel");
 const User = require("../models/UserModel");
+const Address = require("../models/AddressModel");
+const Education = require("../models/EducationModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
 
@@ -15,7 +16,7 @@ module.exports.Signup = async (req, res, next) => {
       createdAt,
       address: { country, city },
       education : {institution, degree, field, startDate, endDate},
-    } = req.body;
+    } = req.body.formData;
 
       if (password === confirm_password) {
       const existingUser = await User.findOne({ email });
@@ -23,13 +24,20 @@ module.exports.Signup = async (req, res, next) => {
         return res.json({ message: "User already exists" });
       }
       
-      const education = await EducationModel.create({
-        institution, 
-        degree, 
-        field, 
-        startDate, 
-        endDate,
+      const address = await Address.create({
+        country : country,
+        city : city,
       })
+      const education = await Education.create({
+        institution :institution, 
+        degree: degree, 
+        field : field, 
+        startDate : startDate, 
+        endDate : endDate,
+      })
+      // return res.json({ message: education._id});
+
+      const addressId = address._id;
       const educationId = education._id;
 
       const username = email.split("@")[0];
@@ -40,7 +48,7 @@ module.exports.Signup = async (req, res, next) => {
         lastName,
         password,
         education : educationId,
-        address: {country, city},
+        address: addressId,
         createdAt
       });
       const token = createSecretToken(user._id);

@@ -58,6 +58,7 @@
 input[type="date"] {
     width: 99%;
     border: 1px solid #e5e5e5;
+    padding: 10px;
 }
 .edit-details>svg {
     width: 40%;

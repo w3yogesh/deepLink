@@ -1,4 +1,6 @@
 import { React, useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -23,6 +25,45 @@ const BasicDetails = ({ userData, setUserData }) => {
   };
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const handleToggleEditMode = async () => {
+    console.log("Hello");
+    console.log(userData.address[0].city);
+    setIsEditMode(!isEditMode);
+    if (isEditMode) {
+      try {
+        // Make a PUT or PATCH request to update the user's data
+        const response = await axios.put(
+          "http://localhost:4000/updateUserProfile",
+          {
+            userId: userData._id,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            gender: userData.gender,
+            phoneNumber: userData.phoneNumber,
+            headline: userData.headline,
+            city: userData.address.city,
+            country: userData.address.country,
+          }
+        );
+        console.log(response.data.message);
+
+        if (response.data.success) {
+          toast(response.data.message, {
+            position: "top-right",
+          });
+        } else {
+          console.log(response.data.message);
+          toast(response.data.message, {
+            position: "top-right",
+          });
+        }
+      } catch (error) {
+        toast("Server error", {
+          position: "top-right",
+        });
+      }
+    }
+  };
 
   return (
     <>
@@ -33,9 +74,7 @@ const BasicDetails = ({ userData, setUserData }) => {
             viewBox="0 0 50 50"
             width="50px"
             height="50px"
-            onClick={() => {
-              setIsEditMode(!isEditMode);
-            }}
+            onClick={handleToggleEditMode}
           >
             {!isEditMode && <EditIcon />}
             {isEditMode && <SaveIcon />}
@@ -78,6 +117,7 @@ const BasicDetails = ({ userData, setUserData }) => {
                     onChange={handleChange}
                     disabled={!isEditMode}
                   >
+                    <option value="" disabled selected>-Select Gender-</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="transgender">Transgender</option>
@@ -137,9 +177,11 @@ const BasicDetails = ({ userData, setUserData }) => {
                 <input
                   type="text"
                   name="address.country"
-                  value={userData && userData.address && userData.address.length > 0
-                    ? userData.address[0].country
-                    : ''}
+                  value={
+                    userData && userData.address && userData.address.length > 0
+                      ? userData.address[0].country
+                      : ""
+                  }
                   onChange={handleChange}
                   disabled={!isEditMode}
                   required
@@ -150,9 +192,11 @@ const BasicDetails = ({ userData, setUserData }) => {
                 <input
                   type="text"
                   name="address.city"
-                  value={userData && userData.address && userData.address.length > 0
-                    ? userData.address[0].city
-                    : ''}
+                  value={
+                    userData && userData.address && userData.address.length > 0
+                      ? userData.address[0].city
+                      : ""
+                  }
                   onChange={handleChange}
                   disabled={!isEditMode}
                   required
