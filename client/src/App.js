@@ -8,6 +8,7 @@ import Feed from "./pages/Feed";
 
 import MyConnections from "./components/MyConnections";
 import Chat from "./pages/Chat";
+import UserProfileView from './pages/UserProfileView';
 function App() {
   return (
     <div className="App">
@@ -23,6 +24,9 @@ function App() {
 
         <Route path="/feed" element={<Feed />} />
         <Route path="/chat" element={<Chat />} />
+
+        <Route path="userprofileview" element={<UserProfileView/>}/>
+
       </Routes>
     </div>
   );
