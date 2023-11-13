@@ -1,10 +1,8 @@
 import { React, useState } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/UserDetails.css";
-import BasicDetails from "../components/UserProfileComponent/BasicDetails2";
-import { ShortProfile } from "../components/UserProfileComponent/ShortProfile2";
-import EducationDetails from "../components/UserProfileComponent/EducationDetails2";
-import SkillDetails from "../components/UserProfileComponent/SkillDetails2";
+import ShortProfile from "../components/UserProfileComponent/ShortProfile";
+
 
 const UserDetails = (props) => {
   
@@ -43,11 +41,9 @@ const UserDetails = (props) => {
       <Navbar />
       <div className="main-container">
         <div className="user-detail-container">
-          <ShortProfile />
+          <ShortProfile userData={userData} setUserData={setUserData}/>
           <div className="user-info-container right">
-            <BasicDetails userData={userData} setUserData={setUserData} />
-            <EducationDetails userData={userData} setUserData={setUserData} />
-            <SkillDetails userData={userData} setUserData={setUserData} />
+
           </div>
         </div>
       </div>

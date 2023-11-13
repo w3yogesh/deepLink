@@ -6,10 +6,10 @@ import "../../styles/userProfileComponent/ShortProfile.css"
 const ShortProfile = ({userData, setUserData }) => {
   const city = (userData && userData.address && userData.address.length > 0
     ? userData.address[0].city 
-    : '');
+    : null);
   const country = ( (userData && userData.address && userData.address.length > 0
     ? userData.address[0].country
-    : ''));
+    : null));
 
   return (
     <div className="profile-container left">

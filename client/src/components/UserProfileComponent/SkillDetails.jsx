@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -13,6 +14,14 @@ const SkillDetails = ({ userData, setUserData }) => {
   const [newSkill, setNewSkill] = useState({
     name: "",
     level: "",
+  });
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "bottom-left",
+  });
+const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "bottom-left",
   });
 
   const handleChange = (event) => {
@@ -35,13 +44,22 @@ const SkillDetails = ({ userData, setUserData }) => {
       skillName: newSkill.skillName,
       skillLevel: newSkill.skillLevel,
     })
-    
-    console.log(response.data);
+    if (response.data.success) {
+      handleSuccess(response.data.message);
+    } else {
+      handleError(response.data.message);
+    }
   };
 
   const handleDeleteSkill = async (skillId) => {
     const response = await axios.delete(`http://localhost:4000/deleteSkill${skillId}`)
-      console.log(response.data);
+      //console.log(response.data);
+      const {success, message} = response.data;
+      if (success) {
+        handleSuccess(message);
+      } else {
+        handleError(message);
+      }
   }
 
   // console.log(userData);

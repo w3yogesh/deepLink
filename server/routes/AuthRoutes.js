@@ -1,17 +1,16 @@
 const { Signup, Login} = require("../controllers/AuthController");
 
 const {userVerification} = require("../middlewares/AuthMiddleware");
-const {getUserProfile} = require("../controllers/getUserProfile");
-const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill} = require("../controllers/updateUserProfile")
+const {getUserProfile, userSearch} = require("../controllers/getUserProfile");
 
+// user controller
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
+
+// User profile controller (edit profile feature)
+const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill} = require("../controllers/updateUserProfile")
 
 //Post Controller
 const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require("../controllers/PostControl");
-
-
-
-
 
 const router = require("express").Router();
 
@@ -19,18 +18,17 @@ const router = require("express").Router();
 router.post("/signup", Signup);
 router.post("/login",Login);
 router.post('/',userVerification);
-router.post('/profile',getUserProfile);
-router.put("/updateUserProfile",updateUserProfile);
+router.post('/profile',getUserProfile); // fetch my profile
+router.get('/search', userSearch);
 
+// User Profile Controller
+router.put("/updateUserProfile",updateUserProfile);
 router.put("/updateEducation",updateEducation);
 router.delete("/deleteEducation:educationId",deleteEducation);
-
 router.put("/updateSkill",updateSkill);
 router.delete("/deleteSkill:skillId",deleteSkill);
 
-
-
-router.get('/api/users', users);
+router.get('/api/users', users);// List of all users
 
 // User Controller
 router.post('/connect', connectUsers);
@@ -41,8 +39,6 @@ router.post('/ignore-connection', ignoreConnection);
 router.post('/drop-connection', dropConnection);
 router.get('/myConnections:userId', myConnections);
 router.put('/deleteMyConnection', deleteMyConnection);
-
-
 
 //Post Controller
 router.post("/post",createPost);

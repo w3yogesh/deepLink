@@ -1,6 +1,7 @@
 const EducationModel = require("../models/EducationModel");
 const UserModel = require("../models/UserModel");
 const SkillModel = require("../models/SkillModel");
+const AddressModel = require("../models/AddressModel");
 require("dotenv").config();
 
 exports.updateUserProfile = async (req, res) => {
@@ -15,8 +16,7 @@ exports.updateUserProfile = async (req, res) => {
       city,
       country,
     } = req.body;
-    // res.json({ success: true, message: gender });
-
+    
     const updatedUser = await UserModel.findOneAndUpdate(
       { _id: userId },
       {
@@ -25,16 +25,17 @@ exports.updateUserProfile = async (req, res) => {
         phoneNumber: phoneNumber,
         headline: headline,
         gender: gender,
-        // city: city,
-        // country: country,
       },
       { new: true }
-    );
+      );
+      const addressId = updatedUser.address[0]._id;
+      await AddressModel.findByIdAndUpdate(addressId, { city, country });
 
+    // return res.json({ success: true, message: addressId });
     if (updatedUser) {
-      res.json({ success: true, message: "Update Successfully" });
+      res.json({ success: true, message: "Profile successfully updated." });
     } else {
-      res.json({ success: false, message: "Not Update" });
+      res.json({ success: false, message: "Please try again later" });
     }
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -62,9 +63,9 @@ exports.updateEducation = async (req, res) => {
     );
 
     if (user) {
-      res.json({ success: true, message: "Update Successfully" });
+      res.json({ success: true, message: "Education added successfully." });
     } else {
-      res.json({ success: false, message: "Not Update" });
+      res.json({ success: false, message: "Failed try again" });
     }
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -80,9 +81,9 @@ exports.deleteEducation = async (req, res) => {
         $pull: { education: educationId },
       });
       await EducationModel.findByIdAndDelete(educationId);
-      return res.json("Deleted Successfully");
+      return res.json({ success: true, message: "Deleted Successfully" });
     } else {
-      return res.json("Already Deleted");
+      return res.json({ success: false, message: "Already Deleted" });
     }
   } catch (error) {}
 };
@@ -90,7 +91,6 @@ exports.deleteEducation = async (req, res) => {
 exports.updateSkill = async (req, res) => {
   try {
     const { userId, skillName, skillLevel } = req.body;
-
     const skill = await SkillModel.create({
       skillName: skillName,
       skillLevel: skillLevel,
@@ -100,13 +100,12 @@ exports.updateSkill = async (req, res) => {
       userId,
       { $push: { skill: skillId } },
       { new: true }
-      );
-      // return res.json({ success: true, message: update.skill });
-      
-      if (update) {
-        res.json({ success: true, message: "Update Successfully" });
+    );
+
+    if (update) {
+      res.json({ success: true, message: "Skill added successfully." });
     } else {
-      res.json({ success: false, message: "Not Update" });
+      res.json({ success: false, message: "Skill addition failed. Retry." });
     }
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -122,10 +121,9 @@ exports.deleteSkill = async (req, res) => {
         $pull: { skill: skillId },
       });
       await SkillModel.findByIdAndDelete(skillId);
-      return res.json("Deleted Successfully");
+      return res.json({ success: true, message: "Deleted Successfully" });
     } else {
-      return res.json("Already Deleted");
+      return res.json({ success: false, message: "Already Deleted" });
     }
   } catch (error) {}
 };
-

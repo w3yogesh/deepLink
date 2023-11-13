@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -26,6 +27,15 @@ const EducationDetails = ({ userData, setUserData }) => {
     }));
   };
 
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "bottom-left",
+  });
+const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "bottom-left",
+  });
+
   const handleAddEducation = async () => {
     // console.log(userData._id);
     if (
@@ -50,11 +60,19 @@ const EducationDetails = ({ userData, setUserData }) => {
       startDate: newEducation.startDate,
       endDate: newEducation.endDate,
     });
-    console.log(response.data);
+    if (response.data.success) {
+      handleSuccess(response.data.message);
+    } else {
+      handleError(response.data.message);
+    }
   };
   const handleDeleteEducation = async(eduId) => {
       const response = await axios.delete(`http://localhost:4000/deleteEducation${eduId}`)
-      console.log(response.data);
+      if (response.data.success) {
+        handleSuccess(response.data.message);
+      } else {
+        handleError(response.data.message);
+      }
   }
 
   return (
