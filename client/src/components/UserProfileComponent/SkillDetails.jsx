@@ -4,6 +4,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const SkillDetails = ({ userData, setUserData }) => {
   const [showForm, setShowForm] = useState(false);
@@ -22,21 +24,27 @@ const SkillDetails = ({ userData, setUserData }) => {
   };
 
   const handleAddSkill = async() => {
-    if (newSkill.name === "" || newSkill.level === "") return;
+    if (newSkill.skillName === "" || newSkill.skillLevel === "") return;
     setUserData((prev) => ({
       ...prev,
       skill: [...prev.skill, newSkill],
     }));
-
+    console.log(userData);
     const response = await axios.put("http://localhost:4000/updateSkill",{
       userId: userData._id,
       skillName: newSkill.skillName,
-      lavel: newSkill.level,
+      skillLevel: newSkill.skillLevel,
     })
+    
     console.log(response.data);
-    console.log(newSkill.name);
   };
 
+  const handleDeleteSkill = async (skillId) => {
+    const response = await axios.delete(`http://localhost:4000/deleteSkill${skillId}`)
+      console.log(response.data);
+  }
+
+  // console.log(userData);
   return (
     <div className="Skill-details details">
       {!showForm && (
@@ -103,8 +111,8 @@ const SkillDetails = ({ userData, setUserData }) => {
                     <label htmlFor="skill_name">Skill Name</label>
                     <input
                       type="text"
-                      name="name"
-                      value={newSkill.name}
+                      name="skillName"
+                      value={newSkill.skillName}
                       onChange={handleChange}
                       disabled={!isEditMode}
                       required
@@ -113,12 +121,13 @@ const SkillDetails = ({ userData, setUserData }) => {
                   <div className="form-data">
                     <label htmlFor="skill_level">Skill Level</label>
                     <select
-                      name="level"
+                      name="skillLevel"
                       onChange={handleChange}
-                      value={newSkill.level}
+                      value={newSkill.skillLevel}
                       disabled={!isEditMode}
                       required
                     >
+                      <option>Select Skill Level</option>
                       <option value="Beginner">Beginner</option>
                       <option value="Intermediate">Intermediate</option>
                       <option value="Advanced">Advanced</option>
@@ -129,12 +138,26 @@ const SkillDetails = ({ userData, setUserData }) => {
             </form>
           </div>
           <div className="all-educations">
-            {/* {userData.skill.map((skl, index) => (
+            {userData.skill.map((skl, index) => (
               <div key={index} style={{ border: "1px solid black" }}>
-                <h5>Skill: {skl.name}</h5>
-                <p>Level: {skl.level}</p>
+                <div className="edit-details">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 50 50"
+                      width="50px"
+                      height="50px"
+                      onClick={()=>handleDeleteSkill(skl._id)}
+                    >
+                      <DeleteIcon />
+                    </svg>
+                  </div>
+                <div className="skill-name">
+                <h5>Skill: {skl.skillName}</h5>
+                </div>
+                
+                <p>Level: {skl.skillLevel}</p>
               </div>
-            ))} */}
+            ))}
           </div>
         </>
       )}

@@ -55,60 +55,13 @@ exports.updateEducation = async (req, res) => {
       endDate,
     });
     const educationId = education._id;
-    // const user = await UserModel.findByIdAndUpdate(
-    //   userId,
-    //   { $push: { education: educationId } },
-    //   { new: true }
-    // );
-
-    // return res.json({ success: true, message: user });
-    if (updatedUser) {
-      res.json({ success: true, message: "Update Successfully" });
-    } else {
-      res.json({ success: false, message: "Not Update" });
-    }
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
-
-// exports.deleteEducation = async (req, res) => {
-//   try {
-//     const {educationId} =  req.params;
-//     const user = await UserModel.findOne({education: educationId});
-//     if(user){
-//       await UserModel.findByIdAndUpdate(user._id,{$pull:{education: educationId}})
-//       await EducationModel.findByIdAndDelete(educationId);
-//       return res.json("Suceessfully Deleted!");
-
-//     }else{
-//       return res.json("Education not belongs to you!");
-//     }
-
-//   } catch (error) {
-    
-//   }
-// }
-
-
-exports.updateSkill = async (req, res) => {
-  try {
-    const {userId, skillName, level } =
-      req.body;
-
-    const skill = await SkillModel.create({
-      skillName: skillName,
-      skillLavel: level,
-    });
-    const skillId = skill._id;
     const user = await UserModel.findByIdAndUpdate(
       userId,
-      { $push: { skill: skillId } },
+      { $push: { education: educationId } },
       { new: true }
     );
 
-    return res.json({ success: true, message:  user});
-    if (updatedUser) {
+    if (user) {
       res.json({ success: true, message: "Update Successfully" });
     } else {
       res.json({ success: false, message: "Not Update" });
@@ -117,3 +70,62 @@ exports.updateSkill = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+exports.deleteEducation = async (req, res) => {
+  try {
+    const { educationId } = req.params;
+    const user = await UserModel.findOne({ education: educationId });
+    if (user) {
+      await UserModel.findByIdAndUpdate(user._id, {
+        $pull: { education: educationId },
+      });
+      await EducationModel.findByIdAndDelete(educationId);
+      return res.json("Deleted Successfully");
+    } else {
+      return res.json("Already Deleted");
+    }
+  } catch (error) {}
+};
+
+exports.updateSkill = async (req, res) => {
+  try {
+    const { userId, skillName, skillLevel } = req.body;
+
+    const skill = await SkillModel.create({
+      skillName: skillName,
+      skillLevel: skillLevel,
+    });
+    const skillId = skill._id;
+    const update = await UserModel.findByIdAndUpdate(
+      userId,
+      { $push: { skill: skillId } },
+      { new: true }
+      );
+      // return res.json({ success: true, message: update.skill });
+      
+      if (update) {
+        res.json({ success: true, message: "Update Successfully" });
+    } else {
+      res.json({ success: false, message: "Not Update" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.deleteSkill = async (req, res) => {
+  try {
+    const { skillId } = req.params;
+    const user = await UserModel.findOne({ skill: skillId });
+    if (user) {
+      await UserModel.findByIdAndUpdate(user._id, {
+        $pull: { skill: skillId },
+      });
+      await SkillModel.findByIdAndDelete(skillId);
+      return res.json("Deleted Successfully");
+    } else {
+      return res.json("Already Deleted");
+    }
+  } catch (error) {}
+};
+

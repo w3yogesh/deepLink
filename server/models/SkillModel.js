@@ -5,7 +5,7 @@ const skillSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    skillLavel:{
+    skillLevel:{
         type: String,
         require: true,
     }

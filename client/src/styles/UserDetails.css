@@ -51,7 +51,7 @@
     width: 49%;
 }
 
-.basic-info-section select {
+.basic-info-section select, .Skill-info-section  select{
     width: 98%;
     padding: 10px;
 }
