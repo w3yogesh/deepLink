@@ -11,7 +11,7 @@ module.exports.getUserProfile = (req, res, next) => {
     if (err) {
      return res.json({ status: false })
     } else {
-      const user = await User.findById(data.id).populate({path:"education", select:"institution field degree startDate endDate"}).populate({path:"address", select: "city country"});
+      const user = await User.findById(data.id).populate({path:"education", select:"institution field degree startDate endDate"}).populate({path:"address", select: "city country"}).populate({path:"skill", select: "skillName skillLevel"});;
       if (user) {
         user.password = null;
         return res.json({ status: true, user: user });

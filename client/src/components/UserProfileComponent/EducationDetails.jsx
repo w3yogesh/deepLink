@@ -52,10 +52,10 @@ const EducationDetails = ({ userData, setUserData }) => {
     });
     console.log(response.data);
   };
-  // const handleDeleteEducation = async(eduId) => {
-  //     const response = await axios.delete(`http://localhost:4000/deleteEducation${eduId}`)
-  //     console.log(response);
-  // }
+  const handleDeleteEducation = async(eduId) => {
+      const response = await axios.delete(`http://localhost:4000/deleteEducation${eduId}`)
+      console.log(response.data);
+  }
 
   return (
     <div className="education-details details">
@@ -197,13 +197,13 @@ const EducationDetails = ({ userData, setUserData }) => {
                       viewBox="0 0 50 50"
                       width="50px"
                       height="50px"
-                      // onClick={handleDeleteEducation(edu._id)}
+                      onClick={()=>handleDeleteEducation(edu._id)}
                     >
                       <DeleteIcon />
                     </svg>
                   </div>
                   <div className="edit-details">
-                    <svg
+                    {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 50 50"
                       width="50px"
@@ -217,7 +217,7 @@ const EducationDetails = ({ userData, setUserData }) => {
                     >
                       {!isEditMode && <EditIcon />}
                       {isEditMode && <SaveIcon />}
-                    </svg>
+                    </svg> */}
                   </div>
                   
                   <div className="institution">
