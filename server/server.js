@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const connectDB = require('./config/dbConnect'); // Import the connectDB function
 
+
 require("dotenv").config(); // Import .env file var
 
 // import cookie and auth
@@ -23,6 +24,7 @@ connectDB()
   .catch((error) => {
     console.error('Failed to start the server:', error);
   });
+
 
 
   app.use(
@@ -52,6 +54,10 @@ connectDB()
       res.status(500).json({ success: false, message: "Internal Server Error" });
     }
   });
+
+
+
+  
 
   app.use(cookieParser());
   

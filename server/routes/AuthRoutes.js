@@ -1,5 +1,7 @@
 const { Signup, Login} = require("../controllers/AuthController");
 
+
+
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");
 const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill} = require("../controllers/updateUserProfile")
@@ -15,6 +17,7 @@ const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require(".
 
 const router = require("express").Router();
 
+const {CreateCompany} =require("../controllers/CompanyController");
 
 router.post("/signup", Signup);
 router.post("/login",Login);
@@ -51,8 +54,9 @@ router.put('/api/postLike', Postlike);
 router.put('/api/postComment', PostComment);
 
 
+router.post("/company", CreateCompany);
 
-
+// router.post("/company",Company);
 
 
 
