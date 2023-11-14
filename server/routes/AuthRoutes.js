@@ -12,14 +12,14 @@ const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteS
 const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany} = require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany} =require("../controllers/CompanyController");
+
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
 
 const router = require("express").Router();
 
-const {CreateCompany,Companies, MyCompany} =require("../controllers/CompanyController");
 
 router.post("/signup", Signup);
 router.post("/login",Login);
