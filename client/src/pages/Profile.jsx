@@ -266,10 +266,6 @@ const Profile = () => {
 
       <PostComponent senderId={userProfile._id} />
 
-    
-
-
-
       <div className="search-box">
         <input
           type="text"
