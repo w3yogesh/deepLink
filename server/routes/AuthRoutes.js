@@ -3,7 +3,7 @@ const { Signup, Login} = require("../controllers/AuthController");
 
 
 const {userVerification} = require("../middlewares/AuthMiddleware");
-const {getUserProfile} = require("../controllers/getUserProfile");
+const {getUserProfile,getUserProfileById} = require("../controllers/getUserProfile");
 const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill} = require("../controllers/updateUserProfile")
 
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
@@ -17,7 +17,7 @@ const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require(".
 
 const router = require("express").Router();
 
-const {CreateCompany} =require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany} =require("../controllers/CompanyController");
 
 router.post("/signup", Signup);
 router.post("/login",Login);
@@ -44,6 +44,7 @@ router.post('/ignore-connection', ignoreConnection);
 router.post('/drop-connection', dropConnection);
 router.get('/myConnections:userId', myConnections);
 router.put('/deleteMyConnection', deleteMyConnection);
+router.get('/userprofile/:userId',getUserProfileById);
 
 
 
@@ -54,9 +55,15 @@ router.put('/api/postLike', Postlike);
 router.put('/api/postComment', PostComment);
 
 
-router.post("/company", CreateCompany);
 
-// router.post("/company",Company);
+//companies controllers
+router.post("/company", CreateCompany);
+router.get("/companies",Companies);
+
+router.get("/company/:companyId",MyCompany);
+
+
+
 
 
 

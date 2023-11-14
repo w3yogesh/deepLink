@@ -10,6 +10,10 @@ import MyConnections from "./components/MyConnections";
 import Chat from "./pages/Chat";
 import UserProfileView from './pages/UserProfileView';
 import CompanyForm from './pages/CompanyForm';
+
+import CompanyList from './pages/CompanyList';
+import CompanyDetail from './pages/CompanyDetail';
+
 function App() {
   return (
     <div className="App">
@@ -26,10 +30,11 @@ function App() {
         <Route path="/feed" element={<Feed />} />
         <Route path="/chat" element={<Chat />} />
 
-        <Route path="/userprofileview" element={<UserProfileView/>}/>
+        <Route path="/userprofileview/:userId" element={<UserProfileView/>}/>
 
         <Route path="/company" element={<CompanyForm/>}/>
-
+        <Route path="/companylist" element={<CompanyList/>}/>
+        <Route path="/company/:companyId" element={<CompanyDetail/>}/>
       </Routes>
     </div>
   );
