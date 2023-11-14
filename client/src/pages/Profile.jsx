@@ -280,7 +280,7 @@ const Profile = () => {
         <ul>
           {searchResults.map((user) => (
             <li key={user._id}>
-                <Link to={`/userprofileview`}>
+                <Link to={`/userprofileview/${user._id}`}>
                 {user.firstName} {user.lastName}
               </Link>
             </li>
