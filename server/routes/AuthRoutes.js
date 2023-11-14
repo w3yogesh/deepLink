@@ -1,5 +1,4 @@
 const { Signup, Login} = require("../controllers/AuthController");
-
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile, userSearch} = require("../controllers/getUserProfile");
 
@@ -11,6 +10,12 @@ const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteS
 
 //Post Controller
 const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require("../controllers/PostControl");
+
+//compnay controller
+const {CreateCompany} = require("../controllers/CompanyController");
+
+//messages controller
+ const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
 
 const router = require("express").Router();
 
@@ -46,7 +51,12 @@ router.get('/api/fetchposts', fetchPosts);
 router.put('/api/postLike', Postlike);
 router.put('/api/postComment', PostComment);
 
+// Company controller
+router.post("/company", CreateCompany);
 
+// User Messages
+router.post("/messaging",createdMessage);
+router.get("/chats/:userId/:requestId",fetchMessages);
 
 
 
