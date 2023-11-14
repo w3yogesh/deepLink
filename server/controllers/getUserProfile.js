@@ -21,6 +21,24 @@ module.exports.getUserProfile = (req, res, next) => {
   })
 }
 
+module.exports.userSearch = async(req, res, )=>{
+  const {query} = req.query;
+
+  try {
+    const results = await User.find({
+      $or: [
+        {firstName: {$regex: new RegExp(query, "i")}},
+        {lastName: {$regex: new RegExp(query, "i")}},
+      ],
+    });
+    res.json({success:true, results});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+
+
 module.exports.getUserProfileById= async (req,res,next)=>{
   const {userId}=req.params;
   try{

@@ -1,16 +1,12 @@
 import { React, useState } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/UserDetails.css";
-import BasicDetails from "../components/UserProfileComponent/BasicDetails2";
 import  ShortProfile from "../components/UserProfileComponent/ShortProfile";
-import EducationDetails from "../components/UserProfileComponent/EducationDetails2";
-import SkillDetails from "../components/UserProfileComponent/SkillDetails2";
 import { useEffect } from "react";
 import axios from "axios"; 
 import { useParams } from 'react-router-dom';
 
 const UserDetails = () => {
-  
     const {userId}=useParams();
     const [user, setUser] = useState(null);
     useEffect(() => {
@@ -66,11 +62,9 @@ const UserDetails = () => {
       <Navbar />
       <div className="main-container">
         <div className="user-detail-container">
-          <ShortProfile  userData={user} setUserData={setUser}  />
+          <ShortProfile userData={user} setUserData={setUser}/>
           <div className="user-info-container right">
-            <BasicDetails userData={user} setUserData={setUser} />
-            <EducationDetails userData={user} setUserData={setUser} />
-            <SkillDetails userData={user} setUserData={setUser} />
+
           </div>
         </div>
       </div>

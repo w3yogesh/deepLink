@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 
 import Navbar from "../components/Navbar";
 import "../styles/UserDetails.css";
@@ -76,7 +76,6 @@ const UserDetails = (props) => {
   //   }],
   // };
 
-
   return (
     <>
       <Navbar />
@@ -90,6 +89,7 @@ const UserDetails = (props) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

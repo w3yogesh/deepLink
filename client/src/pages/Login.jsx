@@ -4,7 +4,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from "react";
 import "../styles/LoginForm.css";
-import "../styles/login-singup.css";
 
 const Login = () => {
   const navigate = useNavigate();
