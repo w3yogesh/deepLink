@@ -58,6 +58,7 @@
     font-weight: 500;
     justify-content: center;
     cursor: pointer;
+    align-items: center;
 }
 
 .comment-section {
@@ -102,4 +103,7 @@ ol.comment-list {
 .comment-respond input {
     width: 70%;
     margin: 0 14px 0 0;
+}
+.post-action svg {
+    margin: 0 6px 0 0;
 }

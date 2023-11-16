@@ -57,7 +57,7 @@ router.delete('/api/removePostLike/:userId/:postId', RemovePostLike)
 router.put('/api/postComment', PostComment);
 
 // Company controller
-router.post("/company", CreateCompany);
+// router.post("/company", CreateCompany);
 router.get("/companies",Companies);
 router.get("/company/:companyId",MyCompany);
 router.post("/createService",CreateService);
@@ -74,6 +74,20 @@ router.get("/jobs/:companyId",GetJobs);
 router.post("/messaging",createdMessage);
 router.get("/chats/:userId/:requestId",fetchMessages);
 
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: "./uploads",
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+
+const upload = multer({ storage });
+
+
+router.post("/company",upload.single("photo"),CreateCompany)
 
 
 

@@ -6,7 +6,7 @@ import UserDetails from "./pages/UserDetails";
 import PostComponent from "./components/PostComponent";
 import Feed from "./pages/Feed";
 
-import MyConnections from "./components/MyConnections";
+import MyNetwork from "./pages/MyNetwork";
 import Chat from "./pages/Chat";
 import UserProfileView from './pages/UserProfileView';
 import CompanyForm from './pages/CompanyForm';
@@ -25,7 +25,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/user" element={<UserDetails/>}/>
 
-        <Route path="/mynetwork" element={<MyConnections/>}/>
+        <Route path="/mynetwork" element={<MyNetwork/>}/>
 
         <Route path="/feed" element={<Feed />} />
         <Route path="/chat" element={<Chat />} />

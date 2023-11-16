@@ -52,6 +52,8 @@ app.get("/search", async (req, res) => {
   }
 });
 
+app.use('/fetchImage', express.static('uploads'));
+
 app.use(cookieParser());
 
 app.use(express.json());

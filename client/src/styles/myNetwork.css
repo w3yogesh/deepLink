@@ -1,0 +1,30 @@
+.mynetwork-container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    max-width: 1200px;
+    justify-content: center;
+}
+
+.left-menu {
+    border: 1px solid;
+    padding: 20px;
+}
+
+.side-menu-item {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border: 1px solid #372626;
+    margin: 0 0 10px 0;
+}
+
+.itme-svg {
+    margin-right: 10px;
+}
+.main-section {
+    width: 65%;
+    border: 1px solid;
+    margin-left: 20px;
+}

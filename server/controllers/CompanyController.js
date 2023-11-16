@@ -1,11 +1,18 @@
 // CompanyController.js
+const express = require("express");
+const app = express();
+const path = require('path');
 
 const Company = require("../models/CompanyModel");
 const Service=require("../models/ServiceModel");
 const Job=require("../models/JobModel");
 
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
 const CreateCompany = async (req, res, next) => {
   try {
+    const image = req.file.originalname;
+    // return res.json({message:image});
     const {
       companyName,
       field,
@@ -15,7 +22,8 @@ const CreateCompany = async (req, res, next) => {
       companySize,
       about,
     } = req.body;
-
+    
+    // Assuming Company is a Mongoose model
     // Additional validation
     // if (!companyName || !email || !companySize || !about || !logo || !coverImage) {
     //   return res.status(400).json({ success: false, message: "Missing required fields" });
@@ -31,6 +39,7 @@ const CreateCompany = async (req, res, next) => {
     //   return res.status(400).json({ success: false, message: "Invalid companySize value" });
     // }
 
+
     const company = await Company.create({
       companyName,
       field,
@@ -39,6 +48,8 @@ const CreateCompany = async (req, res, next) => {
       email,
       companySize,
       about,
+      image
+
     });
 
     return res.status(201).json({

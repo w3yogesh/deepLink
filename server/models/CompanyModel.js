@@ -31,6 +31,10 @@ const CompanySchema = new mongoose.Schema({
     about: {
         type: String,
         required: true,
+      },
+      image:{
+        type:String,
+      },
     },
     products:{
         type: mongoose.Schema.Types.ObjectId, 
@@ -47,6 +51,7 @@ const CompanySchema = new mongoose.Schema({
         ref: "Job", 
         unique: true 
     }
+
 });
 
 module.exports = mongoose.model("Company", CompanySchema);
