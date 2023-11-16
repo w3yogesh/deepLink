@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 
 const SkillDetails = ({ userData, setUserData }) => {
@@ -62,6 +63,14 @@ const handleSuccess = (msg) =>
       }
   }
 
+  const handleEditSkill = async (skillId) => {
+    const skillToEdit = userData.skill.find((skl) => skl._id === skillId);
+    setNewSkill(skillToEdit);
+
+    setIsEditMode(true);
+    setShowForm(true);
+  }
+
   // console.log(userData);
   return (
     <div className="Skill-details details">
@@ -77,7 +86,7 @@ const handleSuccess = (msg) =>
                 setShowForm(true);
               }}
             >
-              <AddCircleIcon />
+              <ArrowDropDownCircleIcon />
             </svg>
           </div>
           <div className="form-container">
@@ -116,7 +125,7 @@ const handleSuccess = (msg) =>
                 setIsEditMode(!isEditMode);
               }}
             >
-              {!isEditMode && <EditIcon />}
+              {!isEditMode && <AddCircleIcon />}
               {isEditMode && <SaveIcon />}
             </svg>
           </div>
@@ -169,6 +178,19 @@ const handleSuccess = (msg) =>
                       <DeleteIcon />
                     </svg>
                   </div>
+
+                  <div className="edit-details">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 50 50"
+                      width="50px"
+                      height="50px"
+                      onClick={()=>handleEditSkill(skl._id)}
+                    >
+                      <EditIcon />
+                    </svg>
+                  </div>
+
                 <div className="skill-name">
                 <h5>Skill: {skl.skillName}</h5>
                 </div>
