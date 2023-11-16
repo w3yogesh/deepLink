@@ -29,9 +29,6 @@
   font-style: italic;
 }
 
-
-
-
 .form_container {
     max-width: 400px;
     margin: 0 auto;
@@ -67,19 +64,5 @@
   
   button:hover {
     background-color: #0056b3;
-  }
-  
-  span {
-    font-size: 14px;
-    color: #333;
-  }
-  
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
   }
   

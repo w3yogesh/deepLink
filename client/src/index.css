@@ -14,7 +14,7 @@
   --text-link: #007BFF; 
 
 
-  --background-primary: #fff; 
+  --background-primary: #f7f8f9; 
   --background-secondary: #f5f5f5; 
 
 
@@ -38,7 +38,7 @@ body{
   line-height: 1.775;
   text-transform: none;
   overflow-x: hidden;
-  background-color: var(--base-2);
+  background-color: var(--background-primary);
   color: var(--contrast);
   font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans,Roboto,Ubuntu,Helvetica,sans-serif;
 }
@@ -109,8 +109,6 @@ h4,h5,h6 {
 .secondary-button:hover {
   background-color: #495057;
 }
-
-
 
 
 

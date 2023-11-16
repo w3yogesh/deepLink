@@ -36,8 +36,8 @@ const PostComponent = (props) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className='user-post'>
+      <div className='user-post-input'>
         <textarea
           rows="4"
           cols="60"
@@ -51,7 +51,7 @@ const PostComponent = (props) => {
           accept="image/*"
           onChange={handleImageChange}
         /> */}
-        <button onClick={handlePostSubmit}>Post</button>
+        <div className='post-button' onClick={handlePostSubmit}>Post</div>
       </div> 
     </div>
   );

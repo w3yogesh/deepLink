@@ -1,12 +1,20 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PostCard from "../components/FeedComponent/PostCard";
-import Grid from "@mui/material/Grid";
+import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import axios from "axios";
+import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import PostComponent from "../components/PostComponent";
 
+
+import "../styles/Feed/Feed.css";
 
 const Feed = () => {
+  const navigate = useNavigate();
   const [allPostObj, setPosts] = useState([]);
-
+  const [userData, setUserData] = useState('');
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
 
   // const allPostObj = [
   //   {
@@ -43,34 +51,59 @@ const Feed = () => {
   //     ],
   //   },
   // ]
-
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/fetchposts");
-        const postsData = response.data;
-        setPosts(postsData);
-        console.log(postsData);
+        const auth = await axios.post(
+          "http://localhost:4000",
+          {},
+          { withCredentials: true }
+        );
+        const { status, user } = auth.data;
+        setUserData(user);
+        setUserId(user._id);
+        setUserName(user.firstName);
+
+        if (!status) {
+          setTimeout(() => {
+            navigate("/login");
+          }, 1);
+        } else {
+          setUserData(user);
+          const response = await axios.get(
+            "http://localhost:4000/api/fetchposts"
+          );
+          const postsData = response.data;
+          setPosts(postsData);
+          
+        }
       } catch (error) {
         console.log(error);
       }
-    
-    }
+    };
     fetchPosts();
-    setPosts(allPostObj);
-  }, [])
-  
-
+  }, [navigate]);
+  const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
   return (
     <div>
-      <h1 style={{textAlign : 'center'}}> feed </h1>
-      <Grid container spacing={2}>
-        {allPostObj.map((post, index) => (
-          <Grid item xs={12} key={index}>
-            <PostCard postObj={post} />
-          </Grid>
-        ))}
-      </Grid>
+      <Navbar />
+
+      <div className="feed-wrapper">
+        <div className="left-sidebar">
+          <FeedSidebar userData={userData} />
+        </div>
+        <div className="post-container">
+        <PostComponent senderId={userId} />
+          {reversedPosts.map((post, index) => (
+            <div className="post-body" key={index}>
+              <PostCard postObj={post} userId={userId} userName={userName} />
+            </div>
+          ))}
+        </div>
+        <div className="right-sidebar">
+          <p>company post</p>
+        </div>
+      </div>
     </div>
   );
 };

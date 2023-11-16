@@ -44,7 +44,7 @@ const Login = () => {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/user");
+          navigate("/feed");
           
         }, 1000);
       } else {

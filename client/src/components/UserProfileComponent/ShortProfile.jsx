@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import "../../styles/userProfileComponent/ShortProfile.css"
 
-const ShortProfile = ({userData, setUserData }) => {
+const ShortProfile = ({userData}) => {
   const city = (userData && userData.address && userData.address.length > 0
     ? userData.address[0].city 
     : null);
