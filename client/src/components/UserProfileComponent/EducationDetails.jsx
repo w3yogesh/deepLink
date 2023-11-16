@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 import axios from "axios";
 
@@ -75,6 +76,15 @@ const handleSuccess = (msg) =>
       }
   }
 
+  const handleEditEducation = async(eduId)  => {
+    const educationToEdit = userData.education.find((edu) => edu._id === eduId);
+
+    setNewEducation(educationToEdit);
+
+    setIsEditMode(true);
+    setShowForm(true);
+  }
+
   return (
     <div className="education-details details">
       {!showForm && (
@@ -89,7 +99,7 @@ const handleSuccess = (msg) =>
                 setShowForm(true);
               }}
             >
-              <AddCircleIcon />
+              <ArrowDropDownCircleIcon />
             </svg>
           </div>
           <div className="form-container">
@@ -128,7 +138,7 @@ const handleSuccess = (msg) =>
                 setIsEditMode(!isEditMode);
               }}
             >
-              {!isEditMode && <EditIcon />}
+              {!isEditMode && <AddCircleIcon />}
               {isEditMode && <SaveIcon />}
             </svg>
           </div>
@@ -220,6 +230,19 @@ const handleSuccess = (msg) =>
                       <DeleteIcon />
                     </svg>
                   </div>
+
+                  <div className="edit-details">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 50 50"
+                      width="50px"
+                      height="50px"
+                      onClick={()=>handleEditEducation(edu._id)}
+                    >
+                      <EditIcon />
+                    </svg>
+                  </div>
+
                   <div className="edit-details">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
