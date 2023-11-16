@@ -20,12 +20,15 @@ function ConnectionRequest(props) {
 
   const handleRequestAccept = async (senderId,receiverId)=> {
     try {
-      const response = await axios.post('http://localhost:4000/accept-connection', { senderId, receiverId });
-      //console.log(response.data); // Log the response data
-      if (response.data.message === 'Connection accepted') {
-        // Handle the case when the connection is accepted
-        // You can call a function like onAccept() here if needed
+      const response = await axios.get(`http://localhost:4000/api/accept-connection/${senderId}/${receiverId}`);
+      const {status, message} = response.data;
+
+      if (status) {
+        console.log(message);
         setUsers(prev => prev.filter(user => user._id !== receiverId))
+      }
+      else{
+        console.log(message);
       }
     } catch (error) {
       // Handle any errors
