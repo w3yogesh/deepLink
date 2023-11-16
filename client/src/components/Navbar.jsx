@@ -1,19 +1,20 @@
 import React from "react";
 import "../styles/Navbar.css"
-
+import { HeaderSearch } from "./HeaderSearch";
 export default function Navbar() {
   return (
     <>
       <header className="site-header">
-        <div className="navbar-wrapper">
+        <div className="navbar-wrapper grid-container">
             <div className="logo-container">
                 <a href="/">
-                <img className="logo"
+                <img className="header-logo"
                   src="https://www.deeplink.ai/wp-content/uploads/2020/11/cropped-Logo-Transparent-Noir-Jaune.png"
                   alt="deeplink"
                 />
 </a>
             </div>
+            <HeaderSearch/>
             <div className="nav-wrapper">
                 <ul className="nav-menu">
                   <li className="nav-menu-item"><a href="/">Home</a></li>

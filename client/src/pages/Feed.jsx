@@ -88,6 +88,7 @@ const Feed = () => {
     <div>
       <Navbar senderId={userId} />
 
+      <div className="grid-container">
       <div className="feed-wrapper">
         <div className="left-sidebar">
           <FeedSidebar userData={userData} />
@@ -103,6 +104,7 @@ const Feed = () => {
         <div className="right-sidebar">
           <p>company post</p>
         </div>
+      </div>
       </div>
     </div>
   );

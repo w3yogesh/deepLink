@@ -16,6 +16,8 @@ export default function CompanyDetail() {
       try {
         const response = await axios.get(`http://localhost:4000/company/${companyId}`);
         setCompany(response.data.company);
+      
+        
       } catch (error) {
         console.error('Error fetching company details:', error.message);
       }
@@ -30,7 +32,9 @@ export default function CompanyDetail() {
 
   return (
     <div>
+      <img src={`http://localhost:4000/fetchImage/${company.image}`} alt="trial" />
       <h2>{company.companyName}</h2>
+      
       <p>Field: {company.field}</p>
       <p>Headquarter: {company.headquarter}</p>
       

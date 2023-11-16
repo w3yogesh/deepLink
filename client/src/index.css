@@ -42,7 +42,10 @@ body{
   color: var(--contrast);
   font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans,Roboto,Ubuntu,Helvetica,sans-serif;
 }
-
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
 h1,h2,h3,h4,h5,h6 {
   font-family: inherit;
   font-size: 100%;

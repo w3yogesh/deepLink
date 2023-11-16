@@ -4,6 +4,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 
 export default function CompanyForm() {
+  const [photo, setphoto] = useState(null);
+  
+
   const [options, setOptions] = useState([]);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -13,30 +16,28 @@ export default function CompanyForm() {
     email: '',
     companySize: '',
     about: '',
-    // logo: '', // New property for logo file
-    // coverImage: '', // New property for cover image file
-    // image: '',
+    photo:null,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      photo: photo,
+    }));
 
-   // Prepare form data for file upload
-//    const formDataWithFiles = new FormData();
-// Object.entries(formData).forEach(([key, value]) => {
-//   if (value instanceof File) {
-//     formDataWithFiles.append(key, value);
-//   } else {
-//     formDataWithFiles.append(key, value);
-//   }
-// });
-
-    //console.log(formDataWithFiles);
-    console.log(formData);
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+  });
+   
+    // formData.append('photo', photo);
+    console.log(data);
     try {
-      // Make an HTTP POST request to your backend endpoint
-      const response = await axios.post('http://localhost:4000/company', formData);
-      // Handle the response from the backend if needed
+    //   // Make an HTTP POST request to your backend endpoint
+      const response = await axios.post("http://localhost:4000/company", data);
+
+    //   // Handle the response from the backend if needed
       console.log('Backend response:', response.data.message);
 
       // Reset the form after successful submission
@@ -58,28 +59,23 @@ export default function CompanyForm() {
   };
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
+    const { name , value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [id]: value,
+      [name]: value,
     }));
   };
 
-  // const handleFileChange = (e, fileType) => {
-  //   const file = e.target.files[0];
-  
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     [fileType]: file.name, // Store the file name or URL, not the entire file object
-  //   }));
-  // };
+  const handleFileChange = (event) => {
+    setphoto(event.target.files[0]);   
+  };
 
   return (
     <form onSubmit={handleSubmit} encType="multipart/form-data">
       <Grid container spacing={2} style={{ marginTop: '2rem' }}>
         <Grid item xs={6}>
           <TextField
-            id='companyName'
+            name='companyName'
             label='Company name'
             fullWidth
             variant='outlined'
@@ -87,7 +83,7 @@ export default function CompanyForm() {
           />
         </Grid>
         <Grid item xs={6}>
-          <TextField id='field' label='Field' fullWidth variant='outlined' onChange={handleChange} />
+          <TextField name='field' label='Field' fullWidth variant='outlined'   onChange={handleChange} />
         </Grid>
       </Grid>
 
@@ -140,7 +136,7 @@ export default function CompanyForm() {
       
 
       <TextField
-        id='website'
+        name='website'
         label='Website of Company'
         fullWidth
         variant='outlined'
@@ -149,7 +145,7 @@ export default function CompanyForm() {
       />
       <TextField
         type='email'
-        id='email'
+        name='email'
         label='Email'
         fullWidth
         variant='outlined'
@@ -157,7 +153,7 @@ export default function CompanyForm() {
         onChange={handleChange}
       />
       <TextField
-        id='companySize'
+        name='companySize'
         label='Company-Size'
         fullWidth
         variant='outlined'
@@ -166,15 +162,16 @@ export default function CompanyForm() {
       />
 
       <TextField
-        id='about'
-        label='Tell us briefly about your company'
+        name='about'
+        label='Tell us brief about your company'
         multiline
         fullWidth
         variant='outlined'
         margin='normal'
         onChange={handleChange}
       />
-
+        <input type="file"  id="photo"  name='file'
+        onChange={(event)=>handleFileChange(event)}/>
       <Button
         variant='contained'
         color='primary'

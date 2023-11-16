@@ -50,7 +50,7 @@ const handleSuccess = (msg) =>
       ...prev,
       education: [...prev.education, newEducation],
     }));
-    console.log(newEducation.endDate);
+
     const response = await axios.put("http://localhost:4000/updateEducation", {
       userId: userData._id,
       institution: newEducation.institution,
@@ -83,7 +83,6 @@ const handleSuccess = (msg) =>
     setIsEditMode(true);
     setShowForm(true);
   }
-
 
   return (
     <div className="education-details details">

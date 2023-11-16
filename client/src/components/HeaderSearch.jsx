@@ -1,0 +1,54 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
+
+export const HeaderSearch = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const handleSearch = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:4000/search?query=${searchTerm}`
+          );
+    
+          if (response.data.success) {
+            setSearchResults(response.data.results);
+          } else {
+            console.log(response.data.message);
+          }
+        } catch (error) {
+
+        }
+      };
+    
+    useEffect(() => {
+        if (searchTerm.trim() !== "") {
+          handleSearch();
+        } else {
+          setSearchResults([]);
+        }
+      }, [searchTerm]);
+
+  return (
+    <div className="search-box">
+      <input
+        type="text"
+        placeholder="Search users by name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <div className="search-result">
+        <ul className="search-list">
+            {searchResults.map((user) => (
+            <li key={user._id} className="search-list-items">
+                <Link to={`/userprofileview/${user._id}`}>
+                {user.firstName} {user.lastName}
+                </Link>
+            </li>
+            ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
