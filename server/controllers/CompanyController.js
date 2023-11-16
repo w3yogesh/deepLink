@@ -2,7 +2,7 @@
 
 const Company = require("../models/CompanyModel");
 
-const CreateCompany = async (req, res,next) => {
+const CreateCompany = async (req, res, next) => {
   try {
     const {
       companyName,
@@ -11,10 +11,24 @@ const CreateCompany = async (req, res,next) => {
       website,
       email,
       companySize,
-      about
+      about,
     } = req.body;
 
-    // Assuming Company is a Mongoose model
+    // Additional validation
+    // if (!companyName || !email || !companySize || !about || !logo || !coverImage) {
+    //   return res.status(400).json({ success: false, message: "Missing required fields" });
+    // }
+
+    // Validate email format (you can use a library or a regex for more thorough validation)
+    // if (!isValidEmail(email)) {
+    //   return res.status(400).json({ success: false, message: "Invalid email format" });
+    // }
+
+    // Validate numeric fields
+    // if (isNaN(companySize)) {
+    //   return res.status(400).json({ success: false, message: "Invalid companySize value" });
+    // }
+
     const company = await Company.create({
       companyName,
       field,
@@ -22,7 +36,7 @@ const CreateCompany = async (req, res,next) => {
       website,
       email,
       companySize,
-      about
+      about,
     });
 
     return res.status(201).json({
@@ -36,6 +50,16 @@ const CreateCompany = async (req, res,next) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
+
+
+
+// Utility function for email validation
+function isValidEmail(email) {
+  // Implement your email validation logic here
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+
 
 const Companies=async (req, res) => {
   const { query } = req.query;
@@ -75,3 +99,4 @@ const MyCompany= async (req, res) => {
 
 
 module.exports = { CreateCompany, Companies,MyCompany};
+

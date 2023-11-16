@@ -29,6 +29,8 @@ export default function CompanyDetail() {
       <h2>{company.companyName}</h2>
       <p>Field: {company.field}</p>
       <p>Headquarter: {company.headquarter}</p>
+      
+      
       {/* Add more details as needed */}
     </div>
   );

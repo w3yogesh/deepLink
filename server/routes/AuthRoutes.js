@@ -57,10 +57,13 @@ router.put('/api/postComment', PostComment);
 
 
 //companies controllers
-router.post("/company", CreateCompany);
+ router.post("/company", CreateCompany);
 router.get("/companies",Companies);
 
 router.get("/company/:companyId",MyCompany);
+
+
+// router.post("/company",upload.single("photo"),CreateCompany)
 
 
 

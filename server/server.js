@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
 const connectDB = require('./config/dbConnect'); // Import the connectDB function
 
 
@@ -57,7 +56,22 @@ connectDB()
 
 
 
-  
+  // Get company details and posts
+// app.get('/company/:companyId', (req, res) => {
+//   const { companyId } = req.params;
+//   const company = companies.find((c) => c.id === companyId);
+//   const companyPosts = posts.filter((post) => post.companyId === companyId);
+//   res.json({ company, posts: companyPosts });
+// });
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: "./uploads",
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
 
   app.use(cookieParser());
   
