@@ -13,7 +13,7 @@ const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteS
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany,Companies, MyCompany} =require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs} =require("../controllers/CompanyController");
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
@@ -59,8 +59,14 @@ router.put('/api/postComment', PostComment);
 // Company controller
 // router.post("/company", CreateCompany);
 router.get("/companies",Companies);
-
 router.get("/company/:companyId",MyCompany);
+router.post("/createService",CreateService);
+router.post("/jobposting",CreateJob);
+router.get("/service/:companyId",GetService);
+router.get("/jobs/:companyId",GetJobs);
+
+
+// router.post("/company",upload.single("photo"),CreateCompany)
 
 
 

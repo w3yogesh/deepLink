@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import "../styles/PostComponent.css"
+import "../styles/PostComponent.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PostComponent = (props) => {
-  const [content, setContent] = useState(['']);
+  const [content, setContent] = useState('');
   const user = props.senderId;
 
   const handlePostBodyChange = (e) => {
@@ -12,26 +14,20 @@ const PostComponent = (props) => {
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    if (content.trim() !== '') {
-      // const newPost = {
-      //   user: userId,
-      //   content: postBody
-      // };
-      
+    if (content.length > 0) {
       try {
-        const response = await axios.post("http://localhost:4000/post",{user, content,});
-          
-          console.log(response.data);
-        // const { success, message } = data;
-        // if (success) {
-        //   console.log("data printed successfully")
-        // } else {
-        //   console.log(message);
-        // }
+        const response = await axios.post("http://localhost:4000/post", { user, content });
+
+        console.log(response.data);
+        toast.success("Post submitted successfully");
       } catch (error) {
         console.log(error);
       }
       setContent('');
+    } else {
+      toast.error("Error submitting post", {
+        position: "top-right",
+      });
     }
   };
 
@@ -46,13 +42,9 @@ const PostComponent = (props) => {
           onChange={handlePostBodyChange}
           placeholder="What's on your mind?"
         />
-        {/* <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        /> */}
         <div className='post-button' onClick={handlePostSubmit}>Post</div>
-      </div> 
+      </div>
+      <ToastContainer />
     </div>
   );
 };

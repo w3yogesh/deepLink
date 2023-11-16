@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-const connectDB = require("./config/dbConnect"); // Import the connectDB function
+const connectDB = require('./config/dbConnect'); // Import the connectDB function
+
 
 require("dotenv").config(); // Import .env file var
 
