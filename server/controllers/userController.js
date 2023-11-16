@@ -57,7 +57,7 @@ exports.acceptConnection = async (req, res) => {
     // Find the requesting user and the target user
     const requestingUser = await User.findById(senderId);
     const targetUser = await User.findById(receiverId);
-    if (!requestingUser || !targetUser) {
+    if ((!requestingUser || !targetUser) || (requestingUser === targetUser)) {
       return res.status(400).json({ error: "Users not found" });
     }
     const requestingUserID = requestingUser._id;

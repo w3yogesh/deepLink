@@ -13,7 +13,6 @@ import MyConnections from "../components/MyConnections";
 
 // import "../styles/Profile.css";
 
-import PostComponent from "../components/PostComponent";
 
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import Navbar from "../components/Navbar";
@@ -35,10 +34,6 @@ const Profile = () => {
     lastName: "",
     email: "",
   });
-
-
-
-
 
   useEffect(() => {
     const loadProfileData = async () => {
@@ -263,8 +258,6 @@ const Profile = () => {
           {showMyConnections && <MyConnections senderId={userProfile._id} />}
         </div>
       </div>
-
-      <PostComponent senderId={userProfile._id} />
 
       <div className="search-box">
         <input

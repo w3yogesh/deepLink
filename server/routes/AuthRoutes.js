@@ -1,6 +1,7 @@
 const { Signup, Login} = require("../controllers/AuthController");
 const {userVerification} = require("../middlewares/AuthMiddleware");
-const {getUserProfile,getUserProfileById, userSearch} = require("../controllers/getUserProfile");
+const {getUserProfile} = require("../controllers/getUserProfile");// My profile and data
+const {getUserProfileById, userSearch} = require("../controllers/PublicProfileController")
 
 // user controller
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
@@ -9,11 +10,10 @@ const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreCo
 const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill} = require("../controllers/updateUserProfile")
 
 //Post Controller
-const {createPost, fetchPosts, Postlike,PostComment, fatchComments} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
 const {CreateCompany,Companies, MyCompany} =require("../controllers/CompanyController");
-
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
@@ -53,6 +53,7 @@ router.get('/userprofile/:userId',getUserProfileById);
 router.post("/post",createPost);
 router.get('/api/fetchposts', fetchPosts);
 router.put('/api/postLike', Postlike);
+router.delete('/api/removePostLike/:userId/:postId', RemovePostLike)
 router.put('/api/postComment', PostComment);
 
 // Company controller
