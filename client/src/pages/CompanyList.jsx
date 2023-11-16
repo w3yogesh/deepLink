@@ -6,6 +6,7 @@ export default function CompanyList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [allCompanies, setAllCompanies] = useState([]);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
+  const [selectedField, setSelectedField] = useState('all'); // Default: show all companies
 
   useEffect(() => {
     // Fetch all companies when the component mounts
@@ -23,16 +24,21 @@ export default function CompanyList() {
   }, []);
 
   useEffect(() => {
-    // Update the list of filtered companies as the search query changes
+    // Update the list of filtered companies as the search query or selected field changes
     setFilteredCompanies(
       allCompanies.filter((company) =>
-        company.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+        company.companyName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (selectedField === 'all' || company.field === selectedField)
       )
     );
-  }, [searchQuery, allCompanies]);
+  }, [searchQuery, allCompanies, selectedField]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleFieldChange = (e) => {
+    setSelectedField(e.target.value);
   };
 
   return (
@@ -44,6 +50,15 @@ export default function CompanyList() {
         value={searchQuery}
         onChange={handleSearchChange}
       />
+      <label htmlFor="fieldFilter">Filter by Field:</label>
+      <select id="fieldFilter" value={selectedField} onChange={handleFieldChange}>
+        <option value="all">All Fields</option>
+        {/* Add options for each field based on your data */}
+        <option value="technology">Technology</option>
+        <option value="finance">Finance</option>
+        <option value="CSE">software</option>
+        {/* Add more options as needed */}
+      </select>
       <ul>
         {filteredCompanies.map((company) => (
           <li key={company._id}>
