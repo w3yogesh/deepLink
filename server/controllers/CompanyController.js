@@ -1,9 +1,17 @@
 // CompanyController.js
+const express = require("express");
+const app = express();
+const path = require('path');
 
 const Company = require("../models/CompanyModel");
 
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+
 const CreateCompany = async (req, res,next) => {
   try {
+    const image = req.file.originalname;
+    // return res.json({message:image});
     const {
       companyName,
       field,
@@ -11,9 +19,8 @@ const CreateCompany = async (req, res,next) => {
       website,
       email,
       companySize,
-      about
+      about,
     } = req.body;
-
     // Assuming Company is a Mongoose model
     const company = await Company.create({
       companyName,
@@ -22,7 +29,8 @@ const CreateCompany = async (req, res,next) => {
       website,
       email,
       companySize,
-      about
+      about,
+      image
     });
 
     return res.status(201).json({
