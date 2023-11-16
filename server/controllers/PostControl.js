@@ -24,20 +24,46 @@ exports.createPost = async (req, res, next) => {
 
 module.exports.Postlike = async(req, res, next) => {
   try {
+    const status = false;
     const{userId, postId} = req.body;
     const like = await Like.create({
       userId,
       postId,
     });
     const likeId = like._id;
-    await Post.updateOne({_id: postId},{$push: {likes :  likeId}});
-    return res.json("Liked");
+    const response = await Post.updateOne({_id: postId},{$push: {likes :  likeId}});
+    if(response){
+      return res.json({status: true, message:"liked"});
+    }
+    return res.json({status, message:"not liked"})
     
   } catch (error) {
-    
+    return res.json(error)
   }
-
 }
+module.exports.RemovePostLike = async(req, res, next)=>{
+  try {
+    // const status = false;
+    // res.json("hello");
+    const {userId, postId} = req.params;
+    const like = await Like.findOne({postId:postId,userId:userId});
+    
+    if (!like) {
+      return res.json({ status: false, message: like });
+    }
+    const likeId = like._id;
+    const resu = await Post.updateOne({_id: postId},{$unset:{likes:likeId}});
+    
+    const result = await Like.findByIdAndDelete({_id: likeId});
+    // return res.json({ status: false, message: result });
+    // return res.json(result);
+
+      return res.status(200).json({ status: true, message: 'Like removed successfully.' });
+  } catch (error) {
+      
+  }
+}
+
 
 module.exports.PostComment = async(req, res, next) => {
   try {
@@ -70,7 +96,8 @@ module.exports.fatchComments = async (req, res, next) =>{
 
 exports.fetchPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"username firstName email"})});
+    const posts = await Post.find().populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"username firstName email"})})
+    .populate("user", "username firstName").populate("likes", "userId");
     // {path: "comments", populate:({path:"userId",}
    
     // const allComments =  posts.select("-content");

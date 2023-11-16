@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -23,11 +23,19 @@ const BasicDetails = ({ userData, setUserData }) => {
       }));
     }
   };
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-left",
+    });
 
   const [isEditMode, setIsEditMode] = useState(false);
   const handleToggleEditMode = async () => {
-    console.log("Hello");
-    console.log(userData.address[0].city);
+    // console.log("Hello");
+    // console.log(userData.address[0].city);
     setIsEditMode(!isEditMode);
     if (isEditMode) {
       try {
@@ -45,22 +53,17 @@ const BasicDetails = ({ userData, setUserData }) => {
             country: userData.address.country,
           }
         );
-        console.log(response.data.message);
+        //  console.log(userData.address._id);
+         console.log(userData);
+
 
         if (response.data.success) {
-          toast(response.data.message, {
-            position: "top-right",
-          });
+          handleSuccess(response.data.message);
         } else {
-          console.log(response.data.message);
-          toast(response.data.message, {
-            position: "top-right",
-          });
+          handleError(response.data.message);
         }
       } catch (error) {
-        toast("Server error", {
-          position: "top-right",
-        });
+        handleError("Server Error retry");
       }
     }
   };
@@ -117,7 +120,9 @@ const BasicDetails = ({ userData, setUserData }) => {
                     onChange={handleChange}
                     disabled={!isEditMode}
                   >
-                    <option value="" disabled selected>-Select Gender-</option>
+                    <option value="" disabled selected>
+                      -Select Gender-
+                    </option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="transgender">Transgender</option>
@@ -180,7 +185,7 @@ const BasicDetails = ({ userData, setUserData }) => {
                   value={
                     userData && userData.address && userData.address.length > 0
                       ? userData.address[0].country
-                      : ""
+                      : null
                   }
                   onChange={handleChange}
                   disabled={!isEditMode}
@@ -195,7 +200,7 @@ const BasicDetails = ({ userData, setUserData }) => {
                   value={
                     userData && userData.address && userData.address.length > 0
                       ? userData.address[0].city
-                      : ""
+                      : null
                   }
                   onChange={handleChange}
                   disabled={!isEditMode}

@@ -1,13 +1,94 @@
-.c1 {
-  
-    position: relative;
-    top: 380px;
-  
-  }
-  
-  .c2 {
-   
-  
-    position: relative;
-    top: 386px;
-  }
+/* Assuming you have a main container for your chat component */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* Adjust the height as needed */
+}
+
+.header-message {
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #2196F3;
+  color: white;
+  padding: 10px;
+}
+
+.chatSection {
+  display: flex;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.userList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: calc(80vh - 60px);
+  overflow-y: auto;
+}
+
+.userList li {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.userList li img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.userList li.selected {
+  background-color: #e0e0e0;
+}
+
+.messageArea {
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.chat-body {
+  display: flex;
+}
+
+.chat-users {
+  width: 30%;
+}
+
+.message-body {
+  width: 60%;
+}
+
+.own-message {
+  list-style-type: none;
+  position: relative;
+  text-align: right;
+  padding: 10px;
+}
+
+.timestamp {
+  color: #bbbbbb;
+}
+
+.message {
+  background: #eee;
+  width: auto;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: inline-block;
+  border: 1px solid #efefef;
+  border-radius: 10px;
+}
+.message-input {
+  display: block;
+}
+
+.message-input input {
+  width: 90%;
+  margin: 0 10px 0 0;
+}

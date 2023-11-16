@@ -7,8 +7,13 @@ function MyConnections(props) {
 
     const handleDeleteMyConnection = async (senderId, receiverId)=>{
       try {
-        const response = await axios.post("http://localhost:4000/deleteMyConnection", {senderId, receiverId});
-         console.log(response.data);
+        const response = await axios.delete(`http://localhost:4000/deleteMyConnection/${senderId}/${receiverId}`);
+        const {status, message} = response.data;
+        if(status){
+          console.log(message);
+        }else{
+          console.log(message);
+        }
         
       } catch (error) {
         

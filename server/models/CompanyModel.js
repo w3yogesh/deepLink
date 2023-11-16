@@ -22,14 +22,7 @@ const CompanySchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true, // If each company should have a unique email
-        // Add validation for email format
-        validate: {
-            validator: (value) => {
-                // Use a regular expression or a library to validate the email format
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-            },
-            message: "Invalid email format",
-        },
+        
     },
     companySize: {
         type: String, // Adjust the data type if it represents a numeric value
@@ -38,6 +31,21 @@ const CompanySchema = new mongoose.Schema({
     about: {
         type: String,
         required: true,
+    },
+    products:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Product", 
+        unique: true ,
+    },
+    services:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Service", 
+        unique: true ,
+    },
+    jobOpenings:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Job", 
+        unique: true 
     }
 });
 

@@ -1,17 +1,28 @@
+const { ObjectId } = require("mongodb");
 const User = require("../models/UserModel");
 
 // When user sent request to other user
 exports.connectUsers = async (req, res) => {
-  const { senderId, recipientId } = req.body;
+  const { senderId, recipientId } = req.params;
   try {
-    await User.findByIdAndUpdate(senderId, {
-      $push: { sent_pending_connections: recipientId },
+    const isSent = await User.findOne({
+      _id: senderId,
+      sent_pending_connections: recipientId,
     });
-    await User.findByIdAndUpdate(recipientId, {
-      $push: { receive_pending_connections: senderId },
-    });
+    if (isSent) return res.json({ status: false, message: "Already send" });
+    // return res.json({ status: true, message: !isSent });
 
-    res.json({ message: "Connection Pending" });
+    if (senderId !== recipientId && !isSent) {
+      const sender = await User.findByIdAndUpdate(senderId, {
+        $push: { sent_pending_connections: recipientId },
+      });
+      const receiver = await User.findByIdAndUpdate(recipientId, {
+        $push: { receive_pending_connections: senderId },
+      });
+      if (sender && receiver)
+        return res.json({ status: true, message: "Connection Pending" });
+    }
+    return res.json({ status: false, message: "Something went wrong" });
   } catch (error) {
     res.status(500).json({ error: "Failed to connect users" });
   }
@@ -52,40 +63,35 @@ exports.sentConnections = async (req, res) => {
 };
 
 exports.acceptConnection = async (req, res) => {
-  const { senderId, receiverId } = req.body;
+  const { senderId, receiverId } = req.params;
   try {
     // Find the requesting user and the target user
     const requestingUser = await User.findById(senderId);
     const targetUser = await User.findById(receiverId);
-    if (!requestingUser || !targetUser) {
+    if (!requestingUser || !targetUser ) {
       return res.status(400).json({ error: "Users not found" });
     }
-    const requestingUserID = requestingUser._id;
-    const targetUserID = targetUser._id;
+    const requestingUserID = senderId;
+    const targetUserID = receiverId;
 
-    //console.log(requestingUserID,targetUserID);
-    console.log(requestingUserID,targetUserID);
-    // Update requestingUser
-    await User.updateOne(
-      {_id: requestingUserID},
+    const res1 = await User.findByIdAndUpdate(
+      { _id: targetUserID },
       {
-        $push: { connections: targetUserID },
-        $pull: { sent_pending_connections: receiverId },
-        
-      }
-    );
-    // Update targetUser
-    await User.updateOne(
-      {_id: targetUserID},
-      {
+        $unset: { sent_pending_connections: requestingUserID },
         $push: { connections: requestingUserID },
-        $pull: { receive_pending_connections: senderId },
-       
       }
     );
-    console.log("Connected");
-    
-    res.json({ message: "Connection accepted" });
+    const res2 = await User.findByIdAndUpdate(
+      { _id: requestingUserID },
+      {
+        $pull: { receive_pending_connections: targetUserID },
+        $push: { connections: targetUserID },
+      },
+      { new: true }
+    );
+
+    if(res1 && res2) return res.json({status: true, message: "Connection accepted" });
+    else return res.json({status: false, message: "Something went wrong" });
   } catch (error) {
     res.status(500).json({ error: "Failed to accept connection" });
   }
@@ -146,15 +152,19 @@ exports.myConnections = async (req, res) => {
 };
 
 exports.deleteMyConnection = async (req, res) => {
-  const { senderId, receiverId } = req.body;
+  const { senderId, receiverId } = req.params;
   try {
-    await User.findByIdAndUpdate(senderId, {
-      $pull: {connections: receiverId },
+    const sender = await User.findByIdAndUpdate(senderId, {
+      $pull: { connections: receiverId },
     });
-    await User.findByIdAndUpdate(receiverId, {
+    const receiver = await User.findByIdAndUpdate(receiverId, {
       $pull: { connections: senderId },
     });
-    return res.json("delete succesfully")
+    if (sender && receiver) {
+      return res.json({ status: true, message: "removed successfully" });
+    } else {
+      return res.json({ status: false, message: "Something went wrong" });
+    }
   } catch (error) {}
 };
 

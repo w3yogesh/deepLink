@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Services from './Services';
+import JobOpenings from './JobOpenings';
+import { Link } from 'react-router-dom';
 
 export default function CompanyDetail() {
+  
   const { companyId } = useParams();
   const [company, setCompany] = useState(null);
 
@@ -30,6 +34,21 @@ export default function CompanyDetail() {
       <p>Field: {company.field}</p>
       <p>Headquarter: {company.headquarter}</p>
       
+      <div className="services">
+
+        <Services companyId={companyId}/>
+      </div>
+
+      <div className="products">
+
+      </div>
+
+      <div className="jobs">
+
+      <JobOpenings companyId={companyId}/>
+
+      </div>
+
       
       {/* Add more details as needed */}
     </div>

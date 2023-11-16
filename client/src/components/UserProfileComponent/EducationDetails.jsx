@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 import axios from "axios";
 
@@ -26,6 +28,15 @@ const EducationDetails = ({ userData, setUserData }) => {
     }));
   };
 
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "bottom-left",
+  });
+const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "bottom-left",
+  });
+
   const handleAddEducation = async () => {
     // console.log(userData._id);
     if (
@@ -40,7 +51,6 @@ const EducationDetails = ({ userData, setUserData }) => {
       education: [...prev.education, newEducation],
     }));
     console.log(newEducation.endDate);
-    console.log(userData.education);
     const response = await axios.put("http://localhost:4000/updateEducation", {
       userId: userData._id,
       institution: newEducation.institution,
@@ -50,12 +60,30 @@ const EducationDetails = ({ userData, setUserData }) => {
       startDate: newEducation.startDate,
       endDate: newEducation.endDate,
     });
-    console.log(response.data);
+    if (response.data.success) {
+      handleSuccess(response.data.message);
+    } else {
+      handleError(response.data.message);
+    }
   };
   const handleDeleteEducation = async(eduId) => {
       const response = await axios.delete(`http://localhost:4000/deleteEducation${eduId}`)
-      console.log(response.data);
+      if (response.data.success) {
+        handleSuccess(response.data.message);
+      } else {
+        handleError(response.data.message);
+      }
   }
+
+  const handleEditEducation = async(eduId)  => {
+    const educationToEdit = userData.education.find((edu) => edu._id === eduId);
+
+    setNewEducation(educationToEdit);
+
+    setIsEditMode(true);
+    setShowForm(true);
+  }
+
 
   return (
     <div className="education-details details">
@@ -71,7 +99,7 @@ const EducationDetails = ({ userData, setUserData }) => {
                 setShowForm(true);
               }}
             >
-              <AddCircleIcon />
+              <ArrowDropDownCircleIcon />
             </svg>
           </div>
           <div className="form-container">
@@ -110,7 +138,7 @@ const EducationDetails = ({ userData, setUserData }) => {
                 setIsEditMode(!isEditMode);
               }}
             >
-              {!isEditMode && <EditIcon />}
+              {!isEditMode && <AddCircleIcon />}
               {isEditMode && <SaveIcon />}
             </svg>
           </div>
@@ -202,6 +230,19 @@ const EducationDetails = ({ userData, setUserData }) => {
                       <DeleteIcon />
                     </svg>
                   </div>
+
+                  <div className="edit-details">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 50 50"
+                      width="50px"
+                      height="50px"
+                      onClick={()=>handleEditEducation(edu._id)}
+                    >
+                      <EditIcon />
+                    </svg>
+                  </div>
+
                   <div className="edit-details">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
