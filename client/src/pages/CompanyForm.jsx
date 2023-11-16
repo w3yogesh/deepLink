@@ -2,6 +2,9 @@ import React,{ useState } from 'react';
 import { Grid, TextField, Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 export default function CompanyForm() {
+  const [photo, setphoto] = useState(null);
+  
+
   const [formData, setFormData] = useState({
     companyName: '',
     field: '',
@@ -10,17 +13,28 @@ export default function CompanyForm() {
     email: '',
     companySize: '',
     about: '',
+    photo:null,
   });
 
   const handleSubmit =  async (e) => {
     e.preventDefault();
-    
-    console.log(formData);
-    try {
-      // Make an HTTP POST request to your backend endpoint
-      const response = await axios.post("http://localhost:4000/company", formData);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      photo: photo,
+    }));
 
-      // Handle the response from the backend if needed
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+  });
+   
+    // formData.append('photo', photo);
+    console.log(data);
+    try {
+    //   // Make an HTTP POST request to your backend endpoint
+      const response = await axios.post("http://localhost:4000/company", data);
+
+    //   // Handle the response from the backend if needed
       console.log('Backend response:', response.data.message);
 
       // Reset the form after successful submission
@@ -41,11 +55,15 @@ export default function CompanyForm() {
   };
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
+    const { name , value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [id]: value,
+      [name]: value,
     }));
+  };
+
+  const handleFileChange = (event) => {
+    setphoto(event.target.files[0]);   
   };
 
   return (
@@ -53,7 +71,7 @@ export default function CompanyForm() {
       <Grid container spacing={2} style={{ marginTop: '2rem' }}>
         <Grid item xs={6}>
           <TextField
-            id='companyName'
+            name='companyName'
             label='Company name'
             fullWidth
             variant='outlined'
@@ -61,12 +79,12 @@ export default function CompanyForm() {
           />
         </Grid>
         <Grid item xs={6}>
-          <TextField id='field' label='Field' fullWidth variant='outlined'   onChange={handleChange} />
+          <TextField name='field' label='Field' fullWidth variant='outlined'   onChange={handleChange} />
         </Grid>
       </Grid>
 
       <TextField
-        id='headquarter'
+        name='headquarter'
         label='Headquarter'
         fullWidth
         variant='outlined'
@@ -74,7 +92,7 @@ export default function CompanyForm() {
         onChange={handleChange}
       />
       <TextField
-        id='website'
+        name='website'
         label='Website of Company'
         fullWidth
         variant='outlined'
@@ -84,7 +102,7 @@ export default function CompanyForm() {
       />
       <TextField
         type='email'
-        id='email'
+        name='email'
         label='Email'
         fullWidth
         variant='outlined'
@@ -93,7 +111,7 @@ export default function CompanyForm() {
 
       />
       <TextField
-        id='companySize'
+        name='companySize'
         label='Company-Size'
         fullWidth
         variant='outlined'
@@ -102,16 +120,16 @@ export default function CompanyForm() {
       />
 
       <TextField
-        id='about'
+        name='about'
         label='Tell us brief about your company'
         multiline
-
         fullWidth
         variant='outlined'
         margin='normal'
         onChange={handleChange}
       />
-
+        <input type="file"  id="photo"  name='file'
+        onChange={(event)=>handleFileChange(event)}/>
       <Button
         variant='contained'
         color='primary'
