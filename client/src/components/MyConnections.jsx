@@ -3,7 +3,6 @@ import axios from "axios";
 
 function MyConnections(props) {
     const [users, setUsers] = useState([]);
-    const [removeBtn, setRemoveBtn] = useState('Remove')
     const userId = props.senderId;
 
     const handleDeleteMyConnection = async (senderId, receiverId)=>{
@@ -12,7 +11,6 @@ function MyConnections(props) {
         const {status, message} = response.data;
         if(status){
           console.log(message);
-          setRemoveBtn('Removed');
         }else{
           console.log(message);
         }
@@ -43,7 +41,7 @@ function MyConnections(props) {
             <br />
             Name: {users.firstName}
             <br/>
-            <button onClick={()=>{handleDeleteMyConnection(userId,users._id)}}>{removeBtn}</button>
+            <button onClick={()=>{handleDeleteMyConnection(userId,users._id)}}>Drop</button>
           </li>
         ))}
       </ul>

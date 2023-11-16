@@ -37,10 +37,10 @@ router.delete("/deleteSkill:skillId",deleteSkill);
 router.get('/api/users', users);// List of all users
 
 // User Controller
-router.get('api/connect:senderId/:recipientId', connectUsers);
+router.get('/api/connect/:senderId/:recipientId', connectUsers);
 router.get('/getConnections:userId', getConnections);
 router.get('/sentConnections:userId', sentConnections);
-router.post('/accept-connection', acceptConnection);
+router.get('/api/accept-connection/:senderId/:receiverId', acceptConnection);
 router.post('/ignore-connection', ignoreConnection);
 router.post('/drop-connection', dropConnection);
 router.get('/myConnections:userId', myConnections);

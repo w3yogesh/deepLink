@@ -17,12 +17,13 @@ function UserList(props) {
             const response = await axios.get(`http://localhost:4000/api/connect/${senderId}/${recipientId}`);
             const {status, message} = response.data;
             if (status) {
-              // Handle the case when the connection is accepted
-              // You can call a function like onAccept() here if needed
+              console.log(message);
               setSentConnect(prev => [...prev, recipientId])
             }
+            else{
+              console.log(message);
+            }
           } catch (error) {
-            // Handle any errors
             console.error('Error:', error);
           }
         };

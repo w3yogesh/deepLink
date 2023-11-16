@@ -20,10 +20,7 @@ function ConnectionSent(props) {
   const handleDropConnection = async (senderId, receiverId)=> {
     try {
       const response = await axios.post('http://localhost:4000/drop-connection',{senderId, receiverId});
-      //console.log(response.data); // Log the response data
       if (response.data.message === 'drop Successfully') {
-        // Handle the case when the connection is accepted
-        // You can call a function like onAccept() here if needed
         console.log('droped successfully');
         setUsers(prev => prev.filter(user => user._id !== receiverId))
       }
