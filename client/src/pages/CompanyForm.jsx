@@ -1,10 +1,13 @@
-import React,{ useState } from 'react';
-import { Grid, TextField, Button, Checkbox } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Grid, TextField, Button, Typography } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
+
 export default function CompanyForm() {
   const [photo, setphoto] = useState(null);
   
 
+  const [options, setOptions] = useState([]);
   const [formData, setFormData] = useState({
     companyName: '',
     field: '',
@@ -16,7 +19,7 @@ export default function CompanyForm() {
     photo:null,
   });
 
-  const handleSubmit =  async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -38,20 +41,21 @@ export default function CompanyForm() {
       console.log('Backend response:', response.data.message);
 
       // Reset the form after successful submission
-     
+      // setFormData({
+      //   companyName: '',
+      //   field: '',
+      //   headquarter: '',
+      //   website: '',
+      //   email: '',
+      //   companySize: '',
+      //   about: '',
+      //   logo: null,
+      //   coverImage: null,
+      // });
     } catch (error) {
       // Handle any errors that occur during the request
       console.error('Error submitting form:', error.message);
     }
-    //  setFormData({
-    //     companyName: '',
-    //     field: '',
-    //     headquarter: '',
-    //     website: '',
-    //     email: '',
-    //     companySize: '',
-    //     about: '',
-    //   });
   };
 
   const handleChange = (e) => {
@@ -67,7 +71,7 @@ export default function CompanyForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
       <Grid container spacing={2} style={{ marginTop: '2rem' }}>
         <Grid item xs={6}>
           <TextField
@@ -83,21 +87,60 @@ export default function CompanyForm() {
         </Grid>
       </Grid>
 
-      <TextField
-        name='headquarter'
-        label='Headquarter'
-        fullWidth
-        variant='outlined'
-        margin='normal'
-        onChange={handleChange}
+      <Autocomplete
+        id='headquarter'
+        options={options}
+        freeSolo
+        onInputChange={async (e, newInputValue) => {
+          if (newInputValue) {
+            try {
+              const response = await axios.get(
+                `http://api.geonames.org/searchJSON?q=${newInputValue}&maxRows=15&username=jeet24`
+              );
+
+              // Extract the names of places from the response and update the options
+              const newOptions = response.data.geonames.map((place) => place.name);
+              setOptions(newOptions);
+            } catch (error) {
+              console.error('Error fetching locations:', error.message);
+            }
+          }
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            id='headquarter'
+            label='Headquarter'
+            variant='outlined'
+            margin='normal'
+            onChange={handleChange}
+          />
+        )}
       />
+      {/* New input for logo image */}
+
+      {/* <input
+        type='file'
+        accept='image/*'
+        id='logo'
+        onChange={(e) => handleFileChange(e, 'logo')}
+        style={{ display: 'none' }}
+      />
+      <label htmlFor='logo'>
+        <Button variant='contained' color='default' component='span' style={{ marginTop: '1rem' }}>
+          Upload Logo
+        </Button>
+      </label> */}
+
+      {/* New input for cover image */}
+      
+
       <TextField
         name='website'
         label='Website of Company'
         fullWidth
         variant='outlined'
         margin='normal'
-       
         onChange={handleChange}
       />
       <TextField
@@ -108,7 +151,6 @@ export default function CompanyForm() {
         variant='outlined'
         margin='normal'
         onChange={handleChange}
-
       />
       <TextField
         name='companySize'

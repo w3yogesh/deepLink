@@ -46,7 +46,7 @@ module.exports.Signup = async (req, res, next) => {
         username,
         firstName,
         lastName,
-        password,
+        password, 
         education : educationId,
         address: addressId,
         createdAt

@@ -58,7 +58,7 @@ function ConnectionRequest(props) {
 
   return (
     <div>
-      <h2>Conection Requests</h2>
+      <h2>Connection Requests</h2>
       <ul>
         {users.map((users) => (
           <li key={users._id}>

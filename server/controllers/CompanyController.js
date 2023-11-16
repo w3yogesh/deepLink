@@ -4,11 +4,12 @@ const app = express();
 const path = require('path');
 
 const Company = require("../models/CompanyModel");
+const Service=require("../models/ServiceModel");
+const Job=require("../models/JobModel");
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-
-const CreateCompany = async (req, res,next) => {
+const CreateCompany = async (req, res, next) => {
   try {
     const image = req.file.originalname;
     // return res.json({message:image});
@@ -21,7 +22,24 @@ const CreateCompany = async (req, res,next) => {
       companySize,
       about,
     } = req.body;
+    
     // Assuming Company is a Mongoose model
+    // Additional validation
+    // if (!companyName || !email || !companySize || !about || !logo || !coverImage) {
+    //   return res.status(400).json({ success: false, message: "Missing required fields" });
+    // }
+
+    // Validate email format (you can use a library or a regex for more thorough validation)
+    // if (!isValidEmail(email)) {
+    //   return res.status(400).json({ success: false, message: "Invalid email format" });
+    // }
+
+    // Validate numeric fields
+    // if (isNaN(companySize)) {
+    //   return res.status(400).json({ success: false, message: "Invalid companySize value" });
+    // }
+
+
     const company = await Company.create({
       companyName,
       field,
@@ -31,6 +49,7 @@ const CreateCompany = async (req, res,next) => {
       companySize,
       about,
       image
+
     });
 
     return res.status(201).json({
@@ -44,6 +63,16 @@ const CreateCompany = async (req, res,next) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
+
+
+
+// Utility function for email validation
+function isValidEmail(email) {
+  // Implement your email validation logic here
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+
 
 const Companies=async (req, res) => {
   const { query } = req.query;
@@ -82,4 +111,88 @@ const MyCompany= async (req, res) => {
 };
 
 
-module.exports = { CreateCompany, Companies,MyCompany};
+const CreateService=async(req,res)=>{
+  try {
+    const { serviceName, description, price,createdBy } = req.body;
+
+    // Validate request data
+    if ( !serviceName || !description || !price || !createdBy) {
+      return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+
+
+
+    // Create a new service
+    const newService = new Service({
+      serviceName,
+      description,
+      price,
+      createdBy, 
+    });
+
+    // Save the service to the database
+    const savedService = await newService.save();
+
+    res.status(201).json({ success: true, message: 'Service created successfully', data: savedService });
+  } catch (error) {
+    console.error('Error creating service:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+
+const CreateJob=async(req,res)=>{
+  try {
+    // Destructure job data from the request body
+    const { title, company, location, description, requirements, postedBy } = req.body;
+
+    // Create a new job instance
+    const newJob = new Job({
+      title,
+      company,
+      location,
+      description,
+      requirements,
+      postedBy,
+    });
+
+    // Save the job to the database
+    const savedJob = await newJob.save();
+
+    res.json({ success: true, job: savedJob });
+  } catch (error) {
+    console.error('Error submitting job form:', error.message);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+
+}
+
+const GetService=async(req,res)=>{
+  const companyId = req.params.companyId;
+
+  try {
+    const services = await Service.find({ createdBy: companyId });
+
+    res.json({ services });
+  } catch (error) {
+    console.error('Error fetching services:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+const GetJobs=async(req,res)=>{
+  const companyId = req.params.companyId;
+
+  try {
+    const jobs = await Job.find({ postedBy: companyId });
+
+    res.json({ jobs });
+  } catch (error) {
+    console.error('Error fetching jobs:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
+
+module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs};
+

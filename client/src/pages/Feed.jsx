@@ -86,7 +86,7 @@ const Feed = () => {
   const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
   return (
     <div>
-      <Navbar />
+      <Navbar senderId={userId} />
 
       <div className="grid-container">
       <div className="feed-wrapper">

@@ -25,7 +25,7 @@ function ConnectionSent(props) {
         setUsers(prev => prev.filter(user => user._id !== receiverId))
       }
       else  {
-        console.log('not droped');
+        console.log('not dropped');
       }
     } catch (error) {
       // Handle any errors
