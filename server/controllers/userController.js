@@ -2,16 +2,19 @@ const User = require("../models/UserModel");
 
 // When user sent request to other user
 exports.connectUsers = async (req, res) => {
-  const { senderId, recipientId } = req.body;
+  const { senderId, recipientId } = req.params;
   try {
-    await User.findByIdAndUpdate(senderId, {
-      $push: { sent_pending_connections: recipientId },
-    });
-    await User.findByIdAndUpdate(recipientId, {
-      $push: { receive_pending_connections: senderId },
-    });
-
-    res.json({ message: "Connection Pending" });
+    if(senderId !== recipientId){
+      const sender = await User.findByIdAndUpdate(senderId, {
+        $push: { sent_pending_connections: recipientId },
+      });
+      const receiver = await User.findByIdAndUpdate(recipientId, {
+        $push: { receive_pending_connections: senderId },
+      });
+      if(sender && receiver)
+        return res.json({ status: true, message: "Connection Pending" });
+    }
+      return res.json({ status: false, message: "Something went wrong" });
   } catch (error) {
     res.status(500).json({ error: "Failed to connect users" });
   }
@@ -146,15 +149,19 @@ exports.myConnections = async (req, res) => {
 };
 
 exports.deleteMyConnection = async (req, res) => {
-  const { senderId, receiverId } = req.body;
+  const { senderId, receiverId } = req.params;
   try {
-    await User.findByIdAndUpdate(senderId, {
+    const sender = await User.findByIdAndUpdate(senderId, {
       $pull: {connections: receiverId },
     });
-    await User.findByIdAndUpdate(receiverId, {
+    const receiver = await User.findByIdAndUpdate(receiverId, {
       $pull: { connections: senderId },
     });
-    return res.json("delete succesfully")
+    if(sender && receiver){
+      return res.json({status:true, message:"removed successfully"})
+    }else{
+      return res.json({status:false, message:"Something went wrong"})
+    }
   } catch (error) {}
 };
 

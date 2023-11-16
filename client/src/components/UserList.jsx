@@ -11,17 +11,12 @@ function UserList(props) {
     const [sentConnect, setSentConnect] = useState([])
 
     const senderId = props.senderId;
-    function handleSendConnectRequest(senderId,recipientId) {
-      console.log(`senderId : ${senderId}`);
-      console.log(`recipientId : ${recipientId}`);
-       
-        // Use an async function to perform the POST request
+    function handleSendConnectRequest(senderId,recipientId) {       
         const sendConnectRequest = async () => {
-            
           try {
-            const response = await axios.post('http://localhost:4000/connect', { senderId, recipientId });
-            //console.log(response.data); // Log the response data
-            if (response.data.message === 'Connection Pending') {
+            const response = await axios.get(`http://localhost:4000/api/connect/${senderId}/${recipientId}`);
+            const {status, message} = response.data;
+            if (status) {
               // Handle the case when the connection is accepted
               // You can call a function like onAccept() here if needed
               setSentConnect(prev => [...prev, recipientId])
