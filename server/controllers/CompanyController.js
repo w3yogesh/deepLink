@@ -49,7 +49,6 @@ const CreateCompany = async (req, res, next) => {
       companySize,
       about,
       image
-
     });
 
     return res.status(201).json({

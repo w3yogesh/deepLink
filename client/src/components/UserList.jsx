@@ -62,7 +62,6 @@ function UserList(props) {
           </li>
         ))}
       </ul>
-      <Button variant="contained" onClick={()=>{console.log(sentConnect)}}> console </Button>
     </div>
   );
 }

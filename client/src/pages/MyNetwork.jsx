@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/myNetwork.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 import UserListComponent from "../components/UserList";
 import ConnectionRequest from "../components/ConnectionRequests";
@@ -15,9 +18,27 @@ const MyNetwork = () => {
   const [showConnectionRequest, setShowConnectionRequest] = useState(false);
   const [showConnectionSent, setShowConnectionSent] = useState(false);
   const [showMyConnections, setShowMyConnections] = useState(false);
-  const [userProfile, setUserProfile] = useState("");
-  const myId = "6545fa65389a9cf8a2aa5757";
+  const [myId, setMyId] = useState("")
+  const navigate = useNavigate();
 
+
+  useEffect(() => {
+    const userAuth = async () => {
+      const response = await axios.post(
+        "http://localhost:4000",
+        {},
+        { withCredentials: true }
+      )
+      const {status, user} = response.data;
+        if(status){
+          setMyId(user._id);
+          console.log(myId)
+        }else{
+          navigate("/login");
+        }
+      }
+    userAuth();
+  }, []);
 
   return (
     <>
