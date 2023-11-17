@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { EducationUserProfile } from "./EducationUserProfile";
 import {ArrowUp, ArrowDown} from "../MySVGIcons.jsx";
+import { ExperienceUserProfile } from "./ExperienceUserProfile.jsx";
 
 export default function MainUserProfile({ userData }) {
   const city =
@@ -57,7 +58,10 @@ export default function MainUserProfile({ userData }) {
       {isDropdownOpen &&   (
       <EducationUserProfile userData={userData}/>
       )}
+      
       </div>
+
+      
     </div>
   );
 }

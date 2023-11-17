@@ -10,6 +10,7 @@ import BasicDetails from "../components/MyProfileComponent/BasicDetails";
 import ShortProfile from "../components/MyProfileComponent/ShortProfile";
 import EducationDetails from "../components/MyProfileComponent/EducationDetails";
 import SkillDetails from "../components/MyProfileComponent/SkillDetails";
+import ExperienceDetails from "../components/MyProfileComponent/ExperienceDetails";
 
 
 const MyProfile = (props) => {
@@ -86,6 +87,7 @@ const MyProfile = (props) => {
             <BasicDetails userData={userData} setUserData={setUserData} />
             <EducationDetails userData={userData} setUserData={setUserData} />
             <SkillDetails userData={userData} setUserData={setUserData} />
+            <ExperienceDetails userData={userData} setUserData={setUserData}/>
           </div>
         </div>
       </div>

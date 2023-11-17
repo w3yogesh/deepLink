@@ -65,6 +65,7 @@ const UserDetails = () => {
       <div className="user-profile-container grid-container">
             <ShortUserProfile userData={user} />
             <MainUserProfile userData={user} />
+            
       </div>
     </>
   );

@@ -96,6 +96,13 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  experience: [
+    { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Experience", 
+      unique: true,
+    },
+  ],
 });
 
 userSchema.pre("save", async function () {
