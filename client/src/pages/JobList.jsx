@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const JobList = ({ companyId }) => {
+
+  function formatDateFromLong(dateInLong) {
+    const date = new Date(dateInLong);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+
+    return `${day}/${month}/${year}`;
+  }
+
+
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
@@ -23,9 +34,10 @@ const JobList = ({ companyId }) => {
       {jobs.map((job) => (
         <div key={job._id}>
           <h3>{job.title}</h3>
+          {/* <p>Company Name: {companyId.companyName}</p> */}
           <p>Requirements: {job.requirements}</p>
           <p>Location: {job.location}</p>
-          <p>Posted on: {job.createdAt}</p>
+          <p>Posted on: {formatDateFromLong(job.createdAt)}</p>
           {/* You can add more details as needed */}
         </div>
       ))}

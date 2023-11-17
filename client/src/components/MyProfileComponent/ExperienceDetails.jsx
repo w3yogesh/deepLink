@@ -9,28 +9,30 @@ import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 import axios from "axios";
 
-const EducationDetails = ({ userData, setUserData }) => {
-  function formatDateFromLong(dateInLong) {
-    const date = new Date(dateInLong);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-    const day = date.getDate().toString().padStart(2, "0");
+const ExperienceDetails = ({ userData, setUserData }) => {
 
-    return `${day}/${month}/${year}`;
-  }
+    function formatDateFromLong(dateInLong) {
+        const date = new Date(dateInLong);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+        const day = date.getDate().toString().padStart(2, "0");
+    
+        return `${day}/${month}/${year}`;
+      }
+
   const [showForm, setShowForm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [newEducation, setNewEducation] = useState({
-    institution: "",
-    degree: "",
-    field: "",
-    grade: "",
-    startDate: "",
-    endDate: "",
+  const [newExperience, setNewExperience] = useState({
+    companyName:"",
+    employmentType:"",
+    location:"",
+    description:"",
+    startDate:"",
+    endDate:"",
   });
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setNewEducation((prev) => ({
+    setNewExperience((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -45,28 +47,28 @@ const handleSuccess = (msg) =>
     position: "bottom-left",
   });
 
-  const handleAddEducation = async () => {
+  const handleAddExperience = async () => {
     // console.log(userData._id);
     if (
-      newEducation.institution === "" ||
-      newEducation.degree === "" ||
-      newEducation.field === "" ||
-      newEducation.grade === ""
+     setNewExperience.companyName === "" ||
+     setNewExperience.employmentType === "" ||
+     setNewExperience.location === "" ||
+     setNewExperience.description === ""
     )
       return;
     setUserData((prev) => ({
       ...prev,
-      education: [...prev.education, newEducation],
+      experience: [...prev.experience, newExperience],
     }));
 
-    const response = await axios.put("http://localhost:4000/updateEducation", {
+    const response = await axios.put("http://localhost:4000/updateExperience", {
       userId: userData._id,
-      institution: newEducation.institution,
-      degree: newEducation.degree,
-      field: newEducation.field,
-      grade: newEducation.grade,
-      startDate: newEducation.startDate,
-      endDate: newEducation.endDate,
+      companyName: newExperience.companyName,
+      employmentType: newExperience.employmentType,
+      location: newExperience.location,
+      description: newExperience.description,
+      startDate: newExperience.startDate,
+      endDate: newExperience.endDate,
     });
     if (response.data.success) {
       handleSuccess(response.data.message);
@@ -74,8 +76,8 @@ const handleSuccess = (msg) =>
       handleError(response.data.message);
     }
   };
-  const handleDeleteEducation = async(eduId) => {
-      const response = await axios.delete(`http://localhost:4000/deleteEducation${eduId}`)
+  const handleDeleteExperience = async(expId) => {
+      const response = await axios.delete(`http://localhost:4000/deleteExperience${expId}`)
       if (response.data.success) {
         handleSuccess(response.data.message);
       } else {
@@ -83,10 +85,10 @@ const handleSuccess = (msg) =>
       }
   }
 
-  const handleEditEducation = async(eduId)  => {
-    const educationToEdit = userData.education.find((edu) => edu._id === eduId);
+  const handleEditExperience= async(expId)  => {
+    const experienceToEdit = userData.experience.find((exp) => exp._id === expId);
 
-    setNewEducation(educationToEdit);
+    setNewExperience(experienceToEdit);
 
     setIsEditMode(true);
     setShowForm(true);
@@ -111,7 +113,7 @@ const handleSuccess = (msg) =>
           </div>
           <div className="form-container">
             <div className="education-info-section">
-              <h4>Add Education</h4>
+              <h4>Add Experience</h4>
             </div>
           </div>
         </>
@@ -140,7 +142,7 @@ const handleSuccess = (msg) =>
               height="50px"
               onClick={() => {
                 if (isEditMode) {
-                  handleAddEducation();
+                  handleAddExperience();
                 }
                 setIsEditMode(!isEditMode);
               }}
@@ -152,25 +154,25 @@ const handleSuccess = (msg) =>
           <div className="form-container">
             <form action="">
               <div className="education-info-section">
-                <h4>Add Education</h4>
+                <h4>Add Experience</h4>
                 <div className="form-row">
                   <div className="form-data">
-                    <label htmlFor="institution">Institute</label>
+                    <label htmlFor="institution">Company Name</label>
                     <input
                       type="text"
-                      name="institution"
+                      name="companyName"
                       onChange={handleChange}
-                      value={newEducation.institution}
+                      value={newExperience.companyName}
                       disabled={!isEditMode}
                       required
                     />
                   </div>
                   <div className="form-data">
-                    <label htmlFor="degree">Degree</label>
+                    <label htmlFor="degree">Employment Type</label>
                     <input
                       type="text"
-                      name="degree"
-                      value={newEducation.degree}
+                      name="employmentType"
+                      value={newExperience.employmentType}
                       onChange={handleChange}
                       disabled={!isEditMode}
                       required
@@ -179,21 +181,21 @@ const handleSuccess = (msg) =>
                 </div>
                 <div className="form-row">
                   <div className="form-data">
-                    <label htmlFor="studyfield">Field of study</label>
+                    <label htmlFor="studyfield">Location</label>
                     <input
                       type="text"
-                      name="field"
-                      value={newEducation.field}
+                      name="location"
+                      value={newExperience.location}
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
                   </div>
                   <div className="form-data">
-                    <label htmlFor="grade">Grade</label>
+                    <label htmlFor="grade">Description</label>
                     <input
                       type="text"
-                      name="grade"
-                      value={newEducation.grade}
+                      name="description"
+                      value={newExperience.description}
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -205,7 +207,7 @@ const handleSuccess = (msg) =>
                     <input
                       type="date"
                       name="startDate"
-                      value={newEducation.startDate}
+                      value={newExperience.startDate}
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -215,7 +217,7 @@ const handleSuccess = (msg) =>
                     <input
                       type="date"
                       name="endDate"
-                      value={newEducation.endDate}
+                      value={newExperience.endDate}
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -224,7 +226,7 @@ const handleSuccess = (msg) =>
               </div>
             </form>
             <div className="all-educations">
-              {userData.education.map((edu, index) => (
+              {userData.experience.map((exp, index) => (
                 <div key={index} style={{ border: "1px solid black" }}>
                   <div className="edit-details">
                     <svg
@@ -232,7 +234,7 @@ const handleSuccess = (msg) =>
                       viewBox="0 0 50 50"
                       width="50px"
                       height="50px"
-                      onClick={()=>handleDeleteEducation(edu._id)}
+                      onClick={()=>handleDeleteExperience(exp._id)}
                     >
                       <DeleteIcon />
                     </svg>
@@ -244,7 +246,7 @@ const handleSuccess = (msg) =>
                       viewBox="0 0 50 50"
                       width="50px"
                       height="50px"
-                      onClick={()=>handleEditEducation(edu._id)}
+                      onClick={()=>handleEditExperience(exp._id)}
                     >
                       <EditIcon />
                     </svg>
@@ -270,34 +272,34 @@ const handleSuccess = (msg) =>
                   
                   <div className="institution">
                     <h4 className="institution-heading">
-                      Institution: <b>{edu.institution}</b>
+                      Company Name: <b>{exp.companyName}</b>
                     </h4>
                   </div>
                   <div className="degree">
                     <p>
-                      Degree: <b>{edu.degree}</b>
+                    Employement Type: <b>{exp.employmentType}</b>
                     </p>
                   </div>
                   <div className="field">
                     <p>
-                      Field of Study: <b>{edu.field}</b>
+                      Location: <b>{exp.location}</b>
                     </p>
                   </div>
                   <div className="grade">
                     <p>
-                      Grade: <b>{edu.grade}</b>
+                      Description: <b>{exp.description}</b>
                     </p>
                   </div>
                   <div className="date">
                     <span>
                       <p>
-                        startDate: <b>{formatDateFromLong(edu.startDate)}</b>
+                        startDate: <b>{formatDateFromLong(exp.startDate)}</b>
                       </p>
                     </span>{" "}
                     <span>
                       {" "}
                       <p>
-                        endDate: <b>{formatDateFromLong(edu.endDate)}</b>
+                        endDate: <b>{formatDateFromLong(exp.endDate)}</b>
                       </p>
                     </span>
                   </div>
@@ -311,4 +313,4 @@ const handleSuccess = (msg) =>
   );
 };
 
-export default EducationDetails;
+export default ExperienceDetails;

@@ -191,7 +191,17 @@ const GetJobs=async(req,res)=>{
   }
 }
 
+const Jobs=async(req,res)=>{
+  try{
+    const jobs=await Job.find();
+    res.json({jobs});
+  }catch(error){
+    console.error('Error fetching jobs:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
 
 
-module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs};
+
+module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs};
 
