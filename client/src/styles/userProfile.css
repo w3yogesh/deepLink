@@ -1,0 +1,138 @@
+.user-profile-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profile-sidebar {
+    width: 30%;
+}
+
+.short-profile-view {
+    text-align: center;
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 10px;
+}
+
+.main-UserProfile {
+    width: 65%;
+    margin: 0 0 0 20px;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.follow-btn,
+.message-btn {
+    width: 46%;
+    margin-top: 10px;
+}
+
+.follow-btn a,
+.message-btn:hover a {
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.message-btn a {
+    color: #007BFF;
+}
+
+.userName {
+    font-size: 22px;
+    margin: 10px 0 14px 0;
+}
+
+.skills {
+    margin: 14px 0;
+}
+
+.profile-skill {
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 10px;
+    margin: 10px 0 0 0;
+}
+
+ul.skill-list {
+    list-style-type: none;
+}
+
+li.skill-items {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 16px;
+    margin: 0 0 10px 0;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+p.userLocation {
+    color: rgba(0, 0, 0, .6);
+}
+
+.user-about {
+    border: 1px solid #bbb;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.user-label {
+    padding: 4px 10px;
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin: 0 0 2px 0;
+}
+
+span.user-label-value {
+    font-weight: 500;
+}
+
+.user-label label {
+    width: 53px;
+}
+
+span.user-label-tag {
+    width: 20%;
+    color: #4b4b4b;
+    font-weight: 500;
+}
+.user-education {
+    border: 1px solid #bbb;
+    margin-top: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.sDate, .eDate {
+    width: 40%;
+}
+.eDate .user-label-tag, .sDate .user-label-tag {
+    margin: 0 20px 0 0;
+}
+.even-education, .odd-education {
+    border: 1px solid;
+    margin: 10px;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+.education-dropdown {
+    display: flex;
+    align-items: center;
+}
+
+.arrow {
+    margin-right: 15px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.education-dropdown h3 {
+    display: inline-block;
+}

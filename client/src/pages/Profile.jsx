@@ -14,7 +14,6 @@ import MyConnections from "../components/MyConnections";
 // import "../styles/Profile.css";
 
 
-import ProfileUpdateForm from "./ProfileUpdateForm";
 import Navbar from "../components/Navbar";
 
 import Button from "@mui/material/Button";

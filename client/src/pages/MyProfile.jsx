@@ -5,14 +5,14 @@ import axios from "axios";
 import { ToastContainer} from "react-toastify";
 
 import Navbar from "../components/Navbar";
-import "../styles/UserDetails.css";
-import BasicDetails from "../components/UserProfileComponent/BasicDetails";
-import ShortProfile from "../components/UserProfileComponent/ShortProfile";
-import EducationDetails from "../components/UserProfileComponent/EducationDetails";
-import SkillDetails from "../components/UserProfileComponent/SkillDetails";
+import "../styles/MyProfile.css";
+import BasicDetails from "../components/MyProfileComponent/BasicDetails";
+import ShortProfile from "../components/MyProfileComponent/ShortProfile";
+import EducationDetails from "../components/MyProfileComponent/EducationDetails";
+import SkillDetails from "../components/MyProfileComponent/SkillDetails";
 
 
-const UserDetails = (props) => {
+const MyProfile = (props) => {
   const [userProfile, setUserProfile] = useState("");
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -94,4 +94,4 @@ const UserDetails = (props) => {
   );
 };
 
-export default UserDetails;
+export default MyProfile;

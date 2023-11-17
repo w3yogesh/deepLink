@@ -1,6 +1,6 @@
+const User = require("../models/UserModel");
 module.exports.userSearch = async(req, res, )=>{
     const {query} = req.query;
-  
     try {
       const results = await User.find({
         $or: [
@@ -19,7 +19,7 @@ module.exports.userSearch = async(req, res, )=>{
   module.exports.getUserProfileById= async (req,res,next)=>{
     const {userId}=req.params;
     try{
-    const user=await User.findById(userId);
+    const user=await User.findById(userId).select("-password -createdAt -updatedAt").populate("skill").populate("address").populate("education").populate("posts");
     if(!user){
       return res.status(404).json({ success: false, message: "user not found" });
     }
