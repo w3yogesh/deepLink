@@ -31,7 +31,7 @@ export default function CompanyForm() {
       data.append(key, value);
   });
    
-    // formData.append('photo', photo);
+    //formData.append('photo', photo);
     console.log(data);
     try {
     //   // Make an HTTP POST request to your backend endpoint
@@ -59,10 +59,10 @@ export default function CompanyForm() {
   };
 
   const handleChange = (e) => {
-    const { name , value } = e.target;
+    const { id , value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [id]: value,
     }));
   };
 
@@ -75,7 +75,7 @@ export default function CompanyForm() {
       <Grid container spacing={2} style={{ marginTop: '2rem' }}>
         <Grid item xs={6}>
           <TextField
-            name='companyName'
+            id='companyName'
             label='Company name'
             fullWidth
             variant='outlined'
@@ -88,7 +88,7 @@ export default function CompanyForm() {
       </Grid>
 
       <Autocomplete
-        id='headquarter'
+        name='headquarter'
         options={options}
         freeSolo
         onInputChange={async (e, newInputValue) => {
@@ -136,7 +136,7 @@ export default function CompanyForm() {
       
 
       <TextField
-        name='website'
+        id='website'
         label='Website of Company'
         fullWidth
         variant='outlined'
@@ -145,7 +145,7 @@ export default function CompanyForm() {
       />
       <TextField
         type='email'
-        name='email'
+        id='email'
         label='Email'
         fullWidth
         variant='outlined'
@@ -153,7 +153,7 @@ export default function CompanyForm() {
         onChange={handleChange}
       />
       <TextField
-        name='companySize'
+        id='companySize'
         label='Company-Size'
         fullWidth
         variant='outlined'
@@ -162,7 +162,7 @@ export default function CompanyForm() {
       />
 
       <TextField
-        name='about'
+        id='about'
         label='Tell us brief about your company'
         multiline
         fullWidth
