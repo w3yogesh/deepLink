@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/userProfileComponent/ShortProfile.css";
+import "../../styles/MyProfileComponent/ShortProfile.css";
 
 const FeedSidebar = ({userData}) => {
   return (
