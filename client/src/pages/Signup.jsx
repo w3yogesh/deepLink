@@ -134,7 +134,7 @@ const Signup = () => {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/profile");
+          navigate("/myprofile");
         }, 1000);
       } else {
         handleError(message);

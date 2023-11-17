@@ -1,8 +1,58 @@
 //SideBar user Profile
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ShortUserProfile = ({ userData }) => {
+  const recipientId = userData._id;
+  const [senderId, setSenderId] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const navigate = useNavigate();
+
+
+const handleAuth = async () => {
+      const { data } = await axios.post(
+        "http://localhost:4000",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      if (status) {
+        setSenderId(user._id);
+      }
+      else {
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    };
+
+  // console.log(senderId);
+  const handleConnect = async () => {
+    // console.log("hello")
+    if (senderId) {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/connect/${senderId}/${recipientId}`
+        );
+        const { status, message } = response.data;
+        if (status) {
+          console.log(message);
+          setIsConnected(true);
+        } else {
+          console.log(message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    
+    }
+    else{
+      handleAuth();
+    }
+   
+  };
+
   const city =
     userData && userData.address && userData.address.length > 0
       ? userData.address[0].city
@@ -11,6 +61,7 @@ const ShortUserProfile = ({ userData }) => {
     userData && userData.address && userData.address.length > 0
       ? userData.address[0].country
       : null;
+
   console.log(userData);
   return (
     <div className="profile-sidebar left">
@@ -29,8 +80,8 @@ const ShortUserProfile = ({ userData }) => {
           <p className="userConections"></p>
         </div>
         <div className="profile-actions">
-          <div className="follow-btn primary-button">
-            <a href="">Connect</a>
+          <div className="follow-btn primary-button" onClick={handleConnect} {...isConnected ? "disabled":""}>
+            <span>{isConnected === true ?" Connected ": " Connect "}</span>
           </div>
           <div className="message-btn secondary-button">
             <a href="">Message</a>

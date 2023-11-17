@@ -54,20 +54,20 @@ function ConnectionRequest(props) {
       console.error('Error:', error);
     }
   }
-  
+  console.log(users)
 
   return (
     <div>
       <h2>Connection Requests</h2>
       <ul>
-        {users.map((users) => (
-          <li key={users._id}>
-            User ID: {users._id}
+      {users.map((user) => (
+          <li key={user._id}>
+            User ID: {user._id}
             <br />
-            Name: {users.firstName}
+            Name: {user.firstName}
             <br/>
-            <button onClick={()=>handleRequestIgnore(userId,users._id)}>ignore</button>
-            <button onClick={()=>handleRequestAccept(userId,users._id)}>Accept</button>
+            <button onClick={()=>handleRequestIgnore(userId,user._id)}>ignore</button>
+            <button onClick={()=>handleRequestAccept(userId,user._id)}>Accept</button>
           </li>
         ))}
       </ul>

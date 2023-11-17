@@ -63,7 +63,7 @@ const UserDetails = () => {
     <>
       <Navbar />
       <div className="user-profile-container grid-container">
-            <ShortUserProfile userData={user} />
+            <ShortUserProfile userData={user}/>
             <MainUserProfile userData={user} />
       </div>
     </>
