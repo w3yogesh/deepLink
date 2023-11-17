@@ -2,6 +2,7 @@ const EducationModel = require("../models/EducationModel");
 const UserModel = require("../models/UserModel");
 const SkillModel = require("../models/SkillModel");
 const AddressModel = require("../models/AddressModel");
+const Experience=require("../models/ExperienceModel");
 require("dotenv").config();
 
 exports.updateUserProfile = async (req, res) => {
@@ -121,6 +122,53 @@ exports.deleteSkill = async (req, res) => {
         $pull: { skill: skillId },
       });
       await SkillModel.findByIdAndDelete(skillId);
+      return res.json({ success: true, message: "Deleted Successfully" });
+    } else {
+      return res.json({ success: false, message: "Already Deleted" });
+    }
+  } catch (error) {}
+};
+
+
+exports.updateExperience = async (req, res) => {
+  try {
+    const { userId, companyName, employmentType, location, description, startDate, endDate } =
+      req.body;
+
+    const experience = await Experience.create({
+      companyName,
+      employmentType,
+      location,
+      description,
+      startDate,
+      endDate,
+    });
+    const experienceId = experience._id;
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { $push: { experience: experienceId } },
+      { new: true }
+    );
+
+    if (user) {
+      res.json({ success: true, message: "Experience added successfully." });
+    } else {
+      res.json({ success: false, message: "Failed try again" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.deleteExperience = async (req, res) => {
+  try {
+    const { experienceId } = req.params;
+    const user = await UserModel.findOne({ experience: experienceId });
+    if (user) {
+      await UserModel.findByIdAndUpdate(user._id, {
+        $pull: { experience: experienceId },
+      });
+      await Experience.findByIdAndDelete(experienceId);
       return res.json({ success: true, message: "Deleted Successfully" });
     } else {
       return res.json({ success: false, message: "Already Deleted" });
