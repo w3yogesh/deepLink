@@ -8,19 +8,14 @@
     background: #fff;
 }
 
-.profile-photo {
-    width: 50%;
-    height: auto;
-    border: 5px solid #801b1b;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto;
-}
+
 
 .profile-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border: 2px solid #252525;
+    border-radius: 50%;
 }
 
 .user-name {
@@ -42,4 +37,114 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+}
+
+.profile-upload-icon {
+    position: relative;
+    top: -36px;
+    right: -40px;
+    font-size: 22px;
+}
+
+.profile-photo {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.photo-icon {
+    padding: 8px;
+    border-radius: 100%;
+    background: #e4e6eb;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+}
+
+.profile-popup-model {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: #eeeeee5e;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    left: 0;
+}
+.popup {
+    background: #fff;
+    width: 600px;
+    height: 500px;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.popup-close-btn {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    border-bottom: 1px solid #bbb;
+    padding-bottom: 10px;
+}
+
+h4.popup-image-heading {
+    margin: 0;
+}
+
+.popup-content img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+    border: 0;
+    border-radius: 0;
+}
+
+.popup-action {
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+.popup-action input {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    font-size: 16px;
+    color: #333;
+    position: absolute;
+    width: unset;
+    background: red;
+    position: absolute;
+    z-index: 2;
+    opacity: 0;
+    width: 6vw;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.upload-profile {background: var(--button-primary-bg);
+    color: #fff;
+    padding: 4px 20px;
+    font-weight: 500;cursor: pointer;}
+
+.upload-profile.upload-mode {
+    border-radius: 2px;
+}
+.upload-profile.save-mode{
+    border-radius: 50px;
+}
+.popup-close-btn svg{
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
 }

@@ -127,3 +127,21 @@ input[type="date"] {
 .skil-name, .skil-level {
     font-weight: 500;
 }
+.user-background-icon {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    font-size: 22px;
+    transform: translate(-30px, 50px);
+}
+.background-icon {
+    padding: 6px;
+    border-radius: 100%;
+    background: #e4e6eb;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    cursor: pointer;
+}

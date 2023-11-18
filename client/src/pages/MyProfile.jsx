@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
+import { CameraIcon } from "../components/MySVGIcons";
+
 
 import Navbar from "../components/Navbar";
 import "../styles/MyProfile.css";
@@ -79,6 +81,11 @@ const MyProfile = () => {
               src="https://img.freepik.com/free-photo/assortment-teacher-s-day-elements_23-2149044959.jpg?w=1060&t=st=1700249398~exp=1700249998~hmac=85da4ad2cfbd384ec308d0fcb610ce53cfed9a623097575f8a09aba979c1aa76"
               alt=""
             />
+            <div className="user-background-icon">
+            <div className="background-icon">
+              <CameraIcon />
+            </div>
+          </div>
           </div>
         </div>
         <div className="user-detail-container">

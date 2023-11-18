@@ -7,13 +7,13 @@ const {getUserProfileById, userSearch} = require("../controllers/PublicProfileCo
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 // User profile controller (edit profile feature)
-const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience} = require("../controllers/updateUserProfile")
+const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience, UploadProfile} = require("../controllers/updateUserProfile");
 
 //Post Controller
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob} =require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob} = require("../controllers/CompanyController");
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
@@ -82,18 +82,26 @@ router.get("/chats/:userId/:requestId",fetchMessages);
 
 const multer = require("multer");
 
-const storage = multer.diskStorage({
-    destination: "./uploads",
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    },
-  });
+const storage1 = multer.diskStorage({
+  destination: "./uploads",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
-const upload = multer({ storage });
+const company = multer({ storage:storage1 });
+router.post("/company",company.single("photo"),CreateCompany)
 
 
-router.post("/company",upload.single("photo"),CreateCompany)
+const userProfile = multer.diskStorage({
+  destination: "./uploads/user/profile",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
+const userprofile = multer({ storage:userProfile });
+router.post("/uploadUserProfile",userprofile.single("photo"),UploadProfile);
 
 
 
