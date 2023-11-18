@@ -29,10 +29,15 @@ const jobSchema = new mongoose.Schema({
         ref: 'Company',
         required: true,
       },
+      appliedusers:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      }],
       createdAt: {
         type: Date,
         default: Date.now,
       },
+
 })
 
 module.exports = mongoose.model("JobModel", jobSchema);
