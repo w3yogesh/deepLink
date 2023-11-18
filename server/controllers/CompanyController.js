@@ -201,7 +201,33 @@ const Jobs=async(req,res)=>{
   }
 }
 
+const ApplyJob=async(req,res)=>{
+
+  try{
+    const { jobId, myId } = req.body;
+    //const job = await Job.findById(jobId);
+    // const user = await User.findById(myId);
+
+    const update = await Job.findByIdAndUpdate(
+      jobId,
+      { $push: { appliedusers: myId } },
+      { new: true }
+    );
+    // if (update) {
+    //   res.json({ success: true, message: "applied to job successfully." });
+    // } else {
+    //   res.json({ success: false, message: " application Retry." });
+    // }
+
+    console.log(`User ${myId} applied for job ${jobId}`);
+
+    return res.json({ status: true, message: 'Application successful.' });
+
+  }catch(error){
+    res.status(500).json({ success: false, error: error.message });
+  }
+}
 
 
-module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs};
+module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob};
 

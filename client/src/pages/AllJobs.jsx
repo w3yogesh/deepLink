@@ -1,11 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [companyFilter, setCompanyFilter] = useState('');
   const [requirementsFilter, setRequirementsFilter] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
+
+  const [myId, setMyId] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userAuth = async () => {
+      try {
+        const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
+        const { status, user } = response.data;
+        if (status) {
+          setMyId(user._id);
+        } else {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error authenticating user:', error.message);
+      }
+    };
+    userAuth();
+  }, [navigate]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -19,6 +41,25 @@ const AllJobs = () => {
 
     fetchJobs();
   }, []);
+
+  const applyNow = async (jobId) => {
+    try {
+      // Send jobId and myId to the backend for application
+      const response = await axios.post('http://localhost:4000/apply', { jobId, myId });
+      
+  toast.success("Applied Successfully", {
+    position: "top-right",
+  });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error applying for the job:', error.message);
+    
+      toast.error("error while applying", {
+        position: "top-right",
+      });
+
+    }
+  };
 
   const uniqueCompanies = [...new Set(jobs.map((job) => job.company))];
   const uniqueRequirements = [...new Set(jobs.map((job) => job.requirements))];
@@ -94,9 +135,10 @@ const AllJobs = () => {
             <p>Requirements: {job.requirements}</p>
             <p>Location: {job.location}</p>
             <p>Posted on: {formatDateFromLong(job.createdAt)}</p>
-            {/* You can add more details as needed */}
+            <button onClick={() => applyNow(job._id)}>Apply Now</button>
           </div>
         ))}
+        <ToastContainer />
     </div>
   );
 };
