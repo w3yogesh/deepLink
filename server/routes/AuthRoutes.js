@@ -7,7 +7,7 @@ const {getUserProfileById, userSearch} = require("../controllers/PublicProfileCo
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 // User profile controller (edit profile feature)
-const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience, UploadProfile} = require("../controllers/updateUserProfile");
+const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
@@ -102,6 +102,8 @@ const userProfile = multer.diskStorage({
 
 const userprofile = multer({ storage:userProfile });
 router.post("/uploadUserProfile",userprofile.single("photo"),UploadProfile);
+router.post("/uploadBackground",userprofile.single("photo"),UploadBackground);
+
 
 
 

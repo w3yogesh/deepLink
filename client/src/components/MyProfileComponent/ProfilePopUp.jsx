@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { CancelIcon } from "../MySVGIcons";
 
-const ProfilePopUp = ({ closePopup, userData }) => {
+const ProfilePopUp = ({ closePopup, isBack, userData }) => {
   const [photo, setPhoto] = useState(null);
   const [showSave, setShowSave] = useState(false);
 
@@ -18,7 +18,7 @@ const ProfilePopUp = ({ closePopup, userData }) => {
   const handleFileChange = (event) => {
     const newPhoto = event.target.files[0];
     setPhoto(newPhoto);
-    setShowSave(!!newPhoto); // Set showSave to true if a new photo is selected
+    setShowSave(!!newPhoto);
   };
 
   const handleUploadProfile = async () => {
@@ -27,7 +27,9 @@ const ProfilePopUp = ({ closePopup, userData }) => {
     data.append("photo", photo);
     data.append("userId", userId);
     const response = await axios.post(
-      "http://localhost:4000/uploadUserProfile",
+      isBack
+        ? "http://localhost:4000/uploadBackground"
+        : "http://localhost:4000/uploadUserProfile",
       data
     );
     const {status, message} = response.data;
@@ -38,16 +40,15 @@ const ProfilePopUp = ({ closePopup, userData }) => {
     }else{
       console.log(message);
     }
-    
+   
     // setPhoto(null);
     // setShowSave(false);
   };
-
-  return (
+ return (
     <div className="profile-popup-model">
       <div className="popup">
         <div className="popup-close-btn" onClick={closePopup}>
-          <h4 className="popup-image-heading">Change Photo</h4>
+          <h4 className="popup-image-heading">Change {isBack ? "Background": "Photo"}</h4>
           <CancelIcon />
         </div>
         <div className="popup-content">
@@ -56,12 +57,16 @@ const ProfilePopUp = ({ closePopup, userData }) => {
               <img src={URL.createObjectURL(photo)} alt="Selected" />
             ) : (
               <img
-                src={
-                  userData.profileImage
+              src={
+                isBack
+                  ? userData.backgroundImage
+                    ? `http://localhost:4000/fetchProfileImage/${userData.backgroundImage}`
+                    : `/images/user-background-photo.jpg`
+                  : userData.profileImage
                     ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
-                    : `/images/user-profile-photo.svg`
-                }
-                alt="User Profile Photo"
+                    : `/images/user-profile-photo.png`
+              }
+              alt={`User ${isBack ? "Background" : "Profile"} Photo`}
               />
             )}
           </div>
@@ -80,15 +85,18 @@ const ProfilePopUp = ({ closePopup, userData }) => {
             className={`upload-profile ${
               showSave ? "save-mode" : "upload-mode"
             }`}
-            onClick={showSave ? handleUploadProfile : null}
+            onClick={showSave ?  handleUploadProfile : null}
           >
             {showSave ? "Save" : "Upload"}
           </label>
-          {/* {showSave && <button onClick={handleUploadProfile}>Save</button>} */}
         </div>
       </div>
     </div>
   );
+
+ 
+
+
 };
 
 export default ProfilePopUp;
