@@ -9,15 +9,14 @@
 
 .left-menu {
     border: 1px solid;
-    padding: 20px;
+    padding: 10px;
 }
 
 .side-menu-item {
     display: flex;
     flex-direction: row;
-    padding: 10px;
-    border: 1px solid #372626;
-    margin: 0 0 10px 0;
+    padding: 2px 0;
+    cursor: pointer;
 }
 
 .itme-svg {
@@ -27,4 +26,41 @@
     width: 65%;
     border: 1px solid;
     margin-left: 20px;
+}
+h6.section-heading {
+    margin: 0 0 10px;
+}
+
+.user-cards {
+    list-style-type: none;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.user-card-list {
+    width: 32%;
+    border: 1px solid;
+    margin-bottom: 20px;
+    padding: 6px;
+    text-align: center;
+}
+
+.user-card-img {
+    width: 100px;
+    height: 100px;
+    max-width: 150px;
+    max-height: 150px;
+    margin: 0 auto;
+}
+
+.user-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-card-name {
+    font-size: 18px;
+    font-weight: 500;
 }

@@ -10,6 +10,7 @@ const Job=require("../models/JobModel");
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 const CreateCompany = async (req, res, next) => {
+  // return res.json({message:"hello"})
   try {
     const image = req.file.originalname;
     // return res.json({message:image});

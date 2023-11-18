@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-
+import { ArrowDown,DeleteIcon, CancelIcon,SaveIcon,EditIcon,AddIcon } from "../MySVGIcons";
 import axios from "axios";
 
 const ExperienceDetails = ({ userData, setUserData }) => {
@@ -21,7 +15,7 @@ const ExperienceDetails = ({ userData, setUserData }) => {
       }
 
   const [showForm, setShowForm] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(true);
   const [newExperience, setNewExperience] = useState({
     companyName:"",
     employmentType:"",
@@ -95,24 +89,18 @@ const handleSuccess = (msg) =>
   }
 
   return (
-    <div className="education-details details">
+    <div className="experience-details details">
       {!showForm && (
         <>
-          <div className="edit-details">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 50 50"
-              width="50px"
-              height="50px"
-              onClick={() => {
+          <div className="edit-details" onClick={() => {
                 setShowForm(true);
-              }}
-            >
-              <ArrowDropDownCircleIcon />
-            </svg>
+              }}>
+       
+              <AddIcon />
+           
           </div>
           <div className="form-container">
-            <div className="education-info-section">
+            <div className="experience-info-section">
               <h4>Add Experience</h4>
             </div>
           </div>
@@ -121,35 +109,20 @@ const handleSuccess = (msg) =>
 
       {showForm && (
         <>
-          <div className="edit-details">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 50 50"
-              width="50px"
-              height="50px"
-              onClick={() => {
+          <div className="edit-details" onClick={() => {
                 setShowForm(false);
-              }}
-            >
+              }}>
+            
               <CancelIcon />
-            </svg>
+       
           </div>
-          <div className="edit-details">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 50 50"
-              width="50px"
-              height="50px"
-              onClick={() => {
-                if (isEditMode) {
+          <div className="edit-details" onClick={() => {
+             
                   handleAddExperience();
-                }
-                setIsEditMode(!isEditMode);
-              }}
-            >
-              {!isEditMode && <AddCircleIcon />}
-              {isEditMode && <SaveIcon />}
-            </svg>
+              
+              }}>
+               <SaveIcon />
+       
           </div>
           <div className="form-container">
             <form action="">
@@ -225,90 +198,51 @@ const handleSuccess = (msg) =>
                 </div>
               </div>
             </form>
-            <div className="all-educations">
+            
+          </div>
+        </>
+      )}
+      <div className="all-experience">
               {userData.experience.map((exp, index) => (
-                <div key={index} style={{ border: "1px solid black" }}>
-                  <div className="edit-details">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 50 50"
-                      width="50px"
-                      height="50px"
-                      onClick={()=>handleDeleteExperience(exp._id)}
-                    >
+                <div key={index}>
+                  <div className="edit-details" onClick={()=>handleDeleteExperience(exp._id)}>
+                    
                       <DeleteIcon />
-                    </svg>
+                
                   </div>
-
-                  <div className="edit-details">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 50 50"
-                      width="50px"
-                      height="50px"
-                      onClick={()=>handleEditExperience(exp._id)}
-                    >
+                  <div className="edit-details" onClick={()=>handleEditExperience(exp._id)}>
+                    
                       <EditIcon />
-                    </svg>
+                    
                   </div>
 
-                  <div className="edit-details">
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 50 50"
-                      width="50px"
-                      height="50px"
-                      onClick={() => {
-                        if (isEditMode) {
-                          // handleAddEducation();
-                        }
-                        setIsEditMode(!isEditMode);
-                      }}
-                    >
-                      {!isEditMode && <EditIcon />}
-                      {isEditMode && <SaveIcon />}
-                    </svg> */}
-                  </div>
+                
                   
-                  <div className="institution">
-                    <h4 className="institution-heading">
-                      Company Name: <b>{exp.companyName}</b>
+                  <div className="company-title">
+                    <h4 className="company-heading">
+                      <span className="exp-label">Company Name:</span><b>{exp.companyName}</b>
                     </h4>
                   </div>
-                  <div className="degree">
-                    <p>
-                    Employement Type: <b>{exp.employmentType}</b>
-                    </p>
+                  <div className="employment-type">
+                    <span className="exp-label">Employement Type:</span>
+                    <span> <b>{exp.employmentType}</b></span>
                   </div>
-                  <div className="field">
-                    <p>
-                      Location: <b>{exp.location}</b>
-                    </p>
+                  <div className="compnay-location">
+                    <span className="exp-label">Location: </span> 
+                    <span><b>{exp.location}</b></span>
                   </div>
-                  <div className="grade">
-                    <p>
-                      Description: <b>{exp.description}</b>
-                    </p>
+                  <div className="experience-description">
+                    <span className="exp-label">Description: </span><span><b>{exp.description}</b></span>
                   </div>
                   <div className="date">
-                    <span>
-                      <p>
-                        startDate: <b>{formatDateFromLong(exp.startDate)}</b>
-                      </p>
-                    </span>{" "}
-                    <span>
-                      {" "}
-                      <p>
-                        endDate: <b>{formatDateFromLong(exp.endDate)}</b>
-                      </p>
-                    </span>
+                    <span className="exp-label">startDate: </span>
+                      <span><b>{formatDateFromLong(exp.startDate)}</b></span><br></br>
+                    <span className="exp-label">endDate:</span>
+                    <span><b>{exp.endDate ? formatDateFromLong(exp.endDate) : 'Present'}</b></span>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        </>
-      )}
     </div>
   );
 };

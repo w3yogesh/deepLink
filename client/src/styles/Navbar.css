@@ -63,3 +63,11 @@
 .search-list-items a {
     color: #2d2d2d;
 }
+.user-menu-icon {
+    font-size: 25px;
+    margin: auto 0 auto 0;
+}
+
+.user-icon {
+    padding: 8px 0 0 10px;
+}

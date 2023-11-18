@@ -1,7 +1,8 @@
 .user-detail-container {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    position: relative;
+    top: -60px;
 }
 
 .user-info-container.right {
@@ -11,6 +12,7 @@
 .edit-details-wrapper {
     float: right;
 }
+
 .add-details {
     border: 1px solid;
     text-align: center;
@@ -20,25 +22,35 @@
     padding: 10px;
     margin: 0 10px 0 0;
 }
+
 .edit-details {
     border: 1px solid;
     text-align: center;
     vertical-align: middle;
-    border-radius: 100px;
+    border-radius: 50px;
     display: inline-flex;
     float: right;
     padding: 0;
     margin: 0 10px 0 0;
     justify-content: center;
+    padding: 8px;
+    cursor: pointer;
 }
+
 .edit-details-wrapper svg {
     font-size: 20px;
 }
-.details{
+
+.details {
     border: 1px solid #222;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     margin-bottom: 30px;
+    background: #fff;
+}
+.user-details {
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
 }
 .form-row {
     display: inline-flex;
@@ -51,15 +63,85 @@
     width: 49%;
 }
 
-.basic-info-section select, .Skill-info-section  select{
+.basic-info-section select,
+.Skill-info-section select {
     width: 98%;
     padding: 10px;
 }
+
 input[type="date"] {
     width: 99%;
     border: 1px solid #e5e5e5;
     padding: 10px;
 }
-.edit-details>svg {
-    width: 40%;
+
+
+.user-background-img img{
+    width: 100vw;
+    height: 38vh;
+    object-fit: cover;
+}
+.my-profile-header {
+    background: #fff;
+    border: 1px solid #222;
+    padding: 0px 10px;
+    border-radius: 0;
+    margin-bottom: 0px;
+}
+
+.my-profile-tabs {
+    display: flex;
+    background: #fff;
+    border-radius: 0;
+}
+
+.profile-tabs {
+    padding: 20px 15px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.profile-tabs.active {
+    border-bottom: 2px solid;
+}
+
+.all-skills-list {
+    padding: 10px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.skill-details {width: 90%;}
+.skill-action {
+    display: flex;
+}
+.skill-details {
+    margin-right: auto;
+}
+.skill-label,.exp-label {
+    margin-right: 10px;
+}
+.skil-name, .skil-level {
+    font-weight: 500;
+}
+.user-background-icon {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    font-size: 22px;
+    transform: translate(-30px, 50px);
+}
+.background-icon {
+    padding: 6px;
+    border-radius: 100%;
+    background: #e4e6eb;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    cursor: pointer;
 }

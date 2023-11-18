@@ -5,7 +5,8 @@ const FeedSidebar = ({userData}) => {
   return (
     <div className="feed-container">
       <div className="profile-photo">
-        <img src="/images/user-profile-photo.svg" alt="User Profile Photo" />
+      <img src={ userData.profileImage ?`http://localhost:4000/fetchProfileImage/${userData.profileImage}` : `/images/user-profile-photo.svg`} alt="User Profile Photo" />
+
       </div>
       <h1 className="user-name">
         {userData.firstName} {userData.lastName}

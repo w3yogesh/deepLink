@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Navbar.css"
 import { HeaderSearch } from "./HeaderSearch";
+import {AdminIcon} from "./MySVGIcons"
 export default function Navbar() {
   return (
     <>
@@ -23,6 +24,11 @@ export default function Navbar() {
                  <li className="nav-menu-item"><a href="/chat">Messages</a></li>
                   <li className="nav-menu-item"><a href="/notifications">Notification</a></li>
                 </ul>
+            </div>
+            <div className="user-menu-icon">
+              <div className="user-icon">
+                <a href="/myprofile"><AdminIcon/></a>
+              </div>
             </div>
         </div>
       </header>

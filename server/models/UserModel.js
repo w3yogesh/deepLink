@@ -88,6 +88,20 @@ const userSchema = new mongoose.Schema({
       unique: true,
     },
   ],
+  experience: [
+    { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Experience", 
+      unique: true,
+    },
+  ],
+  profileImage:{
+      type: String,
+    },
+  backgroundImage:{
+      type: String,
+    },
+
   updatedAt: {
     type: Date,
     default: new Date(),
@@ -96,13 +110,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-  experience: [
-    { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "Experience", 
-      unique: true,
-    },
-  ],
 });
 
 userSchema.pre("save", async function () {

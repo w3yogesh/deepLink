@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-
+import {DeleteIcon, CancelIcon,SaveIcon,EditIcon,AddIcon } from "../MySVGIcons";
 import axios from "axios";
 
 const EducationDetails = ({ userData, setUserData }) => {
@@ -19,7 +13,7 @@ const EducationDetails = ({ userData, setUserData }) => {
     return `${day}/${month}/${year}`;
   }
   const [showForm, setShowForm] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(true);
   const [newEducation, setNewEducation] = useState({
     institution: "",
     degree: "",
@@ -37,13 +31,13 @@ const EducationDetails = ({ userData, setUserData }) => {
   };
 
   const handleError = (err) =>
-  toast.error(err, {
-    position: "bottom-left",
-  });
-const handleSuccess = (msg) =>
-  toast.success(msg, {
-    position: "bottom-left",
-  });
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-left",
+    });
 
   const handleAddEducation = async () => {
     // console.log(userData._id);
@@ -74,40 +68,33 @@ const handleSuccess = (msg) =>
       handleError(response.data.message);
     }
   };
-  const handleDeleteEducation = async(eduId) => {
-      const response = await axios.delete(`http://localhost:4000/deleteEducation${eduId}`)
-      if (response.data.success) {
-        handleSuccess(response.data.message);
-      } else {
-        handleError(response.data.message);
-      }
-  }
+  const handleDeleteEducation = async (eduId) => {
+    const response = await axios.delete(
+      `http://localhost:4000/deleteEducation${eduId}`
+    );
+    if (response.data.success) {
+      handleSuccess(response.data.message);
+    } else {
+      handleError(response.data.message);
+    }
+  };
 
-  const handleEditEducation = async(eduId)  => {
+  const handleEditEducation = async (eduId) => {
     const educationToEdit = userData.education.find((edu) => edu._id === eduId);
 
     setNewEducation(educationToEdit);
-
     setIsEditMode(true);
     setShowForm(true);
-  }
+  };
 
   return (
     <div className="education-details details">
       {!showForm && (
         <>
-          <div className="edit-details">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 50 50"
-              width="50px"
-              height="50px"
-              onClick={() => {
+          <div className="edit-details" onClick={() => {
                 setShowForm(true);
-              }}
-            >
-              <ArrowDropDownCircleIcon />
-            </svg>
+              }}>
+              <AddIcon />
           </div>
           <div className="form-container">
             <div className="education-info-section">
@@ -119,35 +106,17 @@ const handleSuccess = (msg) =>
 
       {showForm && (
         <>
-          <div className="edit-details">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 50 50"
-              width="50px"
-              height="50px"
-              onClick={() => {
+          <div className="edit-details" onClick={() => {
                 setShowForm(false);
-              }}
-            >
+              }}>
               <CancelIcon />
-            </svg>
           </div>
-          <div className="edit-details">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 50 50"
-              width="50px"
-              height="50px"
-              onClick={() => {
-                if (isEditMode) {
+          <div className="edit-details" onClick={() => {
+
                   handleAddEducation();
-                }
-                setIsEditMode(!isEditMode);
-              }}
-            >
-              {!isEditMode && <AddCircleIcon />}
-              {isEditMode && <SaveIcon />}
-            </svg>
+              
+              }}>
+              <SaveIcon />
           </div>
           <div className="form-container">
             <form action="">
@@ -223,90 +192,58 @@ const handleSuccess = (msg) =>
                 </div>
               </div>
             </form>
-            <div className="all-educations">
-              {userData.education.map((edu, index) => (
-                <div key={index} style={{ border: "1px solid black" }}>
-                  <div className="edit-details">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 50 50"
-                      width="50px"
-                      height="50px"
-                      onClick={()=>handleDeleteEducation(edu._id)}
-                    >
-                      <DeleteIcon />
-                    </svg>
-                  </div>
-
-                  <div className="edit-details">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 50 50"
-                      width="50px"
-                      height="50px"
-                      onClick={()=>handleEditEducation(edu._id)}
-                    >
-                      <EditIcon />
-                    </svg>
-                  </div>
-
-                  <div className="edit-details">
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 50 50"
-                      width="50px"
-                      height="50px"
-                      onClick={() => {
-                        if (isEditMode) {
-                          // handleAddEducation();
-                        }
-                        setIsEditMode(!isEditMode);
-                      }}
-                    >
-                      {!isEditMode && <EditIcon />}
-                      {isEditMode && <SaveIcon />}
-                    </svg> */}
-                  </div>
-                  
-                  <div className="institution">
-                    <h4 className="institution-heading">
-                      Institution: <b>{edu.institution}</b>
-                    </h4>
-                  </div>
-                  <div className="degree">
-                    <p>
-                      Degree: <b>{edu.degree}</b>
-                    </p>
-                  </div>
-                  <div className="field">
-                    <p>
-                      Field of Study: <b>{edu.field}</b>
-                    </p>
-                  </div>
-                  <div className="grade">
-                    <p>
-                      Grade: <b>{edu.grade}</b>
-                    </p>
-                  </div>
-                  <div className="date">
-                    <span>
-                      <p>
-                        startDate: <b>{formatDateFromLong(edu.startDate)}</b>
-                      </p>
-                    </span>{" "}
-                    <span>
-                      {" "}
-                      <p>
-                        endDate: <b>{formatDateFromLong(edu.endDate)}</b>
-                      </p>
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </>
       )}
+      <div className="all-educations">
+        {userData.education.map((edu, index) => (
+          <div key={index} className={index % 2 === 0 ? "even-education" : "odd-education"}>
+            <div className="educations-action">
+              <div className="edit-details" onClick={() => handleDeleteEducation(edu._id)}>
+            
+                  <DeleteIcon />
+
+              </div>
+              <div className="edit-details" onClick={() => handleEditEducation(edu._id)}>
+   
+                  <EditIcon />
+
+              </div>
+            </div>
+
+            <div className="user-label">
+              <span className="user-label-tag">Institution:</span>
+              <span className="user-label-value">{edu.institution}</span>
+            </div>
+            <div className="user-label">
+              <span className="user-label-tag">Field:</span>
+              <span className="user-label-value">{edu.field}</span>
+            </div>
+            <div className="user-label">
+              <span className="user-label-tag">Degree:</span>
+              <span className="user-label-value">{edu.degree}</span>
+            </div>
+            <div className="user-label">
+              <span className="user-label-tag">Grade:</span>
+              <span className="user-label-value">{edu.grade}</span>
+            </div>
+            <div className="user-label">
+              <div className="sDate">
+                <span className="user-label-tag">Start Date:</span>
+                <span className="user-label-value">
+                  {formatDateFromLong(edu.startDate)}
+                </span>
+              </div>
+              <div className="eDate">
+                <span className="user-label-tag">End Date:</span>
+                <span className="user-label-value">
+                {edu.endDate ? formatDateFromLong(edu.endDate) : 'Present'}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

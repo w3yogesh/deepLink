@@ -3,6 +3,10 @@ const UserModel = require("../models/UserModel");
 const SkillModel = require("../models/SkillModel");
 const AddressModel = require("../models/AddressModel");
 const Experience=require("../models/ExperienceModel");
+const express = require("express");
+const app = express();
+const path = require('path');
+const { response } = require("express");
 require("dotenv").config();
 
 exports.updateUserProfile = async (req, res) => {
@@ -175,3 +179,28 @@ exports.deleteExperience = async (req, res) => {
     }
   } catch (error) {}
 };
+
+app.use('/uploads/user/profile', express.static(path.join(__dirname, '/uploads/user/profile')));
+
+exports.UploadProfile = async (req, res, next) => {
+  try {
+    const image = req.file.originalname;
+    const {userId} = req.body;
+    
+    const result = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      { $set: { profileImage: image } },
+      { new: true }
+      );
+      if(result){
+        return res.json({status:true, message: "Image uploaded successfully"});
+      }else{
+        return res.json({status:false, message: "Please try again!"});
+      }
+    
+
+    // return res.json(result.profileImage)
+  } catch (error) {
+    
+  }
+}

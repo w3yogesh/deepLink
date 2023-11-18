@@ -11,7 +11,7 @@ module.exports.userVerification = (req, res) => {
     if (err) {
      return res.json({ status: false })
     } else {
-      const user = await User.findById(data.id).select("_id firstName lastName headline")
+      const user = await User.findById(data.id).select("_id firstName lastName headline profileImage")
       if (user) return res.json({ status: true, user: user })
       else return res.json({ status: false })
     }
