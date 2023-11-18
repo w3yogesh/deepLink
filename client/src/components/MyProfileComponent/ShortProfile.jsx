@@ -33,7 +33,7 @@ const ShortProfile = ({ userData }) => {
             src={
               userData.profileImage
                 ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
-                : `/images/user-profile-photo.svg`
+                : `/images/user-profile-photo.png`
             }
             alt="User Profile Photo"
           />

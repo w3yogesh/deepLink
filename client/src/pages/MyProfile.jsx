@@ -13,6 +13,8 @@ import ShortProfile from "../components/MyProfileComponent/ShortProfile";
 import EducationDetails from "../components/MyProfileComponent/EducationDetails";
 import SkillDetails from "../components/MyProfileComponent/SkillDetails";
 import ExperienceDetails from "../components/MyProfileComponent/ExperienceDetails";
+import ProfilePopUp from "../components/MyProfileComponent/ProfilePopUp";
+
 
 const YourComponent = ({ activeTab, userData, setUserData }) => {
   return (
@@ -30,6 +32,8 @@ const MyProfile = () => {
   const [userData, setUserData] = useState("");
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [isBack, setIsBack] = useState(true);
 
   useEffect(() => {
     const loadProfileData = async () => {
@@ -71,18 +75,30 @@ const MyProfile = () => {
     navigate("/");
   };
 
+  const openPopup = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <Navbar />
       <div className="main-container">
         <div className="user-background">
           <div className="user-background-img">
-            <img
-              src="https://img.freepik.com/free-photo/assortment-teacher-s-day-elements_23-2149044959.jpg?w=1060&t=st=1700249398~exp=1700249998~hmac=85da4ad2cfbd384ec308d0fcb610ce53cfed9a623097575f8a09aba979c1aa76"
-              alt=""
-            />
+          <img
+            src={
+              userData.backgroundImage
+                ? `http://localhost:4000/fetchProfileImage/${userData.backgroundImage}`
+                : `images/user-background-photo.jpg`
+            }
+            alt="User Profile Photo"
+          />
             <div className="user-background-icon">
-            <div className="background-icon">
+            <div className="background-icon" onClick={openPopup}>
               <CameraIcon />
             </div>
           </div>
@@ -123,6 +139,9 @@ const MyProfile = () => {
           </div>
         </div>
       </div>
+      {showPopup && (
+          <ProfilePopUp closePopup={closePopup} isBack={isBack} userData={userData} />
+        )}
       <ToastContainer />
     </>
   );
