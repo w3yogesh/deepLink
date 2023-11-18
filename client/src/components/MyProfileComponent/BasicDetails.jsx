@@ -1,10 +1,13 @@
 import { React, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
+import {EditIcon, SaveIcon} from "../MySVGIcons.jsx";
 
 const BasicDetails = ({ userData, setUserData }) => {
+
+
+
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name.includes(".")) {
@@ -70,18 +73,12 @@ const BasicDetails = ({ userData, setUserData }) => {
 
   return (
     <>
+      
       <div className="user-details details">
-        <div className="edit-details">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 50 50"
-            width="50px"
-            height="50px"
-            onClick={handleToggleEditMode}
-          >
+        <div className="edit-details" onClick={handleToggleEditMode}>
+         
             {!isEditMode && <EditIcon />}
             {isEditMode && <SaveIcon />}
-          </svg>
         </div>
         <div className="form-container">
           <form action="">

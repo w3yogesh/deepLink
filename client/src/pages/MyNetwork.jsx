@@ -3,14 +3,12 @@ import Navbar from "../components/Navbar";
 import "../styles/myNetwork.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import {ConnectionSVG,SentSVG,HandShackSVG} from "../components/MySVGIcons"
 
 import UserListComponent from "../components/UserList";
 import ConnectionRequest from "../components/ConnectionRequests";
 import ConnectionSent from "../components/ConnectionSent";
 import MyConnections from "../components/MyConnections";
-
-import Button from "@mui/material/Button";
 
 
 const MyNetwork = () => {
@@ -18,9 +16,8 @@ const MyNetwork = () => {
   const [showConnectionRequest, setShowConnectionRequest] = useState(false);
   const [showConnectionSent, setShowConnectionSent] = useState(false);
   const [showMyConnections, setShowMyConnections] = useState(false);
-  const [myId, setMyId] = useState("")
+  const [myId, setMyId] = useState("");
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const userAuth = async () => {
@@ -28,15 +25,15 @@ const MyNetwork = () => {
         "http://localhost:4000",
         {},
         { withCredentials: true }
-      )
-      const {status, user} = response.data;
-        if(status){
-          setMyId(user._id);
-          console.log(myId)
-        }else{
-          navigate("/login");
-        }
+      );
+      const { status, user } = response.data;
+      if (status) {
+        setMyId(user._id);
+        console.log(myId);
+      } else {
+        navigate("/login");
       }
+    };
     userAuth();
   }, []);
 
@@ -47,46 +44,38 @@ const MyNetwork = () => {
         <div className="left-sidebar">
           <div className="left-menu">
             <section className="side-menu">
-              <h3>Manage Networks</h3>
+              <h6 className="section-heading">Manage Networks</h6>
               <div className="side-menu-item">
-                <div className="itme-svg">svg</div>
-                <div className="item-link">
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      setShowMyConnections(!showMyConnections);
-                    }}
-                  >Connections
-                  </Button>
-                 
+                <div className="itme-svg"><ConnectionSVG/></div>
+                <div
+                  className="item-link"
+                  onClick={() => {
+                    setShowMyConnections(!showMyConnections);
+                  }}
+                >
+                  Connections
                 </div>
               </div>
               <div className="side-menu-item">
-                <div className="itme-svg">svg</div>
-                <div className="item-link">
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      setShowConnectionSent(!showConnectionSent);
-                    }}
-                  >
-                    sent
-                  </Button>
-                  
+                <div className="itme-svg"><SentSVG/></div>
+                <div
+                  className="item-link"
+                  onClick={() => {
+                    setShowConnectionSent(!showConnectionSent);
+                  }}
+                >
+                  sent
                 </div>
               </div>
               <div className="side-menu-item">
-                <div className="itme-svg">svg</div>
-                <div className="item-link">
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      setShowConnectionRequest(!showConnectionRequest);
-                    }}
-                  >
-                    recieved
-                  </Button>
-                  
+                <div className="itme-svg"><HandShackSVG/></div>
+                <div
+                  className="item-link"
+                  onClick={() => {
+                    setShowConnectionRequest(!showConnectionRequest);
+                  }}
+                >
+                  recieved
                 </div>
               </div>
             </section>
@@ -96,18 +85,15 @@ const MyNetwork = () => {
         <div className="main-section">
           <div>
             <div className="actions">
-              <Button
-                variant="contained"
-                onClick={() => {
+                
+               <div className="primary-button" onClick={() => {
                   setShowAllUser(!showAllUser);
-                }}
-              >
-                All User
-              </Button>
+                }}>
+                All User</div>
               {showAllUser && <UserListComponent senderId={myId} />}
-              {showConnectionSent && (<ConnectionSent senderId={myId} />)}
-              {showMyConnections && (<MyConnections senderId={myId} />)}
-              {showConnectionRequest && (<ConnectionRequest senderId={myId} />)}
+              {showConnectionSent && <ConnectionSent senderId={myId} />}
+              {showMyConnections && <MyConnections senderId={myId} />}
+              {showConnectionRequest && <ConnectionRequest senderId={myId} />}
             </div>
           </div>
         </div>
