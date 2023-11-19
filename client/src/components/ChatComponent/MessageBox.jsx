@@ -18,13 +18,22 @@ const MessageBox = ({ messages, myId }) => {
                   <p>{message.content}</p>
                 </div>
                 <div className="timestamp">
-                  <p className="message-timestamp">{message.timestamp}</p>
+                  <p className="message-timestamp">
+                    {new Date(message.timestamp).toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    })}
+                  </p>
                 </div>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="messageArea">no chat Available</p>
+          <p className="messageArea">No chat available</p>
         )}
       </div>
     </>

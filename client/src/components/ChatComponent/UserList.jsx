@@ -1,21 +1,44 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const UserList = ({ users,setUsers,selectedUser,setSelectedUser, setRequestId,handleUserClick }) => {
+const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId, handleUserClick }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-          try {
-            const response = await axios.get('http://localhost:4000/api/users');
-            setUsers(response.data);
-            // setSelectedUser(users[0]); // Set the first user as selected by default
-          } catch (error) {
-            console.error('Error fetching users:', error);
-          }
-        };
-        fetchUsers();
-      }, [users]); // Depend on 'users' to set the selected user after fetching
-    
+  useEffect(() => {
+    const userAuth = async () => {
+      try {
+        const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
+        const { status, user } = response.data;
+        if (status) {
+          setCurrentUser(user._id);
+        } else {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error authenticating user:', error.message);
+      }
+    };
+    userAuth();
+  }, [navigate]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        console.log(currentUser);
+        const response = await axios.get(`http://localhost:4000/myConnections${currentUser}`);
+        setUsers(response.data);
+        // setSelectedUser(users[0]); // Set the first user as selected by default
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    if (currentUser) {
+      fetchUsers();
+    }
+  }, [currentUser, setUsers]); // Include currentUser in the dependency array
+
   return (
     <div className="chat-users">
       <ul className="userList">
