@@ -204,3 +204,25 @@ exports.UploadProfile = async (req, res, next) => {
     
   }
 }
+exports.UploadBackground = async (req, res, next) => {
+  try {
+    const image = req.file.originalname;
+    const {userId} = req.body;
+    
+    const result = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      { $set: { backgroundImage : image } },
+      { new: true }
+      );
+      if(result){
+        return res.json({status:true, message: "Image uploaded successfully"});
+      }else{
+        return res.json({status:false, message: "Please try again!"});
+      }
+    
+
+    // return res.json(result.profileImage)
+  } catch (error) {
+    
+  }
+}
