@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, TextField, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function CompanyForm() {
   const [photo, setPhoto] = useState(null);
   const [options, setOptions] = useState([]);
   const [formData, setFormData] = useState({
+    userId:'',
     companyName: '',
-    field: '',
+    field: '', 
     headquarter: '',
     website: '',
     email: '',
     companySize: '',
     about: '',
   });
+
+
+  const [myId, setMyId] = useState('');
+  const navigate = useNavigate();
+
+ useEffect(() => {
+   const userAuth = async () => {
+     try {
+       const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
+       const { status, user } = response.data;
+       if (status) {
+         setMyId(user._id);
+       } else {
+         navigate('/login');
+       }
+     } catch (error) {
+       console.error('Error authenticating user:', error.message);
+     }
+   };
+   userAuth();
+ }, [navigate]);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +52,18 @@ export default function CompanyForm() {
     if (photo) {
       data.append('photo', photo);
     }
+    // if(myId){
+    //   data.append('userId',myId);
+    // }
 
     try {
-      const response = await axios.post('http://localhost:4000/company', data);
-      console.log('Backend response:', response.data.message);
+      const response = await axios.post(`http://localhost:4000/company/${myId}`, data);
+      const company=response.data.company;
+
+     // console.log(cId);
+      console.log('Backend response:', response);
+
+      // const response2=await axios.post("http://localhost:4000/addcompany",company,myId);
     } catch (error) {
       console.error('Error submitting form:', error.message);
     }

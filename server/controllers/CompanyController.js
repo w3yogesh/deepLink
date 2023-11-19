@@ -6,6 +6,7 @@ const path = require('path');
 const Company = require("../models/CompanyModel");
 const Service=require("../models/ServiceModel");
 const Job=require("../models/JobModel");
+const UserModel = require("../models/UserModel");
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
@@ -13,7 +14,10 @@ const CreateCompany = async (req, res, next) => {
   // return res.json({message:"hello"})
   try {
     const image = req.file.originalname;
+    
     // return res.json({message:image});
+    const {userId}=req.params;
+    //console.log(userId);
     const {
       companyName,
       field,
@@ -23,6 +27,8 @@ const CreateCompany = async (req, res, next) => {
       companySize,
       about,
     } = req.body;
+
+    
     
     // Assuming Company is a Mongoose model
     // Additional validation
@@ -39,9 +45,8 @@ const CreateCompany = async (req, res, next) => {
     // if (isNaN(companySize)) {
     //   return res.status(400).json({ success: false, message: "Invalid companySize value" });
     // }
-
-
     const company = await Company.create({
+      userId,
       companyName,
       field,
       headquarter,
@@ -52,10 +57,21 @@ const CreateCompany = async (req, res, next) => {
       image
     });
 
+  
+    const user=await UserModel.findByIdAndUpdate(
+      userId,
+      {$push:{company:company._id}},
+      { new: true }
+    );
+
+
+
+
     return res.status(201).json({
       message: "Company created successfully",
       success: true,
       company,
+      user,
     });
   
   } catch (error) {
@@ -229,6 +245,30 @@ const ApplyJob=async(req,res)=>{
   }
 }
 
+const GetCompanies=async(req,res)=>{
+  try {
+    const companyId = req.params.companyId;
 
-module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob};
+    
+    const company = await Company.findById(companyId);
+
+    if (!company) {
+      return res.status(404).json({ error: 'Company not found' });
+    }
+
+    // Adjust the response format based on your company model
+    // const companyDetails = {
+    //   _id: company._id,
+    //   companyName: company.companyName,
+    //   // Add other company details as needed
+    // };
+
+    res.json(company);
+  } catch (error) {
+    console.error('Error fetching company details:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,GetCompanies};
 

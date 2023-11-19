@@ -13,7 +13,7 @@ const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteS
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob} = require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,GetCompanies} = require("../controllers/CompanyController");
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
@@ -69,6 +69,7 @@ router.get("/service/:companyId",GetService);
 router.get("/jobs/:companyId",GetJobs);
 router.get("/jobs",Jobs);
 router.post("/apply",ApplyJob);
+router.get("/mycompanies/:companyId",GetCompanies);
 
 
 // router.post("/company",upload.single("photo"),CreateCompany)
@@ -90,7 +91,7 @@ const storage1 = multer.diskStorage({
 });
 
 const company = multer({ storage:storage1 });
-router.post("/company",company.single("photo"),CreateCompany)
+router.post("/company/:userId",company.single("photo"),CreateCompany);
 
 
 const userProfile = multer.diskStorage({

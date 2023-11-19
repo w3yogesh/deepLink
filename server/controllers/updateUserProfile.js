@@ -226,3 +226,34 @@ exports.UploadBackground = async (req, res, next) => {
     
   }
 }
+
+
+// exports.AddCompany = async (req, res) => {
+//   try {
+//     const { userId, companyName, employmentType, location, description, startDate, endDate } =
+//       req.body;
+
+//     const experience = await Experience.create({
+//       companyName,
+//       employmentType,
+//       location,
+//       description,
+//       startDate,
+//       endDate,
+//     });
+//     const experienceId = experience._id;
+//     const user = await UserModel.findByIdAndUpdate(
+//       userId,
+//       { $push: { experience: experienceId } },
+//       { new: true }
+//     );
+
+//     if (user) {
+//       res.json({ success: true, message: "Experience added successfully." });
+//     } else {
+//       res.json({ success: false, message: "Failed try again" });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ success: false, error: error.message });
+//   }
+// };

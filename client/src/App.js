@@ -14,6 +14,7 @@ import CompanyForm from './pages/CompanyForm';
 import CompanyList from './pages/CompanyList';
 import CompanyDetail from './pages/CompanyDetail';
 import AllJobs from "./pages/AllJobs";
+import MyCompanies from "./pages/MyCompanies";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
         <Route path="/companylist" element={<CompanyList/>}/>
         <Route path="/company/:companyId" element={<CompanyDetail/>}/>
         <Route path="/jobs" element={<AllJobs/>}/>
+
+        <Route path="/mycompanies" element={<MyCompanies/>}/>
   
       </Routes>
     </div>
