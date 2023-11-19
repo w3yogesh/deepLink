@@ -110,7 +110,7 @@ exports.deleteEducation = async (req, res) => {
   } catch (error) {}
 };
 
-exports.updateSkill = async (req, res) => {
+exports.addSkill = async (req, res) => {
   try {
     const { userId, skillName, skillLevel } = req.body;
     const skill = await SkillModel.create({
@@ -133,6 +133,19 @@ exports.updateSkill = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+exports.editSkill = async (req, res) => {
+  try {
+    const { skillId, skillName, skillLevel } = req.body;
+    const result = await SkillModel.findByIdAndUpdate(skillId,{skillName,skillLevel})
+    if (result) {
+      res.json({ success: true, message: "Update successfully." });
+    } else {
+      res.json({ success: false, message: "failed. Retry." });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
 
 exports.deleteSkill = async (req, res) => {
   try {
@@ -150,7 +163,7 @@ exports.deleteSkill = async (req, res) => {
   } catch (error) {}
 };
 
-exports.updateExperience = async (req, res) => {
+exports.addExperience = async (req, res) => {
   try {
     const {
       userId,
@@ -179,6 +192,38 @@ exports.updateExperience = async (req, res) => {
 
     if (user) {
       res.json({ success: true, message: "Experience added successfully." });
+    } else {
+      res.json({ success: false, message: "Failed try again" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.editExperience = async (req, res) => {
+  try {
+    const {
+      expId,
+      companyName,
+      employmentType,
+      location,
+      description,
+      startDate,
+      endDate,
+    } = req.body;
+
+    const result = await Experience.findByIdAndUpdate(
+      expId,
+      { companyName,
+        employmentType,
+        location,
+        description,
+        startDate,
+        endDate,
+       }
+    );
+    if (result) {
+      res.json({ success: true, message: "Experience update successfully." });
     } else {
       res.json({ success: false, message: "Failed try again" });
     }

@@ -13,6 +13,7 @@ import {
 const SkillDetails = ({ userData, setUserData }) => {
   const [showForm, setShowForm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
+  const [updateMode, setUpdateMode] = useState(false);
   const [newSkill, setNewSkill] = useState({
     name: "",
     level: "",
@@ -36,13 +37,10 @@ const SkillDetails = ({ userData, setUserData }) => {
 
   const handleAddSkill = async () => {
     if (newSkill.skillName === "" || newSkill.skillLevel === "") return;
-    setUserData((prev) => ({
-      ...prev,
-      skill: [...prev.skill, newSkill],
-    }));
-    console.log(userData);
-    const response = await axios.put("http://localhost:4000/updateSkill", {
-      userId: userData._id,
+    
+   if(updateMode){
+    const response = await axios.put("http://localhost:4000/editSkill", {
+      skillId: newSkill._id,
       skillName: newSkill.skillName,
       skillLevel: newSkill.skillLevel,
     });
@@ -51,7 +49,23 @@ const SkillDetails = ({ userData, setUserData }) => {
     } else {
       handleError(response.data.message);
     }
+   }else{
+    const response = await axios.put("http://localhost:4000/addSkill", {
+      userId: userData._id,
+      skillName: newSkill.skillName,
+      skillLevel: newSkill.skillLevel,
+    });
+    if (response.data.success) {
+      handleSuccess(response.data.message);
+      setUserData((prev) => ({
+        ...prev,
+        skill: [...prev.skill, newSkill],
+      }));
+    } else {
+      handleError(response.data.message);
+    }
   };
+   }
 
   const handleDeleteSkill = async (skillId) => {
     const response = await axios.delete(
@@ -71,6 +85,7 @@ const SkillDetails = ({ userData, setUserData }) => {
     setNewSkill(skillToEdit);
 
     setIsEditMode(true);
+    setUpdateMode(true);
     setShowForm(true);
   };
 

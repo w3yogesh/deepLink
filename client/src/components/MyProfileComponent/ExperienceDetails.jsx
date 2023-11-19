@@ -1,28 +1,38 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { ArrowDown,DeleteIcon, CancelIcon,SaveIcon,EditIcon,AddIcon } from "../MySVGIcons";
+import {
+  ArrowDown,
+  DeleteIcon,
+  CancelIcon,
+  SaveIcon,
+  EditIcon,
+  AddIcon,
+} from "../MySVGIcons";
 import axios from "axios";
 
 const ExperienceDetails = ({ userData, setUserData }) => {
-
-    function formatDateFromLong(dateInLong) {
-        const date = new Date(dateInLong);
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-        const day = date.getDate().toString().padStart(2, "0");
-    
-        return `${day}/${month}/${year}`;
-      }
+  function formatDateFromLong(dateInLong, updateMode) {
+    const date = new Date(dateInLong);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+    if (updateMode) {
+      return `${year}-${month}-${day}`;
+    } else {
+      return `${day}/${month}/${year}`;
+    }
+  }
 
   const [showForm, setShowForm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
+  const [updateMode, setUpdateMode] = useState(false);
   const [newExperience, setNewExperience] = useState({
-    companyName:"",
-    employmentType:"",
-    location:"",
-    description:"",
-    startDate:"",
-    endDate:"",
+    companyName: "",
+    employmentType: "",
+    location: "",
+    description: "",
+    startDate: "",
+    endDate: "",
   });
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,71 +43,95 @@ const ExperienceDetails = ({ userData, setUserData }) => {
   };
 
   const handleError = (err) =>
-  toast.error(err, {
-    position: "bottom-left",
-  });
-const handleSuccess = (msg) =>
-  toast.success(msg, {
-    position: "bottom-left",
-  });
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-left",
+    });
 
   const handleAddExperience = async () => {
-    // console.log(userData._id);
     if (
-     setNewExperience.companyName === "" ||
-     setNewExperience.employmentType === "" ||
-     setNewExperience.location === "" ||
-     setNewExperience.description === ""
+      setNewExperience.companyName === "" ||
+      setNewExperience.employmentType === "" ||
+      setNewExperience.location === "" ||
+      setNewExperience.description === ""
     )
       return;
-    setUserData((prev) => ({
-      ...prev,
-      experience: [...prev.experience, newExperience],
-    }));
 
-    const response = await axios.put("http://localhost:4000/updateExperience", {
-      userId: userData._id,
-      companyName: newExperience.companyName,
-      employmentType: newExperience.employmentType,
-      location: newExperience.location,
-      description: newExperience.description,
-      startDate: newExperience.startDate,
-      endDate: newExperience.endDate,
-    });
+    if (updateMode) {
+      const response = await axios.put("http://localhost:4000/editExperience", {
+        expId: newExperience._id,
+        companyName: newExperience.companyName,
+        employmentType: newExperience.employmentType,
+        location: newExperience.location,
+        description: newExperience.description,
+        startDate: newExperience.startDate,
+        endDate: newExperience.endDate,
+      });
+      const { success, message } = response.data;
+      if (success) {
+        handleSuccess(message);
+        setUpdateMode(false);
+      } else {
+        handleError(message);
+      }
+    } else {
+      const response = await axios.put("http://localhost:4000/addExperience", {
+        userId: userData._id,
+        companyName: newExperience.companyName,
+        employmentType: newExperience.employmentType,
+        location: newExperience.location,
+        description: newExperience.description,
+        startDate: newExperience.startDate,
+        endDate: newExperience.endDate,
+      });
+      const { success, message } = response.data;
+      if (success) {
+        handleSuccess(message);
+        setUserData((prev) => ({
+          ...prev,
+          experience: [...prev.experience, newExperience],
+        }));
+      } else {
+        handleError(message);
+      }
+    }
+  };
+  const handleDeleteExperience = async (expId) => {
+    const response = await axios.delete(
+      `http://localhost:4000/deleteExperience${expId}`
+    );
     if (response.data.success) {
       handleSuccess(response.data.message);
     } else {
       handleError(response.data.message);
     }
   };
-  const handleDeleteExperience = async(expId) => {
-      const response = await axios.delete(`http://localhost:4000/deleteExperience${expId}`)
-      if (response.data.success) {
-        handleSuccess(response.data.message);
-      } else {
-        handleError(response.data.message);
-      }
-  }
 
-  const handleEditExperience= async(expId)  => {
-    const experienceToEdit = userData.experience.find((exp) => exp._id === expId);
+  const handleEditExperience = async (expId) => {
+    const experienceToEdit = userData.experience.find(
+      (exp) => exp._id === expId
+    );
 
     setNewExperience(experienceToEdit);
-
+    setUpdateMode(true);
     setIsEditMode(true);
     setShowForm(true);
-  }
+  };
 
   return (
     <div className="experience-details details">
       {!showForm && (
         <>
-          <div className="edit-details" onClick={() => {
-                setShowForm(true);
-              }}>
-       
-              <AddIcon />
-           
+          <div
+            className="edit-details"
+            onClick={() => {
+              setShowForm(true);
+            }}
+          >
+            <AddIcon />
           </div>
           <div className="form-container">
             <div className="experience-info-section">
@@ -109,20 +143,21 @@ const handleSuccess = (msg) =>
 
       {showForm && (
         <>
-          <div className="edit-details" onClick={() => {
-                setShowForm(false);
-              }}>
-            
-              <CancelIcon />
-       
+          <div
+            className="edit-details"
+            onClick={() => {
+              setShowForm(false);
+            }}
+          >
+            <CancelIcon />
           </div>
-          <div className="edit-details" onClick={() => {
-             
-                  handleAddExperience();
-              
-              }}>
-               <SaveIcon />
-       
+          <div
+            className="edit-details"
+            onClick={() => {
+              handleAddExperience();
+            }}
+          >
+            <SaveIcon />
           </div>
           <div className="form-container">
             <form action="">
@@ -180,7 +215,14 @@ const handleSuccess = (msg) =>
                     <input
                       type="date"
                       name="startDate"
-                      value={newExperience.startDate}
+                      value={
+                        updateMode
+                          ? formatDateFromLong(
+                              newExperience.startDate,
+                              updateMode
+                            )
+                          : newExperience.startDate
+                      }
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -190,7 +232,14 @@ const handleSuccess = (msg) =>
                     <input
                       type="date"
                       name="endDate"
-                      value={newExperience.endDate}
+                      value={
+                        updateMode
+                          ? formatDateFromLong(
+                              newExperience.endDate,
+                              updateMode
+                            )
+                          : newExperience.endDate
+                      }
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -198,51 +247,67 @@ const handleSuccess = (msg) =>
                 </div>
               </div>
             </form>
-            
           </div>
         </>
       )}
       <div className="all-experience">
-              {userData.experience.map((exp, index) => (
-                <div key={index}>
-                  <div className="edit-details" onClick={()=>handleDeleteExperience(exp._id)}>
-                    
-                      <DeleteIcon />
-                
-                  </div>
-                  <div className="edit-details" onClick={()=>handleEditExperience(exp._id)}>
-                    
-                      <EditIcon />
-                    
-                  </div>
-
-                
-                  
-                  <div className="company-title">
-                    <h4 className="company-heading">
-                      <span className="exp-label">Company Name:</span><b>{exp.companyName}</b>
-                    </h4>
-                  </div>
-                  <div className="employment-type">
-                    <span className="exp-label">Employement Type:</span>
-                    <span> <b>{exp.employmentType}</b></span>
-                  </div>
-                  <div className="compnay-location">
-                    <span className="exp-label">Location: </span> 
-                    <span><b>{exp.location}</b></span>
-                  </div>
-                  <div className="experience-description">
-                    <span className="exp-label">Description: </span><span><b>{exp.description}</b></span>
-                  </div>
-                  <div className="date">
-                    <span className="exp-label">startDate: </span>
-                      <span><b>{formatDateFromLong(exp.startDate)}</b></span><br></br>
-                    <span className="exp-label">endDate:</span>
-                    <span><b>{exp.endDate ? formatDateFromLong(exp.endDate) : 'Present'}</b></span>
-                  </div>
-                </div>
-              ))}
+        {userData.experience.map((exp, index) => (
+          <div className="exp-list" key={index}>
+            <div className="exp-action">
+              <div
+                className="edit-details"
+                onClick={() => handleDeleteExperience(exp._id)}
+              >
+                <DeleteIcon />
+              </div>
+              <div
+                className="edit-details"
+                onClick={() => handleEditExperience(exp._id)}
+              >
+                <EditIcon />
+              </div>
             </div>
+            <div className="company-title">
+              <h4 className="company-heading">
+                <span className="exp-label">Company Name:</span>
+                <b>{exp.companyName}</b>
+              </h4>
+            </div>
+            <div className="employment-type">
+              <span className="exp-label">Employement Type:</span>
+              <span>
+                {" "}
+                <b>{exp.employmentType}</b>
+              </span>
+            </div>
+            <div className="compnay-location">
+              <span className="exp-label">Location: </span>
+              <span>
+                <b>{exp.location}</b>
+              </span>
+            </div>
+            <div className="experience-description">
+              <span className="exp-label">Description: </span>
+              <span>
+                <b>{exp.description}</b>
+              </span>
+            </div>
+            <div className="date">
+              <span className="exp-label">startDate: </span>
+              <span>
+                <b>{formatDateFromLong(exp.startDate)}</b>
+              </span>
+              <br></br>
+              <span className="exp-label">endDate:</span>
+              <span>
+                <b>
+                  {exp.endDate ? formatDateFromLong(exp.endDate) : "Present"}
+                </b>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

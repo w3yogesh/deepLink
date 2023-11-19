@@ -7,7 +7,7 @@ const {getUserProfileById, userSearch} = require("../controllers/PublicProfileCo
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 // User profile controller (edit profile feature)
-const {updateUserProfile, addEducation,editEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
+const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
@@ -29,14 +29,17 @@ router.get('/search', userSearch);
 
 // User Profile Controller
 router.put("/updateUserProfile",updateUserProfile);
+
 router.put("/addEducation",addEducation);
 router.put("/editEducation",editEducation);
-
 router.delete("/deleteEducation:educationId",deleteEducation);
-router.put("/updateSkill",updateSkill);
+
+router.put("/addSkill",addSkill);
+router.put("/editSkill",editSkill);
 router.delete("/deleteSkill:skillId",deleteSkill);
 
-router.put("/updateExperience",updateExperience);
+router.put("/addExperience",addExperience);
+router.put("/editExperience",editExperience);
 router.delete("/deleteExperience:experienceId",deleteExperience);
 
 router.get('/api/users', users);// List of all users

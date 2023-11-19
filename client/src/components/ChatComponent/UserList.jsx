@@ -27,7 +27,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
     const fetchUsers = async () => {
       try {
         console.log(currentUser);
-        const response = await axios.get(`http://localhost:4000/myConnections${currentUser}`);
+        const response = await axios.get(`http://localhost:4000/api/myConnections${currentUser}`);
         setUsers(response.data);
         // setSelectedUser(users[0]); // Set the first user as selected by default
       } catch (error) {
