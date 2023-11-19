@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import UserList from '../components/ChatComponent/UserList';
 import MessageBox from '../components/ChatComponent/MessageBox';
-
+import { useNavigate } from 'react-router-dom';
 import '../styles/chat.css';
 import { ChatBox } from '../components/ChatComponent/ChatBox';
 
@@ -11,10 +11,27 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState(['']);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [myId, setMyId] = useState('6545fa65389a9cf8a2aa5757');
+   const [myId, setMyId] = useState('');
   const [requestId, setRequestId] = useState('');
   const inputRef = useRef(null);
+   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userAuth = async () => {
+      try {
+        const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
+        const { status, user } = response.data;
+        if (status) {
+          setMyId(user._id);
+        } else {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error authenticating user:', error.message);
+      }
+    };
+    userAuth();
+  }, [navigate]);
  
 
   const handleUserClick = async (user) => {
