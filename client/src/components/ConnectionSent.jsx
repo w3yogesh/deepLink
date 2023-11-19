@@ -8,7 +8,7 @@ function ConnectionSent(props) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/sentConnections${userId}`);
+        const response = await axios.get(`http://localhost:4000/api/sentConnections${userId}`);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -19,13 +19,14 @@ function ConnectionSent(props) {
 
   const handleDropConnection = async (senderId, receiverId)=> {
     try {
-      const response = await axios.post('http://localhost:4000/drop-connection',{senderId, receiverId});
-      if (response.data.message === 'drop Successfully') {
-        console.log('droped successfully');
+      const response = await axios.post('http://localhost:4000/api/drop-connection',{senderId, receiverId});
+      const {status, message} = response.data;
+      if (status) {
+        console.log(message);
         setUsers(prev => prev.filter(user => user._id !== receiverId))
       }
       else  {
-        console.log('not dropped');
+        console.log(message);
       }
     } catch (error) {
       // Handle any errors
@@ -36,15 +37,29 @@ function ConnectionSent(props) {
 
   return (
     <div>
-      <h2>Sent Conection</h2>
-      <ul>
+      <h4>Sent Conection</h4>
+
+
+      <ul className="user-cards">
         {users.map((user) => (
-          <li key={user._id}>
-            User ID: {user._id}
-            <br />
-            Name: {user.firstName}
-            <br/>
-            <button onClick={()=>handleDropConnection(userId,user._id)}>Drop</button>
+          <li className="user-card-list" key={user._id}>
+            <div className="user-card">
+              <div className="user-card-meta">
+                <div className="user-card-img profile-photo img">
+                  <img src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
+                </div>
+                <div className="user-card-info">
+                  <span className="user-card-name">
+                    {user.firstName} {user.lastName}
+                  </span>
+                  <span className="user-card-headline">{user.headline}</span>
+                  <span className="user-card-connection"></span>
+                </div>
+                <div className="user-card-action">
+                <button onClick={()=>handleDropConnection(userId,user._id)}>Drop</button>
+                </div>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

@@ -4,16 +4,22 @@ import {DeleteIcon, CancelIcon,SaveIcon,EditIcon,AddIcon } from "../MySVGIcons";
 import axios from "axios";
 
 const EducationDetails = ({ userData, setUserData }) => {
-  function formatDateFromLong(dateInLong) {
+  function formatDateFromLong(dateInLong,updateMode) {
     const date = new Date(dateInLong);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
     const day = date.getDate().toString().padStart(2, "0");
-
-    return `${day}/${month}/${year}`;
+    if(updateMode){
+      return `${year}-${month}-${day}`;
+    }
+    else{
+      return `${day}/${month}/${year}`;
+    }
+    
   }
   const [showForm, setShowForm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
+  const [updateMode, setUpdateMode] = useState(false);
   const [newEducation, setNewEducation] = useState({
     institution: "",
     degree: "",
@@ -45,29 +51,55 @@ const EducationDetails = ({ userData, setUserData }) => {
       newEducation.institution === "" ||
       newEducation.degree === "" ||
       newEducation.field === "" ||
-      newEducation.grade === ""
+      newEducation.grade === "" ||
+      newEducation.startDate === "" ||
+      newEducation.endDate === ""
     )
       return;
-    setUserData((prev) => ({
-      ...prev,
-      education: [...prev.education, newEducation],
-    }));
-
-    const response = await axios.put("http://localhost:4000/updateEducation", {
-      userId: userData._id,
-      institution: newEducation.institution,
-      degree: newEducation.degree,
-      field: newEducation.field,
-      grade: newEducation.grade,
-      startDate: newEducation.startDate,
-      endDate: newEducation.endDate,
-    });
-    if (response.data.success) {
-      handleSuccess(response.data.message);
+    
+    
+    if (updateMode) {
+      const response = await axios.put("http://localhost:4000/editEducation", {
+        eduId: newEducation._id,
+        institution: newEducation.institution,
+        degree: newEducation.degree,
+        field: newEducation.field,
+        grade: newEducation.grade,
+        startDate: newEducation.startDate,
+        endDate: newEducation.endDate,
+      });
+      const {success, message} = response.data;
+      if (success) {
+        handleSuccess(message);
+        setUpdateMode(false);
+        
+      } else {
+        handleError(message);
+      }
     } else {
-      handleError(response.data.message);
+      const response = await axios.put("http://localhost:4000/addEducation", {
+        userId: userData._id,
+        institution: newEducation.institution,
+        degree: newEducation.degree,
+        field: newEducation.field,
+        grade: newEducation.grade,
+        startDate: newEducation.startDate,
+        endDate: newEducation.endDate,
+      });
+      const {success, message} = response.data;
+      if (success) {
+        handleSuccess(message);
+        setUserData((prev) => ({
+          ...prev,
+          education: [...prev.education, newEducation],
+        }));
+      } else {
+        handleError(message);
+      }
     }
+   
   };
+
   const handleDeleteEducation = async (eduId) => {
     const response = await axios.delete(
       `http://localhost:4000/deleteEducation${eduId}`
@@ -81,8 +113,9 @@ const EducationDetails = ({ userData, setUserData }) => {
 
   const handleEditEducation = async (eduId) => {
     const educationToEdit = userData.education.find((edu) => edu._id === eduId);
-
+    console.log(educationToEdit);
     setNewEducation(educationToEdit);
+    setUpdateMode(true);
     setIsEditMode(true);
     setShowForm(true);
   };
@@ -174,7 +207,8 @@ const EducationDetails = ({ userData, setUserData }) => {
                     <input
                       type="date"
                       name="startDate"
-                      value={newEducation.startDate}
+                      // value={newEducation.startDate}
+                      value={updateMode ?  formatDateFromLong(newEducation.startDate, updateMode) : newEducation.startDate}
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -184,7 +218,8 @@ const EducationDetails = ({ userData, setUserData }) => {
                     <input
                       type="date"
                       name="endDate"
-                      value={newEducation.endDate}
+                      // value={newEducation.endDate}
+                      value={updateMode ?  formatDateFromLong(newEducation.endDate, updateMode) : newEducation.endDate}
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />

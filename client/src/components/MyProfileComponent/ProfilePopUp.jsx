@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { CancelIcon } from "../MySVGIcons";
 
 const ProfilePopUp = ({ closePopup, isBack, userData }) => {
   const [photo, setPhoto] = useState(null);
   const [showSave, setShowSave] = useState(false);
 
-//   const handleError = (err) =>
-//   toast.error(err, {
-//     position: "bottom-left",
-//   });
-// const handleSuccess = (msg) =>
-//   toast.success(msg, {
-//     position: "bottom-left",
-//   });
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "bottom-left",
+  });
+const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "bottom-left",
+  });
 
   const handleFileChange = (event) => {
     const newPhoto = event.target.files[0];
@@ -35,14 +36,15 @@ const ProfilePopUp = ({ closePopup, isBack, userData }) => {
     const {status, message} = response.data;
     if(status){
       console.log(message);
+      handleSuccess(message);
       closePopup();
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }else{
+      handleError(message)
       console.log(message);
     }
-   
-    // setPhoto(null);
-    // setShowSave(false);
   };
  return (
     <div className="profile-popup-model">

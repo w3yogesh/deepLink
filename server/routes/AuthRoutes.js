@@ -7,7 +7,7 @@ const {getUserProfileById, userSearch} = require("../controllers/PublicProfileCo
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 // User profile controller (edit profile feature)
-const {updateUserProfile, updateEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
+const {updateUserProfile, addEducation,editEducation, deleteEducation, updateSkill, deleteSkill, updateExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
@@ -29,7 +29,9 @@ router.get('/search', userSearch);
 
 // User Profile Controller
 router.put("/updateUserProfile",updateUserProfile);
-router.put("/updateEducation",updateEducation);
+router.put("/addEducation",addEducation);
+router.put("/editEducation",editEducation);
+
 router.delete("/deleteEducation:educationId",deleteEducation);
 router.put("/updateSkill",updateSkill);
 router.delete("/deleteSkill:skillId",deleteSkill);
@@ -41,13 +43,13 @@ router.get('/api/users', users);// List of all users
 
 // User Controller
 router.get('/api/connect/:senderId/:recipientId', connectUsers);
-router.get('/getConnections:userId', getConnections);
-router.get('/sentConnections:userId', sentConnections);
+router.get('/api/getConnections:userId', getConnections);
+router.get('/api/sentConnections:userId', sentConnections);
 router.get('/api/accept-connection/:senderId/:receiverId', acceptConnection);
-router.post('/ignore-connection', ignoreConnection);
-router.post('/drop-connection', dropConnection);
-router.get('/myConnections:userId', myConnections);
-router.delete('/deleteMyConnection/:senderId/:receiverId', deleteMyConnection);
+router.post('/api/ignore-connection', ignoreConnection);
+router.post('/api/drop-connection', dropConnection);
+router.get('/api/myConnections:userId', myConnections);
+router.delete('/api/deleteMyConnection/:senderId/:receiverId', deleteMyConnection);
 router.get('/userprofile/:userId',getUserProfileById);
 
 

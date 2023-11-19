@@ -2,10 +2,10 @@ const EducationModel = require("../models/EducationModel");
 const UserModel = require("../models/UserModel");
 const SkillModel = require("../models/SkillModel");
 const AddressModel = require("../models/AddressModel");
-const Experience=require("../models/ExperienceModel");
+const Experience = require("../models/ExperienceModel");
 const express = require("express");
 const app = express();
-const path = require('path');
+const path = require("path");
 const { response } = require("express");
 require("dotenv").config();
 
@@ -21,7 +21,7 @@ exports.updateUserProfile = async (req, res) => {
       city,
       country,
     } = req.body;
-    
+
     const updatedUser = await UserModel.findOneAndUpdate(
       { _id: userId },
       {
@@ -32,9 +32,9 @@ exports.updateUserProfile = async (req, res) => {
         gender: gender,
       },
       { new: true }
-      );
-      const addressId = updatedUser.address[0]._id;
-      await AddressModel.findByIdAndUpdate(addressId, { city, country });
+    );
+    const addressId = updatedUser.address[0]._id;
+    await AddressModel.findByIdAndUpdate(addressId, { city, country });
 
     // return res.json({ success: true, message: addressId });
     if (updatedUser) {
@@ -47,7 +47,7 @@ exports.updateUserProfile = async (req, res) => {
   }
 };
 
-exports.updateEducation = async (req, res) => {
+exports.addEducation = async (req, res) => {
   try {
     const { userId, institution, degree, field, grade, startDate, endDate } =
       req.body;
@@ -66,9 +66,26 @@ exports.updateEducation = async (req, res) => {
       { $push: { education: educationId } },
       { new: true }
     );
-
     if (user) {
       res.json({ success: true, message: "Education added successfully." });
+    } else {
+      res.json({ success: false, message: "Failed try again" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.editEducation = async (req, res) => {
+  try {
+    const { eduId, institution, degree, field, grade, startDate, endDate } =
+      req.body;
+    const result = await EducationModel.findByIdAndUpdate(
+      eduId,
+      { institution, degree, field, grade, startDate, endDate }
+    );
+    if (result) {
+      res.json({ success: true, message: "Education update successfully." });
     } else {
       res.json({ success: false, message: "Failed try again" });
     }
@@ -133,11 +150,17 @@ exports.deleteSkill = async (req, res) => {
   } catch (error) {}
 };
 
-
 exports.updateExperience = async (req, res) => {
   try {
-    const { userId, companyName, employmentType, location, description, startDate, endDate } =
-      req.body;
+    const {
+      userId,
+      companyName,
+      employmentType,
+      location,
+      description,
+      startDate,
+      endDate,
+    } = req.body;
 
     const experience = await Experience.create({
       companyName,
@@ -180,49 +203,46 @@ exports.deleteExperience = async (req, res) => {
   } catch (error) {}
 };
 
-app.use('/uploads/user/profile', express.static(path.join(__dirname, '/uploads/user/profile')));
+app.use(
+  "/uploads/user/profile",
+  express.static(path.join(__dirname, "/uploads/user/profile"))
+);
 
 exports.UploadProfile = async (req, res, next) => {
   try {
     const image = req.file.originalname;
-    const {userId} = req.body;
-    
+    const { userId } = req.body;
+
     const result = await UserModel.findOneAndUpdate(
       { _id: userId },
       { $set: { profileImage: image } },
       { new: true }
-      );
-      if(result){
-        return res.json({status:true, message: "Image uploaded successfully"});
-      }else{
-        return res.json({status:false, message: "Please try again!"});
-      }
-    
+    );
+    if (result) {
+      return res.json({ status: true, message: "Image uploaded successfully" });
+    } else {
+      return res.json({ status: false, message: "Please try again!" });
+    }
 
     // return res.json(result.profileImage)
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
 exports.UploadBackground = async (req, res, next) => {
   try {
     const image = req.file.originalname;
-    const {userId} = req.body;
-    
+    const { userId } = req.body;
+
     const result = await UserModel.findOneAndUpdate(
       { _id: userId },
-      { $set: { backgroundImage : image } },
+      { $set: { backgroundImage: image } },
       { new: true }
-      );
-      if(result){
-        return res.json({status:true, message: "Image uploaded successfully"});
-      }else{
-        return res.json({status:false, message: "Please try again!"});
-      }
-    
+    );
+    if (result) {
+      return res.json({ status: true, message: "Image uploaded successfully" });
+    } else {
+      return res.json({ status: false, message: "Please try again!" });
+    }
 
     // return res.json(result.profileImage)
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
