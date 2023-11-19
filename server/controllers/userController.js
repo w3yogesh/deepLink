@@ -36,7 +36,7 @@ exports.getConnections = async (req, res) => {
     // Retrieve user's connections
     const user = await User.findById(userId).populate(
       "receive_pending_connections",
-      "firstName email"
+      "firstName lastName headline profileImage"
     );
     //res.json(userId);
     res.json(user.receive_pending_connections);
@@ -53,7 +53,7 @@ exports.sentConnections = async (req, res) => {
     // Retrieve user's connections
     const user = await User.findById(userId).populate(
       "sent_pending_connections",
-      "firstName email"
+      "firstName lastName headline profileImage"
     );
     //res.json(userId);
     res.json(user.sent_pending_connections);
@@ -108,30 +108,39 @@ exports.ignoreConnection = async (req, res) => {
     return res.status(400).json({ error: "Users not found" });
   }
 
-  await User.updateOne(
+  const reci = await User.updateOne(
     { _id: receiver._id },
     {
       $pull: { receive_pending_connections: sender._id },
     }
   );
-  console.log(sender._id);
-  await User.updateOne(
+  const send = await User.updateOne(
     { _id: sender._id },
     { $pull: { sent_pending_connections: receiver._id } }
   );
-  return res.json("ignore Successfully");
+  if(send && reci){
+    return res.json({status : true, message: "ignore Successfully!"});
+  }else{
+    return res.json({status : false, message: "Something went wrong"});
+  }
+  
 };
 
 exports.dropConnection = async (req, res) => {
   const { senderId, receiverId } = req.body;
 
-  await User.findByIdAndUpdate(senderId, {
+  const res1 = await User.findByIdAndUpdate(senderId, {
     $pull: { sent_pending_connections: receiverId },
   });
-  await User.findByIdAndUpdate(receiverId, {
+  const res2 = await User.findByIdAndUpdate(receiverId, {
     $pull: { receive_pending_connections: senderId },
   });
-  return res.json("drop Successfully");
+  if(res1 && res2){
+    return res.json({status: true, message:"Drop successfully"});
+  }
+  else{
+    return res.json({status: false, message:"Something went wrong"});
+  }
 };
 
 // Show My connections
@@ -142,7 +151,7 @@ exports.myConnections = async (req, res) => {
     // Retrieve user's connections
     const user = await User.findById(userId).populate(
       "connections",
-      "firstName email"
+      "firstName lastName headline profileImage"
     );
     //res.json(userId);
     res.json(user.connections);

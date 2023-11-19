@@ -1,9 +1,5 @@
 .mynetwork-container {
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 20px;
-    max-width: 1200px;
     justify-content: center;
 }
 
@@ -48,10 +44,6 @@ h6.section-heading {
 }
 
 .user-card-img {
-    width: 100px;
-    height: 100px;
-    max-width: 150px;
-    max-height: 150px;
     margin: 0 auto;
 }
 
@@ -63,4 +55,10 @@ h6.section-heading {
 .user-card-name {
     font-size: 18px;
     font-weight: 500;
+}
+.item-link {
+    display: flex;
+}
+.user-card-headline, .user-card-connection {
+    font-size: 14px;
 }

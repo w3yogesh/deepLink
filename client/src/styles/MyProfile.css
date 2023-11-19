@@ -145,3 +145,9 @@ input[type="date"] {
     border: 1px solid #eee;
     cursor: pointer;
 }
+.exp-list {
+    padding: 10px;
+    border: 1px solid #eee;
+    background: #ddd;
+    border-radius: 10px;
+}

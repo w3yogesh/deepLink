@@ -3,21 +3,33 @@ import Navbar from "../components/Navbar";
 import "../styles/myNetwork.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {ConnectionSVG,SentSVG,HandShackSVG} from "../components/MySVGIcons"
+import { ConnectionSVG, SentSVG, HandShackSVG } from "../components/MySVGIcons";
 
 import UserListComponent from "../components/UserList";
 import ConnectionRequest from "../components/ConnectionRequests";
 import ConnectionSent from "../components/ConnectionSent";
 import MyConnections from "../components/MyConnections";
 
+const YourComponent = ({ activeTab, myId }) => {
+  return (
+    <div>
+      {activeTab === "allUser" && <UserListComponent senderId={myId} />}
+      {activeTab === "requests" && <ConnectionRequest senderId={myId} />}
+      {activeTab === "sent" && <ConnectionSent senderId={myId} />}
+      {activeTab === "myConnections" && <MyConnections senderId={myId} />}
+    </div>
+  );
+};
 
 const MyNetwork = () => {
-  const [showAllUser, setShowAllUser] = useState(false);
-  const [showConnectionRequest, setShowConnectionRequest] = useState(false);
-  const [showConnectionSent, setShowConnectionSent] = useState(false);
-  const [showMyConnections, setShowMyConnections] = useState(false);
   const [myId, setMyId] = useState("");
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('allUser');
+
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
     const userAuth = async () => {
@@ -40,42 +52,63 @@ const MyNetwork = () => {
   return (
     <>
       <Navbar />
+      <div className="mynetwork grid-container">
       <div className="mynetwork-container">
-        <div className="left-sidebar">
+        
+          <div className="left-sidebar">
           <div className="left-menu">
             <section className="side-menu">
               <h6 className="section-heading">Manage Networks</h6>
               <div className="side-menu-item">
-                <div className="itme-svg"><ConnectionSVG/></div>
                 <div
-                  className="item-link"
-                  onClick={() => {
-                    setShowMyConnections(!showMyConnections);
-                  }}
+                  className={`item-link ${
+                    activeTab === "myConnections" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("myConnections")}
                 >
-                  Connections
+                  <div className="itme-svg">
+                    <ConnectionSVG />
+                  </div>
+                  <span>Connections</span>
                 </div>
               </div>
               <div className="side-menu-item">
-                <div className="itme-svg"><SentSVG/></div>
                 <div
-                  className="item-link"
-                  onClick={() => {
-                    setShowConnectionSent(!showConnectionSent);
-                  }}
+                  className={`item-link ${
+                    activeTab === "sent" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("sent")}
                 >
-                  sent
+                  <div className="itme-svg">
+                    <SentSVG />
+                  </div>
+                  <span>sent</span>
                 </div>
               </div>
               <div className="side-menu-item">
-                <div className="itme-svg"><HandShackSVG/></div>
                 <div
-                  className="item-link"
-                  onClick={() => {
-                    setShowConnectionRequest(!showConnectionRequest);
-                  }}
+                  className={`item-link ${
+                    activeTab === "requests" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("requests")}
                 >
-                  recieved
+                  <div className="itme-svg">
+                    <HandShackSVG />
+                  </div>
+                  <span>recieved</span>
+                </div>
+              </div>
+              <div className="side-menu-item">
+                <div
+                  className={`item-link ${
+                    activeTab === "allUser" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("allUser")}
+                >
+                  <div className="itme-svg">
+                    <HandShackSVG />
+                  </div>
+                  <span>All Users</span>
                 </div>
               </div>
             </section>
@@ -84,19 +117,9 @@ const MyNetwork = () => {
 
         <div className="main-section">
           <div>
-            <div className="actions">
-                
-               <div className="primary-button" onClick={() => {
-                  setShowAllUser(!showAllUser);
-                }}>
-                All User</div>
-              {showAllUser && <UserListComponent senderId={myId} />}
-              {showConnectionSent && <ConnectionSent senderId={myId} />}
-              {showMyConnections && <MyConnections senderId={myId} />}
-              {showConnectionRequest && <ConnectionRequest senderId={myId} />}
+          <YourComponent activeTab={activeTab} myId={myId} />
             </div>
-          </div>
-        </div>
+          </div></div>
       </div>
     </>
   );

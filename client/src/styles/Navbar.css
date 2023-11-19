@@ -71,3 +71,7 @@
 .user-icon {
     padding: 8px 0 0 10px;
 }
+.search-box input:focus-within {
+    width : 120%;
+    transition: width .7s ease;
+}

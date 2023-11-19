@@ -47,16 +47,15 @@ function UserList(props) {
 
   return (
     <div>
-      <h2>All Users</h2>
+      <h4>All Users</h4>
       <ul className="user-cards">
         {users.map((user) => (
           <li className="user-card-list" key={user._id}>
             <div className="user-card">
               <div className="user-card-meta">
-                <div className="user-card-img">
+                <div className="user-card-img profile-photo img">
                   <img
-                    src="/images/user-profile-photo.svg"
-                    alt=""
+                    src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"}
                   />
                 </div>
                 <div className="user-card-info">
