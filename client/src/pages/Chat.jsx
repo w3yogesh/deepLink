@@ -6,6 +6,7 @@ import MessageBox from "../components/ChatComponent/MessageBox";
 import { useNavigate } from "react-router-dom";
 import "../styles/chat.css";
 import { ChatBox } from "../components/ChatComponent/ChatBox";
+import Navbar from "../components/Navbar"
 
 const Chat = () => {
   const [users, setUsers] = useState([]);
@@ -56,6 +57,7 @@ const Chat = () => {
 
   return (
     <>
+    <Navbar/>
     <div className="main-container">
       <div className="chat-box">
         <div className="chat-header">
