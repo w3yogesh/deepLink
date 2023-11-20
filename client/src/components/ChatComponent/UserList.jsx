@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId, handleUserClick }) => {
+const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId, handleUserClick,noti,notiId }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
@@ -26,7 +26,6 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        console.log(currentUser);
         const response = await axios.get(`http://localhost:4000/api/myConnections${currentUser}`);
         setUsers(response.data);
         // setSelectedUser(users[0]); // Set the first user as selected by default
@@ -58,6 +57,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
               src="/images/user-profile-photo.svg"
             />
             <span>{user.firstName}</span>
+            {notiId === user._id ?  <span className='msg-noti'>{noti}</span> : ""}
           </li>
         ))}
       </ul>

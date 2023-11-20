@@ -15,6 +15,8 @@ import CompanyList from './pages/CompanyList';
 import CompanyDetail from './pages/CompanyDetail';
 import AllJobs from "./pages/AllJobs";
 
+import ChatComponent from "./pages/ChatComponent"
+
 function App() {
   return (
     <div className="App">
@@ -30,6 +32,9 @@ function App() {
 
         <Route path="/feed" element={<Feed />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/me" element={<ChatComponent />} />
+
+
 
         <Route path="/userprofileview/:userId" element={<UserProfileView/>}/>
 
