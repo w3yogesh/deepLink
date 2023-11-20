@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import * as XLSX from 'xlsx';
 
 const AppliedUser = ({ companyId }) => {
   const [jobs, setAppliedUsers] = useState([]);
 
   useEffect(() => {
-    // Function to fetch applied users
     const fetchAppliedUsers = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/appliedusers/${companyId}`);
@@ -21,6 +20,20 @@ const AppliedUser = ({ companyId }) => {
     fetchAppliedUsers();
   }, [companyId]);
 
+  const downloadExcel = (job) => {
+    const usersData = job.appliedBy.map((user) => ({
+      Name: `${user.firstName} ${user.lastName}`,
+      // Add more user data properties as needed
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(usersData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Users');
+
+    // Save the Excel file
+    XLSX.writeFile(wb, `${job.title}_Users.xlsx`);
+  };
+
   return (
     <div>
       <h2>Applied Users</h2>
@@ -32,11 +45,12 @@ const AppliedUser = ({ companyId }) => {
           <p>Description: {job.description}</p>
           <ul>
             {job.appliedBy.map((user) => (
-             <li key={user._id}>
-             user: <Link to={`/userprofileview/${user._id}`} > {user.firstName} {user.lastName}</Link>
-              </li> 
+              <li key={user._id}>
+                User: <Link to={`/userprofileview/${user._id}`}>{user.firstName} {user.lastName}</Link>
+              </li>
             ))}
           </ul>
+          <button onClick={() => downloadExcel(job)}>Download Excel</button>
         </div>
       ))}
     </div>
