@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 
 const CompanySchema = new mongoose.Schema({
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        unique:true,
+        required:true,
+
+    },
     companyName: {
         type: String,
         required: true,
@@ -35,21 +42,21 @@ const CompanySchema = new mongoose.Schema({
       image:{
         type:String,
       },
-    products:{
+    products:[{
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Product", 
         unique: true ,
-    },
-    services:{
+    }],
+    services:[{
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Service", 
         unique: true ,
-    },
-    jobOpenings:{
+    }],
+    jobOpenings:[{
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Job", 
         unique: true 
-    }
+    }]
 
 });
 

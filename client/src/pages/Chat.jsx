@@ -11,9 +11,9 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState(['']);
   const [selectedUser, setSelectedUser] = useState(null);
-   const [myId, setMyId] = useState('');
   const [requestId, setRequestId] = useState('');
   const inputRef = useRef(null);
+  const [myId, setMyId] = useState('');
    const navigate = useNavigate();
 
   useEffect(() => {

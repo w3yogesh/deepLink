@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Services from './Services';
-import JobOpenings from './JobOpenings';
+import Services2 from './Services2';
+import JobOpenings2 from './JobOpenings2';
 import { Link } from 'react-router-dom';
-import AppliedUser from './AppliedUser';
 
-export default function CompanyDetail() {
+export default function CompanyDetail2() {
   
   const { companyId } = useParams();
   const [company, setCompany] = useState(null);
-  const [appliedUsers,setAppliedUsers]=useState([]);
 
   useEffect(() => {
     // Fetch the details of the specific company from the backend
@@ -18,6 +16,8 @@ export default function CompanyDetail() {
       try {
         const response = await axios.get(`http://localhost:4000/company/${companyId}`);
         setCompany(response.data.company);
+      
+        
       } catch (error) {
         console.error('Error fetching company details:', error.message);
       }
@@ -25,8 +25,6 @@ export default function CompanyDetail() {
 
     fetchCompanyDetails();
   }, [companyId]);
-
-
 
   if (!company) {
     return <div>Loading...</div>;
@@ -42,7 +40,7 @@ export default function CompanyDetail() {
       
       <div className="services">
 
-        <Services companyId={companyId}/>
+        <Services2 companyId={companyId}/>
       </div>
 
       <div className="products">
@@ -51,11 +49,10 @@ export default function CompanyDetail() {
 
       <div className="jobs">
 
-      <JobOpenings companyId={companyId}/>
+      <JobOpenings2 companyId={companyId}/>
 
       </div>
 
-      <AppliedUser companyId={companyId}/>
       
       {/* Add more details as needed */}
     </div>
