@@ -270,5 +270,15 @@ const GetCompanies=async(req,res)=>{
   }
 }
 
-module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,GetCompanies};
+const getAppliedUsers=async(req,res)=>{
+  try{
+    const companyId= req.params.companyId;
+    const jobs=await Job.find({postedBy:companyId}).populate({path:"appliedBy",select:"firstName lastName _id" });
+    return res.status(200).json({jobs});
+  }catch(error){
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,GetCompanies,getAppliedUsers};
 

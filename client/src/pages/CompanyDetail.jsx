@@ -4,11 +4,13 @@ import axios from 'axios';
 import Services from './Services';
 import JobOpenings from './JobOpenings';
 import { Link } from 'react-router-dom';
+import AppliedUser from './AppliedUser';
 
 export default function CompanyDetail() {
   
   const { companyId } = useParams();
   const [company, setCompany] = useState(null);
+  const [appliedUsers,setAppliedUsers]=useState([]);
 
   useEffect(() => {
     // Fetch the details of the specific company from the backend
@@ -16,8 +18,6 @@ export default function CompanyDetail() {
       try {
         const response = await axios.get(`http://localhost:4000/company/${companyId}`);
         setCompany(response.data.company);
-      
-        
       } catch (error) {
         console.error('Error fetching company details:', error.message);
       }
@@ -25,6 +25,8 @@ export default function CompanyDetail() {
 
     fetchCompanyDetails();
   }, [companyId]);
+
+
 
   if (!company) {
     return <div>Loading...</div>;
@@ -53,6 +55,7 @@ export default function CompanyDetail() {
 
       </div>
 
+      <AppliedUser companyId={companyId}/>
       
       {/* Add more details as needed */}
     </div>
