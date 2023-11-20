@@ -7,7 +7,7 @@ function MyConnections(props) {
 
     const handleDeleteMyConnection = async (senderId, receiverId)=>{
       try {
-        const response = await axios.delete(`http://localhost:4000/deleteMyConnection/${senderId}/${receiverId}`);
+        const response = await axios.delete(`http://localhost:4000/api/deleteMyConnection/${senderId}/${receiverId}`);
         const {status, message} = response.data;
         if(status){
           console.log(message);
@@ -22,7 +22,7 @@ function MyConnections(props) {
   useEffect(() => {
     const fetchMyConnections = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/myConnections${userId}`);
+        const response = await axios.get(`http://localhost:4000/api/myConnections${userId}`);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -33,15 +33,28 @@ function MyConnections(props) {
 
   return (
     <div>
-      <h2>My Conection</h2>
-      <ul>
-        {users.map((users) => (
-          <li key={users._id}>
-            User ID: {users._id}
-            <br />
-            Name: {users.firstName}
-            <br/>
-            <button onClick={()=>{handleDeleteMyConnection(userId,users._id)}}>Drop</button>
+      <h4>My Conection</h4>
+      <ul className="user-cards">
+        {users.map((user) => (
+          <li className="user-card-list" key={user._id}>
+            <div className="user-card">
+              <div className="user-card-meta">
+                <div className="user-card-img profile-photo img">
+                  <img src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
+                </div>
+                <div className="user-card-info">
+                  <span className="user-card-name">
+                    {user.firstName} {user.lastName}
+                  </span>
+                  <span className="user-card-headline">{user.headline}</span>
+                  <span className="user-card-connection"></span>
+                </div>
+                <div className="user-card-action">
+                <button onClick={()=>{handleDeleteMyConnection(userId,users._id)}}>Drop</button>
+
+                </div>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

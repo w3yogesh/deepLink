@@ -227,7 +227,7 @@ const ApplyJob=async(req,res)=>{
 
     const update = await Job.findByIdAndUpdate(
       jobId,
-      { $push: { appliedusers: myId } },
+      { $push: { appliedBy: myId } },
       { new: true }
     );
     // if (update) {
