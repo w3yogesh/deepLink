@@ -227,6 +227,34 @@ const ApplyJob=async(req,res)=>{
   }
 }
 
+const withdrawJob=async(req,res)=>{
+  try{
+    const { jobId, myId } = req.body;
+    //const job = await Job.findById(jobId);
+    // const user = await User.findById(myId);
+
+    const j=await Job.findById(jobId);
+
+    const update = await Job.findByIdAndUpdate(
+      jobId,
+      { $pull: { appliedBy: myId } },
+      { new: true }
+    );
+    // if (update) {
+    //   res.json({ success: true, message: "applied to job successfully." });
+    // } else {
+    //   res.json({ success: false, message: " application Retry." });
+    // }
+
+    console.log(`User ${myId} withdraw for job ${jobId}`);
+
+    return res.json({ status: true, message: 'withdraw successful.' });
+
+  }catch(error){
+    res.status(500).json({ success: false, error: error.message });
+  }
+}
+
 const GetCompanies=async(req,res)=>{
   try {
     const companyId = req.params.companyId;
@@ -262,5 +290,5 @@ const getAppliedUsers=async(req,res)=>{
   }
 }
 
-module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,GetCompanies,getAppliedUsers};
+module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,withdrawJob,GetCompanies,getAppliedUsers};
 
