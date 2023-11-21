@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Services from "./Services";
-import JobOpenings from "./JobOpenings";
 import { Link } from "react-router-dom";
-import AppliedUser from "./AppliedUser";
+import AppliedUser from "../components/MyCompany/AppliedUser";
 import Navbar from "../components/Navbar";
-import JobList from "./JobList";
-import ServiceList from "./ServiceList";
-import JobPostingForm from "./JobPostingForm";
-import ServiceForm from "./ServiceForm";
+import JobList from "../components/MyCompany/JobList";
+import ServiceList from "../components/MyCompany/ServiceList";
+import JobPostingForm from "../components/MyCompany/JobPostingForm";
+import ServiceForm from "../components/MyCompany/ServiceForm";
 import "../styles/CompanyDetail.css";
+import { OpenLinkIcon } from "../components/MySVGIcons";
 
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
-    <div>
+    <div className="company-main-wrapper">
       {activeTab === "jobpost" && <JobPostingForm companyId={companyId} />}
       {activeTab === "addService" && <ServiceForm companyId={companyId} />}
       {activeTab === "AllJobs" && <JobList companyId={companyId} />}
@@ -92,13 +91,10 @@ export default function CompanyDetail() {
         <div className="company-container">
           <div className="company-main-card">
             <div className="company-background">
-              <img
-                src={`http://localhost:4000/fetchImage/${company.image}`}
-                alt="trial"
-              />
+            <img src={company.cover ? `http://localhost:4000/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
             </div>
             <div className="company-logo">
-              <img src="/images/user-profile-photo.png" alt="trial" />
+            <img src={company.logo ? `http://localhost:4000/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
             </div>
             <div className="company-meta">
               <div className="company-title">
@@ -106,14 +102,15 @@ export default function CompanyDetail() {
               </div>
               <div className="company-info-container">
                 <div className="company-info">
-                  <span className="label">Field</span>{" "}
-                  <span className="company-field"> {company.field}</span>
-                  <span className="label">Headquarter</span>
+                  <span className="label">Field:</span>
+                  <span className="company-field"> {company.field},</span>
+                  <span className="label">Headquarter:</span>
                   <span className="coompany-head">{company.headquarter}</span>
                 </div>
-                <div className="company-action">
-                  <button>Website</button>
-                </div>
+               {company.website && <div className="company-action">
+               <button className="company-website"><a target='_blank' href={company.website}>Website <OpenLinkIcon/></a></button>
+
+                </div>}
               </div>
             </div>
           </div>
@@ -140,10 +137,7 @@ export default function CompanyDetail() {
             </div>
           </div>
           <CompanyComponent activeTab={activeTab} companyId={companyId} />
-
           <div className="products"></div>
-
-          
         </div>
       </div>
     </>

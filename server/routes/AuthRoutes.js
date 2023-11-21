@@ -90,16 +90,17 @@ router.get("/chats/:userId/:requestId",fetchMessages);
 
 const multer = require("multer");
 
-const storage1 = multer.diskStorage({
-  destination: "./uploads",
+const companyImages = multer.diskStorage({
+  destination: "./uploads/company",
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
+const company = multer({ storage:companyImages });
 
-const company = multer({ storage:storage1 });
-router.post("/company/:userId",company.single("photo"),CreateCompany);
+router.post("/company/:userId",company.single('photo'),CreateCompany);
 
+// company.single('photo'), 
 
 const userProfile = multer.diskStorage({
   destination: "./uploads/user/profile",

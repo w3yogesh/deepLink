@@ -62,7 +62,7 @@ export default function CompanyList() {
       <ul>
         {filteredCompanies.map((company) => (
           <li key={company._id}>
-            <Link to={`/company2/${company._id}`}>{company.companyName}</Link>
+            <Link to={`/company/${company._id}`}>{company.companyName}</Link>
           </li>
         ))}
       </ul>

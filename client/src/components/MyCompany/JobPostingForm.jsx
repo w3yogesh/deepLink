@@ -33,7 +33,7 @@ const JobPostingForm = ({companyId}) => {
   };
 
   return (
-    <div>
+    <div className='job-post-form'>
       <h2>Create Job Opening</h2>
       <form onSubmit={handleFormSubmit}>
         <label>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ServiceList from './ServiceList';
+import ServiceList from '../components/MyCompany/ServiceList';
 
 const Services2 = ({companyId}) => {
 

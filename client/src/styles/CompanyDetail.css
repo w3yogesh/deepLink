@@ -5,7 +5,7 @@
 .company-main-card {
     border: 1px solid #eee;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
 }
 
 .company-background img {
@@ -32,7 +32,6 @@
 }
 
 .company-sidebar {
-    border: 1px solid;
     width: 28%;
     margin-right: 20px;
 }
@@ -40,7 +39,41 @@
     display: flex;
     align-items: center;
 }
-
 .company-info {
     margin-right: auto;
+    font-size: 15px;
+}
+.company-main-wrapper {
+    padding: 10px;
+    border: 1px solid #eee;
+    background: #fff;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.company-main-wrapper textarea {
+    resize: vertical;
+    width: 100%;
+    min-height: 80px;
+}
+.job-post,.service-list,.applied-list {
+    margin: 2px 2px 10px 2px;
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 10px;
+}
+.company-info span {
+    color: #bbb;
+    padding: 2px;
+}
+
+span.company-field {
+    margin-right: 10px;
+}
+.company-title h2 {
+    margin-bottom: 2px;
+}
+button.company-website a {
+    color: #fff;
+    display: flex;
+    align-items: center;
 }
