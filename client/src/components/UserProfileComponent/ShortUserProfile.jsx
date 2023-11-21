@@ -3,29 +3,47 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ShortUserProfile = ({ userData }) => {
+const ShortUserProfile = ({ userData, senderId}) => {
   const recipientId = userData._id;
-  const [senderId, setSenderId] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(0);
   const navigate = useNavigate();
 
 
-const handleAuth = async () => {
-      const { data } = await axios.post(
-        "http://localhost:4000",
-        {},
-        { withCredentials: true }
-      );
-      const { status, user } = data;
-      if (status) {
-        setSenderId(user._id);
-      }
-      else {
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-      }
-    };
+  // const handleAuth = async () => {
+  //     const { data } = await axios.post(
+  //       "http://localhost:4000",
+  //       {},
+  //       { withCredentials: true }
+  //     );
+  //     const { status, user } = data;
+  //     if (status) {
+  //       setSenderId(user._id);
+  //     }
+  //     else {
+  //       setTimeout(() => {
+  //         navigate("/login");
+  //       }, 2000);
+  //     }
+  //   };
+
+
+    // useEffect( () => {
+    //   console.log(`connections : ${userData.connections}`);
+    //   console.log(`userData.receive_pending_connections : ${userData.receive_pending_connections}`);
+    //   console.log(`userData.sent_pending_connections : ${userData.sent_pending_connections}`);
+    //   console.log(`sender id : ${senderId}`)
+
+    //   if(userData.connections.includes(senderId))  {
+    //     console.log('already connected');
+    //     setIsConnected(2);
+    //   }
+    //     else if(userData.receive_pending_connections.includes(senderId))  {
+    //       console.log('pending');
+    //       setIsConnected(1);
+    //     }
+    //     else
+    //       {setIsConnected(0);}
+    // }, []);
 
   // console.log(senderId);
   const handleConnect = async () => {
@@ -38,7 +56,7 @@ const handleAuth = async () => {
         const { status, message } = response.data;
         if (status) {
           console.log(message);
-          setIsConnected(true);
+          // setIsConnected(true);
         } else {
           console.log(message);
         }
@@ -48,7 +66,7 @@ const handleAuth = async () => {
     
     }
     else{
-      handleAuth();
+      // handleAuth();
     }
    
   };
@@ -63,6 +81,7 @@ const handleAuth = async () => {
       : null;
 
   console.log(userData);
+  
   return (
     <div className="profile-sidebar left">
       <div className="short-profile-view">
@@ -81,7 +100,11 @@ const handleAuth = async () => {
         </div>
         <div className="profile-actions">
           <div className="follow-btn primary-button" onClick={handleConnect} {...isConnected ? "disabled":""}>
-            <span>{isConnected === true ?" Connected ": " Connect "}</span>
+            {!userData.connections.includes(senderId) && !userData.receive_pending_connections.includes(senderId) && <span>  Connect  </span>}
+            {!userData.connections.includes(senderId) && userData.receive_pending_connections.includes(senderId) && <span>  Pending  </span>}
+            {userData.connections.includes(senderId) && <span>  Connected  </span>}
+            {/* <span>{isConnected === true ? "Pending ": " Connect "}</span>   */}
+            
           </div>
           <div className="message-btn secondary-button">
             <a href="">Message</a>
