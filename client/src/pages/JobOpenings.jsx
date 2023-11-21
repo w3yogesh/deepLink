@@ -6,11 +6,8 @@ import JobList from './JobList';
 const JobOpenings = ({companyId}) => {
   return (
     <div>
-     
-      <h1>Job Page</h1>
        <JobList companyId={companyId}/>
       <JobPostingForm companyId={companyId} />
- 
     </div>
   )
 }

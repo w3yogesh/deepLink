@@ -1,0 +1,46 @@
+.company-main-container{
+    margin-top: 20px;
+    display: flex;
+}
+.company-main-card {
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.company-background img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+}
+
+.company-logo img {
+    width: 150px;
+    height: 150px;
+}
+.company-logo { margin-top: -80px;
+    margin-left: 16px;}
+
+.company-meta {
+    margin-left: 30px;
+    padding: 8px 0px 15px 0px;
+    margin-top: -14px;
+    margin-right: 30px;
+}
+.company-container {
+    width: 70%;
+}
+
+.company-sidebar {
+    border: 1px solid;
+    width: 28%;
+    margin-right: 20px;
+}
+.company-info-container {
+    display: flex;
+    align-items: center;
+}
+
+.company-info {
+    margin-right: auto;
+}

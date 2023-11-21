@@ -17,6 +17,7 @@ import CompanyDetail2 from './pages/CompanyDetail2';
 import AllJobs from "./pages/AllJobs";
 import MyCompanies from "./pages/MyCompanies";
 
+
 function App() {
   return (
     <div className="App">
@@ -32,6 +33,7 @@ function App() {
 
         <Route path="/feed" element={<Feed />} />
         <Route path="/chat" element={<Chat />} />
+
 
         <Route path="/userprofileview/:userId" element={<UserProfileView/>}/>
 
