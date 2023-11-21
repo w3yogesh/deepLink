@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
 const MessageBox = ({ messages, myId }) => {
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <>
       <div className="message-area">
         <div className="message-header"></div>
         {messages && messages.length > 0 ? (
           <ul className="messageArea">
-            {messages.map((message) => (
+            {messages.map((message, index) => (
               <li
-                key={message._id}
+                key={index}
                 className={
                   message.sender === myId ? "own-message" : "other-message"
                 }
@@ -31,6 +42,7 @@ const MessageBox = ({ messages, myId }) => {
                 </div>
               </li>
             ))}
+            <div ref={messagesEndRef} />
           </ul>
         ) : (
           <p className="messageArea">No chat available</p>

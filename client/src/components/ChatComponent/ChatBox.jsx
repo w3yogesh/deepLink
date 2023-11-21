@@ -1,8 +1,40 @@
-import React,{ useState} from "react";
+import React,{ useEffect, useState} from "react";
 import axios from "axios";
+import io from "socket.io-client";
 
-export const ChatBox = ({ inputRef, myId,requestId,setSelectedUser}) => {
-    const [messageInput, setMessageInput] = useState('');
+
+export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,setNotiId}) => {
+  const [messageInput, setMessageInput] = useState('');
+  const [socket, setSocket] = useState('');
+ 
+
+  useEffect(() => {
+    const socketIO = io("http://localhost:4000", {
+        query: { userId: myId }, // Replace with the user's actual Object ID
+      });
+      setSocket(socketIO);
+
+      socketIO.on("connect", () => {
+        console.log("Connected to server");
+      });
+  
+      socketIO.on("disconnect", () => {
+        console.log("Disconnected from server");
+      });
+
+      socketIO.on("private-message", ({ from, message }) => {
+        if(requestId === from){
+          setMessages(prevMessages => [...prevMessages, { recipient : from, content: message, timestamp: Date.now() }]);
+          // console.log(`Received message from ${from}: ${message}`);
+        }else{
+          console.log("notification");
+          setNoti((prevNoti) => prevNoti + 1)
+          setNotiId(from)
+        }
+       
+      });
+  }, [myId, requestId, setMessages, setNoti, setNotiId]);
+
 
     const handleMessageInputChange = (e) => {
         setMessageInput(e.target.value);
@@ -10,6 +42,12 @@ export const ChatBox = ({ inputRef, myId,requestId,setSelectedUser}) => {
 
     const handleSendMessage = async () => {
     console.log('Message sent:', messageInput);
+    setMessages(prevMessages => [...prevMessages, { sender: myId,recipient : requestId,  content: messageInput, timestamp: Date.now() }]);
+    
+    socket.emit("private-message", { to: requestId, message: messageInput,  myId });
+
+    
+
     inputRef.current.focus();
 
     try {
