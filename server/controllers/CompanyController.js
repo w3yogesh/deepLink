@@ -210,7 +210,7 @@ const GetJobs=async(req,res)=>{
 
 const Jobs=async(req,res)=>{
   try{
-    const jobs=await Job.find();
+    const jobs=await Job.find({}).populate('postedBy');
     res.json({jobs});
   }catch(error){
     console.error('Error fetching jobs:', error.message);
@@ -224,6 +224,11 @@ const ApplyJob=async(req,res)=>{
     const { jobId, myId } = req.body;
     //const job = await Job.findById(jobId);
     // const user = await User.findById(myId);
+
+    const j=await Job.findById(jobId);
+    if(j.appliedBy.includes(myId)){
+     return res.status(400).json({ error: 'You have already applied for this job' });
+    }
 
     const update = await Job.findByIdAndUpdate(
       jobId,
