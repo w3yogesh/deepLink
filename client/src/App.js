@@ -12,8 +12,8 @@ import UserProfileView from './pages/UserProfileView';
 import CompanyForm from './pages/CompanyForm';
 
 import CompanyList from './pages/CompanyList';
-import CompanyDetail from './pages/CompanyDetail';
-import CompanyDetail2 from './pages/CompanyDetail2';
+import MyCompany from './pages/MyCompany';
+import Company from './pages/Company';
 import AllJobs from "./pages/AllJobs";
 import MyCompanies from "./pages/MyCompanies";
 
@@ -39,8 +39,8 @@ function App() {
 
         <Route path="/company" element={<CompanyForm/>}/>
         <Route path="/companylist" element={<CompanyList/>}/>
-        <Route path="/company/:companyId" element={<CompanyDetail/>}/>
-        <Route path="/company2/:companyId" element={<CompanyDetail2/>}/>
+        <Route path="/mycompany/:companyId" element={<MyCompany/>}/>
+        <Route path="/company/:companyId" element={<Company/>}/>
         <Route path="/jobs" element={<AllJobs/>}/>
 
         <Route path="/mycompanies" element={<MyCompanies/>}/>

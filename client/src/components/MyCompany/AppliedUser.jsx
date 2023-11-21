@@ -35,14 +35,12 @@ const AppliedUser = ({ companyId }) => {
   };
 
   return (
-    <div>
+    <div className='all-aplieds'>
       <h2>Applied Users</h2>
+      <div className="applied-list-container">
       {jobs.map((job) => (
-        <div key={job._id}>
+        <div className='applied-list' key={job._id}>
           <h3>{job.title}</h3>
-          <p>Company: {job.company[0]}</p>
-          <p>Location: {job.location}</p>
-          <p>Description: {job.description}</p>
           <ul>
             {job.appliedBy.map((user) => (
               <li key={user._id}>
@@ -53,6 +51,7 @@ const AppliedUser = ({ companyId }) => {
           <button onClick={() => downloadExcel(job)}>Download Excel</button>
         </div>
       ))}
+      </div>
     </div>
   );
 };

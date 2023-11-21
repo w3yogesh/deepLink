@@ -64,6 +64,8 @@ app.use(
 
 app.use('/fetchImage', express.static('uploads'));
 app.use('/fetchProfileImage', express.static('uploads/user/profile'));
+app.use('/fetchCompanyImage', express.static('uploads/company'));
+
 
 app.use(cookieParser());
 app.use(express.json());
