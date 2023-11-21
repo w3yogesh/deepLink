@@ -1,7 +1,7 @@
 // UserList.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 function UserList(props) {
@@ -59,7 +59,7 @@ function UserList(props) {
                   />
                 </div>
                 <div className="user-card-info">
-                  <span className="user-card-name">{user.firstName} {user.lastName}</span>
+                <Link to={`/userprofileview/${user._id}`}>  <span className="user-card-name">{user.firstName} {user.lastName}</span></Link>
                   <span className="user-card-headline">{user.headline}</span>
                   <span className="user-card-connection">Connections</span>
                 </div>
