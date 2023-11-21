@@ -101,6 +101,10 @@ const userSchema = new mongoose.Schema({
   backgroundImage:{
       type: String,
     },
+   company:[ {
+    type:mongoose.Schema.Types.ObjectId, 
+    ref:"Company",
+    }],
 
   updatedAt: {
     type: Date,
@@ -110,6 +114,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+
 });
 
 userSchema.pre("save", async function () {

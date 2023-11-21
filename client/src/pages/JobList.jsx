@@ -32,6 +32,7 @@ const JobList = ({ companyId }) => {
     <div>
       <h2>Recent openings</h2>
       {jobs.map((job) => (
+
         <div key={job._id}>
           <h3>{job.title}</h3>
           {/* <p>Company Name: {companyId.companyName}</p> */}

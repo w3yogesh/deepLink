@@ -13,9 +13,10 @@ import CompanyForm from './pages/CompanyForm';
 
 import CompanyList from './pages/CompanyList';
 import CompanyDetail from './pages/CompanyDetail';
+import CompanyDetail2 from './pages/CompanyDetail2';
 import AllJobs from "./pages/AllJobs";
+import MyCompanies from "./pages/MyCompanies";
 
-import ChatComponent from "./pages/ChatComponent"
 
 function App() {
   return (
@@ -32,8 +33,6 @@ function App() {
 
         <Route path="/feed" element={<Feed />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/me" element={<ChatComponent />} />
-
 
 
         <Route path="/userprofileview/:userId" element={<UserProfileView/>}/>
@@ -41,7 +40,10 @@ function App() {
         <Route path="/company" element={<CompanyForm/>}/>
         <Route path="/companylist" element={<CompanyList/>}/>
         <Route path="/company/:companyId" element={<CompanyDetail/>}/>
+        <Route path="/company2/:companyId" element={<CompanyDetail2/>}/>
         <Route path="/jobs" element={<AllJobs/>}/>
+
+        <Route path="/mycompanies" element={<MyCompanies/>}/>
   
       </Routes>
     </div>
