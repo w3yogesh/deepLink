@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 function MyConnections(props) {
     const [users, setUsers] = useState([]);
     const userId = props.senderId;
@@ -16,7 +16,7 @@ function MyConnections(props) {
         }
         
       } catch (error) {
-        
+        console.log(error);
       }
     }
   useEffect(() => {
@@ -43,15 +43,14 @@ function MyConnections(props) {
                   <img src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
                 </div>
                 <div className="user-card-info">
-                  <span className="user-card-name">
+                <Link to={`/userprofileview/${user._id}`}>  <span className="user-card-name">
                     {user.firstName} {user.lastName}
-                  </span>
+                  </span> </Link>
                   <span className="user-card-headline">{user.headline}</span>
                   <span className="user-card-connection"></span>
                 </div>
                 <div className="user-card-action">
-                <button onClick={()=>{handleDeleteMyConnection(userId,users._id)}}>Drop</button>
-
+                <button onClick={()=>{handleDeleteMyConnection(userId,user._id)}}>Drop</button>
                 </div>
               </div>
             </div>

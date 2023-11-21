@@ -1,0 +1,79 @@
+.company-main-container{
+    margin-top: 20px;
+    display: flex;
+}
+.company-main-card {
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.company-background img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+}
+
+.company-logo img {
+    width: 150px;
+    height: 150px;
+}
+.company-logo { margin-top: -80px;
+    margin-left: 16px;}
+
+.company-meta {
+    margin-left: 30px;
+    padding: 8px 0px 15px 0px;
+    margin-top: -14px;
+    margin-right: 30px;
+}
+.company-container {
+    width: 70%;
+}
+
+.company-sidebar {
+    width: 28%;
+    margin-right: 20px;
+}
+.company-info-container {
+    display: flex;
+    align-items: center;
+}
+.company-info {
+    margin-right: auto;
+    font-size: 15px;
+}
+.company-main-wrapper {
+    padding: 10px;
+    border: 1px solid #eee;
+    background: #fff;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.company-main-wrapper textarea {
+    resize: vertical;
+    width: 100%;
+    min-height: 80px;
+}
+.job-post,.service-list,.applied-list {
+    margin: 2px 2px 10px 2px;
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 10px;
+}
+.company-info span {
+    color: #bbb;
+    padding: 2px;
+}
+
+span.company-field {
+    margin-right: 10px;
+}
+.company-title h2 {
+    margin-bottom: 2px;
+}
+button.company-website a {
+    color: #fff;
+    display: flex;
+    align-items: center;
+}

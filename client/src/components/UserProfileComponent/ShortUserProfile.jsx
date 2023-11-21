@@ -107,7 +107,7 @@ const ShortUserProfile = ({ userData, senderId}) => {
             
           </div>
           <div className="message-btn secondary-button">
-            <a href="">Message</a>
+            <a href="/messageuser">Message</a>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const JobListing = ({ myId, toast }) => {
   const [jobs, setJobs] = useState([]);
@@ -28,6 +29,8 @@ export const JobListing = ({ myId, toast }) => {
         myId,
       });
 
+      
+
       toast.success("Applied Successfully", {
         position: "top-right",
       });
@@ -35,13 +38,16 @@ export const JobListing = ({ myId, toast }) => {
     } catch (error) {
       console.error("Error applying for the job:", error.message);
 
-      toast.error("error while applying", {
-        position: "top-right",
-      });
+
+        toast.error("You have already applied for this job", {
+          position: "top-right",
+        });
+
+     
     }
   };
 
-  const uniqueCompanies = [...new Set(jobs.map((job) => job.company))];
+  const uniqueCompanies = [...new Set(jobs.map((job) => (job.postedBy ? job.postedBy.companyName : null)))];
   const uniqueRequirements = [...new Set(jobs.map((job) => job.requirements))];
   const uniqueLocations = [...new Set(jobs.map((job) => job.location))];
 
@@ -67,7 +73,7 @@ export const JobListing = ({ myId, toast }) => {
       />
     </div>
         {/* Company Dropdown */}
-        <div className="compnay-filter job-filter">
+        <div className="company-filter job-filter">
           {/* <label htmlFor="Company">Company</label> */}
 
           <select
@@ -141,7 +147,7 @@ export const JobListing = ({ myId, toast }) => {
               </div>
               <div className="job-list-content">
                 <div className="job-meta-info"><span className="company-link">
-                  <a>{job.company}</a>
+                 <Link to={`/company2/${job.postedBy._id}`}><a>{(job.postedBy ? job.postedBy.companyName : null)}</a></Link> 
                 </span>
                 <span className="job-publish-date">
                   Posted on: {formatDateFromLong(job.createdAt)}

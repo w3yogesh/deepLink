@@ -18,16 +18,18 @@ const ServiceList = ({ companyId }) => {
   }, [companyId]);
 
   return (
-    <div>
+    <div className='all-service-list'>
       <h2>Our Service</h2>
+      <div className="company-service-list">
       {services.map((service) => (
-        <div key={service._id}>
+        <div className='service-list' key={service._id} >
           <h3>{service.serviceName}</h3>
           <p>Description: {service.description}</p>
           <p>Price: ${service.price}</p>
           {/* You can add more details as needed */}
         </div>
       ))}
+      </div>
     </div>
   );
 };

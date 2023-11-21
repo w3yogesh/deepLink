@@ -13,11 +13,9 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 const CreateCompany = async (req, res, next) => {
   // return res.json({message:"hello"})
   try {
-    const image = req.file.originalname;
-    
-    // return res.json({message:image});
+    const logo = req.file ? req.file.filename : null;
+
     const {userId}=req.params;
-    //console.log(userId);
     const {
       companyName,
       field,
@@ -28,23 +26,6 @@ const CreateCompany = async (req, res, next) => {
       about,
     } = req.body;
 
-    
-    
-    // Assuming Company is a Mongoose model
-    // Additional validation
-    // if (!companyName || !email || !companySize || !about || !logo || !coverImage) {
-    //   return res.status(400).json({ success: false, message: "Missing required fields" });
-    // }
-
-    // Validate email format (you can use a library or a regex for more thorough validation)
-    // if (!isValidEmail(email)) {
-    //   return res.status(400).json({ success: false, message: "Invalid email format" });
-    // }
-
-    // Validate numeric fields
-    // if (isNaN(companySize)) {
-    //   return res.status(400).json({ success: false, message: "Invalid companySize value" });
-    // }
     const company = await Company.create({
       userId,
       companyName,
@@ -54,18 +35,14 @@ const CreateCompany = async (req, res, next) => {
       email,
       companySize,
       about,
-      image
+      logo,
     });
 
-  
     const user=await UserModel.findByIdAndUpdate(
       userId,
       {$push:{company:company._id}},
       { new: true }
     );
-
-
-
 
     return res.status(201).json({
       message: "Company created successfully",
@@ -210,7 +187,7 @@ const GetJobs=async(req,res)=>{
 
 const Jobs=async(req,res)=>{
   try{
-    const jobs=await Job.find();
+    const jobs=await Job.find({}).populate('postedBy');
     res.json({jobs});
   }catch(error){
     console.error('Error fetching jobs:', error.message);
@@ -224,6 +201,11 @@ const ApplyJob=async(req,res)=>{
     const { jobId, myId } = req.body;
     //const job = await Job.findById(jobId);
     // const user = await User.findById(myId);
+
+    const j=await Job.findById(jobId);
+    if(j.appliedBy.includes(myId)){
+     return res.status(400).json({ error: 'You have already applied for this job' });
+    }
 
     const update = await Job.findByIdAndUpdate(
       jobId,

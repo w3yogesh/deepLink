@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
-import JobPostingForm from './JobPostingForm';
-import JobList from './JobList';
+import JobPostingForm from '../components/MyCompany/JobPostingForm';
+import JobList from '../components/MyCompany/JobList';
 
 const JobOpenings2 = ({companyId}) => {
   return (

@@ -52,13 +52,10 @@ export default function CompanyForm() {
     if (photo) {
       data.append('photo', photo);
     }
-    // if(myId){
-    //   data.append('userId',myId);
-    // }
-
+   
     try {
       const response = await axios.post(`http://localhost:4000/company/${myId}`, data);
-      const company=response.data.company;
+      // const company=response.data.company;
 
      // console.log(cId);
       console.log('Backend response:', response);
@@ -77,8 +74,9 @@ export default function CompanyForm() {
     }));
   };
 
-  const handleFileChange = (event) => {
-    setPhoto(event.target.files[0]);
+  const handleLogoChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setPhoto(selectedFile || null);
   };
 
   return (
@@ -87,7 +85,7 @@ export default function CompanyForm() {
         <Grid item xs={6}>
           <TextField
             id='companyName'
-            label='Company name'
+            label='companyName'
             fullWidth
             variant='outlined'
             onChange={handleChange}
@@ -106,7 +104,7 @@ export default function CompanyForm() {
       </Grid>
 
       <Autocomplete
-        id='autocomplete-headquarter'
+        id='headquarter'
         name='headquarter'
         options={options}
         freeSolo
@@ -170,8 +168,10 @@ export default function CompanyForm() {
         margin='normal'
         onChange={handleChange}
       />
+      <label>logo</label>
+      <input type='file' id='photo' name='logo' onChange={handleLogoChange} />
+  
 
-      <input type='file' id='photo' name='file' onChange={handleFileChange} />
 
       <Button
         variant='contained'

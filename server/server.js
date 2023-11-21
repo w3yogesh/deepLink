@@ -1,22 +1,52 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const http = require("http"); // Import the 'http' module
 
-const connectDB = require('./config/dbConnect'); // Import the connectDB function
+const connectDB = require('./config/dbConnect');
+require("dotenv").config(); 
 
-
-require("dotenv").config(); // Import .env file var
-
-// import cookie and auth
 const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/AuthRoutes");
+
 
 // Connect to MongoDB by calling the imported connectDB function
 connectDB()
   .then(() => {
     // Start your server once the MongoDB connection is established
     const port = process.env.PORT || 3000;
-    app.listen(port, () => {
+
+    // Create the HTTP server
+    const server = http.createServer(app);
+
+    // Attach Socket.io to the HTTP server
+    const io = require("socket.io")(server, {
+      cors: {
+        origin: ["http://localhost:3000"],
+        methods: ["GET", "POST"],
+        credentials: true,
+      },
+    });
+
+    const userConnections = new Map();
+
+    io.on('connection', (socket) => {
+      const userId = socket.handshake.query.userId; // Extract user ID from query parameters
+      userConnections.set(userId, socket);
+    
+      socket.on('private-message', ({ to, message }) => {
+        const toSocket = userConnections.get(to);
+        if (toSocket) {
+          toSocket.emit('private-message', { from: userId, message });
+        }
+      });
+    
+      socket.on('disconnect', () => {
+        userConnections.delete(userId);
+      });
+    });
+
+    server.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
   })
@@ -32,32 +62,11 @@ app.use(
   })
 );
 
-const User = require("./models/UserModel");
-
-app.get("/search", async (req, res) => {
-  const { query } = req.query;
-
-  try {
-    const results = await User.find({
-      $or: [
-        { firstName: { $regex: new RegExp(query, "i") } },
-        { lastName: { $regex: new RegExp(query, "i") } },
-      ],
-    });
-
-    res.json({ success: true, results });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-});
-
 app.use('/fetchImage', express.static('uploads'));
 app.use('/fetchProfileImage', express.static('uploads/user/profile'));
+app.use('/fetchCompanyImage', express.static('uploads/company'));
 
 
 app.use(cookieParser());
-
 app.use(express.json());
-
 app.use("/", authRoute);
