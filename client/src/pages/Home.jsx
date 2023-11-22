@@ -1,10 +1,32 @@
 import Navbar from '../components/Navbar';
 import '../styles/home.css';
 import { Link } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 
 
 const Home = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userAuth = async () => {
+      const response = await axios.post(
+        "http://localhost:4000",
+        {},
+        { withCredentials: true }
+      );
+      const { status } = response.data;
+      if (status) {
+        navigate("/feed")
+      } else {
+        navigate("/login");
+      }
+    };
+    userAuth();
+  }, []);
+
   return (
     <>
        <Navbar/>

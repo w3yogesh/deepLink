@@ -11,6 +11,8 @@ const UserModel = require("../models/UserModel");
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const CreateCompany = async (req, res, next) => {
+    // res.json({ success: false, message: "Internal Server Error" });
+
   // return res.json({message:"hello"})
   try {
     const logo = req.file ? req.file.filename : null;

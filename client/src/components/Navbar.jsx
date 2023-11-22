@@ -54,7 +54,7 @@ export default function Navbar() {
             <a href="/myprofile">My Profile</a>
           </div>
           <div className="drop-menu-item">
-            <a href="#">My Companies</a>
+            <a href="/mycompanies">My Companies</a>
           </div>
           <div className="drop-menu-item">
             <a href="">Logout</a>

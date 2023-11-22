@@ -73,8 +73,6 @@ export default function CompanyDetail2() {
       try {
         const response = await axios.get(`http://localhost:4000/company/${companyId}`);
         setCompany(response.data.company);
-      
-        
       } catch (error) {
         console.error('Error fetching company details:', error.message);
       }
