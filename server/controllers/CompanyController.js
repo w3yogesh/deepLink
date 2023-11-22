@@ -315,8 +315,6 @@ const UploadLogo = async (req, res) => {
 };
 
 const UploadCover = async (req, res) => {
-  return res.json({ status: true, message: "Cover uploaded successfully" });
-
   try {
     const image = req.file.originalname;
     const { companyId } = req.body;
@@ -336,20 +334,5 @@ const UploadCover = async (req, res) => {
   }
 };
 
-module.exports = {
-  CreateCompany,
-  Companies,
-  MyCompany,
-  UploadLogo,
-  UploadCover,
-  CreateService,
-  CreateJob,
-  GetService,
-  GetJobs,
-  Jobs,
-  ApplyJob,
-  GetCompanies,
-  getAppliedUsers,
-};
-module.exports = { CreateCompany, Companies,MyCompany,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,withdrawJob,GetCompanies,getAppliedUsers};
+module.exports = { CreateCompany, Companies,MyCompany,UploadLogo,UploadCover,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,withdrawJob,GetCompanies,getAppliedUsers};
 

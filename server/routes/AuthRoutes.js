@@ -13,7 +13,7 @@ const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill,
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
