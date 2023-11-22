@@ -52,7 +52,10 @@ export default function CompanyForm() {
     if (photo) {
       data.append('photo', photo);
     }
-   
+    console.log(myId)
+    for (var pair of data.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+  }
     try {
       const response = await axios.post(`http://localhost:4000/company/${myId}`, data);
       // const company=response.data.company;

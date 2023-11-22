@@ -73,7 +73,7 @@ const PostCard = ({ postObj, userId, userName }) => {
   return (
     <div className="post-items">
       <div className="post-meta">
-      <UserIcon/> <span>{postObj.user.firstName}</span>
+      <UserIcon/> <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}><span>{postObj.user.firstName}</span></a>
       </div>
       {postObj.image ? <div className="img-post-content">
         {postObj.content ? <p className="img-post-text">{postObj.content}</p> : ""}
