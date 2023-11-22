@@ -7,7 +7,6 @@ const CompanySchema = new mongoose.Schema({
   },
   companyName: {
     type: String,
-    required: true,
     trim: true,
   },
   field: {
@@ -24,16 +23,13 @@ const CompanySchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
     unique: true, // If each company should have a unique email
   },
   companySize: {
     type: String, // Adjust the data type if it represents a numeric value
-    required: true,
   },
   about: {
     type: String,
-    required: true,
   },
   logo: {
     type: String,

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import { JobListing } from "../components/JobComponent/JobListing";
-import { BookMarkIcon , ClipCheckIcon } from "../components/MySVGIcons";
+import { BookMarkIcon , ClipCheckIcon, PostIcon } from "../components/MySVGIcons";
 import "../styles/AllJobs.css"
 
 const AllJobs = () => {
@@ -41,12 +41,16 @@ const AllJobs = () => {
             <div className="job-items"><BookMarkIcon/>Saved Jobs</div>
             <div className="job-items"><ClipCheckIcon/>Applied Jobs</div>
           </div>
+          <div className="post-job-btn">
+            <div className="post-job">
+            <a href="/company"> <PostIcon/>  Post a job </a>
+            </div>
+          </div>
         </div>
           <div className="job-main-container">
             <JobListing myId={myId} toast={toast} />
           </div>
       </div>
-
       <ToastContainer/>
     </>
   );

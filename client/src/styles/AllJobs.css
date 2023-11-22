@@ -7,22 +7,23 @@
 .job-sidebar {
     width: 28%;
     margin-right: 20px;
+    height: fit-content;
 }
 
-.job-items {
+.job-items,.post-job {
     font-size: 18px;
     padding: 0px 10px;
-    margin-bottom: 10px;
+    margin: 5px 0;
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 
-.job-items svg {
+.job-items svg, .post-job-btn svg {
     margin-right: 10px;
 }
 
-.sidebar-content {
+.sidebar-content,.post-job-btn {
     padding: 10px;
     border: 1px solid #eee;
     border-radius: 10px;
@@ -116,4 +117,16 @@
 
 .job-filter label {
     font-weight: 500;
+}
+.requirement-filter.job-filter select {
+    max-width: 170px;
+}
+
+.post-job-btn {
+ margin-top: 20px;
+}
+.post-job a {
+    color: #000000;
+    font-weight: 500;
+    font-size: 18px;
 }

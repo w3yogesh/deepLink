@@ -54,9 +54,10 @@ module.exports.RemovePostLike = async(req, res, next)=>{
       return res.json({ status: false, message: like });
     }
     const likeId = like._id;
-    const resu = await Post.updateOne({_id: postId},{$unset:{likes:likeId}});
-    
+
+    const resu = await Post.findOneAndUpdate({_id: postId},{$pull:{likes:likeId}});
     const result = await Like.findByIdAndDelete({_id: likeId});
+
     // return res.json({ status: false, message: result });
     // return res.json(result);
 
