@@ -233,14 +233,6 @@ export default function CompanyDetail() {
           <div className="products"></div>
         </div>
       </div>
-      <div className="post-container">
-        <CompanyPosts companyId={company._id} />
-          {reversedPosts.map((post, index) => (
-            <div className="post-body" key={index}>
-             <CompanyPostCard postObj={post} userId={userId} userName={userName}/>
-            </div>
-          ))}
-        </div>
       {showPopup && (
         <CompanyPopUp
           closePopup={closePopup}
@@ -249,6 +241,14 @@ export default function CompanyDetail() {
         />
       )}
       <ToastContainer />
+      <div className="post-container">
+        <CompanyPosts companyId={company._id} />
+          {reversedPosts.map((post, index) => (
+            <div className="post-body" key={index}>
+             <CompanyPostCard postObj={post} userId={userId} userName={userName}/>
+            </div>
+          ))}
+        </div>
     </>
   );
 }
