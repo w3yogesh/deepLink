@@ -12,6 +12,10 @@ import { OpenLinkIcon,CameraIcon } from "../components/MySVGIcons";
 import CompanyPopUp from "../components/MyCompany/CompanyPopUp";
 import { ToastContainer } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
+import CompanyPostCard from '../components/FeedComponent/CompanyPostCard';
+import CompanyPosts from "../components/CompanyPosts";
+
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
     <div className="company-main-wrapper">
@@ -30,6 +34,52 @@ export default function CompanyDetail() {
   const [activeTab, setActiveTab] = useState("jobpost");
   const [showPopup, setShowPopup] = useState(false);
   const [isBack, setIsBack] = useState(false);
+
+
+  const [loading, setLoading] = useState(true);
+  
+  const navigate = useNavigate();
+
+  const [allPostObj, setPosts] = useState([]);
+  const [userData, setUserData] = useState('');
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const auth = await axios.post(
+          "http://localhost:4000",
+          {},
+          { withCredentials: true }
+        );
+        const { status, user } = auth.data;
+        setUserData(user);
+        setUserId(user._id);
+        setUserName(user.firstName);
+
+        if (!status) {
+          setTimeout(() => {
+            navigate("/login");
+          }, 1);
+        } else {
+          setUserData(user);
+          const response = await axios.get(
+            "http://localhost:4000/api/fetchcompanyposts"
+          );
+          const postsData = response.data;
+          setPosts(postsData);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPosts();
+  }, [navigate]);
+  const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
+
+  console.log(allPostObj);
 
   useEffect(() => {
     // Fetch the details of the specific company from the backend
@@ -183,6 +233,15 @@ export default function CompanyDetail() {
           <div className="products"></div>
         </div>
       </div>
+
+      <div className="post-container">
+        <CompanyPosts companyId={company._id} />
+          {reversedPosts.map((post, index) => (
+            <div className="post-body" key={index}>
+             <CompanyPostCard postObj={post} userId={userId} userName={userName}/>
+            </div>
+          ))}
+        </div>
       {showPopup && (
         <CompanyPopUp
           closePopup={closePopup}
@@ -191,6 +250,6 @@ export default function CompanyDetail() {
         />
       )}
       <ToastContainer />
-    </>
+   </>
   );
 }
