@@ -1,7 +1,8 @@
-.company-main-container{
+.company-main-container {
     margin-top: 20px;
     display: flex;
 }
+
 .company-main-card {
     border: 1px solid #eee;
     background: #fff;
@@ -15,18 +16,24 @@
 }
 
 .company-logo img {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 }
-.company-logo { margin-top: -80px;
-    margin-left: 16px;}
+
+.company-logo {
+    margin-top: -80px;
+    margin-left: 16px;
+    display: inline-flex;
+    align-items: flex-end;
+}
 
 .company-meta {
-    margin-left: 30px;
-    padding: 8px 0px 15px 0px;
-    margin-top: -14px;
-    margin-right: 30px;
+    margin-left: 20px;
+    padding: 0px 0px 15px 0px;
+    margin-top: 0px;
+    margin-right: 20px;
 }
+
 .company-container {
     width: 70%;
 }
@@ -35,14 +42,17 @@
     width: 28%;
     margin-right: 20px;
 }
+
 .company-info-container {
     display: flex;
     align-items: center;
 }
+
 .company-info {
     margin-right: auto;
     font-size: 15px;
 }
+
 .company-main-wrapper {
     padding: 10px;
     border: 1px solid #eee;
@@ -50,17 +60,22 @@
     margin-top: 10px;
     border-radius: 10px;
 }
+
 .company-main-wrapper textarea {
     resize: vertical;
     width: 100%;
     min-height: 80px;
 }
-.job-post,.service-list,.applied-list {
+
+.job-post,
+.service-list,
+.applied-list {
     margin: 2px 2px 10px 2px;
     border: 1px solid #eee;
     padding: 12px;
     border-radius: 10px;
 }
+
 .company-info span {
     color: #bbb;
     padding: 2px;
@@ -69,11 +84,68 @@
 span.company-field {
     margin-right: 10px;
 }
+
 .company-title h2 {
     margin-bottom: 2px;
 }
+
 button.company-website a {
     color: #fff;
     display: flex;
     align-items: center;
+}
+
+.company-background-icon {
+    position: relative;
+    right: 40px;
+    top: -40px;
+}
+
+.company-background {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.cover-icon {
+    padding: 6px;
+    border-radius: 100%;
+    background: #e4e6eb;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    cursor: pointer;
+}
+
+.cover-icon {
+    padding: 6px;
+    border-radius: 100%;
+    background: #e4e6eb;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--button-primary-bg);
+    cursor: pointer;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+.logo-icon {
+    padding: 4px;
+    border-radius: 100%;
+    background: #e4e6eb;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    cursor: pointer;
+}
+
+.logo-upload-icon {
+    position: relative;
+    top: 0px;
+    right: 30px;
+    font-size: 18px;
 }

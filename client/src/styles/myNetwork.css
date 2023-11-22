@@ -1,3 +1,7 @@
+.mynetwork {
+    margin-top: 20px;
+}
+
 .mynetwork-container {
     display: flex;
     justify-content: center;
@@ -22,8 +26,11 @@
 }
 .main-section {
     width: 65%;
-    border: 1px solid;
+    border: 1px solid #eee;
     margin-left: 20px;
+    padding: 10px;
+    border-radius: 2px;
+    background: #fff;
 }
 h6.section-heading {
     margin: 0 0 10px;
@@ -39,16 +46,20 @@ h6.section-heading {
 
 .user-card-list {
     width: 32%;
-    border: 1px solid;
     margin-bottom: 20px;
     padding: 6px;
     text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    border-radius: 4px;
 }
 
 .user-card-img {
     margin: 0 auto;
 }
-
+.user-card-img img {
+    width: 100px;
+    height: 100px;
+}
 .user-card-info {
     display: flex;
     flex-direction: column;

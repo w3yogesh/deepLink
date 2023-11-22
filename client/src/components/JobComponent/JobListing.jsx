@@ -47,6 +47,28 @@ export const JobListing = ({ myId, toast }) => {
     }
   };
 
+  const withdraw = async(jobId)=> {
+
+    try {
+      const response = await axios.post("http://localhost:4000/withdraw", {
+        jobId,
+        myId,
+      });
+
+      toast.success("Withdraw Successfully", {
+        position: "top-right",
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error withdrawing for the job:", error.message);
+
+
+        toast.error("You have Successfully Withdrawthis job", {
+          position: "top-right",
+        });
+  }
+}
+
   const uniqueCompanies = [...new Set(jobs.map((job) => (job.postedBy ? job.postedBy.companyName : null)))];
   const uniqueRequirements = [...new Set(jobs.map((job) => job.requirements))];
   const uniqueLocations = [...new Set(jobs.map((job) => job.location))];
@@ -59,6 +81,8 @@ export const JobListing = ({ myId, toast }) => {
 
     return `${day}/${month}/${year}`;
   };
+
+  console.log('jobs : ', jobs);
 
   return (
     <div className="jobs-wrapper">
@@ -157,9 +181,12 @@ export const JobListing = ({ myId, toast }) => {
                   Requirements: {job.requirements}
                 </span>
               </div>
-              <div className="job-actions">
+              {!job.appliedBy.includes(myId) && <div className="job-actions">
                 <button onClick={() => applyNow(job._id)}>Apply Now</button>
-              </div>
+              </div>}
+              {job.appliedBy.includes(myId) && <div className="job-actions">
+                <button onClick={() => withdraw(job._id)}> Withdraw </button>
+              </div>}
             </div>
           ))}
       </div>
