@@ -7,6 +7,7 @@ export const JobListing = ({ myId, toast }) => {
   const [companyFilter, setCompanyFilter] = useState("");
   const [requirementsFilter, setRequirementsFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
+  const [searchInput, setSearchInput] = useState(""); // Step 1: Add search input state
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -29,8 +30,6 @@ export const JobListing = ({ myId, toast }) => {
         myId,
       });
 
-      
-
       toast.success("Applied Successfully", {
         position: "top-right",
       });
@@ -38,17 +37,13 @@ export const JobListing = ({ myId, toast }) => {
     } catch (error) {
       console.error("Error applying for the job:", error.message);
 
-
-        toast.error("You have already applied for this job", {
-          position: "top-right",
-        });
-
-     
+      toast.error("You have already applied for this job", {
+        position: "top-right",
+      });
     }
   };
 
-  const withdraw = async(jobId)=> {
-
+  const withdraw = async (jobId) => {
     try {
       const response = await axios.post("http://localhost:4000/withdraw", {
         jobId,
@@ -62,14 +57,15 @@ export const JobListing = ({ myId, toast }) => {
     } catch (error) {
       console.error("Error withdrawing for the job:", error.message);
 
+      toast.error("You have Successfully Withdraw this job", {
+        position: "top-right",
+      });
+    }
+  };
 
-        toast.error("You have Successfully Withdrawthis job", {
-          position: "top-right",
-        });
-  }
-}
-
-  const uniqueCompanies = [...new Set(jobs.map((job) => (job.postedBy ? job.postedBy.companyName : null)))];
+  const uniqueCompanies = [
+    ...new Set(jobs.map((job) => (job.postedBy ? job.postedBy.companyName : null))),
+  ];
   const uniqueRequirements = [...new Set(jobs.map((job) => job.requirements))];
   const uniqueLocations = [...new Set(jobs.map((job) => job.location))];
 
@@ -82,24 +78,21 @@ export const JobListing = ({ myId, toast }) => {
     return `${day}/${month}/${year}`;
   };
 
-  console.log('jobs : ', jobs);
-
   return (
     <div className="jobs-wrapper">
       <h2>Recent openings</h2>
       <div className="job-filters">
-      <div className="job-search-box">
-      <input
-        type="text"
-        placeholder="Search companies"
-        // value={"b"}
-        // onChange={}
-      />
-    </div>
+        <div className="job-search-box">
+          {/* Step 2: Add value and onChange to the search input */}
+          <input
+            type="text"
+            placeholder="Search companies"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        </div>
         {/* Company Dropdown */}
         <div className="company-filter job-filter">
-          {/* <label htmlFor="Company">Company</label> */}
-
           <select
             name="Company"
             value={companyFilter}
@@ -114,16 +107,14 @@ export const JobListing = ({ myId, toast }) => {
           </select>
         </div>
 
+        {/* Requirements Dropdown */}
         <div className="requirement-filter job-filter">
-          {/* Requirements Dropdown */}
-          {/* <label htmlFor="Requirements">Requirements</label> */}
-
           <select
             name="Requirements"
             value={requirementsFilter}
             onChange={(e) => setRequirementsFilter(e.target.value)}
           >
-            <option value="">All Requirements</option>
+            <option value="">Elligibility</option>
             {uniqueRequirements.map((requirement) => (
               <option key={requirement} value={requirement}>
                 {requirement}
@@ -132,10 +123,8 @@ export const JobListing = ({ myId, toast }) => {
           </select>
         </div>
 
+        {/* Location Dropdown */}
         <div className="location-filter job-filter">
-          {/* Location Dropdown */}
-          {/* <label htmlFor="Location">Location</label> */}
-
           <select
             name="Location"
             value={locationFilter}
@@ -151,15 +140,15 @@ export const JobListing = ({ myId, toast }) => {
         </div>
       </div>
 
-      {/* Job listings */}
+      {/* Filter jobs based on search input and other filters */}
       <div className="job-list-section">
         {jobs
           .filter(
             (job) =>
-              (companyFilter === "" || job.company === companyFilter) &&
-              (requirementsFilter === "" ||
-                job.requirements === requirementsFilter) &&
-              (locationFilter === "" || job.location === locationFilter)
+              (companyFilter === "" || job.postedBy.companyName === companyFilter) &&
+              (requirementsFilter === "" || job.requirements === requirementsFilter) &&
+              (locationFilter === "" || job.location === locationFilter) &&
+              (searchInput === "" || job.postedBy.companyName.toLowerCase().includes(searchInput.toLowerCase()))
           )
           .map((job) => (
             <div className="job-list-item" key={job._id}>
@@ -170,23 +159,31 @@ export const JobListing = ({ myId, toast }) => {
                 <h3>{job.title}</h3>
               </div>
               <div className="job-list-content">
-                <div className="job-meta-info"><span className="company-link">
-                 <Link to={`/company/${job.postedBy._id}`}><a>{(job.postedBy ? job.postedBy.companyName : null)}</a></Link> 
-                </span>
-                <span className="job-publish-date">
-                  Posted on: {formatDateFromLong(job.createdAt)}
-                </span></div>
+                <div className="job-meta-info">
+                  <span className="company-link">
+                    <Link to={`/company/${job.postedBy._id}`}>
+                      <a>{job.postedBy.companyName}</a>
+                    </Link>
+                  </span>
+                  <span className="job-publish-date">
+                    Posted on: {formatDateFromLong(job.createdAt)}
+                  </span>
+                </div>
                 <span className="job-list-loc">Location: {job.location}</span>
                 <span className="job-list-req">
-                  Requirements: {job.requirements}
+                  Elligibility: {job.requirements}
                 </span>
               </div>
-              {!job.appliedBy.includes(myId) && <div className="job-actions">
-                <button onClick={() => applyNow(job._id)}>Apply Now</button>
-              </div>}
-              {job.appliedBy.includes(myId) && <div className="job-actions">
-                <button onClick={() => withdraw(job._id)}> Withdraw </button>
-              </div>}
+              {!job.appliedBy.includes(myId) && (
+                <div className="job-actions">
+                  <button onClick={() => applyNow(job._id)}>Apply Now</button>
+                </div>
+              )}
+              {job.appliedBy.includes(myId) && (
+                <div className="job-actions">
+                  <button onClick={() => withdraw(job._id)}>Withdraw</button>
+                </div>
+              )}
             </div>
           ))}
       </div>

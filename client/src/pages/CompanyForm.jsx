@@ -56,7 +56,7 @@ export default function CompanyForm() {
     try {
       const response = await axios.post(`http://localhost:4000/company/${myId}`, data);
       // const company=response.data.company;
-
+      
      // console.log(cId);
       console.log('Backend response:', response);
 
