@@ -100,6 +100,8 @@ const companyImages = multer.diskStorage({
 const company = multer({ storage:companyImages });
 
 router.post("/company/:userId",company.single('photo'),CreateCompany);
+router.post("/uploadLogo",company.single("photo"),UploadLogo);
+router.post("/uploadCover",company.single("photo"),UploadCover);
 
 // company.single('photo'), 
 
