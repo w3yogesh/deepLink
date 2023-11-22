@@ -147,7 +147,7 @@ export const JobListing = ({ myId, toast }) => {
               </div>
               <div className="job-list-content">
                 <div className="job-meta-info"><span className="company-link">
-                 <Link to={`/company2/${job.postedBy._id}`}><a>{(job.postedBy ? job.postedBy.companyName : null)}</a></Link> 
+                 <Link to={`/company/${job.postedBy._id}`}><a>{(job.postedBy ? job.postedBy.companyName : null)}</a></Link> 
                 </span>
                 <span className="job-publish-date">
                   Posted on: {formatDateFromLong(job.createdAt)}

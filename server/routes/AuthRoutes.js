@@ -13,7 +13,7 @@ const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill,
 const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany,Companies, MyCompany,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany,UploadLogo,UploadCover,CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
@@ -99,6 +99,8 @@ const companyImages = multer.diskStorage({
 const company = multer({ storage:companyImages });
 
 router.post("/company/:userId",company.single('photo'),CreateCompany);
+router.post("/uploadLogo",company.single("photo"),UploadLogo);
+router.post("/uploadCover",company.single("photo"),UploadCover);
 
 // company.single('photo'), 
 

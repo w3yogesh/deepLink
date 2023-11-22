@@ -10,6 +10,8 @@ import JobPostingForm from "../components/MyCompany/JobPostingForm";
 import ServiceForm from "../components/MyCompany/ServiceForm";
 import "../styles/CompanyDetail.css";
 import { OpenLinkIcon } from "../components/MySVGIcons";
+import { CameraIcon } from "../components/MySVGIcons";
+import CompanyPopUp from "../components/MyCompany/CompanyPopUp";
 
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
@@ -19,7 +21,6 @@ const CompanyComponent = ({ activeTab, companyId }) => {
       {activeTab === "AllJobs" && <JobList companyId={companyId} />}
       {activeTab === "AllService" && <ServiceList companyId={companyId} />}
       {activeTab === "appliedUsers" && <AppliedUser companyId={companyId} />}
-
     </div>
   );
 };
@@ -27,8 +28,9 @@ const CompanyComponent = ({ activeTab, companyId }) => {
 export default function CompanyDetail() {
   const { companyId } = useParams();
   const [company, setCompany] = useState(null);
-  const [appliedUsers, setAppliedUsers] = useState([]);
   const [activeTab, setActiveTab] = useState("jobpost");
+  const [showPopup, setShowPopup] = useState(false);
+  const [isBack, setIsBack] = useState(false);
 
   useEffect(() => {
     // Fetch the details of the specific company from the backend
@@ -52,6 +54,14 @@ export default function CompanyDetail() {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const openPopup = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
   };
 
   return (
@@ -91,10 +101,34 @@ export default function CompanyDetail() {
         <div className="company-container">
           <div className="company-main-card">
             <div className="company-background">
-            <img src={company.cover ? `http://localhost:4000/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
+              <img
+                src={
+                  company.cover
+                    ? `http://localhost:4000/fetchCompanyImage/${company.cover}`
+                    : "/images/company_cover.jpg"
+                }
+                alt="company cover photo"
+              />
+              <div className="company-background-icon">
+                <div className="cover-icon" onClick={() => { openPopup(); setIsBack(true); }}>
+                  <CameraIcon />
+                </div>
+              </div>
             </div>
             <div className="company-logo">
-            <img src={company.logo ? `http://localhost:4000/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
+              <img
+                src={
+                  company.logo
+                    ? `http://localhost:4000/fetchCompanyImage/${company.logo}`
+                    : "/images/user-profile-photo.png"
+                }
+                alt="company logo"
+              />
+              <div className="logo-upload-icon">
+            <div className="logo-icon" onClick={() => { openPopup(); setIsBack(false); }}>
+              <CameraIcon />
+            </div>
+          </div>
             </div>
             <div className="company-meta">
               <div className="company-title">
@@ -107,31 +141,42 @@ export default function CompanyDetail() {
                   <span className="label">Headquarter:</span>
                   <span className="coompany-head">{company.headquarter}</span>
                 </div>
-               {company.website && <div className="company-action">
-               <button className="company-website"><a target='_blank' href={company.website}>Website <OpenLinkIcon/></a></button>
-
-                </div>}
+                {company.website && (
+                  <div className="company-action">
+                    <button className="company-website">
+                      <a target="_blank" href={company.website}>
+                        Website <OpenLinkIcon />
+                      </a>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
           <div class="company-header">
             <div class="my-profile-tabs">
-              <div className={`profile-tabs  ${
-                    activeTab === "AllJobs" ? "active" : ""
-                  }`}
-                  onClick={() => handleTabClick("AllJobs")}>
+              <div
+                className={`profile-tabs  ${
+                  activeTab === "AllJobs" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("AllJobs")}
+              >
                 <span>Jobs</span>
               </div>
-              <div className={`profile-tabs  ${
-                    activeTab === "AllService" ? "active" : ""
-                  }`}
-                  onClick={() => handleTabClick("AllService")}>
+              <div
+                className={`profile-tabs  ${
+                  activeTab === "AllService" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("AllService")}
+              >
                 <span>Services</span>
               </div>
-              <div className={`profile-tabs  ${
-                    activeTab === "appliedUsers" ? "active" : ""
-                  }`}
-                  onClick={() => handleTabClick("appliedUsers")}>
+              <div
+                className={`profile-tabs  ${
+                  activeTab === "appliedUsers" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("appliedUsers")}
+              >
                 <span>Applied Users</span>
               </div>
             </div>
@@ -140,6 +185,13 @@ export default function CompanyDetail() {
           <div className="products"></div>
         </div>
       </div>
+      {showPopup && (
+        <CompanyPopUp
+          closePopup={closePopup}
+          isBack={isBack}
+          company={company}
+        />
+      )}
     </>
   );
 }
