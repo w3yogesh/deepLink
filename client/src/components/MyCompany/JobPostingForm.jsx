@@ -41,10 +41,6 @@ const JobPostingForm = ({companyId}) => {
           <input type="text" name="title" value={jobData.title} onChange={handleInputChange} />
         </label>
         <label>
-          Company:
-          <input type="text" name="company" value={jobData.company} onChange={handleInputChange} />
-        </label>
-        <label>
           Location:
           <input type="text" name="location" value={jobData.location} onChange={handleInputChange} />
         </label>
