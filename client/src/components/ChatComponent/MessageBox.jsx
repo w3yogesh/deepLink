@@ -8,8 +8,11 @@ const MessageBox = ({ messages, myId }) => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
+
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length>0) {
+      scrollToBottom();
+    }
   }, [messages]);
 
   return (

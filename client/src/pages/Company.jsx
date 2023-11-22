@@ -6,7 +6,11 @@ import JobList from "../components/MyCompany/JobList";
 import ServiceList from "../components/MyCompany/ServiceList";
 import { OpenLinkIcon } from '../components/MySVGIcons';
 import "../styles/CompanyDetail.css";
+import { useNavigate } from "react-router-dom";
+import CompanyPostCard from '../components/FeedComponent/CompanyPostCard';
+import CompanyPosts from "../components/CompanyPosts";
 
+import "../styles/Feed/Feed.css";
 
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
@@ -18,11 +22,51 @@ const CompanyComponent = ({ activeTab, companyId }) => {
 };
 
 export default function CompanyDetail2() {
+  const [loading, setLoading] = useState(true);
   const { companyId } = useParams();
+  const navigate = useNavigate();
   const [company, setCompany] = useState(null);
   const [activeTab, setActiveTab] = useState("jobpost");
-  
+  const [allPostObj, setPosts] = useState([]);
+  const [userData, setUserData] = useState('');
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const auth = await axios.post(
+          "http://localhost:4000",
+          {},
+          { withCredentials: true }
+        );
+        const { status, user } = auth.data;
+        setUserData(user);
+        setUserId(user._id);
+        setUserName(user.firstName);
+
+        if (!status) {
+          setTimeout(() => {
+            navigate("/login");
+          }, 1);
+        } else {
+          setUserData(user);
+          const response = await axios.get(
+            "http://localhost:4000/api/fetchcompanyposts"
+          );
+          const postsData = response.data;
+          setPosts(postsData);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPosts();
+  }, [navigate]);
+  const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
+
+  console.log(allPostObj);
   useEffect(() => {
     // Fetch the details of the specific company from the backend
     const fetchCompanyDetails = async () => {
@@ -44,7 +88,10 @@ export default function CompanyDetail2() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-console.log(company)
+
+  // if (loading) {
+  //   return <div>Loading...</div>; // Render a loading message while data is being fetched
+  // }
 
   return (
     <>
@@ -84,7 +131,6 @@ console.log(company)
         <div className="company-main-card">
           <div className="company-background">
           <img src={company.cover ? `http://localhost:4000/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
-
           </div>
           <div className="company-logo">
             <img src={company.logo ? `http://localhost:4000/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
@@ -129,9 +175,13 @@ console.log(company)
           </div>
         </div>
         <CompanyComponent activeTab={activeTab} companyId={companyId} />
+        
         <div className="products"></div>
+
       </div>
     </div>
+
+
   </>
   );
 }

@@ -58,6 +58,13 @@ const CompanySchema = new mongoose.Schema({
       unique: true,
     },
   ],
+  posts:[
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CompanyPost",
+        unique: true,
+    }
+  ]
 });
 
 module.exports = mongoose.model("Company", CompanySchema);

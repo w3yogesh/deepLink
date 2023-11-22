@@ -11,7 +11,7 @@ const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreCo
 const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
-const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, fatchComments} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts} = require("../controllers/PostControl");
 
 //compnay controller
 const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
@@ -70,8 +70,15 @@ const postImage = multer({ storage:PostImage });
 router.post("/createPost",postImage.single("image"),createPost);
 router.get('/api/fetchposts', fetchPosts);
 router.put('/api/postLike', Postlike);
-router.delete('/api/removePostLike/:userId/:postId', RemovePostLike)
+router.delete('/api/removePostLike/:userId/:postId', RemovePostLike);
 router.put('/api/postComment', PostComment);
+
+//company post controller
+router.post("/companypost",createCompanyPost);
+router.get('/api/fetchcompanyposts',fetchCompanyPosts);
+router.put('/api/companypostLike',CompanyPostlike);
+router.delete('/api/removecompanyPostLike/:userId/:postId',RemoveCompanyPostLike);
+router.put('/api/postcompanyComment',CompanyPostComment);
 
 // Company controller
 // router.post("/company", CreateCompany);
