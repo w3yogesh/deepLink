@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import AppliedUser from "../components/MyCompany/AppliedUser";
 import Navbar from "../components/Navbar";
 import JobList from "../components/MyCompany/JobList";
@@ -9,9 +8,9 @@ import ServiceList from "../components/MyCompany/ServiceList";
 import JobPostingForm from "../components/MyCompany/JobPostingForm";
 import ServiceForm from "../components/MyCompany/ServiceForm";
 import "../styles/CompanyDetail.css";
-import { OpenLinkIcon } from "../components/MySVGIcons";
-import { CameraIcon } from "../components/MySVGIcons";
+import { OpenLinkIcon,CameraIcon } from "../components/MySVGIcons";
 import CompanyPopUp from "../components/MyCompany/CompanyPopUp";
+import { ToastContainer } from "react-toastify";
 
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
@@ -67,7 +66,6 @@ export default function CompanyDetail() {
   return (
     <>
       <Navbar />
-
       <div className="company-main-container grid-container">
         <div className="company-sidebar">
           <div className="left-menu">
@@ -192,6 +190,7 @@ export default function CompanyDetail() {
           company={company}
         />
       )}
+      <ToastContainer />
     </>
   );
 }
