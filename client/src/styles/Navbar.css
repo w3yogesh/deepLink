@@ -82,6 +82,7 @@
 }
 
 .drop-menu {
+    display: none;
     position: absolute;
     background-color: #fff;
     min-width: 100px;
@@ -90,6 +91,9 @@
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #ddd;
+}
+.drop-menu.show {
+    display: block;
 }
 
 .drop-menu-item {

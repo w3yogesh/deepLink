@@ -18,7 +18,7 @@ export default function Navbar() {
             <a href="/">
               <img
                 className="header-logo"
-                src="images/DeepLink_logo.png"
+                src="http://localhost:3000/images/DeepLink_logo.png"
                 alt="deeplink"
               />
             </a>
@@ -48,8 +48,8 @@ export default function Navbar() {
               <AdminIcon />
             </div>
           </div>
-          {isDropdownOpen && (
-        <div className="drop-menu">
+          
+        <div className={`drop-menu ${isDropdownOpen ? 'show' : ''}`}>
           <div className="drop-menu-item">
             <a href="/myprofile">My Profile</a>
           </div>
@@ -60,7 +60,6 @@ export default function Navbar() {
             <a href="">Logout</a>
           </div>
         </div>
-      )}
         </div>
       </header>
      
