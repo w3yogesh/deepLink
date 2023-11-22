@@ -86,7 +86,14 @@ const ShortUserProfile = ({ userData, senderId}) => {
     <div className="profile-sidebar left">
       <div className="short-profile-view">
         <div className="profile-photo">
-          <img src="/images/user-profile-photo.svg" alt="User Profile Photo" />
+        <img
+              src={
+                userData.profileImage
+                  ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
+                  : `images/user-background-photo.jpg`
+              }
+              alt="User background Photo"
+            />
         </div>
         <div className="profile-meta">
           <h1 className="userName">

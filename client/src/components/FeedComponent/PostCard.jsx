@@ -51,7 +51,6 @@ const PostCard = ({ postObj, userId, userName }) => {
       }
     }
   };
-
   const handleAddComment = async (postObjId) => {
     setShowComment(true);
   };
@@ -76,9 +75,15 @@ const PostCard = ({ postObj, userId, userName }) => {
       <div className="post-meta">
       <UserIcon/> <span>{postObj.user.firstName}</span>
       </div>
-      <div className="post-content">
-        <p>{postObj.content}</p>
+      {postObj.image ? <div className="img-post-content">
+        {postObj.content ? <p className="img-post-text">{postObj.content}</p> : ""}
+        <img src={`http://localhost:4000/fetchUserPostImage/${postObj.image}`} alt="user post" />
       </div>
+        
+        : <div className="post-content">
+              <p>{postObj.content}</p>
+          </div>
+      }
       <div className="post-action">
         <div className="like-btn btn" onClick={() => handleLikes(postObj._id)}>
           <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />

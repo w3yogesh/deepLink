@@ -1,3 +1,4 @@
+const multer = require("multer");
 const { Signup, Login} = require("../controllers/AuthController");
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");// My profile and data
@@ -56,9 +57,17 @@ router.delete('/api/deleteMyConnection/:senderId/:receiverId', deleteMyConnectio
 router.get('/userprofile/:userId',getUserProfileById);
 
 
+const PostImage = multer.diskStorage({
+  destination: "./uploads/user/post",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const postImage = multer({ storage:PostImage });
 
 //Post Controller
-router.post("/post",createPost);
+router.post("/createPost",postImage.single("image"),createPost);
 router.get('/api/fetchposts', fetchPosts);
 router.put('/api/postLike', Postlike);
 router.delete('/api/removePostLike/:userId/:postId', RemovePostLike)
@@ -89,7 +98,6 @@ router.post("/messaging",createdMessage);
 router.get("/chats/:userId/:requestId",fetchMessages);
 
 
-const multer = require("multer");
 
 const companyImages = multer.diskStorage({
   destination: "./uploads/company",

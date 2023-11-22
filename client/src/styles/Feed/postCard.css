@@ -29,6 +29,7 @@
     font-weight: 500;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #bbb;
 }
 
 .post-content {
@@ -108,4 +109,15 @@ ol.comment-list {
 }
 .post-action svg {
     margin: 0 6px 0 0;
+}
+.post-content p {
+    word-wrap: break-word;
+    overflow: auto;
+    padding: 20px;
+}
+p.img-post-text {
+    background: #fff;
+    padding-left: 10px;
+    word-wrap: break-word;
+    overflow: auto;
 }

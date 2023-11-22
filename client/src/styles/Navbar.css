@@ -90,7 +90,10 @@
     top: 100%;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #252525;
+    z-index: 1;
+    background: #F0F8FF;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .drop-menu.show {
     display: block;
@@ -103,9 +106,9 @@
 .drop-menu::before {
     content: "";
     position: absolute;
-    border-color: rgba(194, 225, 245, 0);
+    border-color: rgba(76, 76, 76, 0);
     border: solid transparent;
-    border-bottom-color: white;
+    border-bottom-color: #bbb;
     border-width: 11px;
     margin-left: -10px;
     top: -21px;

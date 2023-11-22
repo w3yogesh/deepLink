@@ -4,7 +4,7 @@ import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import PostComponent from "../components/PostComponent";
+import PostComponent from "../components/FeedComponent/PostComponent";
 
 
 import "../styles/Feed/Feed.css";

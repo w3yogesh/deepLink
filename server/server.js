@@ -63,6 +63,8 @@ app.use(
 );
 
 app.use('/fetchImage', express.static('uploads'));
+app.use('/fetchUserPostImage', express.static('uploads/user/post'));
+
 app.use('/fetchProfileImage', express.static('uploads/user/profile'));
 app.use('/fetchCompanyImage', express.static('uploads/company'));
 
