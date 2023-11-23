@@ -16,6 +16,7 @@ import MyCompany from './pages/MyCompany';
 import Company from './pages/Company';
 import AllJobs from "./pages/AllJobs";
 import MyCompanies from "./pages/MyCompanies";
+import TimelineUser from "./pages/TimelineUser";
 
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
         <Route path="/jobs" element={<AllJobs/>}/>
 
         <Route path="/mycompanies" element={<MyCompanies/>}/>
-  
+
       </Routes>
     </div>
   );

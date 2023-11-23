@@ -114,7 +114,7 @@ export const JobListing = ({ myId, toast }) => {
             value={requirementsFilter}
             onChange={(e) => setRequirementsFilter(e.target.value)}
           >
-            <option value="">Elligibility</option>
+            <option value="">Elligible</option>
             {uniqueRequirements.map((requirement) => (
               <option key={requirement} value={requirement}>
                 {requirement}
