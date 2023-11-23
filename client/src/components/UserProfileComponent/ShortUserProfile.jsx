@@ -150,7 +150,7 @@ const ShortUserProfile = ({ userData, senderId}) => {
               <li className="skill-items" key={index}>
                 <div className="skill-name">{skill.skillName}</div>
                 <div className="skill-level">{skill.skillLevel}</div>
-          
+                
                 <div className="endorsement-count">Endorsements: {skill.endorsement.length}</div>
                
                 <button

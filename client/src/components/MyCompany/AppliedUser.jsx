@@ -21,16 +21,22 @@ const AppliedUser = ({ companyId }) => {
   }, [companyId]);
 
   const downloadExcel = (job) => {
-    const usersData = job.appliedBy.map((user) => ({
-      Name: `${user.firstName} ${user.lastName}`,
-      // Add more user data properties as needed
-    }));
+    const usersData = job.appliedBy.map((user) => {
+      const skillsString = user.skill.map((skill) => skill.skillName).join(', ');
+      return {
+        Name: `${user.firstName} ${user.lastName}`,
+        Email: `${user.email}`,
+        Gender: `${user.gender}`,
+        Skills: `${skillsString}`,
+        PhoneNumber:`${user.phoneNumber}`,
+        
+      };
+  
+    });
 
     const ws = XLSX.utils.json_to_sheet(usersData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
-
-    // Save the Excel file
     XLSX.writeFile(wb, `${job.title}_Users.xlsx`);
   };
 

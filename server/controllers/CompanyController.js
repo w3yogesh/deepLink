@@ -8,6 +8,7 @@ const Service = require("../models/ServiceModel");
 const Job = require("../models/JobModel");
 const UserModel = require("../models/UserModel");
 
+
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const CreateCompany = async (req, res, next) => {
@@ -284,7 +285,12 @@ const getAppliedUsers = async (req, res) => {
     const companyId = req.params.companyId;
     const jobs = await Job.find({ postedBy: companyId }).populate({
       path: "appliedBy",
-      select: "firstName lastName _id",
+      select: "firstName lastName _id email skill phoneNumber gender experience",
+      populate: {
+        path: 'skill',
+        model: 'Skill',
+        select: 'skillName',
+      },
     });
     return res.status(200).json({ jobs });
   } catch (error) {
