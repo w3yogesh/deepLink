@@ -8,7 +8,7 @@ const {getUserProfileById, userSearch} = require("../controllers/PublicProfileCo
 const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users } = require('../controllers/userController');
 
 // User profile controller (edit profile feature)
-const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
+const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground,addEndorsement} = require("../controllers/updateUserProfile");
 
 //Post Controller
 
@@ -58,6 +58,7 @@ router.post('/api/drop-connection', dropConnection);
 router.get('/api/myConnections:userId', myConnections);
 router.delete('/api/deleteMyConnection/:senderId/:receiverId', deleteMyConnection);
 router.get('/userprofile/:userId',getUserProfileById);
+router.put('/endorsement/:skillId/:endorserUserId',addEndorsement);
 
 
 const PostImage = multer.diskStorage({

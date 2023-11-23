@@ -88,6 +88,23 @@ const ShortUserProfile = ({ userData, senderId}) => {
       : null;
 
   console.log(userData);
+
+  const handleEndorseSkill = async (skillId) => {
+    try {
+      const response = await axios.put(`http://localhost:4000/endorsement/${skillId}/${senderId}`);
+      const { status, message } = response.data;
+      if (status) {
+        toast.success(message);
+        console.log(message);
+      } else {
+        toast.error(message);
+        console.log(message);
+      }
+    } catch (error) {
+      toast.error("Error endorsing skill. Please try again.");
+      console.error("Error:", error);
+    }
+  };
   
   return (
     <div className="profile-sidebar left">
@@ -132,7 +149,15 @@ const ShortUserProfile = ({ userData, senderId}) => {
             {userData.skill.map((skill, index) => (
               <li className="skill-items" key={index}>
                 <div className="skill-name">{skill.skillName}</div>
-                <div className="skill-lavel">{skill.skillLevel}</div>
+                <div className="skill-level">{skill.skillLevel}</div>
+                
+                <div className="endorsement-count">Endorsements: {skill.endorsement.length}</div>
+               
+                <button
+                  onClick={() => handleEndorseSkill(skill._id)}
+                >
+                  Endorse
+                </button>
               </li>
             ))}
           </ul>
