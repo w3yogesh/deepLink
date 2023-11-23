@@ -4,7 +4,8 @@ import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import PostComponent from "../components/PostComponent";
+import PostComponent from "../components/FeedComponent/PostComponent";
+import { JobSidebar } from "../components/FeedComponent/JobSidebar";
 
 
 import "../styles/Feed/Feed.css";
@@ -102,7 +103,7 @@ const Feed = () => {
           ))}
         </div>
         <div className="right-sidebar">
-          <p>company post</p>
+          <JobSidebar/>
         </div>
       </div>
       </div>

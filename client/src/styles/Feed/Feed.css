@@ -33,9 +33,3 @@
     flex-wrap: wrap;
     justify-content: center;
 }
-.post-button {
-    width: 90%;
-    text-align: center;
-    border: 1px solid #eee;
-    margin: 8px auto 15px;
-}

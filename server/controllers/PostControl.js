@@ -9,10 +9,12 @@ const Company=require("../models/CompanyModel");
 //Post page for user
 exports.createPost = async (req, res, next) => {
   try {
+    const image = req.file ? req.file.filename : null;
     const { user, content } = req.body;
     const post = await Post.create({
       user,
       content,
+      image
     });
     const postId = post._id;
     await User.updateOne({_id : user},{$push: {posts : postId}});

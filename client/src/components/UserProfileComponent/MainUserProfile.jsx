@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { EducationUserProfile } from "./EducationUserProfile";
-import {ArrowUp, ArrowDown} from "../MySVGIcons.jsx";
+import { ArrowUp, ArrowDown } from "../MySVGIcons.jsx";
 import { ExperienceUserProfile } from "./ExperienceUserProfile.jsx";
 
 export default function MainUserProfile({ userData }) {
@@ -14,9 +14,13 @@ export default function MainUserProfile({ userData }) {
       : null;
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isExpOpen, setIsExpOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+  const toggleExpdown = () => {
+    setIsExpOpen(!isExpOpen);
   };
 
   return (
@@ -47,21 +51,23 @@ export default function MainUserProfile({ userData }) {
         )}
       </div>
       <div className="user-education">
-      
-      <div className="education-dropdown" onClick={toggleDropdown}>
-      <h3 className="section-heading">Education</h3>
-        <span className="arrow">
-        
-          {isDropdownOpen ? <ArrowUp/> : <ArrowDown/> }
-        </span>
+        <div className="education-dropdown" onClick={toggleDropdown}>
+          <h3 className="section-heading">Education</h3>
+          <span className="arrow">
+            {isDropdownOpen ? <ArrowUp /> : <ArrowDown />}
+          </span>
+        </div>
+        {isDropdownOpen && <EducationUserProfile userData={userData} />}
       </div>
-      {isDropdownOpen &&   (
-      <EducationUserProfile userData={userData}/>
-      )}
-      
+      <div className="user-education">
+        <div className="education-dropdown" onClick={toggleExpdown}>
+          <h3 className="section-heading">Experience</h3>
+          <span className="arrow">
+            {isExpOpen ? <ArrowUp /> : <ArrowDown />}
+          </span>
+        </div>
+        {isExpOpen && <ExperienceUserProfile userData={userData} />}
       </div>
-
-      
     </div>
   );
 }

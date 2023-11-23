@@ -15,10 +15,9 @@ export const JobListing = ({ myId, toast }) => {
         const response = await axios.get("http://localhost:4000/jobs");
         setJobs(response.data.jobs);
       } catch (error) {
-        console.error("Error fetching services:", error.message);
+        console.error("Error fetching jobs:", error.message);
       }
     };
-
     fetchJobs();
   }, []);
 
@@ -153,7 +152,7 @@ export const JobListing = ({ myId, toast }) => {
           .map((job) => (
             <div className="job-list-item" key={job._id}>
               <div className="job-list-logo">
-                <img src="/images/user-profile-photo.png" alt="" />
+                <img src={job.postedBy.logo ?`http://localhost:4000/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
               </div>
               <div className="job-list-title">
                 <h3>{job.title}</h3>

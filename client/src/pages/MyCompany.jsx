@@ -19,11 +19,14 @@ import CompanyPosts from "../components/CompanyPosts";
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
     <div className="company-main-wrapper">
+      
       {activeTab === "jobpost" && <JobPostingForm companyId={companyId} />}
+      {activeTab === "CreatePost" && <CompanyPosts companyId={companyId} />}
       {activeTab === "addService" && <ServiceForm companyId={companyId} />}
       {activeTab === "AllJobs" && <JobList companyId={companyId} />}
       {activeTab === "AllService" && <ServiceList companyId={companyId} />}
       {activeTab === "appliedUsers" && <AppliedUser companyId={companyId} />}
+      
     </div>
   );
 };
@@ -133,6 +136,16 @@ export default function CompanyDetail() {
                 </div>
               </div>
               <div class="side-menu-item">
+              <div
+               className={`item-link ${
+                  activeTab === "CreatePost" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("CreatePost")}
+              ><div class="itme-svg"></div>
+                <span>Write Post</span>
+              </div>
+              </div>
+              <div class="side-menu-item">
                 <div
                   className={`item-link ${
                     activeTab === "addService" ? "active" : ""
@@ -203,6 +216,14 @@ export default function CompanyDetail() {
           </div>
           <div class="company-header">
             <div class="my-profile-tabs">
+            <div
+                className={`profile-tabs  ${
+                  activeTab === "Posts" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("Posts")}
+              >
+                <span>Posts</span>
+              </div>
               <div
                 className={`profile-tabs  ${
                   activeTab === "AllJobs" ? "active" : ""
@@ -227,12 +248,23 @@ export default function CompanyDetail() {
               >
                 <span>Applied Users</span>
               </div>
+              
             </div>
           </div>
           <CompanyComponent activeTab={activeTab} companyId={companyId} />
           <div className="products"></div>
+          { activeTab === "Posts" && <div className="company-post-container">
+          {reversedPosts.map((post, index) => (
+            <div className="post-body" key={index}>
+             <CompanyPostCard postObj={post} userId={userId} userName={userName}/>
+            </div>
+          ))}
+        </div>}
+          
+          
         </div>
       </div>
+      
       {showPopup && (
         <CompanyPopUp
           closePopup={closePopup}
@@ -241,14 +273,6 @@ export default function CompanyDetail() {
         />
       )}
       <ToastContainer />
-      <div className="post-container">
-        <CompanyPosts companyId={company._id} />
-          {reversedPosts.map((post, index) => (
-            <div className="post-body" key={index}>
-             <CompanyPostCard postObj={post} userId={userId} userName={userName}/>
-            </div>
-          ))}
-        </div>
-    </>
+   </>
   );
 }

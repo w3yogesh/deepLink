@@ -4,7 +4,7 @@ import PostCard from "../components/FeedComponent/PostCard";
 import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import PostComponent from "../components/PostComponent";
+import PostComponent from "../components/FeedComponent/PostComponent";
 
 
 const TimelineUser = ({userId}) => {
