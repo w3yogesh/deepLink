@@ -108,4 +108,69 @@ exports.createCompanyPost = async (req, res, next) => {
       console.error(error);
     }
   };
+  exports.fetchCompanyPostsSpecific = async (req, res) => {
+    try {
+      const companyId=req.params.companyId;
+      const posts = await CompanyPost.find({company:companyId}).populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"firstName lastName"})})
+      .populate("company", "companyName").populate("likes", "userId");
+      // {path: "comments", populate:({path:"userId",}
+     
+      // const allComments =  posts.select("-content");
+      // const PostData = await Comments.find(allComments).populate('userId', 'firstName username')
+      res.json(posts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   
+exports.fetchPostsSpecific = async (req, res) => {
+  try {
+    const userId = req.params.userId; 
+    if (!userId) {
+      return res.status(400).json({ error: 'Invalid userId' });
+    }
+    const posts = await Post.find({ user: userId })
+      .populate({
+        path: "comments",
+        select: "userId comment",
+        populate: { path: "userId", select: "username firstName email" }
+      })
+      .populate("user", "username firstName")
+      .populate("likes", "userId");
+
+    res.json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+  exports.deleteCompanyPosts=async(req,res)=>{
+    try{
+      const companyId=req.params.companyId;
+      const postId=req.params.postId;
+  
+      if(!postId||!companyId){
+        return res.status(400).json({ status: false, message: "company or post not found" });
+      }
+  
+      const company = await Company.findOneAndUpdate(
+        { _id: companyId, posts: postId },
+        { $pull: { posts: postId } }, 
+        { new: true } 
+      );
+  
+      if (!company) {
+        return res.status(404).json({ status: false, message: "You can't delete others post" });
+      }
+  
+      const deletedPost = await CompanyPost.findByIdAndDelete(postId);
+  
+      if (!deletedPost) {
+        return res.status(404).json({ status: false, message: "post not found" });
+      }
+      res.json({ status: true, message: "Post Deleted Successfully" });
+    }catch(error){
+      console.error(error);
+    }
+  };

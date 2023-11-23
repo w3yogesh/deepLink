@@ -68,7 +68,7 @@ export default function CompanyDetail() {
         } else {
           setUserData(user);
           const response = await axios.get(
-            "http://localhost:4000/api/fetchcompanyposts"
+            `http://localhost:4000/api/fetchcompanypost/${companyId}`
           );
           const postsData = response.data;
           setPosts(postsData);

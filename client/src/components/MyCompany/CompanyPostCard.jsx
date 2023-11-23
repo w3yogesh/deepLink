@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/Feed/postCard.css";
 import { LikeIcon, CommentIcon, UserIcon } from "../MySVGIcons";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useParams } from 'react-router-dom';
 
 const CompanyPostCard = ({ postObj, userId, userName }) => {
   const [postId, setPostId] = useState("");
@@ -10,6 +15,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   const [comments, setComments] = useState(postObj.comments);
   const [newComment, setNewComment] = useState("");
   const [showComment, setShowComment] = useState(false);
+  const { companyId } = useParams();
   useEffect(() => {
     setLikes(postObj.likes.length);
     setComments(postObj.comments);
@@ -53,6 +59,24 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
       } else {
         console.log(message);
       }
+    }
+  };
+
+  const handleDelete = async (postId) => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/deleteCompanyPost/${companyId}/${postId}`);
+      const { status, message } = response.data;
+
+      if (status) {
+        toast.success(message);
+        // onPostDelete(postId);
+        console.log(message);
+      } else {
+        console.log(message);
+      }
+    } catch (error) {
+      toast.error("You can't delete other's post");
+      console.error('Error deleting post:', error);
     }
   };
 
@@ -119,6 +143,9 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
             Comment{" "}
           </div>
         )}
+        <div className="delete-btn btn" onClick={() => handleDelete(postObj._id)}>
+          Delete
+        </div>
       </div>
       {showComment && (
         <div className="comment-section">
@@ -148,6 +175,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
           </ol>
         </div>
       )}
+       <ToastContainer />
     </div>
   );
 };

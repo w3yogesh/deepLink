@@ -1,5 +1,5 @@
 const multer = require("multer");
-const { Signup, Login} = require("../controllers/AuthController");
+const { Signup, Login, LoginWithGoogle} = require("../controllers/AuthController");
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");// My profile and data
 const {getUserProfileById, userSearch} = require("../controllers/PublicProfileController")
@@ -11,8 +11,9 @@ const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreCo
 const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
-const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment,fetchPostsSpecific} = require("../controllers/PostControl");
-const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts} = require("../controllers/CompanyPostControl.js")
+
+const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts,fetchPostsSpecific,fetchCompanyPostsSpecific,deleteCompanyPosts} = require("../controllers/CompanyPostControl.js")
+const {createPost, fetchPosts, fetchLikeData, postReaction, removePostReaction, updateReaction, Postlike, RemovePostLike ,PostComment,deletePosts} = require("../controllers/PostControl");
 
 //compnay controller
 const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
@@ -25,6 +26,7 @@ const router = require("express").Router();
 
 router.post("/signup", Signup);
 router.post("/login",Login);
+router.post("/LoginWithGoogle",LoginWithGoogle);
 router.post('/',userVerification);
 router.post('/profile',getUserProfile); // fetch my profile
 router.get('/search', userSearch);
@@ -70,6 +72,10 @@ const postImage = multer({ storage:PostImage });
 //Post Controller
 router.post("/createPost",postImage.single("image"),createPost);
 router.get('/api/fetchposts', fetchPosts);
+router.get('/api/fetchlike/:likeId', fetchLikeData);
+router.put('/api/postReaction', postReaction);
+router.delete('/api/removePostReaction/:userId/:postId', removePostReaction);
+router.put('/api/updateReaction/:likeId/:reactionType', updateReaction);
 router.put('/api/postLike', Postlike);
 router.delete('/api/removePostLike/:userId/:postId', RemovePostLike);
 router.put('/api/postComment', PostComment);
@@ -106,6 +112,10 @@ router.get("/mycompanies/:companyId",GetCompanies);
 
 router.get("/appliedusers/:companyId",getAppliedUsers);
 router.get("/api/fetchpost/:userId",fetchPostsSpecific);
+router.get("/api/fetchcompanypost/:companyId",fetchCompanyPostsSpecific);
+router.delete("/api/deletepost/:userId/:postId",deletePosts);
+router.delete("/api/deleteCompanyPost/:companyId/:postId",deleteCompanyPosts);
+
 
 
 // router.post("/company",upload.single("photo"),CreateCompany)

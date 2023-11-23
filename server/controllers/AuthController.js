@@ -99,3 +99,39 @@ module.exports.Login = async (req, res, next) => {
     console.error(error);
   }
 };
+
+// Login with Google *(not done)
+module.exports.LoginWithGoogle = async (req, res, next) => {
+  try {
+    const { email, firstName, lastName } = req.body;
+    if (!email) {
+      return res.json({ message: "email is required" });
+    }
+    let user = await User.findOne({ email });
+    if (!user) {
+      // create new user and login
+      const username = email.split("@")[0];
+      user = await User.create({
+        email,
+        username,
+        firstName,
+        lastName,
+      });
+      user = await User.findOne({ email });
+    }
+
+    const token = createSecretToken(user._id);
+    res.cookie("token", token, {
+      maxAge: 6000 * 1000, // in sec
+      withCredentials: true,
+      httpOnly: false,
+    });
+    //const email = user.email;
+    res
+      .status(201)
+      .json({ message: "User logged in successfully", success: true, email });
+    next();
+  } catch (error) {
+    console.error(error);
+  }
+};
