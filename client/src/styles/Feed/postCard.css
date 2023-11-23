@@ -117,7 +117,23 @@ ol.comment-list {
 }
 p.img-post-text {
     background: #fff;
-    padding-left: 10px;
+    padding: 10px;
     word-wrap: break-word;
     overflow: auto;
+}
+.post-meta img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+
+.post-meta span {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #252525;
+}
+
+.post-meta a {
+    display: flex;
+    align-items: center;
 }

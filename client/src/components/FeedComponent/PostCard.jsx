@@ -29,6 +29,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       else setLikeColor("blue");
   }
 
+
   useEffect(() => {
     fun();
     setLikes(postObj.likes.length);
@@ -174,7 +175,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   return (
     <div className="post-items">
       <div className="post-meta">
-        <UserIcon /> <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}><span>{postObj.user.firstName}</span></a>
+      <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}>  {postObj.user.profileImage? (<img src={`http://localhost:4000/fetchProfileImage/${postObj.user.profileImage}`} alt="user post" />):<UserIcon />}<span>{postObj.user.firstName}</span></a>
       </div>
       {postObj.image ? (
         <div className="img-post-content">
