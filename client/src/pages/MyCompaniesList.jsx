@@ -68,7 +68,7 @@ const MyCompanies = () => {
             ) : (
               <ul className="companies-cards">
                 {companyDetails.map((company) => (
-                  <Link to={`/company/${company._id}`}>
+                  <Link to={`/mycompany/${company._id}`}>
                     <div className="companies-card-list" key={company._id}>
                       <div className="companies-card">
                         <div className="companies-card-meta">
@@ -82,7 +82,7 @@ const MyCompanies = () => {
                             />
                           </div>
                           <div className="user-card-info">
-                            <Link to={`/company/${company._id}`}>
+                            <Link to={`/mycompany/${company._id}`}>
                               <span className="companies-card-name">
                               <h4 key={company._id}>{company.companyName}</h4>
                               </span>

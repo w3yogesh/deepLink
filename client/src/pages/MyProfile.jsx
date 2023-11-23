@@ -14,6 +14,8 @@ import SkillDetails from "../components/MyProfileComponent/SkillDetails";
 import ExperienceDetails from "../components/MyProfileComponent/ExperienceDetails";
 import ProfilePopUp from "../components/MyProfileComponent/ProfilePopUp";
 
+import TimelineUser from "./TimelineUser";
+
 const YourComponent = ({ activeTab, userData, setUserData }) => {
   return (
     <div>
@@ -156,6 +158,9 @@ const MyProfile = () => {
             />
           </div>
         </div>
+      </div>
+      <div>
+        <TimelineUser userId={userData._id}/>
       </div>
       {showPopup && (
         <ProfilePopUp
