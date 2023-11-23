@@ -9,6 +9,16 @@ exports.connectUsers = async (req, res) => {
       _id: senderId,
       sent_pending_connections: recipientId,
     });
+
+    const isConnected = await User.findOne({
+      _id: senderId,
+      connections: recipientId,
+    });
+
+    if(isConnected){
+      return res.json({ status: false, message: "Already Connected" });
+    }
+
     if (isSent) return res.json({ status: false, message: "Already send" });
     // return res.json({ status: true, message: !isSent });
 

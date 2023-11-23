@@ -2,6 +2,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ShortUserProfile = ({ userData, senderId}) => {
   const recipientId = userData._id;
@@ -55,12 +59,15 @@ const ShortUserProfile = ({ userData, senderId}) => {
         );
         const { status, message } = response.data;
         if (status) {
+          toast.success(message);
           console.log(message);
           // setIsConnected(true);
         } else {
+          toast.error(message);
           console.log(message);
         }
       } catch (error) {
+        toast.error("Error connecting. Please try again.");
         console.error("Error:", error);
       }
     
@@ -131,6 +138,7 @@ const ShortUserProfile = ({ userData, senderId}) => {
           </ul>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
