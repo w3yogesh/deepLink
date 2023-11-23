@@ -19,14 +19,14 @@ const CompanySchema = new mongoose.Schema({
   },
   website: {
     type: String,
-    trim: true,
+    trim: true, 
   },
   email: {
     type: String,
-    unique: true, // If each company should have a unique email
+    unique: true,
   },
   companySize: {
-    type: String, // Adjust the data type if it represents a numeric value
+    type: String,
   },
   about: {
     type: String,
@@ -41,30 +41,26 @@ const CompanySchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
-      unique: true,
     },
   ],
   services: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Service",
-      unique: true,
     },
   ],
   jobOpenings: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Job",
-      unique: true,
     },
   ],
-  posts:[
+  posts: [
     {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CompanyPost",
-        unique: true,
-    }
-  ]
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CompanyPost",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Company", CompanySchema);

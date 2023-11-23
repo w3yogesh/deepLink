@@ -5,6 +5,7 @@ import ShortUserProfile from "../components/UserProfileComponent/ShortUserProfil
 import MainUserProfile from "../components/UserProfileComponent/MainUserProfile";
 import { useEffect } from "react";
 import axios from "axios";
+
 import { useParams } from "react-router-dom";
 
 const UserDetails = () => {

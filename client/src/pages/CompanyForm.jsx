@@ -1,45 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, TextField, Button } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function CompanyForm() {
   const [photo, setPhoto] = useState(null);
   const [options, setOptions] = useState([]);
   const [formData, setFormData] = useState({
-    userId:'',
-    companyName: '',
-    field: '', 
-    headquarter: '',
-    website: '',
-    email: '',
-    companySize: '',
-    about: '',
+    userId: "",
+    companyName: "",
+    field: "",
+    headquarter: "",
+    website: "",
+    email: "",
+    companySize: "",
+    about: "",
   });
 
-
-  const [myId, setMyId] = useState('');
+  const [myId, setMyId] = useState("");
   const navigate = useNavigate();
 
- useEffect(() => {
-   const userAuth = async () => {
-     try {
-       const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
-       const { status, user } = response.data;
-       if (status) {
-         setMyId(user._id);
-       } else {
-         navigate('/login');
-       }
-     } catch (error) {
-       console.error('Error authenticating user:', error.message);
-     }
-   };
-   userAuth();
- }, [navigate]);
-
-
+  useEffect(() => {
+    const userAuth = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000",
+          {},
+          { withCredentials: true }
+        );
+        const { status, user } = response.data;
+        if (status) {
+          setMyId(user._id);
+        } else {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error authenticating user:", error.message);
+      }
+    };
+    userAuth();
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,22 +52,28 @@ export default function CompanyForm() {
     });
 
     if (photo) {
-      data.append('photo', photo);
+      data.append("photo", photo);
     }
-    console.log(myId)
-    for (var pair of data.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-  }
+
     try {
-      const response = await axios.post(`http://localhost:4000/company/${myId}`, data);
-      // const company=response.data.company;
+      const response = await axios.post(
+        `http://localhost:4000/createCompany/${myId}`,
+        data
+      );
+      const{status, message} = response.data;
+      if(status){
+        toast.success(message, {
+          position: "top-right",
+        });
+      }
+      else{
+        toast.error(message, {
+          position: "top-right",
+        });
+      }
 
-     // console.log(cId);
-      console.log('Backend response:', response);
-
-      // const response2=await axios.post("http://localhost:4000/addcompany",company,myId);
     } catch (error) {
-      console.error('Error submitting form:', error.message);
+      console.error("Error submitting form:", error.message);
     }
   };
 
@@ -83,107 +91,106 @@ export default function CompanyForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <Grid container spacing={2} style={{ marginTop: '2rem' }}>
-        <Grid item xs={6}>
-          <TextField
-            id='companyName'
-            label='companyName'
-            fullWidth
-            variant='outlined'
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            id='field'
-            name='field'
-            label='Field'
-            fullWidth
-            variant='outlined'
-            onChange={handleChange}
-          />
-        </Grid>
-      </Grid>
+    <>
+      <Navbar />
+      <div className="grid-container">
+        <div className="company-form">
+          <h3>Create Company</h3>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-row">
+            <div className="form-data">
+              <label>Company Name:</label>
+              <input type="text" id="companyName" onChange={handleChange} />
+            </div>
 
-      <Autocomplete
-        id='headquarter'
-        name='headquarter'
-        options={options}
-        freeSolo
-        onInputChange={async (e, newInputValue) => {
-          if (newInputValue) {
-            try {
-              const response = await axios.get(
-                `http://api.geonames.org/searchJSON?q=${newInputValue}&maxRows=15&username=jeet24`
-              );
-              const newOptions = response.data.geonames.map((place) => place.name);
-              setOptions(newOptions);
-            } catch (error) {
-              console.error('Error fetching locations:', error.message);
-            }
-          }
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            id='headquarter'
-            label='Headquarter'
-            variant='outlined'
-            margin='normal'
-            onChange={handleChange}
-          />
-        )}
-      />
+            <div className="form-data">
+              <label>Field:</label>
+              <input type="text" id="field" onChange={handleChange} />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-data">
+              <label>Headquarter:</label>
+              <input
+                type="text"
+                id="headquarter"
+                onChange={async (e) => {
+                  const newInputValue = e.target.value;
+                  if (newInputValue) {
+                    try {
+                      const response = await axios.get(
+                        `http://api.geonames.org/searchJSON?q=${newInputValue}&maxRows=15&username=jeet24`
+                      );
+                      const newOptions = response.data.geonames.map(
+                        (place) => place.name
+                      );
+                      setOptions(newOptions);
+                    } catch (error) {
+                      console.error("Error fetching locations:", error.message);
+                    }
+                  }
+                  handleChange(e);
+                }}
+              />
+            </div>
 
-      <TextField
-        id='website'
-        label='Website of Company'
-        fullWidth
-        variant='outlined'
-        margin='normal'
-        onChange={handleChange}
-      />
-      <TextField
-        type='email'
-        id='email'
-        label='Email'
-        fullWidth
-        variant='outlined'
-        margin='normal'
-        onChange={handleChange}
-      />
-      <TextField
-        id='companySize'
-        label='Company-Size'
-        fullWidth
-        variant='outlined'
-        margin='normal'
-        onChange={handleChange}
-      />
+            <div className="form-data">
+              <label>Website of Company:</label>
+              <input type="text" id="website" onChange={handleChange} />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-data">
+              <label>Email:</label>
+              <input type="email" id="email" onChange={handleChange} />
+            </div>
 
-      <TextField
-        id='about'
-        label='Tell us briefly about your company'
-        multiline
-        fullWidth
-        variant='outlined'
-        margin='normal'
-        onChange={handleChange}
-      />
-      <label>logo</label>
-      <input type='file' id='photo' name='logo' onChange={handleLogoChange} />
-  
+            <div className="form-data">
+              <label>Company Size:</label>
+              <input type="text" id="companySize" onChange={handleChange} />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-data">
+              <label>Tell us briefly about your company:</label>
+              <textarea id="about" onChange={handleChange} />
+            </div>
 
-
-      <Button
-        variant='contained'
-        color='primary'
-        type='submit'
-        style={{ marginTop: '1rem' }}
-      >
-        Submit
-      </Button>
-    </form>
+            <div className="form-data">
+              <label>Logo:</label>
+              <input
+                type="file"
+                id="photo"
+                name="logo"
+                onChange={handleLogoChange}
+              />
+            </div>
+          </div>
+          <button className="company-submit" type="submit">
+            Submit
+          </button>
+        </form>
+        </div>
+      </div>
+      <style>{
+        `.company-form {
+          width: 80%;
+          margin: 30px auto;
+          padding: 20px;
+          border: 1px solid #bbb;
+          background: #ffff;
+          border-radius: 10px;
+      }
+      
+      button.company-submit {
+          display: block;
+          width: 20%;
+          margin-left: auto;
+      }
+          
+        `
+      }</style>
+<ToastContainer/>
+    </>
   );
 }

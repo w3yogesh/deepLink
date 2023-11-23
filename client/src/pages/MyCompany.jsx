@@ -38,8 +38,8 @@ export default function CompanyDetail() {
   const [showPopup, setShowPopup] = useState(false);
   const [isBack, setIsBack] = useState(false);
 
-
   const [loading, setLoading] = useState(true);
+
   
   const navigate = useNavigate();
 

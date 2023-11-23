@@ -11,7 +11,7 @@ const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreCo
 const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
-const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment,fetchPostsSpecific} = require("../controllers/PostControl");
 const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts} = require("../controllers/CompanyPostControl.js")
 
 //compnay controller
@@ -105,6 +105,7 @@ router.post("/withdraw",withdrawJob);
 router.get("/mycompanies/:companyId",GetCompanies);
 
 router.get("/appliedusers/:companyId",getAppliedUsers);
+router.get("/api/fetchpost/:userId",fetchPostsSpecific);
 
 
 // router.post("/company",upload.single("photo"),CreateCompany)
@@ -125,7 +126,7 @@ const companyImages = multer.diskStorage({
 });
 const company = multer({ storage:companyImages });
 
-router.post("/company/:userId",company.single('photo'),CreateCompany);
+router.post("/createCompany/:userId",company.single('photo'),CreateCompany);
 router.post("/uploadLogo",company.single("photo"),UploadLogo);
 router.post("/uploadCover",company.single("photo"),UploadCover);
 

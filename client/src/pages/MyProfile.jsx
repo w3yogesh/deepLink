@@ -59,7 +59,7 @@ const MyProfile = () => {
         if (!status) {
           setTimeout(() => {
             navigate("/login");
-          }, 2000);
+          }, 0);
         } else {
           setUserData(user);
         }
@@ -156,6 +156,8 @@ const MyProfile = () => {
             />
           </div>
         </div>
+      </div>
+      <div>
       </div>
       {showPopup && (
         <ProfilePopUp
