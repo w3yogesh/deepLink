@@ -128,6 +128,24 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     }
   }
 
+  const handleDelete = async (postId) => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/deletePost/${userId}/${postId}`);
+      const { status, message } = response.data;
+
+      if (status) {
+        toast.success(message);
+        // onPostDelete(postId);
+        console.log(message);
+      } else {
+        console.log(message);
+      }
+    } catch (error) {
+      toast.error("You can't delete other's post");
+      console.error('Error deleting post:', error);
+    }
+  };
+
   const handleAddComment = async (postObjId) => {
     setShowComment(true);
   };
