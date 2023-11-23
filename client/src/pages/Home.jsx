@@ -5,9 +5,6 @@ import React, {useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-
-
-
 const Home = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -20,8 +17,6 @@ const Home = () => {
       const { status } = response.data;
       if (status) {
         navigate("/feed")
-      } else {
-        navigate("/login");
       }
     };
     userAuth();

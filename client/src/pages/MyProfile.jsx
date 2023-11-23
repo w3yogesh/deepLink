@@ -14,8 +14,6 @@ import SkillDetails from "../components/MyProfileComponent/SkillDetails";
 import ExperienceDetails from "../components/MyProfileComponent/ExperienceDetails";
 import ProfilePopUp from "../components/MyProfileComponent/ProfilePopUp";
 
-import TimelineUser from "./TimelineUser";
-
 const YourComponent = ({ activeTab, userData, setUserData }) => {
   return (
     <div>
@@ -61,7 +59,7 @@ const MyProfile = () => {
         if (!status) {
           setTimeout(() => {
             navigate("/login");
-          }, 2000);
+          }, 0);
         } else {
           setUserData(user);
         }
@@ -160,7 +158,6 @@ const MyProfile = () => {
         </div>
       </div>
       <div>
-        <TimelineUser userId={userData._id}/>
       </div>
       {showPopup && (
         <ProfilePopUp

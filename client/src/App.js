@@ -4,6 +4,7 @@ import Profile from "./pages/Profile"
 
 import MyProfile from "./pages/MyProfile";
 import Feed from "./pages/Feed";
+import MyTimeLine from "./pages/MyTimeline"
 
 import MyNetwork from "./pages/MyNetwork";
 import Chat from "./pages/Chat";
@@ -27,6 +28,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/myprofile" element={<MyProfile/>}/>
+        <Route path="/mytimeline" element={<MyTimeLine/>}/>
 
         <Route path="/mynetwork" element={<MyNetwork/>}/>
 
@@ -36,7 +38,7 @@ function App() {
 
         <Route path="/userprofileview/:userId" element={<UserProfileView/>}/>
 
-        <Route path="/company" element={<CompanyForm/>}/>
+        <Route path="/createcompany" element={<CompanyForm/>}/>
         <Route path="/companylist" element={<CompanyList/>}/>
         <Route path="/mycompany/:companyId" element={<MyCompany/>}/>
         <Route path="/company/:companyId" element={<Company/>}/>

@@ -5,17 +5,15 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     trim: true,
-
   },
   lastName: {
     type: String,
     trim: true,
-
   },
-  gender:{
+  gender: {
     type: String,
-    enum: ['Male', 'Female', 'transgender', 'None',],
-    default: 'None',
+    enum: ["Male", "Female", "transgender", "None"],
+    default: "None",
   },
   username: {
     type: String,
@@ -40,45 +38,44 @@ const userSchema = new mongoose.Schema({
   },
   address: [
     {
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "Address", 
-      unique: true,
-    }
-  ],
-  education: [
-    { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "Education", 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Address",
       unique: true,
     },
   ],
-  skill:[
+  education: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Education",
+      unique: true,
+    },
+  ],
+  skill: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Skill",
       unique: true,
-
-    }
+    },
   ],
   connections: [
-    { 
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", 
-      unique: true 
+      ref: "User",
+      unique: true,
     },
   ],
   sent_pending_connections: [
-    { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "User", 
-      unique: true 
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      unique: true,
     },
   ],
   receive_pending_connections: [
-    { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "User", 
-      unique: true 
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      unique: true,
     },
   ],
   posts: [
@@ -89,23 +86,24 @@ const userSchema = new mongoose.Schema({
     },
   ],
   experience: [
-    { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "Experience", 
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Experience",
       unique: true,
     },
   ],
-  profileImage:{
-      type: String,
+  profileImage: {
+    type: String,
+  },
+  backgroundImage: {
+    type: String,
+  },
+  company: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
     },
-  backgroundImage:{
-      type: String,
-    },
-   company:[ {
-    type:mongoose.Schema.Types.ObjectId, 
-    ref:"Company",
-    }],
-
+  ],
   updatedAt: {
     type: Date,
     default: new Date(),
@@ -114,7 +112,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-
 });
 
 userSchema.pre("save", async function () {

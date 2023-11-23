@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostCard from "../components/FeedComponent/PostCard";
 import FeedSidebar from "../components/FeedComponent/FeedSidebar";
-import Navbar from "../components/Navbar";
+import Navbar from '../components/Navbar';
 import { useNavigate } from "react-router-dom";
 import PostComponent from "../components/FeedComponent/PostComponent";
+import "../styles/Feed/Feed.css";
 
 
-const TimelineUser = ({userId}) => {
+const MyTimeLine = () => {
     const navigate = useNavigate();
     const [allPostObj, setPosts] = useState([]);
     const [userData, setUserData] = useState('');
-    // const [userId, setUserId] = useState("");
+    const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
-    
+    const [loading, setLoading] = useState(true);
 
+  
     useEffect(() => {
         const fetchPosts = async () => {
           try {
@@ -25,7 +27,7 @@ const TimelineUser = ({userId}) => {
             );
             const { status, user } = auth.data;
             setUserData(user);
-            // setUserId(user._id);
+            setUserId(user._id);
             setUserName(user.firstName);
     
             if (!status) {
@@ -39,7 +41,7 @@ const TimelineUser = ({userId}) => {
               );
               const postsData = response.data;
               setPosts(postsData);
-              
+              setLoading(false);
             }
           } catch (error) {
             console.log(error);
@@ -48,9 +50,17 @@ const TimelineUser = ({userId}) => {
         fetchPosts();
       }, [userId]);
       const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
-
+      if (loading) {
+        return <p>Loading...</p>;
+      }
   return (
-    <div>
+    <>
+      <Navbar/>
+      <div className="grid-container">
+    <div className="feed-wrapper">
+      <div className="left-sidebar">
+      <FeedSidebar userData={userData}/>
+      </div>
        <div className="post-container">
         <PostComponent senderId={userId} />
           {reversedPosts.map((post, index) => (
@@ -59,8 +69,10 @@ const TimelineUser = ({userId}) => {
             </div>
           ))}
         </div>
-    </div>
+        </div>
+        </div>
+    </>
   )
 }
 
-export default TimelineUser
+export default MyTimeLine;
