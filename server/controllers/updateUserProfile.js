@@ -8,6 +8,7 @@ const app = express();
 const path = require("path");
 const { response } = require("express");
 require("dotenv").config();
+const Skill=require("../models/SkillModel");
 
 exports.updateUserProfile = async (req, res) => {
   try {
@@ -114,6 +115,7 @@ exports.addSkill = async (req, res) => {
   try {
     const { userId, skillName, skillLevel } = req.body;
     const skill = await SkillModel.create({
+      userId:userId,
       skillName: skillName,
       skillLevel: skillLevel,
     });
@@ -290,4 +292,33 @@ exports.UploadBackground = async (req, res, next) => {
 
     // return res.json(result.profileImage)
   } catch (error) {}
+};
+
+exports.addEndorsement = async (req, res) => {
+  const { skillId, endorserUserId } = req.params;
+  try {
+    const skill = await Skill.findById(skillId);
+    const endorserUser = await UserModel.findById(endorserUserId);
+  
+    if (!skill || !endorserUser) {
+      return res.json({ status: false, message: "Skill or user not found" });
+    }
+  
+    if (skill.userId === endorserUserId) {
+      return res.json({ status: false, message: "You can't endorse your own skill" });
+    }
+  
+    if (skill.endorsement.includes(endorserUser._id)) {
+      return res.json({ status: false, message: "Already endorsed" });
+    }
+  
+    skill.endorsement.push(endorserUser._id);
+    await skill.save();
+  
+    res.status(200).json( {status:true, message: 'Endorsement added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  
 };
