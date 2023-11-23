@@ -9,6 +9,11 @@ const likeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  reaction : {
+    type : String,
+    default : 'like',
+    // none, like, love, cong, 
+  },
   createdAt: {
     type: Date,
     default: new Date(),
