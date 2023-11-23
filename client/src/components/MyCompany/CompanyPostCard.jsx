@@ -13,16 +13,19 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   useEffect(() => {
     setLikes(postObj.likes.length);
     setComments(postObj.comments);
-    if (postObj.likes.find(item => item.userId === userId)) setLikeColor("red");
+    if (postObj.likes.find((item) => item.userId === userId))
+      setLikeColor("red");
     else setLikeColor("blue");
   }, []);
   const handleLikes = async (postId) => {
     // console.log(postId);
     if (likeColor === "red") {
-      const response = await axios.delete(`http://localhost:4000/api/removecompanyPostLike/${userId}/${postId}`);
-      const {status, message} = response.data;
+      const response = await axios.delete(
+        `http://localhost:4000/api/removecompanyPostLike/${userId}/${postId}`
+      );
+      const { status, message } = response.data;
       // console.log(postId);
-      if(status){
+      if (status) {
         // const index = postObj.likes.indexOf(userId);
         // postObj.likes.splice(index, 1);
         setLikes(likes - 1);
@@ -30,22 +33,24 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
         console.log(message);
       }
       console.log(message);
-    } 
-    else {
-      const response = await axios.put("http://localhost:4000/api/companypostLike", {
-        userId,
-        postId,
-      });
-      
+    } else {
+      const response = await axios.put(
+        "http://localhost:4000/api/companypostLike",
+        {
+          userId,
+          postId,
+        }
+      );
+
       const index = postObj.likes.indexOf(userId);
-      const {status, message} = response.data;
+      const { status, message } = response.data;
       console.log(message);
-      if(status){
+      if (status) {
         setLikes(likes + 1);
         postObj.likes.push(userId);
         setLikeColor("red");
         console.log(message);
-      }else{
+      } else {
         console.log(message);
       }
     }
@@ -54,7 +59,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   const handleAddComment = async (postObjId) => {
     setShowComment(true);
   };
-
+  console.log(postObj);
   const handleNewComment = async (postId) => {
     if (newComment.trim() !== "" && userId) {
       const comment = newComment.trim();
@@ -73,18 +78,35 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   return (
     <div className="post-items">
       <div className="post-meta">
-      <UserIcon/> <span>{postObj.company.companyName}</span>
+        <UserIcon /> <span>{postObj.company.companyName}</span>
       </div>
-      <div className="post-content">
-        <p>{postObj.content}</p>
-      </div>
+      {postObj.image ? (
+        <div className="img-post-content">
+          {postObj.content ? (
+            <p className="img-post-text">{postObj.content}</p>
+          ) : (
+            " "
+          )}
+          <img
+            src={`http://localhost:4000/fetchCompanyPostImage/${postObj.image}`}
+            alt="user post"
+          />
+        </div>
+      ) : (
+        <div className="post-content">
+          <p>{postObj.content}</p>
+        </div>
+      )}
       <div className="post-action">
         <div className="like-btn btn" onClick={() => handleLikes(postObj._id)}>
           <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />
           {likes}Likes
         </div>
         {showComment ? (
-          <div className="comment-button btn" onClick={() => setShowComment(false)}>
+          <div
+            className="comment-button btn"
+            onClick={() => setShowComment(false)}
+          >
             <CommentIcon />
             Comments
           </div>

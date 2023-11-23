@@ -11,7 +11,8 @@ const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreCo
 const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
-const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment} = require("../controllers/PostControl");
+const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts} = require("../controllers/CompanyPostControl.js")
 
 //compnay controller
 const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
@@ -73,8 +74,18 @@ router.put('/api/postLike', Postlike);
 router.delete('/api/removePostLike/:userId/:postId', RemovePostLike);
 router.put('/api/postComment', PostComment);
 
+
+const CompanyPostImage = multer.diskStorage({
+  destination: "./uploads/company/post",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const companyPostImage = multer({ storage:CompanyPostImage });
+
 //company post controller
-router.post("/companypost",createCompanyPost);
+router.post("/companypost",companyPostImage.single("image"),createCompanyPost);
 router.get('/api/fetchcompanyposts',fetchCompanyPosts);
 router.put('/api/companypostLike',CompanyPostlike);
 router.delete('/api/removecompanyPostLike/:userId/:postId',RemoveCompanyPostLike);

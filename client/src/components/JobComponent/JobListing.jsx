@@ -28,8 +28,6 @@ export const JobListing = ({ myId, toast }) => {
         myId,
       });
 
-      
-
       toast.success("Applied Successfully", {
         position: "top-right",
       });

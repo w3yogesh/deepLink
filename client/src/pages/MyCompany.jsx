@@ -13,8 +13,8 @@ import CompanyPopUp from "../components/MyCompany/CompanyPopUp";
 import { ToastContainer } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
-import CompanyPostCard from '../components/FeedComponent/CompanyPostCard';
-import CompanyPosts from "../components/CompanyPosts";
+import CompanyPostCard from '../components/MyCompany/CompanyPostCard';
+import CompanyPosts from "../components/MyCompany/CompanyPosts";
 
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
@@ -115,6 +115,8 @@ export default function CompanyDetail() {
   const closePopup = () => {
     setShowPopup(false);
   };
+
+
 
   return (
     <>

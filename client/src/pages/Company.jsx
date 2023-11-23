@@ -7,8 +7,8 @@ import ServiceList from "../components/MyCompany/ServiceList";
 import { OpenLinkIcon } from '../components/MySVGIcons';
 import "../styles/CompanyDetail.css";
 import { useNavigate } from "react-router-dom";
-import CompanyPostCard from '../components/FeedComponent/CompanyPostCard';
-import CompanyPosts from "../components/CompanyPosts";
+import CompanyPostCard from '../components/MyCompany/CompanyPostCard';
+import CompanyPosts from "../components/MyCompany/CompanyPosts";
 
 import "../styles/Feed/Feed.css";
 

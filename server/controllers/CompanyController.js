@@ -156,7 +156,7 @@ const CreateJob = async (req, res) => {
     // Save the job to the database
     const savedJob = await newJob.save();
 
-    res.json({ status: true, job: savedJob });
+    res.json({ status: true, message: "Job Published" });
   } catch (error) {
     console.error("Error submitting job form:", error.message);
     res.status(500).json({ status: false, message: "Internal Server Error" });
