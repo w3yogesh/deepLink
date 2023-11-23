@@ -26,7 +26,7 @@ export default function CompanyDetail2() {
   const { companyId } = useParams();
   const navigate = useNavigate();
   const [company, setCompany] = useState(null);
-  const [activeTab, setActiveTab] = useState("jobpost");
+  const [activeTab, setActiveTab] = useState("Posts");
   const [allPostObj, setPosts] = useState([]);
   const [userData, setUserData] = useState('');
   const [userId, setUserId] = useState("");
@@ -154,12 +154,14 @@ export default function CompanyDetail2() {
         </div>
         <div class="company-header">
           <div class="my-profile-tabs">
-          <div className={`profile-tabs  ${
-                  activeTab === "AllPosts" ? "active" : ""
+          <div
+                className={`profile-tabs  ${
+                  activeTab === "Posts" ? "active" : ""
                 }`}
-                onClick={() => handleTabClick("AllPosts")}>
-              <span>Post</span>
-            </div>
+                onClick={() => handleTabClick("Posts")}
+              >
+                <span>Posts</span>
+              </div>
             <div className={`profile-tabs  ${
                   activeTab === "AllJobs" ? "active" : ""
                 }`}
@@ -177,6 +179,13 @@ export default function CompanyDetail2() {
         <CompanyComponent activeTab={activeTab} companyId={companyId} />
         
         <div className="products"></div>
+        { activeTab === "Posts" && <div className="company-post-container">
+          {reversedPosts.map((post, index) => (
+            <div className="post-body" key={index}>
+             <CompanyPostCard postObj={post} userId={userId} userName={userName}/>
+            </div>
+          ))}
+        </div>}
 
       </div>
     </div>
