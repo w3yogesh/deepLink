@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from "react";
 import "../styles/LoginForm.css";
+import GoogleSignup from "../components/SignupFormComponent/GoogleSignup";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -60,6 +61,33 @@ const Login = () => {
     });
   };
 
+  const handleGoogleLogin = async(email, firstName, lastName)=> {
+    console.log('email : ' , email);
+    console.log('firstName : ' , firstName);
+    console.log('lastName : ' , lastName);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/LoginWithGoogle",
+        {
+          email, firstName, lastName
+        },
+        { withCredentials: true }
+      );
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/feed");
+          
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      
+    }
+  }
+
 
   useEffect(() => {
     // Add a class to the body element to apply specific styles
@@ -102,6 +130,9 @@ const Login = () => {
           Already have an account? <Link to={"/signup"}>Signup</Link>
         </span>
       </form>
+
+      <GoogleSignup handleGoogleLogin={handleGoogleLogin}/>
+
       <ToastContainer />
     </div>
   );

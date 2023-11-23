@@ -1,5 +1,5 @@
 const multer = require("multer");
-const { Signup, Login} = require("../controllers/AuthController");
+const { Signup, Login, LoginWithGoogle} = require("../controllers/AuthController");
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");// My profile and data
 const {getUserProfileById, userSearch} = require("../controllers/PublicProfileController")
@@ -24,6 +24,7 @@ const router = require("express").Router();
 
 router.post("/signup", Signup);
 router.post("/login",Login);
+router.post("/LoginWithGoogle",LoginWithGoogle);
 router.post('/',userVerification);
 router.post('/profile',getUserProfile); // fetch my profile
 router.get('/search', userSearch);
