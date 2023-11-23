@@ -33,6 +33,7 @@ export default function CompanyDetail2() {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
+
     const fetchPosts = async () => {
       try {
         const auth = await axios.post(
@@ -52,7 +53,7 @@ export default function CompanyDetail2() {
         } else {
           setUserData(user);
           const response = await axios.get(
-            "http://localhost:4000/api/fetchcompanyposts"
+            `http://localhost:4000/api/fetchcompanypost/${companyId}`
           );
           const postsData = response.data;
           setPosts(postsData);
