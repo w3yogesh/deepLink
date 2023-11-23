@@ -11,7 +11,7 @@ const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreCo
 const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground} = require("../controllers/updateUserProfile");
 
 //Post Controller
-const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts} = require("../controllers/PostControl");
+const {createPost, fetchPosts, Postlike, RemovePostLike ,PostComment, createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts,fetchPostsSpecific} = require("../controllers/PostControl");
 
 //compnay controller
 const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
@@ -94,6 +94,7 @@ router.post("/withdraw",withdrawJob);
 router.get("/mycompanies/:companyId",GetCompanies);
 
 router.get("/appliedusers/:companyId",getAppliedUsers);
+router.get("/api/fetchpost/:userId",fetchPostsSpecific);
 
 
 // router.post("/company",upload.single("photo"),CreateCompany)
