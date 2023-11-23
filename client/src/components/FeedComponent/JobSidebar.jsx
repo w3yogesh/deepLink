@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export const JobListing = ({ myId, toast }) => {
+export const JobSidebar = ({ myId, toast }) => {
   const [jobs, setJobs] = useState([]);
   const [companyFilter, setCompanyFilter] = useState("");
   const [requirementsFilter, setRequirementsFilter] = useState("");
@@ -86,70 +86,6 @@ export const JobListing = ({ myId, toast }) => {
   return (
     <div className="jobs-wrapper">
       <h2>Recent openings</h2>
-      <div className="job-filters">
-      <div className="job-search-box">
-      <input
-        type="text"
-        placeholder="Search companies"
-        // value={"b"}
-        // onChange={}
-      />
-    </div>
-        {/* Company Dropdown */}
-        <div className="company-filter job-filter">
-          {/* <label htmlFor="Company">Company</label> */}
-
-          <select
-            name="Company"
-            value={companyFilter}
-            onChange={(e) => setCompanyFilter(e.target.value)}
-          >
-            <option value="">All Companies</option>
-            {uniqueCompanies.map((company) => (
-              <option key={company} value={company}>
-                {company}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="requirement-filter job-filter">
-          {/* Requirements Dropdown */}
-          {/* <label htmlFor="Requirements">Requirements</label> */}
-
-          <select
-            name="Requirements"
-            value={requirementsFilter}
-            onChange={(e) => setRequirementsFilter(e.target.value)}
-          >
-            <option value="">All Requirements</option>
-            {uniqueRequirements.map((requirement) => (
-              <option key={requirement} value={requirement}>
-                {requirement}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="location-filter job-filter">
-          {/* Location Dropdown */}
-          {/* <label htmlFor="Location">Location</label> */}
-
-          <select
-            name="Location"
-            value={locationFilter}
-            onChange={(e) => setLocationFilter(e.target.value)}
-          >
-            <option value="">All Locations</option>
-            {uniqueLocations.map((location) => (
-              <option key={location} value={location}>
-                {location}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
       {/* Job listings */}
       <div className="job-list-section">
         {jobs
@@ -163,7 +99,7 @@ export const JobListing = ({ myId, toast }) => {
           .map((job) => (
             <div className="job-list-item" key={job._id}>
               <div className="job-list-logo">
-                <img src={job.postedBy.logo ?`http://localhost:4000/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
+                <img src="/images/user-profile-photo.png" alt="" />
               </div>
               <div className="job-list-title">
                 <h3>{job.title}</h3>

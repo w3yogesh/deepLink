@@ -24,8 +24,7 @@ const JobPostingForm = ({companyId}) => {
 
     try {
       const response = await axios.post('http://localhost:4000/jobposting', jobData);
-
-      console.log(response.data);
+      const {status, } = response.data;
 
     } catch (error) {
       console.error('Error submitting job form:', error.message);
@@ -38,19 +37,19 @@ const JobPostingForm = ({companyId}) => {
       <form onSubmit={handleFormSubmit}>
         <label>
           Title:
-          <input type="text" name="title" value={jobData.title} onChange={handleInputChange} />
+          <input type="text" name="title" value={jobData.title} onChange={handleInputChange} required/>
         </label>
         <label>
           Location:
-          <input type="text" name="location" value={jobData.location} onChange={handleInputChange} />
+          <input type="text" name="location" value={jobData.location} onChange={handleInputChange} required/>
         </label>
         <label>
           Description:
-          <textarea name="description" value={jobData.description} onChange={handleInputChange} />
+          <textarea name="description" value={jobData.description} onChange={handleInputChange} required/>
         </label>
         <label>
           Requirements:
-          <textarea name="requirements" value={jobData.requirements} onChange={handleInputChange} />
+          <textarea name="requirements" value={jobData.requirements} onChange={handleInputChange} required/>
         </label>
         <button type="submit">Submit</button>
       </form>

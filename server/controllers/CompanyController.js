@@ -156,10 +156,10 @@ const CreateJob = async (req, res) => {
     // Save the job to the database
     const savedJob = await newJob.save();
 
-    res.json({ success: true, job: savedJob });
+    res.json({ status: true, job: savedJob });
   } catch (error) {
     console.error("Error submitting job form:", error.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    res.status(500).json({ status: false, message: "Internal Server Error" });
   }
 };
 
