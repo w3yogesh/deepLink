@@ -88,7 +88,6 @@
     min-width: 100px;
     right: 20px;
     top: 100%;
-    padding: 5px;
     border-radius: 5px;
     border: 1px solid #252525;
     z-index: 1;
@@ -114,4 +113,8 @@
     top: -21px;
     right: 10px;
     z-index: 1;
+}
+.drop-menu-item:hover, .drop-menu-item:hover a {
+    color: #fff;
+    background: #1877f2;
 }

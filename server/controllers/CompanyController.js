@@ -11,12 +11,9 @@ const UserModel = require("../models/UserModel");
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const CreateCompany = async (req, res, next) => {
-    // res.json({ success: false, message: "Internal Server Error" });
-
-  // return res.json({message:"hello"})
+  
   try {
     const logo = req.file ? req.file.filename : null;
-
     const { userId } = req.params;
     const {
       companyName,
@@ -27,7 +24,7 @@ const CreateCompany = async (req, res, next) => {
       companySize,
       about,
     } = req.body;
-
+    
     const company = await Company.create({
       userId,
       companyName,
@@ -37,21 +34,20 @@ const CreateCompany = async (req, res, next) => {
       email,
       companySize,
       about,
-      logo,
+      logo
     });
-
+    // res.json({ success: false, message: "Internal Server Error" });
     const user = await UserModel.findByIdAndUpdate(
       userId,
       { $push: { company: company._id } },
       { new: true }
     );
-
-    return res.status(201).json({
-      message: "Company created successfully",
-      success: true,
-      company,
-      user,
-    });
+      if(user){
+        return res.json({status: true,message: "Company created successfully",});
+      }else{
+        return res.json({status: false, message:"Something went wrong"});
+      }
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -156,7 +152,7 @@ const CreateJob = async (req, res) => {
     // Save the job to the database
     const savedJob = await newJob.save();
 
-    res.json({ status: true, job: savedJob });
+    res.json({ status: true, message: "Job Published" });
   } catch (error) {
     console.error("Error submitting job form:", error.message);
     res.status(500).json({ status: false, message: "Internal Server Error" });

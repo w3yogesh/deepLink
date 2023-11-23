@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import PostComponent from "../components/FeedComponent/PostComponent";
 import { JobSidebar } from "../components/FeedComponent/JobSidebar";
-
+import Loading from "../components/Loading";
 
 import "../styles/Feed/Feed.css";
 
@@ -16,6 +16,8 @@ const Feed = () => {
   const [userData, setUserData] = useState('');
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
+  const [loading, setLoading] = useState(true);
+
 
   // const allPostObj = [
   //   {
@@ -61,22 +63,20 @@ const Feed = () => {
           { withCredentials: true }
         );
         const { status, user } = auth.data;
-        setUserData(user);
-        setUserId(user._id);
-        setUserName(user.firstName);
-
         if (!status) {
           setTimeout(() => {
             navigate("/login");
-          }, 1);
+          }, 1000);
         } else {
           setUserData(user);
+          setUserId(user._id);
+          setUserName(user.firstName);
           const response = await axios.get(
             "http://localhost:4000/api/fetchposts"
           );
           const postsData = response.data;
           setPosts(postsData);
-          
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -84,6 +84,9 @@ const Feed = () => {
     };
     fetchPosts();
   }, [navigate]);
+  if (loading) {
+    return <Loading/>;
+  }
   const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
   return (
     <div>
@@ -103,7 +106,7 @@ const Feed = () => {
           ))}
         </div>
         <div className="right-sidebar">
-          <JobSidebar/>
+          {/* <JobSidebar/> */}
         </div>
       </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
 
 const JobPostingForm = ({companyId}) => {
   const [jobData, setJobData] = useState({
@@ -24,10 +25,18 @@ const JobPostingForm = ({companyId}) => {
 
     try {
       const response = await axios.post('http://localhost:4000/jobposting', jobData);
-      const {status, } = response.data;
+      const {status, message} = response.data;
 
+      if(status){
+        toast.success("Job Published", {
+          position: "top-right",
+        });  
+      }
     } catch (error) {
       console.error('Error submitting job form:', error.message);
+      toast.error("Something went wrong", {
+        position: "top-right",
+      });
     }
   };
 

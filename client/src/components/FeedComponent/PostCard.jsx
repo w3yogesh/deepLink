@@ -13,8 +13,24 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const [comments, setComments] = useState(postObj.comments);
   const [newComment, setNewComment] = useState("");
   const [showComment, setShowComment] = useState(false);
+  const [showReactions, setShowReactions] = useState(false);
+  const [reactions, setReactions] = useState("like");
+
+  const fun = async() => {
+      const isLiked = postObj.likes.find((item) => item.userId === userId);
+      if (isLiked)  {
+        setLikeColor("red");
+        const likeId = isLiked._id;
+        // console.log(likeId)
+        const response = await axios.get(`http://localhost:4000/api/fetchlike/${likeId}`)
+        // console.log(`response` , response.data);
+        setReactions(response.data.reaction);
+      }
+      else setLikeColor("blue");
+  }
 
   useEffect(() => {
+    fun();
     setLikes(postObj.likes.length);
     setComments(postObj.comments);
     if (postObj.likes.find(item => item.userId === userId)) setLikeColor("red");
@@ -58,6 +74,59 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       }
     }
   };
+
+  const handleReactions = async(postId, reactionType)=> {
+    // no reaction set only set new reaction
+    if(likeColor === "blue")  {
+      const response = await axios.put("http://localhost:4000/api/postReaction", {
+        userId, postId, reactionType,
+      });
+      const { status, message } = response.data;
+      if (status) {
+        setLikes(likes + 1);
+        postObj.likes.push(userId);
+        setLikeColor("red");
+        setReactions(reactionType);
+        // console.log(message);
+      } else {
+        console.log(message);
+      }
+    }
+
+    // remove reaction
+    else if(likeColor === "red" && reactionType === reactions) {
+      const response = await axios.delete(
+        `http://localhost:4000/api/removePostReaction/${userId}/${postId}`
+      );
+      const { status, message } = response.data;
+      // console.log(postId);
+      if (status) {
+        setLikes(likes - 1);
+        setLikeColor("blue");
+        setReactions("Like")
+        // console.log(`reaction removed`);
+      }
+      else {
+        console.log(`reaction not removed`);
+      }
+    }
+
+    // change reaction type
+    else  {
+      const isLiked = postObj.likes.find((item) => item.userId === userId);
+      const likeId = isLiked._id;
+      const response = await axios.put(`http://localhost:4000/api/updateReaction/${likeId}/${reactionType}`)
+      const { status, message } = response.data;
+      // console.log(postId);
+      if (status) {
+        setReactions(reactionType)
+        console.log(`reaction changed`);
+      }
+      else {
+        console.log(`reaction not changed`);
+      }
+    }
+  }
 
   const handleDelete = async (postId) => {
     try {
@@ -118,12 +187,39 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         </div>
       )}
       <div className="post-action">
-        <div className="like-btn btn" onClick={() => handleLikes(postObj._id)}>
+
+        {/* <div className="like-btn btn" onClick={() => handleLikes(postObj._id)}>
           <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />
-          {likes} Likes
+          {likes}Likes
+        </div> */}
+
+        <div
+          className="like-btn btn"
+          onMouseEnter={() => setShowReactions(true)}
+          onMouseLeave={() => setShowReactions(false)}
+        >
+          <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />
+          {likes} {reactions}
+          {showReactions && (
+            <div className="reactions-tooltip">
+              <div onClick={() => handleReactions(postObj._id, "Like")}>
+                👍Like
+              </div>
+              <div onClick={() => handleReactions(postObj._id, "Love")}>
+                ❤️Love
+              </div>
+              <div onClick={() => handleReactions(postObj._id, "Congo")}>
+                🎉Congo
+              </div>
+            </div>
+          )}
         </div>
+
         {showComment ? (
-          <div className="comment-button btn" onClick={() => setShowComment(false)}>
+          <div
+            className="comment-button btn"
+            onClick={() => setShowComment(false)}
+          >
             <CommentIcon />
             Comments
           </div>

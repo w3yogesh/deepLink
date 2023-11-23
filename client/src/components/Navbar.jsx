@@ -2,12 +2,23 @@ import React, { useState } from "react";
 import "../styles/Navbar.css";
 import { HeaderSearch } from "./HeaderSearch";
 import { AdminIcon } from "./MySVGIcons";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
+
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [cookies, removeCookie] = useCookies([]);
+
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+  const Logout = () => {
+    removeCookie("token");
+    navigate("/");
   };
 
   return (
@@ -54,10 +65,13 @@ export default function Navbar() {
             <a href="/myprofile">My Profile</a>
           </div>
           <div className="drop-menu-item">
+            <a href="/mytimeline">My Timeline</a>
+          </div>
+          <div className="drop-menu-item">
             <a href="/mycompanies">My Companies</a>
           </div>
           <div className="drop-menu-item">
-            <a href="">Logout</a>
+            <a href="" onClick={Logout}>Logout</a>
           </div>
         </div>
         </div>
