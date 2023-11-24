@@ -4,6 +4,9 @@ import "../styles/myNetwork.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ConnectionSVG, SentSVG, HandShackSVG } from "../components/MySVGIcons";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+
 
 import UserListComponent from "../components/UserList";
 import ConnectionRequest from "../components/ConnectionRequests";
@@ -13,13 +16,21 @@ import MyConnections from "../components/MyConnections";
 const YourComponent = ({ activeTab, myId , userNotConnected, connectedUser}) => {
   return (
     <div>
-      {activeTab === "allUser" && <UserListComponent senderId={myId} userNotConnected={userNotConnected} />}
-      {activeTab === "requests" && <ConnectionRequest senderId={myId} />}
-      {activeTab === "sent" && <ConnectionSent senderId={myId} />}
-      {activeTab === "myConnections" && <MyConnections senderId={myId} connectedUser={connectedUser} />}
+      {activeTab === "allUser" && <UserListComponent senderId={myId} usersNotConnected={userNotConnected} handleError={handleError} handleSuccess={handleSuccess}/>}
+      {activeTab === "requests" && <ConnectionRequest senderId={myId} handleError={handleError} handleSuccess={handleSuccess} />}
+      {activeTab === "sent" && <ConnectionSent senderId={myId} handleError={handleError} handleSuccess={handleSuccess} />}
+      {activeTab === "myConnections" && <MyConnections senderId={myId} connectedUser={connectedUser} handleError={handleError} handleSuccess={handleSuccess} />}
     </div>
   );
 };
+const handleError = (err) =>
+    toast.error(err, {
+      position: "top-right",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "top-right",
+    });
 
 const MyNetwork = () => {
   const [myId, setMyId] = useState("");
@@ -160,6 +171,7 @@ const MyNetwork = () => {
             </div>
           </div></div>
       </div>
+      <ToastContainer />
     </>
   );
 };

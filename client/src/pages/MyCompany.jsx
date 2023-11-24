@@ -65,7 +65,11 @@ export default function CompanyDetail() {
           setTimeout(() => {
             navigate("/login");
           }, 1);
-        } else {
+        }else if(!(userData.company&&userData.company.includes(companyId))){
+          setTimeout(() => {
+            navigate("/mycompanies");
+          }, 1);
+        }else {
           setUserData(user);
           const response = await axios.get(
             `http://localhost:4000/api/fetchcompanypost/${companyId}`
@@ -82,7 +86,7 @@ export default function CompanyDetail() {
   }, [navigate]);
   const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
 
-  console.log(allPostObj);
+  console.log();
 
   useEffect(() => {
     // Fetch the details of the specific company from the backend
