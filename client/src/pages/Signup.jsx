@@ -15,7 +15,7 @@ import "../styles/SignUpForm.css";
 import SignupStep1 from "../components/SignupFormComponent/SignupStep1";
 import SignupStep2 from "../components/SignupFormComponent/SignupStep2";
 import SignupStep3 from "../components/SignupFormComponent/SignupStep3";
-import SignupStep4 from "../components/SignupFormComponent/SignupStep4";
+// import SignupStep4 from "../components/SignupFormComponent/SignupStep4";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -99,18 +99,18 @@ const Signup = () => {
       }
     }
 
-    if (curr === 3) {
-      if (formData.education.institution === " " || formData.education.degree === " ") {
-        toast.error("required field");
-        setCurr(3);
-        return;
-      }
-    }
+    // if (curr === 3) {
+    //   if (formData.education.institution === " " || formData.education.degree === " ") {
+    //     toast.error("required field");
+    //     setCurr(3);
+    //     return;
+    //   }
+    // }
 
     setCurr((prev) => prev + 1);
   };
 
-  const steps = ["step 1", "step 2", "step 3", "step 4"];
+  const steps = ["email & password", "name", "address"];
   const [curr, setCurr] = useState(0);
 
   const goBack = () => {
@@ -176,9 +176,9 @@ const Signup = () => {
             {curr === 2 && (
               <SignupStep3 formData={formData} updateForm={updateForm} />
             )}
-            {curr === 3 && (
+            {/* {curr === 3 && (
               <SignupStep4 formData={formData} updateForm={updateForm} />
-            )}
+            )} */}
             <Button disabled={curr === 0} onClick={goBack}>
               Back
             </Button>
