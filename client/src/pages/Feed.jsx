@@ -13,6 +13,7 @@ import "../styles/Feed/Feed.css";
 const Feed = () => {
   const navigate = useNavigate();
   const [allPostObj, setPosts] = useState([]);
+  const [companyPost, setCompanyPost] = useState([]);
   const [userData, setUserData] = useState('');
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
