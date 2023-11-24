@@ -10,6 +10,13 @@ const BasicDetails = ({ userData, setUserData }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    if (name === 'phoneNumber' && (value.length > 10 || !/^\d*$/.test(value))) {
+      toast.error("Phone number must be empty or have a length of 10 digits", {
+        position: "bottom-left",
+      });
+      return;
+    }
+
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
       setUserData((prev) => ({
@@ -37,8 +44,12 @@ const BasicDetails = ({ userData, setUserData }) => {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const handleToggleEditMode = async () => {
-    // console.log("Hello");
-    // console.log(userData.address[0].city);
+    if(isEditMode && userData.phoneNumber.length>0 && userData.phoneNumber.length<10) {
+      toast.error("Phone number must be empty or have a length of 10 digits", {
+        position: "bottom-left",
+      });
+      return;
+    }
     setIsEditMode(!isEditMode);
     if (isEditMode) {
       try {

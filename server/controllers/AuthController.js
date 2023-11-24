@@ -24,7 +24,7 @@ module.exports.Signup = async (req, res, next) => {
 
     const emailValidationResponse = await axios.get(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${API_KEY}`);
     
-    console.log('emailValidationResponse : ' , emailValidationResponse.data);
+    // console.log('emailValidationResponse : ' , emailValidationResponse.data);
 
     if(emailValidationResponse.data.data.status !== "valid")  {
       return res.json({ message: "email not valid" });
