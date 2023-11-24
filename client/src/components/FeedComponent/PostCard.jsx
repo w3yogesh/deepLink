@@ -15,7 +15,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const [newComment, setNewComment] = useState("");
   const [showComment, setShowComment] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
-  const [reactions, setReactions] = useState("like");
+  const [reactions, setReactions] = useState("Like");
   const [show, setShow] = useState(false);
 
   const fun = async () => {
@@ -245,8 +245,14 @@ console.log(userId)
           onMouseEnter={() => setShowReactions(true)}
           onMouseLeave={() => setShowReactions(false)}
         >
-          <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />
-          {likes} {reactions}
+          {likes} 
+          {reactions==="Like" && <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />}
+          {reactions==="Love" && <div className="love"> <Love/> </div> }
+          {reactions==="Congo" && <div className="congo"> <Celebrate /> </div> }
+          {reactions==="Support" && <div className="support"> <Support /> </div> }
+          {reactions==="Insightful" && <div className="insightful"> <Insightful /> </div> }
+          {reactions==="Funny" && <div className="funny"> <Funny /> </div> }
+          
           {showReactions && (
             <div className="reactions-tooltip">
               <div className="reaction-btn like" onClick={() => handleReactions(postObj._id, "Like")}>
