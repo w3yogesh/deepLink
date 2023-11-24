@@ -3,6 +3,10 @@ const Address = require("../models/AddressModel");
 const Education = require("../models/EducationModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
+const {API_KEY} = process.env;
+require("dotenv").config();
+const axios = require('axios');
+
 
 // signup
 module.exports.Signup = async (req, res, next) => {
@@ -17,6 +21,18 @@ module.exports.Signup = async (req, res, next) => {
       address: { country, city },
       education: { institution, degree, field, startDate, endDate },
     } = req.body.formData;
+
+    const emailValidationResponse = await axios.get(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${API_KEY}`);
+    
+    console.log('emailValidationResponse : ' , emailValidationResponse.data);
+
+    if(emailValidationResponse.data.data.status !== "valid")  {
+      return res.json({ message: "email not valid" });
+    }
+
+    if(emailValidationResponse.data.data.result !== "deliverable")  {
+      return res.json({ message: "email not deliverable" });
+    }
 
     if (password === confirm_password) {
       const existingUser = await User.findOne({ email });

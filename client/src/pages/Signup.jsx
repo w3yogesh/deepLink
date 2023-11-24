@@ -140,6 +140,7 @@ const Signup = () => {
         handleError(message);
       }
     } catch (error) {
+      navigate("/signup");
       console.log(error);
     }
   };
