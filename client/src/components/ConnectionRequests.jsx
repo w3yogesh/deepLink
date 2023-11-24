@@ -35,7 +35,6 @@ function ConnectionRequest({senderId,handleError,handleSuccess}) {
         handleError(message);
       }
     } catch (error) {
-      // Handle any errors
       console.error("Error:", error);
     }
   };

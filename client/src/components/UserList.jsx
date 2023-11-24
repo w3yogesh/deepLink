@@ -2,10 +2,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import LoadingForComponent from "./LoadingForComponent";
 
-function UserList({senderId, handleError,handleSuccess}) {
+
+  // console.log('user not connected in userList page : ', props.userNotConnected);
+function UserList({senderId, handleError,handleSuccess, usersNotConnected}) {
+  const [userNotConnected, setUserNotConnected] = useState(usersNotConnected);
+
   const [users, setUsers] = useState([]);
   const [sentConnect, setSentConnect] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // const senderId = props.senderId;
   function handleSendConnectRequest(senderId, recipientId) {
@@ -29,29 +35,21 @@ function UserList({senderId, handleError,handleSuccess}) {
         console.error("Error:", error);
       }
     };
-
-    // Call the sendConnectRequest function when the button is clicked
     sendConnectRequest();
   }
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/users");
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+    setUserNotConnected(usersNotConnected);
+    if(usersNotConnected.length > 0) setIsLoading(false);
+  }, [usersNotConnected]);
 
   return (
     <div>
+      {isLoading && <LoadingForComponent/>}
+      {!isLoading && <div>
       <h4>All Users</h4>
       <ul className="user-cards">
-        {users.map((user) => (
+        {userNotConnected.map((user) => (
           <li className="user-card-list" key={user._id}>
             <div className="user-card">
               <div className="user-card-meta">
@@ -84,6 +82,7 @@ function UserList({senderId, handleError,handleSuccess}) {
           </li>
         ))}
       </ul>
+      </div>}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import MyCompany from './pages/MyCompany';
 import Company from './pages/Company';
 import AllJobs from "./pages/AllJobs";
 import MyCompaniesList from "./pages/MyCompaniesList";
+import Notification from "./pages/Notification";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/jobs" element={<AllJobs/>}/>
 
         <Route path="/mycompanies" element={<MyCompaniesList/>}/>
+        <Route path="/notifications" element={<Notification/>}/>
   
       </Routes>
     </div>

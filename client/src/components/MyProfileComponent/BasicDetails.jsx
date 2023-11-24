@@ -5,11 +5,18 @@ import {EditIcon, SaveIcon} from "../MySVGIcons.jsx";
 
 const BasicDetails = ({ userData, setUserData }) => {
 
-
+  const prevUserData = userData;
 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    if (name === 'phoneNumber' && (value.length > 10 || !/^\d*$/.test(value))) {
+      toast.error("Phone number must be empty or have a length of 10 digits", {
+        position: "bottom-left",
+      });
+      return;
+    }
+
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
       setUserData((prev) => ({
@@ -36,13 +43,27 @@ const BasicDetails = ({ userData, setUserData }) => {
     });
 
   const [isEditMode, setIsEditMode] = useState(false);
+
   const handleToggleEditMode = async () => {
-    // console.log("Hello");
-    // console.log(userData.address[0].city);
+
+    if(isEditMode && userData.phoneNumber.length>0 && userData.phoneNumber.length<10) {
+      toast.error("Phone number must be empty or have a length of 10 digits", {
+        position: "bottom-left",
+      });
+      return;
+    }
+
+    if(isEditMode && userData === prevUserData) {
+      toast.error("no data changed", {
+        position: "bottom-left",
+      });
+      setIsEditMode(!isEditMode);
+      return;
+    }
+
     setIsEditMode(!isEditMode);
     if (isEditMode) {
       try {
-        // Make a PUT or PATCH request to update the user's data
         const response = await axios.put(
           "http://localhost:4000/updateUserProfile",
           {

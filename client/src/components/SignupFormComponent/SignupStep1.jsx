@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const SignupStep1 = ({ formData, updateForm }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -8,10 +9,9 @@ const SignupStep1 = ({ formData, updateForm }) => {
   };
 
   useEffect(() => {
-    // Add a class to the body element to apply specific styles
+   
     document.body.classList.add("login-body");
-  
-    // Remove the class when the component unmounts
+
     return () => {
       document.body.classList.remove("login-body");
     };
@@ -45,6 +45,9 @@ const SignupStep1 = ({ formData, updateForm }) => {
         value={formData.confirm_password}
         onChange={handleChange}
       />
+       <span>
+          Already have an account? <Link to={"/login"}>Login</Link>
+        </span>
     </div>
   );
 };

@@ -69,7 +69,6 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
 
       if (status) {
         toast.success(message);
-        // onPostDelete(postId);
         console.log(message);
       } else {
         console.log(message);

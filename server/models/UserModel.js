@@ -40,21 +40,18 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
-      unique: true,
     },
   ],
   education: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Education",
-      unique: true,
     },
   ],
   skill: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Skill",
-      unique: true,
     },
   ],
   connections: [

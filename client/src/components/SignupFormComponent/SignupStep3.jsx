@@ -13,10 +13,10 @@ const SignupStep3 = ({ formData, updateForm }) => {
   };
 
   useEffect(() => {
-    // Add a class to the body element to apply specific styles
+    
     document.body.classList.add("login-body");
   
-    // Remove the class when the component unmounts
+    
     return () => {
       document.body.classList.remove("login-body");
     };

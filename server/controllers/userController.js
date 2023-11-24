@@ -1,5 +1,6 @@
 const { ObjectId } = require("mongodb");
 const User = require("../models/UserModel");
+const Notification=require("../models/NotificationModel");
 
 // When user sent request to other user
 exports.connectUsers = async (req, res) => {
@@ -29,8 +30,15 @@ exports.connectUsers = async (req, res) => {
       const receiver = await User.findByIdAndUpdate(recipientId, {
         $push: { receive_pending_connections: senderId },
       });
-      if (sender && receiver)
+      if (sender && receiver){
+
+        const user=await User.findById(senderId);
+        const userName=user.firstName;
+         const message = `${userName} sent you a connection request`;
+         await createNotification(recipientId, message);
+
         return res.json({ status: true, message: "Connection Pending" });
+      }
     }
     return res.json({ status: false, message: "Something went wrong" });
   } catch (error) {
@@ -55,7 +63,7 @@ exports.getConnections = async (req, res) => {
   }
 };
 
-// When a user Sent connection request
+// When a user sent connection request
 exports.sentConnections = async (req, res) => {
   const { userId } = req.params;
   //const { userId } = req.params.userId;
@@ -65,6 +73,10 @@ exports.sentConnections = async (req, res) => {
       "sent_pending_connections",
       "firstName lastName headline profileImage"
     );
+
+   
+
+
     //res.json(userId);
     res.json(user.sent_pending_connections);
   } catch (error) {
@@ -75,7 +87,7 @@ exports.sentConnections = async (req, res) => {
 exports.acceptConnection = async (req, res) => {
   const { senderId, receiverId } = req.params;
   try {
-    // Find the requesting user and the target user
+
     const requestingUser = await User.findById(senderId);
     const targetUser = await User.findById(receiverId);
     if (!requestingUser || !targetUser ) {
@@ -100,7 +112,13 @@ exports.acceptConnection = async (req, res) => {
       { new: true }
     );
 
-    if(res1 && res2) return res.json({status: true, message: "Connection accepted" });
+    if(res1 && res2){
+    const user=await User.findById(senderId);
+        const userName=user.firstName;
+         const message = `${userName} accepted your connection request`;
+         await createNotification(receiverId, message);
+    return res.json({status: true, message: "Connection accepted" });
+    }
     else return res.json({status: false, message: "Something went wrong" });
   } catch (error) {
     res.status(500).json({ error: "Failed to accept connection" });
@@ -153,12 +171,10 @@ exports.dropConnection = async (req, res) => {
   }
 };
 
-// Show My connections
 exports.myConnections = async (req, res) => {
   const { userId } = req.params;
   //const { userId } = req.params.userId;
   try {
-    // Retrieve user's connections
     const user = await User.findById(userId).populate(
       "connections",
       "firstName lastName headline profileImage"
@@ -187,7 +203,7 @@ exports.deleteMyConnection = async (req, res) => {
   } catch (error) {}
 };
 
-//Show all Users list
+
 exports.users = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // Fetch all users
@@ -197,3 +213,41 @@ exports.users = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+//notification
+const createNotification = async (userId, message) => {
+  try {
+    
+    const notification = await Notification.create({
+      userId,
+      message,
+    });
+    console.log('Notification created:', notification);
+  } catch (error) {
+    console.error('Error creating notification:', error);
+  }
+};
+
+exports.Notification=async(req,res)=>{
+  try{
+    const {userId} = req.params;
+    const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
+    await Notification.updateMany({ userId, isRead: false }, { isRead: true });
+    res.json(notifications);
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+}
+
+exports.hasUnreadNotifications=async(req,res)=>{
+  try{
+    const userId=req.user._id;
+    const unreadNotifications = await Notification.find({ userId, isRead: false });
+    const len=unreadNotifications.length;
+    return res.json(len);
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+}

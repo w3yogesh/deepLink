@@ -24,7 +24,6 @@ export const JobListing = ({ myId, toast }) => {
 
   const applyNow = async (jobId) => {
     try {
-      // Send jobId and myId to the backend for application
       const response = await axios.post("http://localhost:4000/apply", {
         jobId,
         myId,
@@ -83,7 +82,6 @@ export const JobListing = ({ myId, toast }) => {
       <h2>Recent openings</h2>
       <div className="job-filters">
         <div className="job-search-box">
-          {/* Step 2: Add value and onChange to the search input */}
           <input
             type="text"
             placeholder="Search companies"
@@ -91,7 +89,6 @@ export const JobListing = ({ myId, toast }) => {
             onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
-        {/* Company Dropdown */}
         <div className="company-filter job-filter">
           <select
             name="Company"
@@ -107,7 +104,6 @@ export const JobListing = ({ myId, toast }) => {
           </select>
         </div>
 
-        {/* Requirements Dropdown */}
         <div className="requirement-filter job-filter">
           <select
             name="Requirements"
@@ -123,7 +119,6 @@ export const JobListing = ({ myId, toast }) => {
           </select>
         </div>
 
-        {/* Location Dropdown */}
         <div className="location-filter job-filter">
           <select
             name="Location"
@@ -140,7 +135,6 @@ export const JobListing = ({ myId, toast }) => {
         </div>
       </div>
 
-      {/* Filter jobs based on search input and other filters */}
       <div className="job-list-section">
         {jobs
           .filter(

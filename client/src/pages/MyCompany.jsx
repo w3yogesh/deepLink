@@ -89,7 +89,7 @@ export default function CompanyDetail() {
   console.log();
 
   useEffect(() => {
-    // Fetch the details of the specific company from the backend
+
     const fetchCompanyDetails = async () => {
       try {
         const response = await axios.get(

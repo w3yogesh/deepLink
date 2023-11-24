@@ -15,7 +15,6 @@ import "../styles/SignUpForm.css";
 import SignupStep1 from "../components/SignupFormComponent/SignupStep1";
 import SignupStep2 from "../components/SignupFormComponent/SignupStep2";
 import SignupStep3 from "../components/SignupFormComponent/SignupStep3";
-import SignupStep4 from "../components/SignupFormComponent/SignupStep4";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -55,7 +54,7 @@ const Signup = () => {
 
     if (curr === 0) {
 
-      // email validation
+  
       if (!formData.email) {
         toast.error("email is required");
         setCurr(0)
@@ -66,14 +65,14 @@ const Signup = () => {
         return;
       }
 
-      // password and confirm password matching
+      
       else if (formData.password !== formData.confirm_password) {
         toast.error("password and confirm password not matching");
         setCurr(0);
         return;
       }
 
-      // password validation
+    
       // else if (!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
       //   toast.error("Password should contain one Capital , one small, one special char, minlen=6, maxlen=12");
       //   setCurr(0);
@@ -82,7 +81,6 @@ const Signup = () => {
     }
 
     if (curr === 1) {
-      // firstname and lastname required
       if (formData.firstName === "" || formData.lastName === "") {
         toast.error("required field");
         setCurr(1);
@@ -91,7 +89,6 @@ const Signup = () => {
     }
 
     if (curr === 2) {
-      // address is required
       if (formData.address.country === "") {
         toast.error("required field");
         setCurr(2);
@@ -99,18 +96,10 @@ const Signup = () => {
       }
     }
 
-    if (curr === 3) {
-      if (formData.education.institution === " " || formData.education.degree === " ") {
-        toast.error("required field");
-        setCurr(3);
-        return;
-      }
-    }
-
     setCurr((prev) => prev + 1);
   };
 
-  const steps = ["step 1", "step 2", "step 3", "step 4"];
+  const steps = ["email & password", "name", "address"];
   const [curr, setCurr] = useState(0);
 
   const goBack = () => {
@@ -119,7 +108,7 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Send the formData to the backend API here
+   
     console.log("Submitting form data to the backend:", formData);
     try {
       const { data } = await axios.post(
@@ -140,6 +129,7 @@ const Signup = () => {
         handleError(message);
       }
     } catch (error) {
+      navigate("/signup");
       console.log(error);
     }
   };
@@ -175,9 +165,6 @@ const Signup = () => {
             )}
             {curr === 2 && (
               <SignupStep3 formData={formData} updateForm={updateForm} />
-            )}
-            {curr === 3 && (
-              <SignupStep4 formData={formData} updateForm={updateForm} />
             )}
             <Button disabled={curr === 0} onClick={goBack}>
               Back
