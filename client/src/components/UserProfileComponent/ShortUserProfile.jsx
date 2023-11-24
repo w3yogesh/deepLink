@@ -145,8 +145,8 @@ const ShortUserProfile = ({ userData, senderId }) => {
             )}
             {/* <span>{isConnected === true ? "Pending ": " Connect "}</span>   */}
           </button>
-          <div className="message-btn secondary-button">
-            <a href="/messageuser">Message</a>
+          <div className="message-btn secondary-button" onClick={()=>{navigate("/chat")}}>
+            Message
           </div>
         </div>
       </div>
