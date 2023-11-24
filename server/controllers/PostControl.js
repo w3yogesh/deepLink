@@ -4,7 +4,7 @@ const Like = require("../models/LikeModel")
 const Comments = require("../models/CommentModel");
 const Notification=require("../models/NotificationModel");
 
-//Post page for user
+
 exports.createPost = async (req, res, next) => {
   try {
     const image = req.file ? req.file.filename : null;
@@ -155,7 +155,7 @@ module.exports.updateReaction = async(req, res) => {
   }
 }
 
-//creating notification
+
 const createNotification = async (postId, message) => {
   try {
     const post = await Post.findById(postId);

@@ -5,9 +5,6 @@ import {EditIcon, SaveIcon} from "../MySVGIcons.jsx";
 
 const BasicDetails = ({ userData, setUserData }) => {
 
-
-
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name.includes(".")) {
@@ -42,7 +39,6 @@ const BasicDetails = ({ userData, setUserData }) => {
     setIsEditMode(!isEditMode);
     if (isEditMode) {
       try {
-        // Make a PUT or PATCH request to update the user's data
         const response = await axios.put(
           "http://localhost:4000/updateUserProfile",
           {

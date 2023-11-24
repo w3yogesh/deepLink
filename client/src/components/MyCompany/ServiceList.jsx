@@ -26,7 +26,6 @@ const ServiceList = ({ companyId }) => {
           <h3>{service.serviceName}</h3>
           <p>Description: {service.description}</p>
           <p>Price: ${service.price}</p>
-          {/* You can add more details as needed */}
         </div>
       ))}
       </div>

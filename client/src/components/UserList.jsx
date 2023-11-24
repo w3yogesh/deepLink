@@ -35,8 +35,6 @@ function UserList({senderId, handleError,handleSuccess, usersNotConnected}) {
         console.error("Error:", error);
       }
     };
-
-    // Call the sendConnectRequest function when the button is clicked
     sendConnectRequest();
   }
 

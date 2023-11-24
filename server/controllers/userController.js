@@ -63,7 +63,7 @@ exports.getConnections = async (req, res) => {
   }
 };
 
-// When a user Sent connection request
+// When a user sent connection request
 exports.sentConnections = async (req, res) => {
   const { userId } = req.params;
   //const { userId } = req.params.userId;
@@ -87,7 +87,7 @@ exports.sentConnections = async (req, res) => {
 exports.acceptConnection = async (req, res) => {
   const { senderId, receiverId } = req.params;
   try {
-    // Find the requesting user and the target user
+
     const requestingUser = await User.findById(senderId);
     const targetUser = await User.findById(receiverId);
     if (!requestingUser || !targetUser ) {
@@ -171,12 +171,10 @@ exports.dropConnection = async (req, res) => {
   }
 };
 
-// Show My connections
 exports.myConnections = async (req, res) => {
   const { userId } = req.params;
   //const { userId } = req.params.userId;
   try {
-    // Retrieve user's connections
     const user = await User.findById(userId).populate(
       "connections",
       "firstName lastName headline profileImage"
@@ -205,7 +203,7 @@ exports.deleteMyConnection = async (req, res) => {
   } catch (error) {}
 };
 
-//Show all Users list
+
 exports.users = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // Fetch all users
@@ -216,7 +214,7 @@ exports.users = async (req, res) => {
   }
 };
 
-//creating notification
+//notification
 const createNotification = async (userId, message) => {
   try {
     

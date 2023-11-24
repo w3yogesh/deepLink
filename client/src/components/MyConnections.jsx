@@ -35,7 +35,6 @@ function MyConnections(props) {
         console.error("Error fetching users:", error);
       }
     };
-    // fetchMyConnections();
     setUsers(props.connectedUser);
     if(props.connectedUser.length > 0)  setIsLoading(false);
   }, [props.connectedUser]);

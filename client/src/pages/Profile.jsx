@@ -82,7 +82,7 @@ const Profile = () => {
 
   const handleUpdateUserProfile = async () => {
     try {
-      // Make a PUT or PATCH request to update the user's data
+    
       const response = await axios.put(
         "http://localhost:4000/updateUserProfile",
         {
