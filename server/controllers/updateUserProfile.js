@@ -304,12 +304,14 @@ exports.addEndorsement = async (req, res) => {
       return res.json({ status: false, message: "Skill or user not found" });
     }
   
-    if (skill.userId === endorserUserId) {
+    if (skill.userId.toString() === endorserUserId.toString()) {
       return res.json({ status: false, message: "You can't endorse your own skill" });
     }
   
     if (skill.endorsement.includes(endorserUser._id)) {
-      return res.json({ status: false, message: "Already endorsed" });
+      skill.endorsement.pull(endorserUser._id);
+      await skill.save();
+      return res.json({ status: true, message: "Endorsement reverted successfully" });
     }
   
     skill.endorsement.push(endorserUser._id);
