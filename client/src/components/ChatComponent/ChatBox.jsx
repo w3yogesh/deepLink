@@ -10,7 +10,7 @@ export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,set
 
   useEffect(() => {
     const socketIO = io("http://localhost:4000", {
-        query: { userId: myId }, // Replace with the user's actual Object ID
+        query: { userId: myId },
       });
       setSocket(socketIO);
 

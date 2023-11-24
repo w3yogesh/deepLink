@@ -29,7 +29,6 @@ function ConnectionSent(props) {
         console.log(message);
       }
     } catch (error) {
-      // Handle any errors
       console.error('Error:', error);
     }
       

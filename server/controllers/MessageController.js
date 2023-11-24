@@ -24,7 +24,7 @@ exports.fetchMessages = async (req, res, next) => {
             { sender: requestId, recipient: userId },
         ],
     })
-    .sort({ timestamp: "asc" }) // Optionally, you can sort by timestamp
+    .sort({ timestamp: "asc" }) 
     .exec()
     return res.json(messages);
   } catch (error) {

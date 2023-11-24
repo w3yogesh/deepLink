@@ -55,9 +55,9 @@ const CreateCompany = async (req, res, next) => {
   }
 };
 
-// Utility function for email validation
+
 function isValidEmail(email) {
-  // Implement your email validation logic here
+
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
@@ -66,12 +66,12 @@ const Companies = async (req, res) => {
   try {
     let companies;
     if (query) {
-      // If there's a search query, filter companies by name
+      
       companies = await Company.find({
-        companyName: { $regex: new RegExp(query, "i") }, // Case-insensitive regex search
+        companyName: { $regex: new RegExp(query, "i") }, 
       });
     } else {
-      // If no search query, fetch all companies
+     
       companies = await Company.find();
     }
     res.json({ success: true, companies });
@@ -103,14 +103,13 @@ const CreateService = async (req, res) => {
   try {
     const { serviceName, description, price, createdBy } = req.body;
 
-    // Validate request data
+   
     if (!serviceName || !description || !price || !createdBy) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
 
-    // Create a new service
     const newService = new Service({
       serviceName,
       description,
@@ -118,7 +117,7 @@ const CreateService = async (req, res) => {
       createdBy,
     });
 
-    // Save the service to the database
+    
     const savedService = await newService.save();
 
     res
@@ -136,11 +135,11 @@ const CreateService = async (req, res) => {
 
 const CreateJob = async (req, res) => {
   try {
-    // Destructure job data from the request body
+   
     const { title, company, location, description, requirements, postedBy } =
       req.body;
 
-    // Create a new job instance
+  
     const newJob = new Job({
       title,
       company,
@@ -150,7 +149,7 @@ const CreateJob = async (req, res) => {
       postedBy,
     });
 
-    // Save the job to the database
+  
     const savedJob = await newJob.save();
 
     res.json({ status: true, message: "Job Published" });
@@ -214,11 +213,7 @@ const ApplyJob = async (req, res) => {
       { $push: { appliedBy: myId } },
       { new: true }
     );
-    // if (update) {
-    //   res.json({ success: true, message: "applied to job successfully." });
-    // } else {
-    //   res.json({ success: false, message: " application Retry." });
-    // }
+
 
     console.log(`User ${myId} applied for job ${jobId}`);
 
@@ -241,11 +236,7 @@ const withdrawJob=async(req,res)=>{
       { $pull: { appliedBy: myId } },
       { new: true }
     );
-    // if (update) {
-    //   res.json({ success: true, message: "applied to job successfully." });
-    // } else {
-    //   res.json({ success: false, message: " application Retry." });
-    // }
+  
 
     console.log(`User ${myId} withdraw for job ${jobId}`);
 
@@ -266,7 +257,6 @@ const GetCompanies = async (req, res) => {
       return res.status(404).json({ error: "Company not found" });
     }
 
-    // Adjust the response format based on your company model
     // const companyDetails = {
     //   _id: company._id,
     //   companyName: company.companyName,
