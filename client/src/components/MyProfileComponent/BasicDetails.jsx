@@ -5,7 +5,7 @@ import {EditIcon, SaveIcon} from "../MySVGIcons.jsx";
 
 const BasicDetails = ({ userData, setUserData }) => {
 
-
+  const prevUserData = userData;
 
 
   const handleChange = (event) => {
@@ -43,13 +43,24 @@ const BasicDetails = ({ userData, setUserData }) => {
     });
 
   const [isEditMode, setIsEditMode] = useState(false);
+
   const handleToggleEditMode = async () => {
+
     if(isEditMode && userData.phoneNumber.length>0 && userData.phoneNumber.length<10) {
       toast.error("Phone number must be empty or have a length of 10 digits", {
         position: "bottom-left",
       });
       return;
     }
+
+    if(isEditMode && userData === prevUserData) {
+      toast.error("no data changed", {
+        position: "bottom-left",
+      });
+      setIsEditMode(!isEditMode);
+      return;
+    }
+
     setIsEditMode(!isEditMode);
     if (isEditMode) {
       try {
