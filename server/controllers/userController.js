@@ -1,5 +1,6 @@
 const { ObjectId } = require("mongodb");
 const User = require("../models/UserModel");
+const Notification=require("../models/NotificationModel");
 
 // When user sent request to other user
 exports.connectUsers = async (req, res) => {
@@ -29,8 +30,15 @@ exports.connectUsers = async (req, res) => {
       const receiver = await User.findByIdAndUpdate(recipientId, {
         $push: { receive_pending_connections: senderId },
       });
-      if (sender && receiver)
+      if (sender && receiver){
+
+        const user=await User.findById(senderId);
+        const userName=user.firstName;
+         const message = `${userName} sent you a connection request`;
+         await createNotification(recipientId, message);
+
         return res.json({ status: true, message: "Connection Pending" });
+      }
     }
     return res.json({ status: false, message: "Something went wrong" });
   } catch (error) {
@@ -65,6 +73,10 @@ exports.sentConnections = async (req, res) => {
       "sent_pending_connections",
       "firstName lastName headline profileImage"
     );
+
+   
+
+
     //res.json(userId);
     res.json(user.sent_pending_connections);
   } catch (error) {
@@ -100,7 +112,13 @@ exports.acceptConnection = async (req, res) => {
       { new: true }
     );
 
-    if(res1 && res2) return res.json({status: true, message: "Connection accepted" });
+    if(res1 && res2){
+    const user=await User.findById(senderId);
+        const userName=user.firstName;
+         const message = `${userName} accepted your connection request`;
+         await createNotification(receiverId, message);
+    return res.json({status: true, message: "Connection accepted" });
+    }
     else return res.json({status: false, message: "Something went wrong" });
   } catch (error) {
     res.status(500).json({ error: "Failed to accept connection" });
@@ -197,3 +215,29 @@ exports.users = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+//creating notification
+const createNotification = async (userId, message) => {
+  try {
+    
+    const notification = await Notification.create({
+      userId,
+      message,
+    });
+    console.log('Notification created:', notification);
+  } catch (error) {
+    console.error('Error creating notification:', error);
+  }
+};
+
+exports.Notification=async(req,res)=>{
+  try{
+    const {userId} = req.params;
+    const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
+    await Notification.updateMany({ userId, isRead: false }, { isRead: true });
+    res.json(notifications);
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+}
