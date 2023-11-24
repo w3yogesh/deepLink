@@ -73,25 +73,37 @@
     margin: 0;
 }  
 .post-image-button {
-  border: 1px solid #eee;
+    border: 1px solid #eee;
     padding: 4px 10px;
-    width: 20%;
     margin-right: 10px;
+    cursor: pointer;
 }
 .post-image-button input {
   padding: 0;
   border: 0;
   border-radius: 0;
   position: absolute;
+  padding: 20px;
   z-index: 2;
   opacity: 0;
   width: 6vw;
-  cursor: pointer;
   margin-top: 8px;
+  cursor: pointer;
 }
 .post-button {
-  width: 78%;
   text-align: center;
-  border: 1px solid #eee;
-  padding: 4px 10px;
+  border: 1px solid #0C356A;
+  padding: 2px 30px;
+  margin-left: auto;
+  border-radius: 50px;
+  background: #095caf;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+.post-button:hover{
+  background: #fff;
+  color: #095caf;
+  border: 1px solid #095caf;
+
 }

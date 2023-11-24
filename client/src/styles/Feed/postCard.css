@@ -19,17 +19,18 @@
 .post-items {
     display: flex;
     flex-direction: column;
+    background: #fff;
+    padding: 14px;
 }
 
 .post-meta {
-    background: #ffffff;
-    padding: 10px;
     border-radius: 10px 10px 0 0;
     font-size: 16px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #bbb;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #eee;
     justify-content: space-between;
 }
 .more-option-items {
@@ -54,22 +55,15 @@
 .post-content {
     display: flex;
     align-items: center;
-    min-height: 420px;
-    justify-content: center;
-    font-size: 30px;
-    background-color: rgb(226, 1, 59);
-    background-image: linear-gradient(rgb(226, 1, 59), rgb(226, 1, 59));
-    text-align: center;
 }
 
 .post-action {
     display: flex;
     align-content: flex-end;
     margin: 0;
-    padding: 10px;
     background: #fff;
-    padding: 15px 10px;
     border-radius: 0 0 10px 10px;
+    margin-top: 10px;
 }
 
 .like-btn,
@@ -130,12 +124,7 @@ ol.comment-list {
 .post-action svg {
     margin: 0 6px 0 0;
 }
-.post-content p {
-    word-wrap: break-word;
-    overflow: auto;
-    padding: 20px;
-}
-p.img-post-text {
+p.img-post-text,.post-content p{
     background: #fff;
     padding: 10px;
     word-wrap: break-word;
@@ -221,4 +210,14 @@ p.img-post-text {
 }
 .funny {
     fill: #78C1F3;
+}
+.post-action-counts {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+    color: #707070;
+    font-size: 12px;
 }

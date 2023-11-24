@@ -88,8 +88,6 @@ const Login = () => {
       
     }
   }
-
-
   useEffect(() => {
     // Add a class to the body element to apply specific styles
     document.body.classList.add("login-body");

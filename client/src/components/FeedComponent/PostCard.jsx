@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MoreIcon, Celebrate, Support,Love,Insightful,Funny } from "../MySVGIcons";
+import ReadMore from '../FeedComponent/ReadMoreButton';
 
 const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const [likes, setLikes] = useState(postObj.likes.length);
@@ -41,7 +42,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     if (postObj.likes.find((item) => item.userId === userId))
       setLikeColor("red");
     else setLikeColor("blue");
-  }, [postObj.likes, postObj.comments, userId]);
+  }, [userId]);
 
   const handleLikes = async (postId) => {
     if (likeColor === "red") {
@@ -194,7 +195,6 @@ console.log(userId)
       <div className="post-meta">
         <div className="user-info">
           <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}>
-            {" "}
             {postObj.user.profileImage ? (
               <img
                 src={`http://localhost:4000/fetchProfileImage/${postObj.user.profileImage}`}
@@ -223,7 +223,9 @@ console.log(userId)
       {postObj.image ? (
         <div className="img-post-content">
           {postObj.content ? (
-            <p className="img-post-text">{postObj.content}</p>
+            <p className="img-post-text">
+            <ReadMore text={postObj.content} maxLength={50} />
+              </p>
           ) : (
             ""
           )}
@@ -234,24 +236,22 @@ console.log(userId)
         </div>
       ) : (
         <div className="post-content">
-          <p>{postObj.content}</p>
+          <p><ReadMore text={postObj.content} maxLength={50} /></p>
         </div>
       )}
+        <div className="post-action-counts">
+          <span>{likes} Likes</span> {totalComment ? <span>{totalComment} Comments</span> : ""}
+        </div>
       <div className="post-action">
-        {/* <div className="like-btn btn" onClick={() => handleLikes(postObj._id)}>
-          <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />
-          {likes}Likes
-        </div> */}
-
         <div
           className="like-btn btn"
           onMouseEnter={() => setShowReactions(true)}
           onMouseLeave={() => setShowReactions(false)}
         >
-          {likes} 
+           
           {reactions==="Like" && <div> <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} /> Like </div>}
           {reactions==="Love" && <div className="love"> <Love/> Love </div> }
-          {reactions==="Congo" && <div className="congo"> <Celebrate /> Congo </div> }
+          {reactions==="Congratulation" && <div className="congo"> <Celebrate /> Congratulation </div> }
           {reactions==="Support" && <div className="support"> <Support /> Support </div> }
           {reactions==="Insightful" && <div className="insightful"> <Insightful /> Insightful </div> }
           {reactions==="Funny" && <div className="funny"> <Funny /> Funny </div> }
@@ -264,7 +264,7 @@ console.log(userId)
               <div className="reaction-btn love" onClick={() => handleReactions(postObj._id, "Love")}>
                 <Love/>
               </div>
-              <div className="reaction-btn congo" onClick={() => handleReactions(postObj._id, "Congo")}>
+              <div className="reaction-btn congo" onClick={() => handleReactions(postObj._id, "Congratulation")}>
                 <Celebrate/>
               </div>
               <div className="reaction-btn support" onClick={() => handleReactions(postObj._id, "Support")}>
@@ -294,7 +294,7 @@ console.log(userId)
             onClick={() => handleAddComment(postObj._id)}
           >
             <CommentIcon />
-            {totalComment} Comment{" "}
+            Comment
           </div>
         )}
       </div>
@@ -316,7 +316,9 @@ console.log(userId)
             {reversedComments.map((Postcomment, index) => (
               <li className="post-comment" key={index}>
                 <div className="comment-author-info">
+                  <a href={`http://localhost:3000/userprofileview/${Postcomment?.userId?._id ?? Postcomment.user}`}>
                   {Postcomment?.userId?.firstName ?? Postcomment.user}
+                  </a>
                 </div>
                 <div className="comment-content">
                   <p>{Postcomment?.comment ?? Postcomment.content}</p>
