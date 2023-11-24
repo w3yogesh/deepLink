@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import LoadingForComponent from "./LoadingForComponent";
 
 function UserList(props) {
   const [userNotConnected, setUserNotConnected] = useState(props.userNotConnected);
-  console.log('user not connected in userList page : ', props.userNotConnected);
+  // console.log('user not connected in userList page : ', props.userNotConnected);
   const [sentConnect, setSentConnect] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const senderId = props.senderId;
   function handleSendConnectRequest(senderId, recipientId) {
@@ -34,10 +36,13 @@ function UserList(props) {
 
   useEffect(() => {
     setUserNotConnected(props.userNotConnected);
+    if(props.userNotConnected.length > 0) setIsLoading(false);
   }, [props.userNotConnected]);
 
   return (
     <div>
+      {isLoading && <LoadingForComponent/>}
+      {!isLoading && <div>
       <h4>All Users</h4>
       <ul className="user-cards">
         {userNotConnected.map((user) => (
@@ -73,6 +78,7 @@ function UserList(props) {
           </li>
         ))}
       </ul>
+      </div>}
     </div>
   );
 }

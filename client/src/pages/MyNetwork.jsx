@@ -82,9 +82,9 @@ const MyNetwork = () => {
   }, [myId]);
 
   useEffect ( () => {
-    console.log('all Users : ', allUser);
-    console.log('connected user : ', connectedUser);
-    console.log('not connected user : ', userNotConnected);
+    // console.log('all Users : ', allUser);
+    // console.log('connected user : ', connectedUser);
+    // console.log('not connected user : ', userNotConnected);
   }, [myId, allUser, connectedUser, userNotConnected]);
 
   
