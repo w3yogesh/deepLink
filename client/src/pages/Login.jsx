@@ -62,9 +62,9 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async(email, firstName, lastName)=> {
-    console.log('email : ' , email);
-    console.log('firstName : ' , firstName);
-    console.log('lastName : ' , lastName);
+    // console.log('email : ' , email);
+    // console.log('firstName : ' , firstName);
+    // console.log('lastName : ' , lastName);
     try {
       const { data } = await axios.post(
         "http://localhost:4000/LoginWithGoogle",
@@ -73,11 +73,12 @@ const Login = () => {
         },
         { withCredentials: true }
       );
+      
       const { success, message } = data;
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/feed");
+          navigate("/myprofile");
           
         }, 1000);
       } else {
@@ -87,8 +88,6 @@ const Login = () => {
       
     }
   }
-
-
   useEffect(() => {
     // Add a class to the body element to apply specific styles
     document.body.classList.add("login-body");
