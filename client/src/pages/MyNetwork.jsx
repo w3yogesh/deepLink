@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import "../styles/myNetwork.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ConnectionSVG, SentSVG, HandShackSVG } from "../components/MySVGIcons";
+import { ConnectionSVG, SentSVG, HandShackSVG,UserIcon } from "../components/MySVGIcons";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 
@@ -18,8 +18,8 @@ const YourComponent = ({ activeTab, myId }) => {
     <div>
       {activeTab === "allUser" && <UserListComponent senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
       {activeTab === "requests" && <ConnectionRequest senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "sent" && <ConnectionSent senderId={myId} toast={toast} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "myConnections" && <MyConnections senderId={myId} toast={toast} handleError={handleError} handleSuccess={handleSuccess}/>}
+      {activeTab === "sent" && <ConnectionSent senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
+      {activeTab === "myConnections" && <MyConnections senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
     </div>
   );
 };
@@ -117,7 +117,7 @@ const MyNetwork = () => {
                   onClick={() => handleTabClick("allUser")}
                 >
                   <div className="itme-svg">
-                    <HandShackSVG />
+                    <UserIcon />
                   </div>
                   <span>All Users</span>
                 </div>

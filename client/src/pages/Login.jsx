@@ -62,9 +62,6 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async(email, firstName, lastName)=> {
-    // console.log('email : ' , email);
-    // console.log('firstName : ' , firstName);
-    // console.log('lastName : ' , lastName);
     try {
       const { data } = await axios.post(
         "http://localhost:4000/LoginWithGoogle",
@@ -89,10 +86,7 @@ const Login = () => {
     }
   }
   useEffect(() => {
-    // Add a class to the body element to apply specific styles
     document.body.classList.add("login-body");
-  
-    // Remove the class when the component unmounts
     return () => {
       document.body.classList.remove("login-body");
     };
@@ -126,7 +120,7 @@ const Login = () => {
         
         <button type="submit">Submit</button>
         <span>
-          Already have an account? <Link to={"/signup"}>Signup</Link>
+          Don't have an account? <Link to={"/signup"}>Signup</Link>
         </span>
       </form>
 

@@ -35,7 +35,13 @@ exports.updateUserProfile = async (req, res) => {
       { new: true }
     );
     const addressId = updatedUser.address[0]._id;
-    await AddressModel.findByIdAndUpdate(addressId, { city, country });
+        if(addressId){
+          await AddressModel.findByIdAndUpdate(addressId, { city, country });
+        }else{
+          const address = AddressModel.create
+        }
+
+    
 
     // return res.json({ success: true, message: addressId });
     if (updatedUser) {

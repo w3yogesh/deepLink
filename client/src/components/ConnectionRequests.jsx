@@ -28,7 +28,7 @@ function ConnectionRequest({senderId,handleError,handleSuccess}) {
 
       if (status) {
         console.log(message);
-        handleSuccess(message)
+        handleSuccess(message);
         setUsers((prev) => prev.filter((user) => user._id !== receiverId));
       } else {
         console.log(message);

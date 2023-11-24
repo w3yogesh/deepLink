@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-function MyConnections(props) {
+function MyConnections({senderId, handleError,handleSuccess}) {
     const [users, setUsers] = useState([]);
-    const userId = props.senderId;
+    const userId = senderId;
 
     const handleDeleteMyConnection = async (senderId, receiverId)=>{
       try {
@@ -11,8 +11,12 @@ function MyConnections(props) {
         const {status, message} = response.data;
         if(status){
           console.log(message);
+        handleSuccess(message);
+
         }else{
           console.log(message);
+        handleError(message);
+
         }
         
       } catch (error) {

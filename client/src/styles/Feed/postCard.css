@@ -8,9 +8,10 @@
 
 .post-body {
     border: 1px solid #eee;
-    border-radius: 10px;
+    border-radius: 2px;
     margin: 0 0 20px 0;
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 
 }
 .post-meta svg {
@@ -158,24 +159,14 @@ p.img-post-text,.post-content p{
 .reactions-tooltip {
     position: absolute;
     display: flex;
-    bottom: 40px;
+    bottom: 30px;
     background: #fff;
     padding: 10px;
     border: 1px solid #eee;
     border-radius: 50px;
     justify-content: space-evenly;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
-.reactions-tooltip {
-    position: absolute;
-    display: flex;
-    bottom: 28px;
-    background: #fff;
-    padding: 10px;
-    border: 1px solid #eee;
-    border-radius: 50px;
-    justify-content: space-evenly;
-}
-
 .reaction-btn {
     padding: 4px 8px;
     margin-left: 4px;
