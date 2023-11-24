@@ -28,7 +28,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
       try {
         const response = await axios.get(`http://localhost:4000/api/myConnections${currentUser}`);
         setUsers(response.data);
-        // setSelectedUser(users[0]); // Set the first user as selected by default
+        // setSelectedUser(users[0]); 
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -36,7 +36,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
     if (currentUser) {
       fetchUsers();
     }
-  }, [currentUser, setUsers]); // Include currentUser in the dependency array
+  }, [currentUser, setUsers]);
 
   return (
     <div className="chat-users">

@@ -19,10 +19,9 @@ const SignupStep4 = ({ formData, updateForm }) => {
 
 
   useEffect(() => {
-    // Add a class to the body element to apply specific styles
+    
     document.body.classList.add("login-body");
   
-    // Remove the class when the component unmounts
     return () => {
       document.body.classList.remove("login-body");
     };
@@ -30,7 +29,6 @@ const SignupStep4 = ({ formData, updateForm }) => {
 
   return (
     <div>
-      {/* school, degree, field of study, start date, end date */}
       <TextField
         label="Institution Name"
         variant="outlined"

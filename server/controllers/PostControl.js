@@ -2,9 +2,9 @@ const Post = require("../models/PostModel");
 const User = require("../models/UserModel")
 const Like = require("../models/LikeModel")
 const Comments = require("../models/CommentModel");
+const Notification=require("../models/NotificationModel");
 
 
-//Post page for user
 exports.createPost = async (req, res, next) => {
   try {
     const image = req.file ? req.file.filename : null;
@@ -54,6 +54,11 @@ module.exports.Postlike = async(req, res, next) => {
     const likeId = like._id;
     const response = await Post.updateOne({_id: postId},{$push: {likes :  likeId}});
     if(response){
+      
+      const user=await User.findById(userId);
+   const userName=user.firstName;
+    const message = `${userName} Reacted to your post`;
+    await createNotification(postId, message);
       return res.json({status: true, message:"liked"});
     }
     return res.json({status, message:"not liked"})
@@ -74,7 +79,15 @@ module.exports.postReaction = async(req, res) => {
     const likeId = like._id;
     const response = await Post.updateOne({_id: postId},{$push: {likes :  likeId}});
     if(response){
-      return res.json({status: true, message:"reacted"});
+
+      const user=await User.findById(userId);
+   const userName=user.firstName;
+    const message = `${userName} Reacted to your post`;
+    await createNotification(postId, message);
+
+
+
+      return res.json({status: true, message:"reacted and notified"});
     }
     return res.json({status : false, message:"not reacted"})
     
@@ -143,21 +156,53 @@ module.exports.updateReaction = async(req, res) => {
 }
 
 
-module.exports.PostComment = async(req, res, next) => {
+const createNotification = async (postId, message) => {
   try {
-    const {userId, postId, comment} = req.body;
+    const post = await Post.findById(postId);
+    const userId = post.user;
+    const notification = await Notification.create({
+      userId,
+      message,
+    });
+    console.log('Notification created:', notification);
+  } catch (error) {
+    console.error('Error creating notification:', error);
+  }
+};
+
+module.exports.PostComment = async (req, res, next) => {
+
+  try {
+    const { userId, postId, comment } = req.body;
+
+   
     const response = await Comments.create({
       userId,
       postId,
       comment,
     });
+
     const commentId = response._id;
-    await Post.updateOne({_id: postId},{$push: {comments :  commentId}});
-    return res.json("Commented");
-  } catch (error) {
+
     
+    await Post.updateOne({ _id: postId }, { $push: { comments: commentId } });
+
+   const user=await User.findById(userId);
+   const userName=user.firstName;
+    const message = `${userName} commented on your post`;
+    await createNotification(postId, message);
+
+  
+    res.json({ status: "Commented and Notified" });
+
+  } catch (error) {
+    console.error('Error posting comment:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
+
+
+
 
 module.exports.fatchComments = async (req, res, next) =>{
   const { postId } = req.params;

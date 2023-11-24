@@ -22,7 +22,6 @@ export const JobSidebar = ({ myId, toast }) => {
 
   const applyNow = async (jobId) => {
     try {
-      // Send jobId and myId to the backend for application
       const response = await axios.post("http://localhost:4000/apply", {
         jobId,
         myId,
@@ -75,7 +74,7 @@ export const JobSidebar = ({ myId, toast }) => {
   const formatDateFromLong = (dateInLong) => {
     const date = new Date(dateInLong);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
 
     return `${day}/${month}/${year}`;
@@ -86,7 +85,6 @@ export const JobSidebar = ({ myId, toast }) => {
   return (
     <div className="jobs-wrapper">
       <h2>Recent openings</h2>
-      {/* Job listings */}
       <div className="job-list-section">
         {jobs
           .filter(

@@ -21,14 +21,11 @@ const ServiceForm = ({companyId}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Make an HTTP POST request to your backend endpoint
       console.log(formData);
       const response = await axios.post('http://localhost:4000/createService', formData);
 
-      // Handle the response from the backend if needed
-      console.log('Backend response:', response.data.message);
+      console.log('response:', response.data.message);
 
-      // Reset the form after successful submission
       setFormData({
         serviceName: '',
         description: '',
@@ -36,8 +33,7 @@ const ServiceForm = ({companyId}) => {
         createdBy:'',
       });
     } catch (error) {
-      // Handle any errors that occur during the request
-      console.error('Error submitting form:', error.message);
+      console.error('Error:', error.message);
     }
   };
 

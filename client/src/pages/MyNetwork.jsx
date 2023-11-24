@@ -73,11 +73,9 @@ const MyNetwork = () => {
           axios.get(`http://localhost:4000/api/myConnections${myId}`)
         ]);
   
-        // Extract data from responses
         const allUsers = allUsersResponse.data;
         const connectedUsers = myConnectionsResponse.data;
   
-        // Set state
         setAllUser(allUsersResponse.data);
         setConnectedUser(myConnectionsResponse.data);
         const result = allUsers.filter(user => !connectedUsers.some(connectedUser => connectedUser._id === user._id));

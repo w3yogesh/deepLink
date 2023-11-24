@@ -18,12 +18,11 @@ export const HeaderSearch = () => {
         console.log(response.data.message);
       }
     } catch (error) {
-      // Handle error
+
     }
   };
 
   const handleClickResult = () => {
-    // Clear search term and results when a result is clicked
     setSearchTerm("");
     setSearchResults([]);
   };
@@ -36,7 +35,6 @@ export const HeaderSearch = () => {
     }
   }, [searchTerm]);
 
-  // Clear search results when the component unmounts
   useEffect(() => {
     return () => {
       setSearchResults([]);

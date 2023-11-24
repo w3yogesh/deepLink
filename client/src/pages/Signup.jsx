@@ -55,7 +55,7 @@ const Signup = () => {
 
     if (curr === 0) {
 
-      // email validation
+  
       if (!formData.email) {
         toast.error("email is required");
         setCurr(0)
@@ -66,14 +66,14 @@ const Signup = () => {
         return;
       }
 
-      // password and confirm password matching
+      
       else if (formData.password !== formData.confirm_password) {
         toast.error("password and confirm password not matching");
         setCurr(0);
         return;
       }
 
-      // password validation
+    
       // else if (!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
       //   toast.error("Password should contain one Capital , one small, one special char, minlen=6, maxlen=12");
       //   setCurr(0);
@@ -82,7 +82,6 @@ const Signup = () => {
     }
 
     if (curr === 1) {
-      // firstname and lastname required
       if (formData.firstName === "" || formData.lastName === "") {
         toast.error("required field");
         setCurr(1);
@@ -91,7 +90,6 @@ const Signup = () => {
     }
 
     if (curr === 2) {
-      // address is required
       if (formData.address.country === "") {
         toast.error("required field");
         setCurr(2);
@@ -119,7 +117,7 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Send the formData to the backend API here
+   
     console.log("Submitting form data to the backend:", formData);
     try {
       const { data } = await axios.post(
