@@ -4,12 +4,32 @@ import { HeaderSearch } from "./HeaderSearch";
 import { AdminIcon } from "./MySVGIcons";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+
+  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(0);
+
+  useEffect(() => {
+    const checkUnreadNotifications = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/hasUnreadNotifications", { withCredentials: true });
+        const unreadCount = response.data;
+        setHasUnreadNotifications(unreadCount);
+      } catch (error) {
+        console.error('Error checking unread notifications:', error);
+      }
+    };
+    checkUnreadNotifications();
+  }, []);
+
+console.log(`number of unread : ${hasUnreadNotifications}`);
   const [cookies, removeCookie] = useCookies([]);
 
 
@@ -50,7 +70,9 @@ export default function Navbar() {
                 <a href="/chat">Messages</a>
               </li>
               <li className="nav-menu-item">
-                <a href="/notifications">Notification</a>
+              <a href="/notifications" className={hasUnreadNotifications>0? 'unread' : ''}>
+            Notification {hasUnreadNotifications}
+          </a>
               </li>
             </ul>
           </div>

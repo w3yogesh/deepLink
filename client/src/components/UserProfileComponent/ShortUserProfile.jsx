@@ -69,7 +69,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
         console.error("Error:", error);
       }
     } else {
-      // handleAuth();
+      
     }
   };
 
@@ -162,9 +162,13 @@ const ShortUserProfile = ({ userData, senderId }) => {
                 </div>
                 <div className="endorsement-count">
                   <span>Endorsements:{skill.endorsement.length}</span>
-                  <div className="endorsement-btn" onClick={() => handleEndorseSkill(skill._id)}>
-                    Endorse
-                  </div>
+                  {skill.endorsement.includes(senderId) ? (
+                    <div className="endorsement-btn endorsed" onClick={() => handleEndorseSkill(skill._id)}>Endorsed</div>
+                  ) : (
+                    <div className="endorsement-btn" onClick={() => handleEndorseSkill(skill._id)}>
+                      Endorse
+                    </div>
+                  )}
                 </div>
                 
               </li>

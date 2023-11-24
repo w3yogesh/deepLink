@@ -241,3 +241,15 @@ exports.Notification=async(req,res)=>{
     res.status(500).json({ error: "Server Error" });
   }
 }
+
+exports.hasUnreadNotifications=async(req,res)=>{
+  try{
+    const userId=req.user._id;
+    const unreadNotifications = await Notification.find({ userId, isRead: false });
+    const len=unreadNotifications.length;
+    return res.json(len);
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+}

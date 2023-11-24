@@ -6,7 +6,7 @@ const {getUserProfile} = require("../controllers/getUserProfile");// My profile 
 const {getUserProfileById, userSearch} = require("../controllers/PublicProfileController")
 
 // user controller
-const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users,Notification } = require('../controllers/userController');
+const { connectUsers, getConnections, sentConnections, acceptConnection,ignoreConnection,dropConnection, myConnections, deleteMyConnection,users,Notification,hasUnreadNotifications } = require('../controllers/userController');
 
 // User profile controller (edit profile feature)
 const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill, editSkill,deleteSkill, addExperience,editExperience, deleteExperience, UploadProfile,UploadBackground,addEndorsement} = require("../controllers/updateUserProfile");
@@ -134,7 +134,7 @@ router.get("/chats/:userId/:requestId",fetchMessages);
 //Notifications
 
 router.get("/getNotifications/:userId",Notification);
-
+router.get("/hasUnreadNotifications",isAuthenticated,hasUnreadNotifications);
 
 const companyImages = multer.diskStorage({
   destination: "./uploads/company",

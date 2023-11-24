@@ -50,7 +50,7 @@ const ShortProfile = ({ userData }) => {
         <p className="user-location">
           {city} {country}
         </p>
-        <p className="user-conections">646 followers * 500+ connections</p>
+       <strong> <p className="user-conections">{userData.connections.length} connections</p></strong>
       </div>
 
       <div>

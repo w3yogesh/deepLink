@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const SignupStep1 = ({ formData, updateForm }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -45,6 +46,9 @@ const SignupStep1 = ({ formData, updateForm }) => {
         value={formData.confirm_password}
         onChange={handleChange}
       />
+       <span>
+          Already have an account? <Link to={"/login"}>Login</Link>
+        </span>
     </div>
   );
 };
