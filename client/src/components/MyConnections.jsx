@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 function MyConnections(props) {
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState(props.connectedUser);
     const userId = props.senderId;
 
     const handleDeleteMyConnection = async (senderId, receiverId)=>{
@@ -11,6 +11,7 @@ function MyConnections(props) {
         const {status, message} = response.data;
         if(status){
           console.log(message);
+          setUsers(users => users.filter(user => user._id !== receiverId));
         }else{
           console.log(message);
         }
@@ -28,8 +29,9 @@ function MyConnections(props) {
         console.error("Error fetching users:", error);
       }
     };
-    fetchMyConnections();
-  }, []);
+    // fetchMyConnections();
+    setUsers(props.connectedUser);
+  }, [props.connectedUser]);
 
   return (
     <div>

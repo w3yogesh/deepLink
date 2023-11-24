@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 function UserList(props) {
-  const [users, setUsers] = useState([]);
-
+  const [userNotConnected, setUserNotConnected] = useState(props.userNotConnected);
+  console.log('user not connected in userList page : ', props.userNotConnected);
   const [sentConnect, setSentConnect] = useState([]);
 
   const senderId = props.senderId;
@@ -33,23 +33,14 @@ function UserList(props) {
   }
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/users");
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+    setUserNotConnected(props.userNotConnected);
+  }, [props.userNotConnected]);
 
   return (
     <div>
       <h4>All Users</h4>
       <ul className="user-cards">
-        {users.map((user) => (
+        {userNotConnected.map((user) => (
           <li className="user-card-list" key={user._id}>
             <div className="user-card">
               <div className="user-card-meta">
