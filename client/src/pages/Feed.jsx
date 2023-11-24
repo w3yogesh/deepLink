@@ -86,7 +86,7 @@ const Feed = () => {
   }, [navigate]);
   if (loading) {
     return <Loading/>;
-  }
+  } 
   const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
   return (
     <div>

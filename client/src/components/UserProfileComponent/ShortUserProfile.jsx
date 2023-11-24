@@ -7,11 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ShortUserProfile = ({ userData, senderId}) => {
+const ShortUserProfile = ({ userData, senderId }) => {
   const recipientId = userData._id;
   const [isConnected, setIsConnected] = useState(0);
   const navigate = useNavigate();
-
 
   // const handleAuth = async () => {
   //     const { data } = await axios.post(
@@ -30,24 +29,23 @@ const ShortUserProfile = ({ userData, senderId}) => {
   //     }
   //   };
 
+  // useEffect( () => {
+  //   console.log(`connections : ${userData.connections}`);
+  //   console.log(`userData.receive_pending_connections : ${userData.receive_pending_connections}`);
+  //   console.log(`userData.sent_pending_connections : ${userData.sent_pending_connections}`);
+  //   console.log(`sender id : ${senderId}`)
 
-    // useEffect( () => {
-    //   console.log(`connections : ${userData.connections}`);
-    //   console.log(`userData.receive_pending_connections : ${userData.receive_pending_connections}`);
-    //   console.log(`userData.sent_pending_connections : ${userData.sent_pending_connections}`);
-    //   console.log(`sender id : ${senderId}`)
-
-    //   if(userData.connections.includes(senderId))  {
-    //     console.log('already connected');
-    //     setIsConnected(2);
-    //   }
-    //     else if(userData.receive_pending_connections.includes(senderId))  {
-    //       console.log('pending');
-    //       setIsConnected(1);
-    //     }
-    //     else
-    //       {setIsConnected(0);}
-    // }, []);
+  //   if(userData.connections.includes(senderId))  {
+  //     console.log('already connected');
+  //     setIsConnected(2);
+  //   }
+  //     else if(userData.receive_pending_connections.includes(senderId))  {
+  //       console.log('pending');
+  //       setIsConnected(1);
+  //     }
+  //     else
+  //       {setIsConnected(0);}
+  // }, []);
 
   // console.log(senderId);
   const handleConnect = async () => {
@@ -70,12 +68,9 @@ const ShortUserProfile = ({ userData, senderId}) => {
         toast.error("Error connecting. Please try again.");
         console.error("Error:", error);
       }
-    
-    }
-    else{
+    } else {
       // handleAuth();
     }
-   
   };
 
   const city =
@@ -91,7 +86,9 @@ const ShortUserProfile = ({ userData, senderId}) => {
 
   const handleEndorseSkill = async (skillId) => {
     try {
-      const response = await axios.put(`http://localhost:4000/endorsement/${skillId}/${senderId}`);
+      const response = await axios.put(
+        `http://localhost:4000/endorsement/${skillId}/${senderId}`
+      );
       const { status, message } = response.data;
       if (status) {
         toast.success(message);
@@ -105,19 +102,19 @@ const ShortUserProfile = ({ userData, senderId}) => {
       console.error("Error:", error);
     }
   };
-  
+
   return (
     <div className="profile-sidebar left">
       <div className="short-profile-view">
         <div className="profile-photo">
-        <img
-              src={
-                userData.profileImage
-                  ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
-                  : `images/user-background-photo.jpg`
-              }
-              alt="User background Photo"
-            />
+          <img
+            src={
+              userData.profileImage
+                ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
+                : `images/user-background-photo.jpg`
+            }
+            alt="User background Photo"
+          />
         </div>
         <div className="profile-meta">
           <h1 className="userName">
@@ -130,13 +127,24 @@ const ShortUserProfile = ({ userData, senderId}) => {
           <p className="userConections"></p>
         </div>
         <div className="profile-actions">
-          <div className="follow-btn primary-button" onClick={handleConnect} {...isConnected ? "disabled":""}>
-            {!userData.connections.includes(senderId) && !userData.receive_pending_connections.includes(senderId) && <span>  Connect  </span>}
-            {!userData.connections.includes(senderId) && userData.receive_pending_connections.includes(senderId) && <span>  Pending  </span>}
-            {userData.connections.includes(senderId) && <span>  Connected  </span>}
+          <button 
+            className="follow-btn primary-button"
+            onClick={handleConnect}
+            {...((isConnected || (senderId === recipientId)) ? "disabled" : "")}
+          >
+            {!userData.connections.includes(senderId) &&
+              !userData.receive_pending_connections.includes(senderId) && (
+                <span> Connect </span>
+              )}
+            {!userData.connections.includes(senderId) &&
+              userData.receive_pending_connections.includes(senderId) && (
+                <span> Pending </span>
+              )}
+            {userData.connections.includes(senderId) && (
+              <span> Connected </span>
+            )}
             {/* <span>{isConnected === true ? "Pending ": " Connect "}</span>   */}
-            
-          </div>
+          </button>
           <div className="message-btn secondary-button">
             <a href="/messageuser">Message</a>
           </div>
@@ -148,16 +156,17 @@ const ShortUserProfile = ({ userData, senderId}) => {
           <ul className="skill-list">
             {userData.skill.map((skill, index) => (
               <li className="skill-items" key={index}>
-                <div className="skill-name">{skill.skillName}</div>
-                <div className="skill-level">{skill.skillLevel}</div>
+                <div className="skill-details">
+                  <div className="skill-name">{skill.skillName}</div>
+                  <div className="skill-level">{skill.skillLevel}</div>
+                </div>
+                <div className="endorsement-count">
+                  <span>Endorsements:{skill.endorsement.length}</span>
+                  <div className="endorsement-btn" onClick={() => handleEndorseSkill(skill._id)}>
+                    Endorse
+                  </div>
+                </div>
                 
-                <div className="endorsement-count">Endorsements: {skill.endorsement.length}</div>
-               
-                <button
-                  onClick={() => handleEndorseSkill(skill._id)}
-                >
-                  Endorse
-                </button>
               </li>
             ))}
           </ul>
