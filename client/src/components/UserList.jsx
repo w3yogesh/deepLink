@@ -2,26 +2,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
 
-function UserList(props) {
+function UserList({senderId, handleError,handleSuccess}) {
   const [users, setUsers] = useState([]);
-
   const [sentConnect, setSentConnect] = useState([]);
 
-  const senderId = props.senderId;
+  // const senderId = props.senderId;
   function handleSendConnectRequest(senderId, recipientId) {
     const sendConnectRequest = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/connect/${senderId}/${recipientId}`
+          `http://localhost:4000/api/connect/${senderId}/${recipientId}`,
+          { withCredentials: true }
         );
         const { status, message } = response.data;
         if (status) {
           console.log(message);
+          handleSuccess(message)
+
           setSentConnect((prev) => [...prev, recipientId]);
         } else {
           console.log(message);
+          handleError(message);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -65,16 +67,16 @@ function UserList(props) {
                 </div>
                 <div className="user-card-action">
                   {sentConnect.includes(user._id) && (
-                    <Button disabled> Pending </Button>
+                    <button disabled> Pending </button>
                   )}
                   {!sentConnect.includes(user._id) && (
-                    <Button
+                    <button
                       onClick={() =>
                         handleSendConnectRequest(senderId, user._id)
                       }
                     >
                       Connect
-                    </Button>
+                    </button>
                   )}
                 </div>
               </div>
