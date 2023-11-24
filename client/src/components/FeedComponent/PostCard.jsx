@@ -17,6 +17,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [reactions, setReactions] = useState("Like");
   const [show, setShow] = useState(false);
+  const [totalComment, setTotalComment] = useState(0)
 
   const fun = async () => {
     const isLiked = postObj.likes.find((item) => item.userId === userId);
@@ -36,6 +37,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     fun();
     setLikes(postObj.likes.length);
     setComments(postObj.comments);
+    setTotalComment(postObj.comments.length);
     if (postObj.likes.find((item) => item.userId === userId))
       setLikeColor("red");
     else setLikeColor("blue");
@@ -174,6 +176,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         console.log(response.data);
         setComments([...comments, { user: userName, content: newComment }]);
         setNewComment("");
+        setTotalComment(totalComment + 1);
       } catch (error) {
         console.error("Error adding comment:", error);
       }
@@ -246,12 +249,12 @@ console.log(userId)
           onMouseLeave={() => setShowReactions(false)}
         >
           {likes} 
-          {reactions==="Like" && <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />}
-          {reactions==="Love" && <div className="love"> <Love/> </div> }
-          {reactions==="Congo" && <div className="congo"> <Celebrate /> </div> }
-          {reactions==="Support" && <div className="support"> <Support /> </div> }
-          {reactions==="Insightful" && <div className="insightful"> <Insightful /> </div> }
-          {reactions==="Funny" && <div className="funny"> <Funny /> </div> }
+          {reactions==="Like" && <div> <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} /> Like </div>}
+          {reactions==="Love" && <div className="love"> <Love/> Love </div> }
+          {reactions==="Congo" && <div className="congo"> <Celebrate /> Congo </div> }
+          {reactions==="Support" && <div className="support"> <Support /> Support </div> }
+          {reactions==="Insightful" && <div className="insightful"> <Insightful /> Insightful </div> }
+          {reactions==="Funny" && <div className="funny"> <Funny /> Funny </div> }
           
           {showReactions && (
             <div className="reactions-tooltip">
@@ -283,7 +286,7 @@ console.log(userId)
             onClick={() => setShowComment(false)}
           >
             <CommentIcon />
-            Comments
+            {totalComment} Comments
           </div>
         ) : (
           <div
@@ -291,7 +294,7 @@ console.log(userId)
             onClick={() => handleAddComment(postObj._id)}
           >
             <CommentIcon />
-            Comment{" "}
+            {totalComment} Comment{" "}
           </div>
         )}
       </div>
