@@ -2,6 +2,7 @@ const Like = require("../models/LikeModel")
 const Comments = require("../models/CommentModel");
 const CompanyPost=require("../models/CompanyPostModel");
 const Company=require("../models/CompanyModel");
+const Post=require("../models/PostModel");
 
 exports.createCompanyPost = async (req, res, next) => {
     try {
@@ -98,7 +99,7 @@ exports.createCompanyPost = async (req, res, next) => {
   exports.fetchCompanyPosts = async (req, res) => {
     try {
       const posts = await CompanyPost.find().populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"firstName lastName"})})
-      .populate("company", "companyName").populate("likes", "userId");
+      .populate("company", "companyName logo").populate("likes", "userId");
       // {path: "comments", populate:({path:"userId",}
      
       // const allComments =  posts.select("-content");
@@ -112,7 +113,7 @@ exports.createCompanyPost = async (req, res, next) => {
     try {
       const companyId=req.params.companyId;
       const posts = await CompanyPost.find({company:companyId}).populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"firstName lastName"})})
-      .populate("company", "companyName").populate("likes", "userId");
+      .populate("company", "companyName logo").populate("likes", "userId");
       // {path: "comments", populate:({path:"userId",}
      
       // const allComments =  posts.select("-content");
@@ -123,27 +124,7 @@ exports.createCompanyPost = async (req, res, next) => {
     }
   };
   
-exports.fetchPostsSpecific = async (req, res) => {
-  try {
-    const userId = req.params.userId; 
-    if (!userId) {
-      return res.status(400).json({ error: 'Invalid userId' });
-    }
-    const posts = await Post.find({ user: userId })
-      .populate({
-        path: "comments",
-        select: "userId comment",
-        populate: { path: "userId", select: "username firstName email" }
-      })
-      .populate("user", "username firstName")
-      .populate("likes", "userId");
 
-    res.json(posts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
 
   exports.deleteCompanyPosts=async(req,res)=>{
     try{

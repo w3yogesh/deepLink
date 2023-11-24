@@ -175,7 +175,7 @@ module.exports.fatchComments = async (req, res, next) =>{
 exports.fetchPosts = async (req, res) => {
   try {
     const posts = await Post.find().populate({path:"comments", select:"userId comment", populate:({path:"userId", select:"username firstName email"})})
-    .populate("user", "username firstName").populate("likes", "userId");
+    .populate("user", "username firstName profileImage").populate("likes", "userId");
     // {path: "comments", populate:({path:"userId",}
    
     // const allComments =  posts.select("-content");
@@ -218,3 +218,24 @@ exports.deletePosts=async(req,res)=>{
   }
 };
 
+exports.fetchPostsSpecific = async (req, res) => {
+  try {
+    const userId = req.params.userId; 
+    if (!userId) {
+      return res.status(400).json({ error: 'Invalid userId' });
+    }
+    const posts = await Post.find({ user: userId })
+      .populate({
+        path: "comments",
+        select: "userId comment",
+        populate: { path: "userId", select: "username firstName email" }
+      })
+      .populate("user", "username firstName profileImage")
+      .populate("likes", "userId");
+
+    res.json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
