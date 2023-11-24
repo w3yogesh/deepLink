@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { EducationUserProfile } from "./EducationUserProfile";
 import { ArrowUp, ArrowDown } from "../MySVGIcons.jsx";
 import { ExperienceUserProfile } from "./ExperienceUserProfile.jsx";
+import PostComponent from "../FeedComponent/PostComponent.jsx";
+import PostCard from "../FeedComponent/PostCard.jsx";
 
-export default function MainUserProfile({ userData }) {
+export default function MainUserProfile({ userData,senderId,userName }) {
   const city =
     userData && userData.address && userData.address.length > 0
       ? userData.address[0].city
@@ -15,6 +17,8 @@ export default function MainUserProfile({ userData }) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isExpOpen, setIsExpOpen] = useState(false);
+  const [isPostOpen, setIsPostOpen] = useState(false);
+  const [allPostObj, setAllPostObj] = useState(userData.posts);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -22,7 +26,13 @@ export default function MainUserProfile({ userData }) {
   const toggleExpdown = () => {
     setIsExpOpen(!isExpOpen);
   };
-
+  const togglePostdown = () => {
+    setIsPostOpen(!isPostOpen);
+  }
+  const reversedPosts = Array.isArray(allPostObj)
+    ? [...allPostObj].reverse()
+    : [];
+console.log(userData);
   return (
     <div className="main-UserProfile">
       <div className="user-about">
@@ -67,6 +77,25 @@ export default function MainUserProfile({ userData }) {
           </span>
         </div>
         {isExpOpen && <ExperienceUserProfile userData={userData} />}
+      </div>
+      <div className="user-education">
+        <div className="education-dropdown" onClick={togglePostdown}>
+          <h3 className="section-heading">Posts</h3>
+          <span className="arrow">
+            {isPostOpen ? <ArrowUp /> : <ArrowDown />}
+          </span>
+        </div>
+        {isPostOpen && <div className="post-container">
+          {reversedPosts.map((post, index) => (
+            <div className="post-body" key={index}>
+              <PostCard
+                postObj={post}
+                userId={senderId}
+                userName={userName}
+              />
+            </div>
+          ))}
+        </div>}
       </div>
     </div>
   );

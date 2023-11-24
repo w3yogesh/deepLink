@@ -5,6 +5,7 @@ import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import Navbar from '../components/Navbar';
 import { useNavigate } from "react-router-dom";
 import PostComponent from "../components/FeedComponent/PostComponent";
+import Loading from '../components/Loading';
 import "../styles/Feed/Feed.css";
 
 
@@ -51,7 +52,7 @@ const MyTimeLine = () => {
       }, [userId]);
       const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
       if (loading) {
-        return <p>Loading...</p>;
+        return <Loading/>;
       }
   return (
     <>

@@ -30,8 +30,27 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid #bbb;
+    justify-content: space-between;
 }
-
+.more-option-items {
+    display: none;
+    background-color: #fff;
+    min-width: 100px;
+    right: 20px;
+    top: 100%;
+    border-radius: 5px;
+    border: 1px solid #252525;
+    z-index: 1;
+    background: #F0F8FF;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    padding: 0 6px;
+    opacity: 0;
+    position: absolute;
+}
+.more-option-items.show{
+    display: block;
+    opacity: 1;
+}
 .post-content {
     display: flex;
     align-items: center;
@@ -62,6 +81,7 @@
     justify-content: center;
     cursor: pointer;
     align-items: center;
+    position: relative;
 }
 
 .comment-section {
@@ -117,7 +137,88 @@ ol.comment-list {
 }
 p.img-post-text {
     background: #fff;
-    padding-left: 10px;
+    padding: 10px;
     word-wrap: break-word;
     overflow: auto;
+}
+.post-meta img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+
+.post-meta span {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #252525;
+}
+
+.post-meta a {
+    display: flex;
+    align-items: center;
+}
+.more-option {
+    padding: 8px;
+    position: relative;
+    cursor: pointer;
+}
+
+.delete-btn.btn {
+    cursor: pointer;
+}
+.reactions-tooltip {
+    position: absolute;
+    display: flex;
+    bottom: 40px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 50px;
+    justify-content: space-evenly;
+}
+.reactions-tooltip {
+    position: absolute;
+    display: flex;
+    bottom: 28px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 50px;
+    justify-content: space-evenly;
+}
+
+.reaction-btn {
+    padding: 4px 8px;
+    margin-left: 4px;
+    border-radius: 10px;
+    display: flex;
+    font-size: 22px;
+    stroke: #252525;
+    stroke-width: 1px;
+}
+
+.reaction-btn svg {
+    margin: 0;
+}
+.reaction-btn:hover svg {
+    transform: scale(1.5);
+    transition: 0.5s;
+}
+.like {
+    fill: #2F58CD;
+}
+.love {
+    fill: #D21312;
+}
+.congo {
+    fill: #00a693;
+}
+.insightful {
+    fill: #F39F5A;
+}
+.support {
+    fill: #F05941;
+}
+.funny {
+    fill: #78C1F3;
 }

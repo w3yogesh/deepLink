@@ -12,8 +12,8 @@ const {updateUserProfile, addEducation,editEducation, deleteEducation, addSkill,
 
 //Post Controller
 
-const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts,fetchPostsSpecific,fetchCompanyPostsSpecific,deleteCompanyPosts} = require("../controllers/CompanyPostControl.js")
-const {createPost, fetchPosts, fetchLikeData, postReaction, removePostReaction, updateReaction, Postlike, RemovePostLike ,PostComment,deletePosts} = require("../controllers/PostControl");
+const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostComment,fetchCompanyPosts,fetchCompanyPostsSpecific,deleteCompanyPosts} = require("../controllers/CompanyPostControl.js")
+const {createPost, fetchPosts, fetchLikeData, postReaction, removePostReaction, updateReaction, Postlike, RemovePostLike ,PostComment,deletePosts,fetchPostsSpecific} = require("../controllers/PostControl");
 
 //compnay controller
 const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
@@ -97,6 +97,8 @@ router.get('/api/fetchcompanyposts',fetchCompanyPosts);
 router.put('/api/companypostLike',CompanyPostlike);
 router.delete('/api/removecompanyPostLike/:userId/:postId',RemoveCompanyPostLike);
 router.put('/api/postcompanyComment',CompanyPostComment);
+router.delete("/api/deletepost/:userId/:postId",deletePosts);
+router.get("/api/fetchpost/:userId",fetchPostsSpecific);
 
 // Company controller
 // router.post("/company", CreateCompany);
@@ -111,10 +113,10 @@ router.post("/apply",ApplyJob);
 router.post("/withdraw",withdrawJob);
 router.get("/mycompanies/:companyId",GetCompanies);
 
+
+
 router.get("/appliedusers/:companyId",getAppliedUsers);
-router.get("/api/fetchpost/:userId",fetchPostsSpecific);
 router.get("/api/fetchcompanypost/:companyId",fetchCompanyPostsSpecific);
-router.delete("/api/deletepost/:userId/:postId",deletePosts);
 router.delete("/api/deleteCompanyPost/:companyId/:postId",deleteCompanyPosts);
 
 

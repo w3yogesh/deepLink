@@ -13,6 +13,8 @@ import EducationDetails from "../components/MyProfileComponent/EducationDetails"
 import SkillDetails from "../components/MyProfileComponent/SkillDetails";
 import ExperienceDetails from "../components/MyProfileComponent/ExperienceDetails";
 import ProfilePopUp from "../components/MyProfileComponent/ProfilePopUp";
+import Loading from "../components/Loading";
+
 
 const YourComponent = ({ activeTab, userData, setUserData }) => {
   return (
@@ -40,6 +42,8 @@ const MyProfile = () => {
   const [cookies, removeCookie] = useCookies([]);
   const [showPopup, setShowPopup] = useState(false);
   const [isBack, setIsBack] = useState(true);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const loadProfileData = async () => {
@@ -62,6 +66,7 @@ const MyProfile = () => {
           }, 0);
         } else {
           setUserData(user);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error loading user profile:", error);
@@ -88,7 +93,9 @@ const MyProfile = () => {
   const closePopup = () => {
     setShowPopup(false);
   };
-
+  if (loading) {
+    return <Loading/>;
+  } 
   return (
     <>
       <Navbar />

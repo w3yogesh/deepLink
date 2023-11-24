@@ -136,3 +136,33 @@ span.user-label-tag {
 .education-dropdown h3 {
     display: inline-block;
 }
+.skill-level {
+    font-size: 15px;
+    color: #777;
+}
+
+.skill-name {
+    font-weight: 500;
+}
+.endorsement-count {
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.endorsement-btn {
+    border: 1px solid #eee;
+    border-radius: 50px;
+    text-align: center;
+    background: #bcc;
+    padding: 3px 10px;
+    position: relative;
+    bottom: 0;
+    cursor: pointer;
+}
+.endorsement-btn:hover {
+    border: 1px solid #eee;
+    background-color: #007BFF;
+    color: #fff;
+}
