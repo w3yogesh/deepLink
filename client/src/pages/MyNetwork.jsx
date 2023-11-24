@@ -13,13 +13,13 @@ import ConnectionRequest from "../components/ConnectionRequests";
 import ConnectionSent from "../components/ConnectionSent";
 import MyConnections from "../components/MyConnections";
 
-const YourComponent = ({ activeTab, myId }) => {
+const YourComponent = ({ activeTab, myId , userNotConnected, connectedUser}) => {
   return (
     <div>
-      {activeTab === "allUser" && <UserListComponent senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "requests" && <ConnectionRequest senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "sent" && <ConnectionSent senderId={myId} toast={toast} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "myConnections" && <MyConnections senderId={myId} toast={toast} handleError={handleError} handleSuccess={handleSuccess}/>}
+      {activeTab === "allUser" && <UserListComponent senderId={myId} usersNotConnected={userNotConnected} handleError={handleError} handleSuccess={handleSuccess}/>}
+      {activeTab === "requests" && <ConnectionRequest senderId={myId} handleError={handleError} handleSuccess={handleSuccess} />}
+      {activeTab === "sent" && <ConnectionSent senderId={myId} handleError={handleError} handleSuccess={handleSuccess} />}
+      {activeTab === "myConnections" && <MyConnections senderId={myId} connectedUser={connectedUser} handleError={handleError} handleSuccess={handleSuccess} />}
     </div>
   );
 };
@@ -36,6 +36,10 @@ const MyNetwork = () => {
   const [myId, setMyId] = useState("");
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('allUser');
+
+  const [allUser, setAllUser] = useState([]);
+  const [connectedUser, setConnectedUser] = useState([]);
+  const [userNotConnected, setUserNotConnected] = useState([]);
 
 
   const handleTabClick = (tab) => {
@@ -60,6 +64,41 @@ const MyNetwork = () => {
     userAuth();
   }, []);
 
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [allUsersResponse, myConnectionsResponse] = await Promise.all([
+          axios.get("http://localhost:4000/api/users"),
+          axios.get(`http://localhost:4000/api/myConnections${myId}`)
+        ]);
+  
+        // Extract data from responses
+        const allUsers = allUsersResponse.data;
+        const connectedUsers = myConnectionsResponse.data;
+  
+        // Set state
+        setAllUser(allUsersResponse.data);
+        setConnectedUser(myConnectionsResponse.data);
+        const result = allUsers.filter(user => !connectedUsers.some(connectedUser => connectedUser._id === user._id));
+        setUserNotConnected(result);
+  
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+  
+    fetchData();
+  
+  }, [myId]);
+
+  useEffect ( () => {
+    // console.log('all Users : ', allUser);
+    // console.log('connected user : ', connectedUser);
+    // console.log('not connected user : ', userNotConnected);
+  }, [myId, allUser, connectedUser, userNotConnected]);
+
+  
   return (
     <>
       <Navbar />
@@ -128,7 +167,7 @@ const MyNetwork = () => {
 
         <div className="main-section">
           <div>
-          <YourComponent activeTab={activeTab} myId={myId} />
+          <YourComponent activeTab={activeTab} myId={myId} userNotConnected={userNotConnected} connectedUser={connectedUser}/>
             </div>
           </div></div>
       </div>
