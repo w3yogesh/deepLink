@@ -15,30 +15,32 @@ module.exports.Signup = async (req, res, next) => {
       confirm_password,
       createdAt,
       address: { country, city },
-      education : {institution, degree, field, startDate, endDate},
+      education: { institution, degree, field, startDate, endDate },
     } = req.body.formData;
 
-      if (password === confirm_password) {
+    if (password === confirm_password) {
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.json({ message: "User already exists" });
       }
-      
+
       const address = await Address.create({
-        country : country,
-        city : city,
-      })
+        country: country,
+        city: city,
+      });
       const education = await Education.create({
-        institution :institution, 
-        degree: degree, 
-        field : field, 
-        startDate : startDate, 
-        endDate : endDate,
-      })
+        institution: institution,
+        degree: degree,
+        field: field,
+        startDate: startDate,
+        endDate: endDate,
+      });
       // return res.json({ message: education._id});
 
       const addressId = address._id;
       const educationId = education._id;
+
+      const hashedPassword = await bcrypt.hash(password, 12);
 
       const username = email.split("@")[0];
       const user = await User.create({
@@ -46,13 +48,13 @@ module.exports.Signup = async (req, res, next) => {
         username,
         firstName,
         lastName,
-        password, 
-        education : educationId,
+        password : hashedPassword,
+        education: educationId,
         address: addressId,
-        createdAt
+        createdAt,
       });
       const token = createSecretToken(user._id);
-      res.cookie("token", token, {  
+      res.cookie("token", token, {
         maxAge: 60 * 1000, // in sec
         withCredentials: true,
         httpOnly: false,
@@ -107,19 +109,17 @@ module.exports.LoginWithGoogle = async (req, res, next) => {
     if (!email) {
       return res.json({ message: "email is required" });
     }
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       // create new user and login
       const username = email.split("@")[0];
-      user = await User.create({
+      const user = await User.create({
         email,
         username,
         firstName,
         lastName,
       });
-      user = await User.findOne({ email });
     }
-
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
       maxAge: 6000 * 1000, // in sec

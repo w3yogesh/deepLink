@@ -8,6 +8,7 @@ export const JobListing = ({ myId, toast }) => {
   const [requirementsFilter, setRequirementsFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [searchInput, setSearchInput] = useState(""); // Step 1: Add search input state
+  const [showJobDes, setShowJobDes] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -150,7 +151,10 @@ export const JobListing = ({ myId, toast }) => {
               (searchInput === "" || job.postedBy.companyName.toLowerCase().includes(searchInput.toLowerCase()))
           )
           .map((job) => (
-            <div className="job-list-item" key={job._id}>
+            <div className="job-list-item" 
+              onMouseEnter={() => setShowJobDes(job._id)}
+              onMouseLeave={() => setShowJobDes(null)} 
+              key={job._id}>
               <div className="job-list-logo">
                 <img src={job.postedBy.logo ?`http://localhost:4000/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
               </div>
@@ -170,8 +174,13 @@ export const JobListing = ({ myId, toast }) => {
                 </div>
                 <span className="job-list-loc">Location: {job.location}</span>
                 <span className="job-list-req">
-                  Elligibility: {job.requirements}
+                  <b> Elligibility: </b> {job.requirements}
                 </span>
+                {showJobDes === job._id && (
+                  <span className="job-description">
+                    <b> Description: </b> {job.description}
+                  </span>
+                )}
               </div>
               {!job.appliedBy.includes(myId) && (
                 <div className="job-actions">

@@ -8,8 +8,8 @@ const GoogleSignup = ( { handleGoogleLogin } ) => {
       <GoogleLogin
         onSuccess={(credentialResponse) => {
         const decoded = jwtDecode(credentialResponse.credential);
-        handleGoogleLogin(decoded.email)
-        // console.log(decoded)
+        handleGoogleLogin(decoded.email,decoded.given_name,decoded.family_name,)
+        // console.log(decoded.email,decoded.family_name, decoded.given_name)
         }}
         onError={() => {
           console.log("Login Failed");

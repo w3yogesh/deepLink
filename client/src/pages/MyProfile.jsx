@@ -70,7 +70,6 @@ const MyProfile = () => {
         }
       } catch (error) {
         console.error("Error loading user profile:", error);
-        // Handle error as needed
       }
     };
 

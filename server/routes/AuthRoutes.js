@@ -1,4 +1,5 @@
 const multer = require("multer");
+const isAuthenticated = require("../middlewares/isAuthenticated")
 const { Signup, Login, LoginWithGoogle} = require("../controllers/AuthController");
 const {userVerification} = require("../middlewares/AuthMiddleware");
 const {getUserProfile} = require("../controllers/getUserProfile");// My profile and data
@@ -49,7 +50,7 @@ router.delete("/deleteExperience:experienceId",deleteExperience);
 router.get('/api/users', users);// List of all users
 
 // User Controller
-router.get('/api/connect/:senderId/:recipientId', connectUsers);
+router.get('/api/connect/:senderId/:recipientId',isAuthenticated, connectUsers);
 router.get('/api/getConnections:userId', getConnections);
 router.get('/api/sentConnections:userId', sentConnections);
 router.get('/api/accept-connection/:senderId/:receiverId', acceptConnection);

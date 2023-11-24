@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-function ConnectionRequest(props) {
+function ConnectionRequest({senderId,handleError,handleSuccess}) {
   const [users, setUsers] = useState([]);
-  const userId = props.senderId;
+  const userId = senderId;
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -28,9 +28,11 @@ function ConnectionRequest(props) {
 
       if (status) {
         console.log(message);
+        handleSuccess(message)
         setUsers((prev) => prev.filter((user) => user._id !== receiverId));
       } else {
         console.log(message);
+        handleError(message);
       }
     } catch (error) {
       // Handle any errors
@@ -48,8 +50,10 @@ function ConnectionRequest(props) {
       if (status) {
         setUsers((prev) => prev.filter((user) => user._id !== receiverId));
         console.log(message);
+        handleSuccess(message)
       } else {
         console.log(message);
+        handleError(message);
       }
     } catch (error) {
       console.error("Error:", error);
