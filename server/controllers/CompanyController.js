@@ -7,6 +7,7 @@ const Company = require("../models/CompanyModel");
 const Service = require("../models/ServiceModel");
 const Job = require("../models/JobModel");
 const UserModel = require("../models/UserModel");
+const Notification=require("../models/NotificationModel");
 
 
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
@@ -152,12 +153,76 @@ const CreateJob = async (req, res) => {
   
     const savedJob = await newJob.save();
 
+    const companydetails=Company.findById(company);
+    const followers=companydetails.followers;
+
+ for (const followerId of followers) {
+      await createNotification(followerId, `New job "${title}" posted by ${postedBy}`);
+    }
+
+
     res.json({ status: true, message: "Job Published" });
   } catch (error) {
     console.error("Error submitting job form:", error.message);
     res.status(500).json({ status: false, message: "Internal Server Error" });
   }
 };
+
+
+const createNotification = async (userId, message) => {
+  try {
+    
+    const notification = await Notification.create({
+      userId,
+      message,
+    });
+    console.log('Notification created:', notification);
+  } catch (error) {
+    console.error('Error creating notification:', error);
+  }
+};
+
+
+const FollowCompany=async(req,res)=>{
+  try{
+    const {companyId}=req.params;
+    const company = await Company.findOne({ _id: companyId });
+    const {userId}=req.body;
+    if (!company) {
+      return res.status(404).json({ error: 'Company not found' });
+    }
+
+    const isFollowing = company.followers.includes(userId);
+
+    if (isFollowing) {
+      await Company.updateOne({ _id: companyId }, { $pull: { followers: userId } });
+
+      return res.status(200).json({ message: 'User unfollowed the company successfully' });
+    } else {
+      await Company.updateOne({ _id: companyId }, { $addToSet: { followers: userId } });
+
+      return res.status(200).json({ message: 'User followed the company successfully' });
+    }
+
+  }catch(error){
+
+  }
+}
+
+const getCompany=async(req,res)=>{
+  try{
+    const companyId = req.params.companyId;
+    const company = await Company.findById(companyId);
+
+    if (!company) {
+      return res.status(404).json({ error: 'Company not found' });
+    }
+
+    return res.status(200).json({ company });
+  }catch(error){
+
+  }
+}
 
 const GetService = async (req, res) => {
   const companyId = req.params.companyId;
@@ -328,5 +393,5 @@ const UploadCover = async (req, res) => {
   }
 };
 
-module.exports = { CreateCompany, Companies,MyCompany,UploadLogo,UploadCover,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,withdrawJob,GetCompanies,getAppliedUsers};
+module.exports = {getCompany,FollowCompany,CreateCompany, Companies,MyCompany,UploadLogo,UploadCover,CreateService,CreateJob,GetService,GetJobs,Jobs,ApplyJob,withdrawJob,GetCompanies,getAppliedUsers};
 
