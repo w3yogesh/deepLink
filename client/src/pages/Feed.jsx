@@ -9,51 +9,18 @@ import { JobSidebar } from "../components/FeedComponent/JobSidebar";
 import Loading from "../components/Loading";
 
 import "../styles/Feed/Feed.css";
+import CompanyPostCard from "../components/MyCompany/CompanyPostCard";
 
 const Feed = () => {
   const navigate = useNavigate();
   const [allPostObj, setPosts] = useState([]);
+  const [companyPost, setCompanyPost] = useState([]);
+  const [everyPost, setEveryPost] = useState([]);
   const [userData, setUserData] = useState('');
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
 
-
-  // const allPostObj = [
-  //   {
-  //     title : 'Post Title',
-  //     description : 'Post Description',
-  //     imageSrc : 'Post image link',
-  //     likes : ['u1', 'u2', 'u5', ],
-  //     comments : [
-  //       {user : 'u1', content : 'it is user1 comment'},
-  //       {user : 'u2', content : 'it is user2 comment'},
-  //       {user : 'u3', content : 'it is user3 comment'},
-  //     ],
-  //   },
-  //   {
-  //     title : 'Post Title',
-  //     description : 'Post Description',
-  //     imageSrc : 'Post image link',
-  //     likes : ['u1', 'u2', 'u5', ],
-  //     comments : [
-  //       {user : 'u1', content : 'it is user1 comment'},
-  //       {user : 'u2', content : 'it is user2 comment'},
-  //       {user : 'u3', content : 'it is user3 comment'},
-  //     ],
-  //   },
-  //   {
-  //     title : 'Post Title',
-  //     description : 'Post Description',
-  //     imageSrc : 'Post image link',
-  //     likes : ['u1', 'u2', 'u5', ],
-  //     comments : [
-  //       {user : 'u1', content : 'it is user1 comment'},
-  //       {user : 'u2', content : 'it is user2 comment'},
-  //       {user : 'u3', content : 'it is user3 comment'},
-  //     ],
-  //   },
-  // ]
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -74,20 +41,45 @@ const Feed = () => {
           const response = await axios.get(
             "http://localhost:4000/api/fetchposts"
           );
-          const postsData = response.data;
-          setPosts(postsData);
+          // const postsData = response.data;
+          // setPosts(postsData);
+          setEveryPost(prevEveryPost => [...prevEveryPost, ...response.data]);
           setLoading(false);
         }
       } catch (error) {
         console.log(error);
       }
     };
+
+    const fetchCompanyPost = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/fetchcompanyposts`
+        );
+        // setCompanyPost(response.data);
+        setEveryPost(prevEveryPost => [...prevEveryPost, ...response.data]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchPosts();
+    fetchCompanyPost();
   }, [navigate]);
+
   if (loading) {
     return <Loading/>;
   } 
-  const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
+  const letestPost = [...everyPost].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const uniqueId = new Set();
+  const uniqueLetestPost = letestPost.filter((post) => {
+    if (!uniqueId.has(post._id)) {
+      uniqueId.add(post._id);
+      return true;
+    }
+    return false;
+  });
+  console.log('everyPost : ', everyPost);
   return (
     <div>
       <Navbar senderId={userId} />
@@ -99,11 +91,13 @@ const Feed = () => {
         </div>
         <div className="post-container">
         <PostComponent senderId={userId} />
-          {reversedPosts.map((post, index) => (
+          {uniqueLetestPost.map((post, index) => (
             <div className="post-body" key={index}>
-              <PostCard postObj={post} userId={userId} userName={userName} />
+              {post.user !== undefined && (<PostCard postObj={post} userId={userId} userName={userName} />)}
+              {post.user === undefined && (<CompanyPostCard postObj={post} userId={userId} userName={userName} />)}
             </div>
           ))}
+
         </div>
         <div className="right-sidebar">
           {/* <JobSidebar/> */}
