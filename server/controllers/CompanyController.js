@@ -153,12 +153,12 @@ const CreateJob = async (req, res) => {
   
     const savedJob = await newJob.save();
 
-    const companydetails=Company.findById(company);
-    const followers=companydetails.followers;
+//     const companydetails=Company.findById(company);
+//     const followers=companydetails.followers;
 
- for (const followerId of followers) {
-      await createNotification(followerId, `New job "${title}" posted by ${postedBy}`);
-    }
+//  for (const followerId of followers) {
+//       await createNotification(followerId, `New job "${title}" posted by ${postedBy}`);
+//     }
 
 
     res.json({ status: true, message: "Job Published" });

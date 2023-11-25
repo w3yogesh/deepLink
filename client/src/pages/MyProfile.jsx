@@ -80,11 +80,6 @@ const MyProfile = () => {
     setActiveTab(tab);
   };
 
-  const Logout = () => {
-    removeCookie("token");
-    navigate("/");
-  };
-
   const openPopup = () => {
     setShowPopup(true);
   };
