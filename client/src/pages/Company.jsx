@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CompanyPostCard from '../components/MyCompany/CompanyPostCard';
 import CompanyPosts from "../components/MyCompany/CompanyPosts";
 
+
 import "../styles/Feed/Feed.css";
 
 const CompanyComponent = ({ activeTab, companyId }) => {
@@ -67,9 +68,31 @@ export default function CompanyDetail2() {
   }, [navigate]);
   const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
 
-  // console.log(allPostObj);
+
+  const [isFollowing, setIsFollowing] = useState(false);
+  const handleFollowToggle = async () => {
+    try {
+
+      const response = await axios.post(`http://localhost:4000/followCompany/${companyId}`, {
+        userId: userId,
+      });
+      console.log(`hello`);
+     
+      setIsFollowing(!isFollowing);
+
+
+      const updatedCompanyResponse = await axios.get(`http://localhost:4000/getCompanyrefresh/${companyId}`);
+      setCompany(updatedCompanyResponse.data.company);
+    } catch (error) {
+      console.error('Error toggling follow:', error.message);
+    }
+  };
+
+
+
+  //console.log(allPostObj);
   useEffect(() => {
-    // Fetch the details of the specific company from the backend
+   
     const fetchCompanyDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/company/${companyId}`);
@@ -91,7 +114,7 @@ export default function CompanyDetail2() {
   };
 
   // if (loading) {
-  //   return <div>Loading...</div>; // Render a loading message while data is being fetched
+  //   return <div>Loading...</div>;
   // }
 
   return (
@@ -150,6 +173,11 @@ export default function CompanyDetail2() {
               {company.website && <div className="company-action">
                   <button className="company-website"><a target='_blank' href={company.website}>Website <OpenLinkIcon/></a></button>
                 </div>}
+                <div className="company-action">
+        <button onClick={handleFollowToggle}>
+          {isFollowing ? 'Unfollow' : 'Follow'}
+        </button>
+      </div>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ const {createCompanyPost,CompanyPostlike,RemoveCompanyPostLike,CompanyPostCommen
 const {createPost, fetchPosts, fetchLikeData, postReaction, removePostReaction, updateReaction, Postlike, RemovePostLike ,PostComment,deletePosts,fetchPostsSpecific} = require("../controllers/PostControl");
 
 //compnay controller
-const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers} = require("../controllers/CompanyController");
+const {CreateCompany,Companies, MyCompany,UploadLogo, UploadCover, CreateService, CreateJob,GetService,GetJobs,Jobs, ApplyJob,withdrawJob,GetCompanies,getAppliedUsers,FollowCompany,getCompany} = require("../controllers/CompanyController");
 
 //messages controller
  const {createdMessage, fetchMessages} =  require("../controllers/MessageController");
@@ -100,6 +100,9 @@ router.delete('/api/removecompanyPostLike/:userId/:postId',RemoveCompanyPostLike
 router.put('/api/postcompanyComment',CompanyPostComment);
 router.delete("/api/deletepost/:userId/:postId",deletePosts);
 router.get("/api/fetchpost/:userId",fetchPostsSpecific);
+
+router.post("/followCompany/:companyId",FollowCompany);
+router.get("/getCompanyrefresh/:companyId",getCompany);
 
 // Company controller
 // router.post("/company", CreateCompany);
