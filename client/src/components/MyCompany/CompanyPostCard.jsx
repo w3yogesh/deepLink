@@ -172,7 +172,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   const handleAddComment = async (postObjId) => {
     setShowComment(true);
   };
-  console.log(postObj);
+  // console.log(postObj);
   const handleNewComment = async (postId) => {
     try {
       if (newComment.trim() !== "" && userId) {
