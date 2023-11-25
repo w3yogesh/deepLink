@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import "../styles/myNetwork.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ConnectionSVG, SentSVG, HandShackSVG } from "../components/MySVGIcons";
+import { ConnectionSVG, SentSVG, HandShackSVG,UserIcon } from "../components/MySVGIcons";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 
@@ -154,7 +154,7 @@ const MyNetwork = () => {
                   onClick={() => handleTabClick("allUser")}
                 >
                   <div className="itme-svg">
-                    <HandShackSVG />
+                    <UserIcon />
                   </div>
                   <span>All Users</span>
                 </div>

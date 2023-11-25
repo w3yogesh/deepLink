@@ -62,9 +62,6 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async(email, firstName, lastName)=> {
-    // console.log('email : ' , email);
-    // console.log('firstName : ' , firstName);
-    // console.log('lastName : ' , lastName);
     try {
       const { data } = await axios.post(
         "http://localhost:4000/LoginWithGoogle",
@@ -89,10 +86,7 @@ const Login = () => {
     }
   }
   useEffect(() => {
-   
     document.body.classList.add("login-body");
-  
- 
     return () => {
       document.body.classList.remove("login-body");
     };
@@ -125,6 +119,9 @@ const Login = () => {
         </div>
         
         <button type="submit">Submit</button>
+        <span>
+          Don't have an account? <Link to={"/signup"}>Signup</Link>
+        </span>
        
       </form>
 

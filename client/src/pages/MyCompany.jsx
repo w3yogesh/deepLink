@@ -11,7 +11,7 @@ import "../styles/CompanyDetail.css";
 import { OpenLinkIcon,CameraIcon } from "../components/MySVGIcons";
 import CompanyPopUp from "../components/MyCompany/CompanyPopUp";
 import { ToastContainer } from "react-toastify";
-
+import Loading from "../components/Loading"
 import { useNavigate } from "react-router-dom";
 import CompanyPostCard from '../components/MyCompany/CompanyPostCard';
 import CompanyPosts from "../components/MyCompany/CompanyPosts";
@@ -65,7 +65,7 @@ export default function CompanyDetail() {
           setTimeout(() => {
             navigate("/login");
           }, 1);
-        }else if(!(userData.company&&userData.company.includes(companyId))){
+        }else if((userData.company&&userData.company.includes(companyId))){
           setTimeout(() => {
             navigate("/mycompanies");
           }, 1);
@@ -105,7 +105,7 @@ export default function CompanyDetail() {
   }, [companyId]);
 
   if (!company) {
-    return <div>Loading...</div>;
+    return <Loading/>
   }
 
   const handleTabClick = (tab) => {

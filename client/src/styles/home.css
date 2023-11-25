@@ -1,0 +1,58 @@
+.home-wrapper {
+    display: flex;
+    align-items: center;
+    height: 90vh;
+}
+
+.left {
+    width: 80%;
+}
+.home-action {
+    display: flex;
+    align-items: center;
+}
+
+.home-login {margin-right: 10px;background: #1877f2;}
+.home-login a{color:#fff;}
+.home-login:hover{
+    background: #fff;
+    border: 1px solid #1877f2;
+}
+.home-login:hover a{color: #000;}
+.home-btn {
+    padding: 2px 20px;
+    border: 1px solid;
+    font-weight: 500;
+    border-radius: 4px;
+    width: 42%;
+    text-align: center;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.home-signup a{
+    color: #000;
+}
+.home-signup a{color:#000;}
+.home-signup:hover{
+    background: #fff;
+    border: 1px solid #1877f2;
+}
+.home-signup:hover a{color: #1877f2;}
+.about-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+.feature{
+    display: flex;
+    align-items: center;
+}
+
+.about-left,.feature-right,.feature2-left {
+    width: 85%;
+}
+
+.about-detail h1,.feature-right h3, .feature2-left h3 {
+    margin-bottom: 20px;
+}
