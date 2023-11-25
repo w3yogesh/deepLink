@@ -131,21 +131,10 @@ export default function CompanyDetail2() {
                 className={`item-link ${
                   activeTab === "jobpost" ? "active" : ""
                 }`}
-                onClick={() => handleTabClick("jobpost")}
-              >
+              ><a href="http://localhost:3000/mycompanies">
                 <div class="itme-svg"></div>
                 <span>Post a job</span>
-              </div>
-            </div>
-            <div class="side-menu-item">
-              <div
-                className={`item-link ${
-                  activeTab === "addService" ? "active" : ""
-                }`}
-                onClick={() => handleTabClick("addService")}
-              >
-                <div class="itme-svg"></div>
-                <span>Add Services</span>
+                </a>
               </div>
             </div>
           </section>

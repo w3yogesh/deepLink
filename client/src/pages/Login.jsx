@@ -94,6 +94,7 @@ const Login = () => {
 
 
   return (
+    <>
     <div className="form_container">
       <h2>Login Account</h2>
       <form onSubmit={handleSubmit}>
@@ -127,8 +128,8 @@ const Login = () => {
 
       <GoogleSignup handleGoogleLogin={handleGoogleLogin}/>
 
-      <ToastContainer />
     </div>
+      <ToastContainer /></>
   );
 };
 

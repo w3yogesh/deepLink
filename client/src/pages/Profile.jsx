@@ -17,17 +17,12 @@ import MyConnections from "../components/MyConnections";
 import Navbar from "../components/Navbar";
 
 import Button from "@mui/material/Button";
-
-
 import { Link } from "react-router-dom";
-
-import Chat from "./Chat"
 
 const Profile = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [userProfile, setUserProfile] = useState("");
-  const [showForm, setShowForm] = useState(false);
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -67,54 +62,12 @@ const Profile = () => {
     };
     loadProfileData();
   }, [cookies, navigate, removeCookie]);
-  const Logout = () => {
-    removeCookie("token");
-    navigate("/");
-  };
 
-  const [updatedName, setUpdatedName] = useState("");
-  const [updatedEmail, setUpdatedEmail] = useState("");
 
   const [showAllUser, setShowAllUser] = useState(false);
   const [showConnectionRequest, setShowConnectionRequest] = useState(false);
   const [showConnectionSent, setShowConnectionSent] = useState(false);
   const [showMyConnections, setShowMyConnections] = useState(false);
-
-  const handleUpdateUserProfile = async () => {
-    try {
-    
-      const response = await axios.put(
-        "http://localhost:4000/updateUserProfile",
-        {
-          NewName: updatedName,
-          userId: userProfile._id,
-        }
-      );
-
-      if (response.data.success) {
-        toast(response.data.message, {
-          position: "top-right",
-        });
-      } else {
-        console.log(response.data.message);
-        toast(response.data.message, {
-          position: "top-right",
-        });
-      }
-    } catch (error) {
-      toast("Server error", {
-        position: "top-right",
-      });
-    }
-  };
-
-  // const handleUpdateUserProfile = ()=> {
-  //   setUserData({
-  //     firstName : userProfile.firstName,
-  //     lastName : userProfile.lastName,
-  //   })
-  //   setShowForm(true);
-  // }
 
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -153,56 +106,8 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      {/* <ProfileUpdateForm
-            userId={userProfile._id}
-            userData={userData}
-            setUserData={setUserData}
-            setShowForm={setShowForm}
-          /> */}
       <div className="main-container">
-        {/* <div className="profile">
-            <div className="profile-container">
-              <div className="profile-photo">
-                <img
-                  src="/images/user-profile-photo.svg"
-                  alt="User Profile Photo"
-                />
-              </div>
-              <h1 className="user-name">
-                {userProfile.firstName} {userProfile.lastName}
-              </h1>
-              <p className="user-headline">
-                MCA' 25 @NIT Allahabad | Front-end Developer | SEO Specialist
-              </p>
-              <p className="user-location">Rajasthan, India</p>
-              <p className="user-conections">646 followers * 500+ connections</p>
-              <button
-                className="edit-button"
-                id="edit-button"
-                onclick="toggleEditForm()"
-              >
-                Edit
-              </button>
-              <form className="edit-form" id="edit-form">
-                <input type="text" id="edit-name" placeholder="New Name" />
-                <input type="text" id="edit-title" placeholder="New Title" />
-                <input
-                  type="text"
-                  id="edit-location"
-                  placeholder="New Location"
-                />
-                <button
-                  className="save-button"
-                  id="save-button"
-                  onclick="saveChanges()"
-                >
-                  Save
-                </button>
-              </form>
-            </div>
 
-            <button onClick={Logout}>LOGOUT</button>
-          </div> */}
         <div className="main-body">
           <div className="user-detail-form">
             <form action=""></form>
