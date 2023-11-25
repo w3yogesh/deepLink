@@ -6,8 +6,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MoreIcon, Celebrate, Support,Love,Insightful,Funny } from "../MySVGIcons";
-import ReadMore from '../FeedComponent/ReadMoreButton';
+import {
+  MoreIcon,
+  Celebrate,
+  Support,
+  Love,
+  Insightful,
+  Funny,
+} from "../MySVGIcons";
+import ReadMore from "../FeedComponent/ReadMoreButton";
 
 const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const [likes, setLikes] = useState(postObj.likes.length);
@@ -18,7 +25,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [reactions, setReactions] = useState("Like");
   const [show, setShow] = useState(false);
-  const [totalComment, setTotalComment] = useState(0)
+  const [totalComment, setTotalComment] = useState(0);
 
   const fun = async () => {
     const isLiked = postObj.likes.find((item) => item.userId === userId);
@@ -189,7 +196,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const reversedComments = Array.isArray(comments)
     ? [...comments].reverse()
     : [];
-console.log(userId)
+  console.log(userId);
   return (
     <div className="post-items">
       <div className="post-meta">
@@ -224,8 +231,8 @@ console.log(userId)
         <div className="img-post-content">
           {postObj.content ? (
             <p className="img-post-text">
-            <ReadMore text={postObj.content} maxLength={50} />
-              </p>
+              <ReadMore text={postObj.content} maxLength={50} />
+            </p>
           ) : (
             ""
           )}
@@ -236,45 +243,98 @@ console.log(userId)
         </div>
       ) : (
         <div className="post-content">
-          <p><ReadMore text={postObj.content} maxLength={50} /></p>
+          <p>
+            <ReadMore text={postObj.content} maxLength={50} />
+          </p>
         </div>
       )}
-        <div className="post-action-counts">
-          <span>{likes} Likes</span> {totalComment ? <span>{totalComment} Comments</span> : ""}
-        </div>
+      <div className="post-action-counts">
+        <span>{likes} Likes</span>{" "}
+        {totalComment ? <span>{totalComment} Comments</span> : ""}
+      </div>
       <div className="post-action">
         <div
           className="like-btn btn"
           onMouseEnter={() => setShowReactions(true)}
           onMouseLeave={() => setShowReactions(false)}
         >
-           
-          {reactions==="Like" && <div> <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} /> Like </div>}
-          {reactions==="Love" && <div className="love"> <Love/> Love </div> }
-          {reactions==="Congratulation" && <div className="congo"> <Celebrate /> Congratulation </div> }
-          {reactions==="Support" && <div className="support"> <Support /> Support </div> }
-          {reactions==="Insightful" && <div className="insightful"> <Insightful /> Insightful </div> }
-          {reactions==="Funny" && <div className="funny"> <Funny /> Funny </div> }
-          
+          {reactions === "Like" && (
+            <div>
+              {" "}
+              <LikeIcon
+                style={{ fill: likeColor === "red" ? "red" : "blue" }}
+              />{" "}
+              Like{" "}
+            </div>
+          )}
+          {reactions === "Love" && (
+            <div className="love">
+              {" "}
+              <Love /> Love{" "}
+            </div>
+          )}
+          {reactions === "Congratulation" && (
+            <div className="congo">
+              {" "}
+              <Celebrate /> Congratulation{" "}
+            </div>
+          )}
+          {reactions === "Support" && (
+            <div className="support">
+              {" "}
+              <Support /> Support{" "}
+            </div>
+          )}
+          {reactions === "Insightful" && (
+            <div className="insightful">
+              {" "}
+              <Insightful /> Insightful{" "}
+            </div>
+          )}
+          {reactions === "Funny" && (
+            <div className="funny">
+              {" "}
+              <Funny /> Funny{" "}
+            </div>
+          )}
+
           {showReactions && (
             <div className="reactions-tooltip">
-              <div className="reaction-btn like" onClick={() => handleReactions(postObj._id, "Like")}>
-                <LikeIcon/>
+              <div
+                className="reaction-btn like"
+                onClick={() => handleReactions(postObj._id, "Like")}
+              >
+                <LikeIcon />
               </div>
-              <div className="reaction-btn love" onClick={() => handleReactions(postObj._id, "Love")}>
-                <Love/>
+              <div
+                className="reaction-btn love"
+                onClick={() => handleReactions(postObj._id, "Love")}
+              >
+                <Love />
               </div>
-              <div className="reaction-btn congo" onClick={() => handleReactions(postObj._id, "Congratulation")}>
-                <Celebrate/>
+              <div
+                className="reaction-btn congo"
+                onClick={() => handleReactions(postObj._id, "Congratulation")}
+              >
+                <Celebrate />
               </div>
-              <div className="reaction-btn support" onClick={() => handleReactions(postObj._id, "Support")}>
-                <Support/>
+              <div
+                className="reaction-btn support"
+                onClick={() => handleReactions(postObj._id, "Support")}
+              >
+                <Support />
               </div>
-              <div className="reaction-btn insightful" onClick={() => handleReactions(postObj._id, "Insightful")}>
-                <Insightful/>
+              <div
+                className="reaction-btn insightful"
+                onClick={() => handleReactions(postObj._id, "Insightful")}
+              >
+                <Insightful />
               </div>
-              <div className="reaction-btn funny" onClick={() => handleReactions(postObj._id, "Funny")}>
-                <Funny/>                
+              <div
+                className="reaction-btn funny"
+                onClick={() => handleReactions(postObj._id, "Funny")}
+              >
+                <Funny />
               </div>
             </div>
           )}
@@ -316,8 +376,12 @@ console.log(userId)
             {reversedComments.map((Postcomment, index) => (
               <li className="post-comment" key={index}>
                 <div className="comment-author-info">
-                  <a href={`http://localhost:3000/userprofileview/${Postcomment?.userId?._id ?? Postcomment.user}`}>
-                  {Postcomment?.userId?.firstName ?? Postcomment.user}
+                  <a
+                    href={`http://localhost:3000/userprofileview/${
+                      Postcomment?.userId?._id ?? Postcomment.user
+                    }`}
+                  >
+                    {Postcomment?.userId?.firstName ?? Postcomment.user}
                   </a>
                 </div>
                 <div className="comment-content">

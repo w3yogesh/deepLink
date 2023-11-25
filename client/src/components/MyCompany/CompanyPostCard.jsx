@@ -6,23 +6,53 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import {
+  MoreIcon,
+  Celebrate,
+  Support,
+  Love,
+  Insightful,
+  Funny,
+} from "../MySVGIcons";
 
 const CompanyPostCard = ({ postObj, userId, userName }) => {
   const [postId, setPostId] = useState("");
   const [likes, setLikes] = useState(postObj.likes.length);
   const [likeColor, setLikeColor] = useState("blue");
+  const [show, setShow] = useState(false);
+  const [showReactions, setShowReactions] = useState(false);
+  const [reactions, setReactions] = useState("Like");
+  const [totalComment, setTotalComment] = useState(0);
   const [comments, setComments] = useState(postObj.comments);
   const [newComment, setNewComment] = useState("");
   const [showComment, setShowComment] = useState(false);
   const { companyId } = useParams();
+
+  const fun = async () => {
+    const isLiked = postObj.likes.find((item) => item.userId === userId);
+    if (isLiked) {
+      setLikeColor("red");
+      const likeId = isLiked._id;
+      // console.log(likeId)
+      const response = await axios.get(
+        `http://localhost:4000/api/fetchlike/${likeId}`
+      );
+      // console.log(`response` , response.data);
+      setReactions(response.data.reaction);
+    } else setLikeColor("blue");
+  };
+
   useEffect(() => {
+    fun();
     setLikes(postObj.likes.length);
     setComments(postObj.comments);
+    setTotalComment(postObj.comments.length);
     if (postObj.likes.find((item) => item.userId === userId))
       setLikeColor("red");
     else setLikeColor("blue");
   }, []);
+
   const handleLikes = async (postId) => {
     // console.log(postId);
     if (likeColor === "red") {
@@ -62,9 +92,69 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
     }
   };
 
+  const handleReactions = async (postId, reactionType) => {
+    // no reaction set only set new reaction
+    if (likeColor === "blue") {
+      const response = await axios.put(
+        "http://localhost:4000/api/postReaction",
+        {
+          userId,
+          postId,
+          reactionType,
+        }
+      );
+      const { status, message } = response.data;
+      if (status) {
+        setLikes(likes + 1);
+        postObj.likes.push(userId);
+        setLikeColor("red");
+        setReactions(reactionType);
+        // console.log(message);
+      } else {
+        console.log(message);
+      }
+    }
+
+    // remove reaction
+    else if (likeColor === "red" && reactionType === reactions) {
+      const response = await axios.delete(
+        `http://localhost:4000/api/removePostReaction/${userId}/${postId}`
+      );
+      const { status, message } = response.data;
+      // console.log(postId);
+      if (status) {
+        setLikes(likes - 1);
+        setLikeColor("blue");
+        setReactions("Like");
+        // console.log(`reaction removed`);
+      } else {
+        console.log(`reaction not removed`);
+      }
+    }
+
+    // change reaction type
+    else {
+      const isLiked = postObj.likes.find((item) => item.userId === userId);
+      const likeId = isLiked._id;
+      const response = await axios.put(
+        `http://localhost:4000/api/updateReaction/${likeId}/${reactionType}`
+      );
+      const { status, message } = response.data;
+      // console.log(postId);
+      if (status) {
+        setReactions(reactionType);
+        console.log(`reaction changed`);
+      } else {
+        console.log(`reaction not changed`);
+      }
+    }
+  };
+
   const handleDelete = async (postId) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/api/deleteCompanyPost/${companyId}/${postId}`);
+      const response = await axios.delete(
+        `http://localhost:4000/api/deleteCompanyPost/${companyId}/${postId}`
+      );
       const { status, message } = response.data;
 
       if (status) {
@@ -75,24 +165,29 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
       }
     } catch (error) {
       toast.error("You can't delete other's post");
-      console.error('Error deleting post:', error);
+      console.error("Error deleting post:", error);
     }
   };
 
   const handleAddComment = async (postObjId) => {
     setShowComment(true);
   };
-  console.log(postObj);
+  // console.log(postObj);
   const handleNewComment = async (postId) => {
-    if (newComment.trim() !== "" && userId) {
-      const comment = newComment.trim();
-      const response = await axios.put(
-        "http://localhost:4000/api/postcompanyComment",
-        { userId, postId, comment }
-      );
-      console.log(response.data);
-      setComments([...comments, { user: userName, content: newComment }]);
-      setNewComment("");
+    try {
+      if (newComment.trim() !== "" && userId) {
+        const comment = newComment.trim();
+        const response = await axios.put(
+          "http://localhost:4000/api/postcompanyComment",
+          { userId, postId, comment }
+        );
+        console.log(response.data);
+        setComments([...comments, { user: userName, content: newComment }]);
+        setNewComment("");
+        setTotalComment(totalComment + 1);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   const reversedComments = Array.isArray(comments)
@@ -101,9 +196,30 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   return (
     <div className="post-items">
       <div className="post-meta">
-      <a href={`http://localhost:3000/company/${postObj.company._id}`}> 
-      {postObj.company.logo ? (<img src={`http://localhost:4000/fetchCompanyImage/${postObj.company.logo}`} alt="user post" />):<UserIcon />}
-       <span>{postObj.company.companyName}</span></a>
+        <a href={`http://localhost:3000/company/${postObj.company._id}`}>
+          {postObj.company.logo ? (
+            <img
+              src={`http://localhost:4000/fetchCompanyImage/${postObj.company.logo}`}
+              alt="user post"
+            />
+          ) : (
+            <UserIcon />
+          )}
+          <span>{postObj.company.companyName}</span>
+        </a>
+        {true ? (
+          <div className="more-option" onClick={()=>setShow(!show)}>
+            <MoreIcon />
+            <div className={`more-option-items ${show ? "show" : ""}`}>
+              <div
+                className="delete-btn btn"
+                onClick={() => handleDelete(postObj._id)}
+              >
+                Delete Post
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
       {postObj.image ? (
         <div className="img-post-content">
@@ -122,7 +238,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
           <p>{postObj.content}</p>
         </div>
       )}
-      <div className="post-action">
+      {/* <div className="post-action">
         <div className="like-btn btn" onClick={() => handleLikes(postObj._id)}>
           <LikeIcon style={{ fill: likeColor === "red" ? "red" : "blue" }} />
           {likes}Likes
@@ -144,10 +260,118 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
             Comment{" "}
           </div>
         )}
-        <div className="delete-btn btn" onClick={() => handleDelete(postObj._id)}>
+        <div
+          className="delete-btn btn"
+          onClick={() => handleDelete(postObj._id)}
+        >
           Delete
         </div>
+      </div> */}
+      <div className="post-action-counts">
+        <span>{likes} Likes</span>{" "}
+        {totalComment ? <span>{totalComment} Comments</span> : ""}
       </div>
+      <div className="post-action">
+        <div
+          className="like-btn btn"
+          onMouseEnter={() => setShowReactions(true)}
+          onMouseLeave={() => setShowReactions(false)}
+        >
+          {reactions === "Like" && (
+            <div>
+              <LikeIcon
+                style={{ fill: likeColor === "red" ? "red" : "blue" }}
+              />
+              Like
+            </div>
+          )}
+          {reactions === "Love" && (
+            <div className="love">
+              <Love /> Love
+            </div>
+          )}
+          {reactions === "Congratulation" && (
+            <div className="congo">
+              <Celebrate /> Congratulation
+            </div>
+          )}
+          {reactions === "Support" && (
+            <div className="support">
+              <Support /> Support
+            </div>
+          )}
+          {reactions === "Insightful" && (
+            <div className="insightful">
+              <Insightful /> Insightful
+            </div>
+          )}
+          {reactions === "Funny" && (
+            <div className="funny">
+              <Funny /> Funny
+            </div>
+          )}
+
+          {showReactions && (
+            <div className="reactions-tooltip">
+              <div
+                className="reaction-btn like"
+                onClick={() => handleReactions(postObj._id, "Like")}
+              >
+                <LikeIcon />
+              </div>
+              <div
+                className="reaction-btn love"
+                onClick={() => handleReactions(postObj._id, "Love")}
+              >
+                <Love />
+              </div>
+              <div
+                className="reaction-btn congo"
+                onClick={() => handleReactions(postObj._id, "Congratulation")}
+              >
+                <Celebrate />
+              </div>
+              <div
+                className="reaction-btn support"
+                onClick={() => handleReactions(postObj._id, "Support")}
+              >
+                <Support />
+              </div>
+              <div
+                className="reaction-btn insightful"
+                onClick={() => handleReactions(postObj._id, "Insightful")}
+              >
+                <Insightful />
+              </div>
+              <div
+                className="reaction-btn funny"
+                onClick={() => handleReactions(postObj._id, "Funny")}
+              >
+                <Funny />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {showComment ? (
+          <div
+            className="comment-button btn"
+            onClick={() => setShowComment(false)}
+          >
+            <CommentIcon />
+            {totalComment} Comments
+          </div>
+        ) : (
+          <div
+            className="comment-button btn"
+            onClick={() => handleAddComment(postObj._id)}
+          >
+            <CommentIcon />
+            Comment
+          </div>
+        )}
+      </div>
+
       {showComment && (
         <div className="comment-section">
           <h3>Comments</h3>
@@ -176,7 +400,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
           </ol>
         </div>
       )}
-       <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };

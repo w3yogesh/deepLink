@@ -67,7 +67,7 @@ export default function CompanyDetail2() {
   }, [navigate]);
   const reversedPosts = Array.isArray(allPostObj) ? [...allPostObj].reverse() : [];
 
-  console.log(allPostObj);
+  // console.log(allPostObj);
   useEffect(() => {
     // Fetch the details of the specific company from the backend
     const fetchCompanyDetails = async () => {
