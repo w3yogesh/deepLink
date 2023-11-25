@@ -86,14 +86,7 @@ const Login = () => {
     }
   }
   useEffect(() => {
-<<<<<<< HEAD
     document.body.classList.add("login-body");
-=======
-   
-    document.body.classList.add("login-body");
-  
- 
->>>>>>> 6bb6fed5a362b3db9fe2a14cc6274e06759e6138
     return () => {
       document.body.classList.remove("login-body");
     };
@@ -126,13 +119,10 @@ const Login = () => {
         </div>
         
         <button type="submit">Submit</button>
-<<<<<<< HEAD
         <span>
           Don't have an account? <Link to={"/signup"}>Signup</Link>
         </span>
-=======
        
->>>>>>> 6bb6fed5a362b3db9fe2a14cc6274e06759e6138
       </form>
 
       <GoogleSignup handleGoogleLogin={handleGoogleLogin}/>

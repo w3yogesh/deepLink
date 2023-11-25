@@ -120,3 +120,8 @@
 .nav-menu-item:hover {
     border-bottom: 2px solid #222;
 }
+.notification {display: flex;padding: 4px 10px;border: 1px solid #eee;flex-direction: column;}
+
+span.notification-time {
+    font-size: 12px;
+}

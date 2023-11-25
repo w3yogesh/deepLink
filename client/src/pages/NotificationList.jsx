@@ -22,10 +22,10 @@ const NotificationList = ({ userId }) => {
     <div>
       <h1>Notifications</h1>
       {notifications.map(notification => (
-        <div key={notification._id}>
-          <p>{notification.message}</p>
+        <div className='notification' key={notification._id}>
+          <span className='notification-msg'>{notification.message}</span>
           {/* <p>{notification.createdAt}</p> */}
-          <p>
+          <span className='notification-time'>
           {new Date(notification.createdAt).toLocaleString("en-US", {
                       year: "numeric",
                       month: "numeric",
@@ -34,7 +34,7 @@ const NotificationList = ({ userId }) => {
                       minute: "numeric",
                       hour12: true,
                     })}
-          </p>
+          </span>
         </div>
       ))}
     </div>

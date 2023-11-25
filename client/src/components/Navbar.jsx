@@ -12,9 +12,14 @@ import axios from 'axios';
 export default function Navbar() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(0);
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+
 
   useEffect(() => {
     const checkUnreadNotifications = async () => {
@@ -80,6 +85,11 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
             <div className="user-icon" onClick={handleDropdownToggle}>
               <AdminIcon />
             </div>
+          </div>
+          <div className="hamburger-icon" onClick={handleMobileMenuToggle}>
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
           </div>
           
         <div className={`drop-menu ${isDropdownOpen ? 'show' : ''}`}>

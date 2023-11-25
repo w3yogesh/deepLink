@@ -16,17 +16,10 @@ import MyConnections from "../components/MyConnections";
 const YourComponent = ({ activeTab, myId , userNotConnected, connectedUser}) => {
   return (
     <div>
-<<<<<<< HEAD
-      {activeTab === "allUser" && <UserListComponent senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "requests" && <ConnectionRequest senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "sent" && <ConnectionSent senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-      {activeTab === "myConnections" && <MyConnections senderId={myId} handleError={handleError} handleSuccess={handleSuccess}/>}
-=======
       {activeTab === "allUser" && <UserListComponent senderId={myId} usersNotConnected={userNotConnected} handleError={handleError} handleSuccess={handleSuccess}/>}
       {activeTab === "requests" && <ConnectionRequest senderId={myId} handleError={handleError} handleSuccess={handleSuccess} />}
       {activeTab === "sent" && <ConnectionSent senderId={myId} handleError={handleError} handleSuccess={handleSuccess} />}
       {activeTab === "myConnections" && <MyConnections senderId={myId} connectedUser={connectedUser} handleError={handleError} handleSuccess={handleSuccess} />}
->>>>>>> 6bb6fed5a362b3db9fe2a14cc6274e06759e6138
     </div>
   );
 };

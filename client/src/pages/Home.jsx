@@ -5,6 +5,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { HomeImage } from "../components/MySVGIcons";
+import "../styles/Navbar.css";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,7 +27,33 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <header className="site-header">
+        <div className="navbar-wrapper grid-container">
+          <div className="logo-container">
+            <a href="/">
+              <img
+                className="header-logo"
+                src="http://localhost:3000/images/DeepLink_logo.png"
+                alt="deeplink"
+              />
+            </a>
+          </div>
+          <div className="nav-wrapper">
+            <ul className="nav-menu">
+              <li className="nav-menu-item">
+                <a href="/login">Login</a>
+              </li>
+              <li className="nav-menu-item">
+                <a href="/signup">Signup</a>
+              </li>
+            </ul>
+          </div>
+          
+        </div>
+      </header>
+     
+  
+
       <section className="home-main">
         <div className="grid-container">
           <div className="home-wrapper">

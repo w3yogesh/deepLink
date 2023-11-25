@@ -1,36 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-<<<<<<< HEAD
-function MyConnections({senderId, handleError,handleSuccess}) {
-    const [users, setUsers] = useState([]);
-    const userId = senderId;
-
-    const handleDeleteMyConnection = async (senderId, receiverId)=>{
-      try {
-        const response = await axios.delete(`http://localhost:4000/api/deleteMyConnection/${senderId}/${receiverId}`);
-        const {status, message} = response.data;
-        if(status){
-          console.log(message);
-        handleSuccess(message);
-
-        }else{
-          console.log(message);
-        handleError(message);
-
-        }
-        
-      } catch (error) {
-        console.log(error);
-=======
 import LoadingForComponent from "./LoadingForComponent";
+import { Link } from "react-router-dom";
 
-function MyConnections(props) {
-  const [users, setUsers] = useState(props.connectedUser);
+function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) {
+  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const userId = props.senderId;
 
-  const handleDeleteMyConnection = async (senderId, receiverId) => {
+  const handleDeleteMyConnection = async (receiverId) => {
     try {
       const response = await axios.delete(
         `http://localhost:4000/api/deleteMyConnection/${senderId}/${receiverId}`
@@ -39,35 +16,40 @@ function MyConnections(props) {
       if (status) {
         console.log(message);
         setUsers((users) => users.filter((user) => user._id !== receiverId));
+        handleSuccess(message);
       } else {
         console.log(message);
->>>>>>> 6bb6fed5a362b3db9fe2a14cc6274e06759e6138
+        handleError(message);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const fetchMyConnections = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/myConnections${userId}`
+          `http://localhost:4000/api/myConnections/${senderId}`
         );
         setUsers(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
+        setIsLoading(false);
       }
     };
-    setUsers(props.connectedUser);
-    if(props.connectedUser.length > 0)  setIsLoading(false);
-  }, [props.connectedUser]);
+
+    // Ensure fetchMyConnections is called when the component mounts
+    fetchMyConnections();
+  }, [senderId]); // Include senderId as a dependency for useEffect
 
   return (
     <div>
       {isLoading && <LoadingForComponent />}
       {!isLoading && (
         <div>
-          <h4>My Conection</h4>
+          <h4>My Connection</h4>
           <ul className="user-cards">
             {users.map((user) => (
               <li className="user-card-list" key={user._id}>
@@ -98,7 +80,7 @@ function MyConnections(props) {
                     <div className="user-card-action">
                       <button
                         onClick={() => {
-                          handleDeleteMyConnection(userId, user._id);
+                          handleDeleteMyConnection(user._id);
                         }}
                       >
                         Drop

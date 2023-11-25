@@ -65,7 +65,7 @@ export default function CompanyDetail() {
           setTimeout(() => {
             navigate("/login");
           }, 1);
-        }else if(!(userData.company&&userData.company.includes(companyId))){
+        }else if((userData.company&&userData.company.includes(companyId))){
           setTimeout(() => {
             navigate("/mycompanies");
           }, 1);
