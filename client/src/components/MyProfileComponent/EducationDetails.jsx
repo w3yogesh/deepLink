@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import {DeleteIcon, CancelIcon,SaveIcon,EditIcon,AddIcon } from "../MySVGIcons";
+import {
+  DeleteIcon,
+  CancelIcon,
+  SaveIcon,
+  EditIcon,
+  AddIcon,
+} from "../MySVGIcons";
 import axios from "axios";
 
 const EducationDetails = ({ userData, setUserData }) => {
-  function formatDateFromLong(dateInLong,updateMode) {
+  function formatDateFromLong(dateInLong, updateMode) {
     const date = new Date(dateInLong);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
     const day = date.getDate().toString().padStart(2, "0");
-    if(updateMode){
+    if (updateMode) {
       return `${year}-${month}-${day}`;
-    }
-    else{
+    } else {
       return `${day}/${month}/${year}`;
     }
-    
   }
-  // git issue 
+  // git issue
   const [showForm, setShowForm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
   const [updateMode, setUpdateMode] = useState(false);
@@ -57,8 +61,12 @@ const EducationDetails = ({ userData, setUserData }) => {
       newEducation.endDate === ""
     )
       return;
-    
-    
+
+    if (new Date(newEducation.startDate) >= new Date(newEducation.endDate)) {
+      handleError("end date must be after start date");
+      return;
+    }
+
     if (updateMode) {
       const response = await axios.put("http://localhost:4000/editEducation", {
         eduId: newEducation._id,
@@ -69,11 +77,20 @@ const EducationDetails = ({ userData, setUserData }) => {
         startDate: newEducation.startDate,
         endDate: newEducation.endDate,
       });
-      const {success, message} = response.data;
+      const { success, message } = response.data;
       if (success) {
         handleSuccess(message);
         setUpdateMode(false);
-        
+        setUserData((prevUserData) => {
+          const updatedEducation = prevUserData.education.map((edu) =>
+            edu._id === newEducation._id ? newEducation : edu
+          );
+
+          return {
+            ...prevUserData,
+            education: updatedEducation,
+          };
+        });
       } else {
         handleError(message);
       }
@@ -87,7 +104,7 @@ const EducationDetails = ({ userData, setUserData }) => {
         startDate: newEducation.startDate,
         endDate: newEducation.endDate,
       });
-      const {success, message} = response.data;
+      const { success, message } = response.data;
       if (success) {
         handleSuccess(message);
         setUserData((prev) => ({
@@ -98,7 +115,6 @@ const EducationDetails = ({ userData, setUserData }) => {
         handleError(message);
       }
     }
-   
   };
 
   const handleDeleteEducation = async (eduId) => {
@@ -107,6 +123,16 @@ const EducationDetails = ({ userData, setUserData }) => {
     );
     if (response.data.success) {
       handleSuccess(response.data.message);
+      setUserData((prevUserData) => {
+        const updatedEducation = prevUserData.education.filter(
+          (edu) => edu._id !== eduId
+        );
+
+        return {
+          ...prevUserData,
+          education: updatedEducation,
+        };
+      });
     } else {
       handleError(response.data.message);
     }
@@ -125,10 +151,13 @@ const EducationDetails = ({ userData, setUserData }) => {
     <div className="education-details details">
       {!showForm && (
         <>
-          <div className="edit-details" onClick={() => {
-                setShowForm(true);
-              }}>
-              <AddIcon />
+          <div
+            className="edit-details"
+            onClick={() => {
+              setShowForm(true);
+            }}
+          >
+            <AddIcon />
           </div>
           <div className="form-container">
             <div className="education-info-section">
@@ -140,17 +169,21 @@ const EducationDetails = ({ userData, setUserData }) => {
 
       {showForm && (
         <>
-          <div className="edit-details" onClick={() => {
-                setShowForm(false);
-              }}>
-              <CancelIcon />
+          <div
+            className="edit-details"
+            onClick={() => {
+              setShowForm(false);
+            }}
+          >
+            <CancelIcon />
           </div>
-          <div className="edit-details" onClick={() => {
-
-                  handleAddEducation();
-              
-              }}>
-              <SaveIcon />
+          <div
+            className="edit-details"
+            onClick={() => {
+              handleAddEducation();
+            }}
+          >
+            <SaveIcon />
           </div>
           <div className="form-container">
             <form action="">
@@ -209,7 +242,14 @@ const EducationDetails = ({ userData, setUserData }) => {
                       type="date"
                       name="startDate"
                       // value={newEducation.startDate}
-                      value={updateMode ?  formatDateFromLong(newEducation.startDate, updateMode) : newEducation.startDate}
+                      value={
+                        updateMode
+                          ? formatDateFromLong(
+                              newEducation.startDate,
+                              updateMode
+                            )
+                          : newEducation.startDate
+                      }
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -220,7 +260,11 @@ const EducationDetails = ({ userData, setUserData }) => {
                       type="date"
                       name="endDate"
                       // value={newEducation.endDate}
-                      value={updateMode ?  formatDateFromLong(newEducation.endDate, updateMode) : newEducation.endDate}
+                      value={
+                        updateMode
+                          ? formatDateFromLong(newEducation.endDate, updateMode)
+                          : newEducation.endDate
+                      }
                       onChange={handleChange}
                       disabled={!isEditMode}
                     />
@@ -233,17 +277,22 @@ const EducationDetails = ({ userData, setUserData }) => {
       )}
       <div className="all-educations">
         {userData.education.map((edu, index) => (
-          <div key={index} className={index % 2 === 0 ? "even-education" : "odd-education"}>
+          <div
+            key={index}
+            className={index % 2 === 0 ? "even-education" : "odd-education"}
+          >
             <div className="educations-action">
-              <div className="edit-details" onClick={() => handleDeleteEducation(edu._id)}>
-            
-                  <DeleteIcon />
-
+              <div
+                className="edit-details"
+                onClick={() => handleDeleteEducation(edu._id)}
+              >
+                <DeleteIcon />
               </div>
-              <div className="edit-details" onClick={() => handleEditEducation(edu._id)}>
-   
-                  <EditIcon />
-
+              <div
+                className="edit-details"
+                onClick={() => handleEditEducation(edu._id)}
+              >
+                <EditIcon />
               </div>
             </div>
 
@@ -273,7 +322,7 @@ const EducationDetails = ({ userData, setUserData }) => {
               <div className="eDate">
                 <span className="user-label-tag">End Date:</span>
                 <span className="user-label-value">
-                {edu.endDate ? formatDateFromLong(edu.endDate) : 'Present'}
+                  {edu.endDate ? formatDateFromLong(edu.endDate) : "Present"}
                 </span>
               </div>
             </div>

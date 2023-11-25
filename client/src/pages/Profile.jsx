@@ -251,8 +251,7 @@ const Profile = () => {
               setShowMyConnections(!showMyConnections);
             }}
           >
-            {" "}
-            Connections{" "}
+            Connections
           </Button>
           {showMyConnections && <MyConnections senderId={userProfile._id} />}
         </div>
