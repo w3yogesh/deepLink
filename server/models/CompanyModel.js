@@ -61,6 +61,12 @@ const CompanySchema = new mongoose.Schema({
       ref: "CompanyPost",
     },
   ],
+  followers:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
 });
 
 module.exports = mongoose.model("Company", CompanySchema);

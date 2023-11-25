@@ -33,7 +33,7 @@ const CompanyPosts = ({companyId}) => {
       try {
         const response = await axios.post("http://localhost:4000/companypost",data);
 
-        console.log(response);
+        // console.log(response);
         toast.success("Post submitted successfully");
       } catch (error) {
         console.log(error);
