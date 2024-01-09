@@ -5,6 +5,12 @@
 
 Welcome to Deeplink, our JobSearch Portal! This platform is designed to help job seekers find exciting career opportunities and connect with potential employers. Whether you are actively searching for a new job or looking to explore new career paths, our portal provides a user-friendly and efficient experience.
 
+## Demo
+- [video](https://youtu.be/WaHqghgq9Es?si=HG43dJSAK6ktDu-u)
+
+- [PPT](https://www.canva.com/design/DAF1vlYIRmY/gHViKNpxz8bSNl9IWp_miw/edit)
+
+
 ## Installation
 
 the project has two components
@@ -109,16 +115,22 @@ backend setup done, now hit the most favourite command `npm start`
 ![connection page](https://github.com/w3yogesh/deepLink/assets/72679078/d38ba47c-0615-49f5-9c1c-e4894e8c7708)
 
 
-
-
-
-[video]  https://github.com/w3yogesh/deepLink/assets/72679078/69eabad8-fbc6-4d23-81a8-c97537348a91
-
+## Tech stack
+- Languages: JavaScript
+- Frontend: React.js, Axios
+- Backend: Node.js, Express
+- Database: MongoDB
+- Real-time Communication: Socket.io
+- Middleware: Multer
+- Authentication: JSON Web Tokens (JWT)
+- Tools
+  - GitHub
+  - VS Code
 
 
 ## contributors
 
-this is a team project made under the annual event **Code Sangam** of MNNIT Allahabad.
+this is a team project made under the annual event **Code Sangam (Webster)** of MNNIT Allahabad.
 
 # TEAM `HTML Hackers`
 
