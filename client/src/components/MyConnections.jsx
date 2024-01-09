@@ -51,7 +51,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
         <div>
           <h4>My Connection</h4>
           <ul className="user-cards">
-            {users.map((user) => (
+            {connectedUser.map((user) => (
               <li className="user-card-list" key={user._id}>
                 <div className="user-card">
                   <div className="user-card-meta">

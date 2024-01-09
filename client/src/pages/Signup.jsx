@@ -8,7 +8,6 @@ import {
   Step,
   StepLabel,
   Typography,
-  Paper,
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/SignUpForm.css";
@@ -51,28 +50,23 @@ const Signup = () => {
     });
 
   const goNext = () => {
-
     if (curr === 0) {
-
-  
       if (!formData.email) {
         toast.error("email is required");
-        setCurr(0)
+        setCurr(0);
         return;
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)) {
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
+      ) {
         toast.error("Invalid email address");
         setCurr(0);
         return;
-      }
-
-      
-      else if (formData.password !== formData.confirm_password) {
+      } else if (formData.password !== formData.confirm_password) {
         toast.error("password and confirm password not matching");
         setCurr(0);
         return;
       }
 
-    
       // else if (!/^[a-zA-Z0-9!@#$%^&*]{6,12}$/.test(formData.password)) {
       //   toast.error("Password should contain one Capital , one small, one special char, minlen=6, maxlen=12");
       //   setCurr(0);
@@ -108,7 +102,7 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-   
+
     console.log("Submitting form data to the backend:", formData);
     try {
       const { data } = await axios.post(
@@ -135,8 +129,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="container">
-      <title> signup </title>
+    <div className="signup-body">
+      <div className="container signup">
       <h2> Signup </h2>
 
       <Stepper activeStep={curr} alternativeLabel>
@@ -146,7 +140,7 @@ const Signup = () => {
           </Step>
         ))}
       </Stepper>
-      <Paper style={{ padding: "20px" }}>
+      <div style={{ padding: "20px" }}>
         {curr === steps.length ? (
           <div>
             <Typography>All steps completed</Typography>
@@ -174,9 +168,10 @@ const Signup = () => {
             </Button>
           </div>
         )}
-      </Paper>
+      </div>
 
       <ToastContainer />
+    </div>
     </div>
   );
 };

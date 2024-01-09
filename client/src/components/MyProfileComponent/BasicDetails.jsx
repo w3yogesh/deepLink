@@ -53,13 +53,13 @@ const BasicDetails = ({ userData, setUserData }) => {
       return;
     }
 
-    if(isEditMode && userData === prevUserData) {
-      toast.error("no data changed", {
-        position: "bottom-left",
-      });
-      setIsEditMode(!isEditMode);
-      return;
-    }
+    // if(isEditMode && userData === prevUserData) {
+    //   toast.error("no data changed", {
+    //     position: "bottom-left",
+    //   });
+    //   setIsEditMode(!isEditMode);
+    //   return;
+    // }
 
     setIsEditMode(!isEditMode);
     if (isEditMode) {

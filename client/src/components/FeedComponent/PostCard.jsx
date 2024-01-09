@@ -32,7 +32,6 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     if (isLiked) {
       setLikeColor("red");
       const likeId = isLiked._id;
-      // console.log(likeId)
       const response = await axios.get(
         `http://localhost:4000/api/fetchlike/${likeId}`
       );
@@ -81,7 +80,6 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         if (status) {
           setLikes(likes + 1);
           setLikeColor("red");
-          console.log(message);
         } else {
           console.log(message);
         }
@@ -108,7 +106,6 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         postObj.likes.push(userId);
         setLikeColor("red");
         setReactions(reactionType);
-        // console.log(message);
       } else {
         console.log(message);
       }
@@ -120,7 +117,6 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         `http://localhost:4000/api/removePostReaction/${userId}/${postId}`
       );
       const { status, message } = response.data;
-      // console.log(postId);
       if (status) {
         setLikes(likes - 1);
         setLikeColor("blue");
@@ -158,10 +154,9 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
 
       if (status) {
         toast.success(message);
-        // onPostDelete(postId);
-        console.log(message);
       } else {
         console.log(message);
+
       }
     } catch (error) {
       toast.error("You can't delete other's post");
@@ -231,7 +226,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         <div className="img-post-content">
           {postObj.content ? (
             <p className="img-post-text">
-              <ReadMore text={postObj.content} maxLength={50} />
+              <ReadMore text={postObj.content} maxLength={120} />
             </p>
           ) : (
             ""
@@ -244,7 +239,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       ) : (
         <div className="post-content">
           <p>
-            <ReadMore text={postObj.content} maxLength={50} />
+            <ReadMore text={postObj.content} maxLength={120} />
           </p>
         </div>
       )}
