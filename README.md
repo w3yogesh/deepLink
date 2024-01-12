@@ -7,9 +7,7 @@ Welcome to Deeplink, our JobSearch Portal! This platform is designed to help job
 
 ## Demo
 - [video1](https://youtu.be/uPnz75CTgHY?si=xNZg6UEpCGEjMaNc)
-- 
 - [video2](https://youtu.be/WaHqghgq9Es?si=HG43dJSAK6ktDu-u)
-
 - [PPT](https://www.canva.com/design/DAF1vlYIRmY/gHViKNpxz8bSNl9IWp_miw/edit)
 
 
