@@ -71,9 +71,10 @@
 
 .job-list-item {
     padding: 10px;
-    border: 1px solid;
-    border-radius: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
     margin-bottom: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .job-list-title h3 {

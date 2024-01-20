@@ -82,4 +82,11 @@
   .google-login {
     display: flex;
     align-items: center;
+    margin-top: 10px;
+}
+.google-login div {
+  display: flex;
+  flex-direction: row!important;
+  justify-content: center;
+  align-content: center;
 }

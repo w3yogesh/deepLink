@@ -40,11 +40,24 @@ const Home = () => {
           </div>
           <div className="nav-wrapper">
             <ul className="nav-menu">
-              <li className="nav-menu-item">
-                <a href="/login">Login</a>
+            <li className="nav-menu-item">
+                <a href="#">Articles</a>
               </li>
               <li className="nav-menu-item">
+                <a href="#">People</a>
+              </li>
+              <li className="nav-menu-item">
+                <a href="#">Learning</a>
+              </li>
+              <li className="nav-menu-item">
+                <a href="#">Jobs</a>
+              </li>
+              
+              <li className="nav-menu-item sign-up">
                 <a href="/signup">Signup</a>
+              </li>
+              <li className="nav-menu-item login">
+                <a href="/login">Login</a>
               </li>
             </ul>
           </div>

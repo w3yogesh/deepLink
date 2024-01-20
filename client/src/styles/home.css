@@ -1,3 +1,30 @@
+li.nav-menu-item.login, li.nav-menu-item.sign-up {
+    padding: 0;
+}
+
+li.nav-menu-item.login a, li.nav-menu-item.sign-up a {
+    padding:5px 10px 6px 10px;
+    border: 1px solid #1877f2;
+    border-radius: 2px;
+}
+li.nav-menu-item.sign-up:hover a{
+    background: #f25218;
+    color: #fff;
+    border: 1px solid #1877f2;
+}
+li.nav-menu-item.login:hover a{
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+li.nav-menu-item.sign-up {
+    margin-right: 10px;
+}
+
+li.nav-menu-item.login a {
+    background: #1877f2;
+    color: #fff;
+}
 .home-wrapper {
     display: flex;
     align-items: center;

@@ -9,7 +9,6 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/AuthRoutes");
 
-
 // Connect to MongoDB by calling the imported connectDB function
 connectDB()
   .then(() => {

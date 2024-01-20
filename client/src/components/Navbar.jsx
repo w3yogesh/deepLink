@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Navbar.css";
 import { HeaderSearch } from "./HeaderSearch";
+import Notification from "../pages/Notification";
 import { AdminIcon } from "./MySVGIcons";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -12,6 +13,7 @@ import axios from 'axios';
 export default function Navbar() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotiOpen, setIsNotiOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(0);
 
@@ -41,6 +43,9 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const handleNotiToggle = () => {
+    setIsNotiOpen(!isNotiOpen);
+  };
   const Logout = () => {
     removeCookie("token");
     navigate("/");
@@ -63,7 +68,7 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
           <div className="nav-wrapper">
             <ul className="nav-menu">
               <li className="nav-menu-item">
-                <a href="/">Home</a>
+                <a href="/feed">Home</a>
               </li>
               <li className="nav-menu-item">
                 <a href="/mynetwork">My Network</a>
@@ -74,8 +79,8 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
               <li className="nav-menu-item">
                 <a href="/chat">Messages</a>
               </li>
-              <li className="nav-menu-item">
-              <a href="/notifications" className={hasUnreadNotifications>0? 'unread' : ''}>
+              <li className="nav-menu-item" onClick={handleNotiToggle}>
+              <a  className={hasUnreadNotifications>0? 'unread' : ''}>
             Notification {hasUnreadNotifications}
           </a>
               </li>
@@ -92,7 +97,7 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
             <div className="bar"></div>
           </div>
           
-        <div className={`drop-menu ${isDropdownOpen ? 'show' : ''}`}>
+          <div className={`drop-menu ${isDropdownOpen ? 'show' : ''}`}>
           <div className="drop-menu-item">
             <a href="/myprofile">My Profile</a>
           </div>
@@ -105,6 +110,9 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
           <div className="drop-menu-item">
             <a href="" onClick={Logout}>Logout</a>
           </div>
+        </div>
+        <div className={`drop-menu ${isNotiOpen ? 'show' : ''}`}>
+          <Notification/>
         </div>
         </div>
       </header>
