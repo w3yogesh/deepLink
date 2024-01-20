@@ -79,7 +79,6 @@ const Feed = () => {
     }
     return false;
   });
-  console.log('everyPost : ', everyPost);
   return (
     <div>
       <Navbar senderId={userId} />

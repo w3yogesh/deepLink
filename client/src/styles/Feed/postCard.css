@@ -14,6 +14,9 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 
 }
+p.img-post-text a {
+    cursor: pointer;
+}
 .post-meta svg {
     margin: 0 10px 0 6px;
 }

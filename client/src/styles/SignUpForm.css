@@ -1,17 +1,51 @@
-.container {
+/* .container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+} */
+  .container.signup {
+    position: absolute;
+    transform: translate(50%, -50%);
+    top: 50%;
+    right: 50%;
     max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid;
+    padding: 15px;
     text-align: center;
-  }
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgb(255, 255, 255, 0.3);
+    background-color: rgb(255, 255, 255, 0.3);
+}
   .form-group {
     margin-bottom: 20px;
   }
-  
+  .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
+    margin-bottom: 14px;
+}
+.css-1hv8oq8-MuiStepLabel-label.MuiStepLabel-alternativeLabel {
+  margin-top: 10px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+p.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #2226;
+  text-transform: capitalize;
+}
+.signup-body {
+  width: 100vw;
+  height: 100vh;
+  background: #eef5fd;
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+}
   label {
     display: block;
     font-size: 16px;

@@ -104,7 +104,7 @@ export const JobListing = ({ myId, toast }) => {
           </select>
         </div>
 
-        <div className="requirement-filter job-filter">
+        {/* <div className="requirement-filter job-filter">
           <select
             name="Requirements"
             value={requirementsFilter}
@@ -117,7 +117,7 @@ export const JobListing = ({ myId, toast }) => {
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
 
         <div className="location-filter job-filter">
           <select
@@ -170,11 +170,11 @@ export const JobListing = ({ myId, toast }) => {
                 <span className="job-list-req">
                   <b> Elligibility: </b> {job.requirements}
                 </span>
-                {showJobDes === job._id && (
+                {/* {showJobDes === job._id && (
                   <span className="job-description">
                     <b> Description: </b> {job.description}
                   </span>
-                )}
+                )} */}
               </div>
               {!job.appliedBy.includes(myId) && (
                 <div className="job-actions">

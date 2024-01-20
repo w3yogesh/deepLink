@@ -1,35 +1,40 @@
-.form_container > h2 {
+.container.login > h2 {
   margin-block: 1rem;
   padding-block: 0.6rem;
   color: #000;
 }
 
-.form_container > form {
+.container.login > form {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
 }
 
-.form_container div {
+.container.login div {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
 }
 
-.form_container input {
+.container.login input {
   border: none;
   padding: 0.5rem;
   border-bottom: 1px solid gray;
   font-size: 1.1rem;
   outline: none;
 }
-
-.form_container input::placeholder {
+.login-body {
+  width: 100vw;
+  height: 100vh;
+  background: #eef5fd;
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+}
+.container.login input::placeholder {
   font-size: 0.9rem;
   font-style: italic;
 }
 
-.form_container {
+/* .container.login {
   max-width: 400px;
   padding: 20px;
   min-width: 380px;
@@ -42,8 +47,23 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  } */
+  .container.login{
+    position: absolute;
+    min-width: 380px;
+    transform: translate(50%, -50%);
+    top: 50%;
+    right: 50%;
+    max-width: 400px;
+    border: 1px solid;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgb(255, 255, 255, 0.3);
+    background-color: rgb(255, 255, 255, 0.3);
   }
-  
   
   input[type="username"],
   input[type="password"] {
@@ -59,4 +79,14 @@
   button:hover {
     background-color: #002d5e;
   }
-  
+  .google-login {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.google-login div {
+  display: flex;
+  flex-direction: row!important;
+  justify-content: center;
+  align-content: center;
+}

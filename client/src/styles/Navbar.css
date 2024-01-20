@@ -35,7 +35,9 @@
 }
 
 .nav-menu-item {
-    padding: 16px 10px;
+    padding: 16px 12px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 .nav-menu-item a,.drop-menu a {
     color: #252525;
@@ -118,10 +120,21 @@
     background: #1877f2;
 }
 .nav-menu-item:hover {
-    border-bottom: 2px solid #222;
+    background-color: #eee;
 }
 .notification {display: flex;padding: 4px 10px;border: 1px solid #eee;flex-direction: column;}
 
 span.notification-time {
     font-size: 12px;
+}
+@media screen and (max-width: 768px) {
+    .search-box{
+        display: none;
+    }
+  }
+  .drop-menu.show {
+    display: block;
+    max-height: 400px;
+    word-wrap: break-word;
+    overflow: overlay;
 }
