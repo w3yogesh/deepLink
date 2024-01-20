@@ -1,6 +1,7 @@
 import React,{ useEffect, useState} from "react";
 import axios from "axios";
 import io from "socket.io-client";
+const BASH_URL = process.env.BASH_URL;
 
 
 export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,setNotiId}) => {
@@ -9,7 +10,7 @@ export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,set
  
 
   useEffect(() => {
-    const socketIO = io("http://localhost:4000", {
+    const socketIO = io(BASH_URL, {
         query: { userId: myId },
       });
       setSocket(socketIO);

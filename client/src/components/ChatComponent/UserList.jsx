@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+const BASH_URL = process.env.BASH_URL;
+
 
 const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId, handleUserClick,noti,notiId }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -9,7 +11,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const userAuth = async () => {
       try {
-        const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
+        const response = await axios.post(BASH_URL, {}, { withCredentials: true });
         const { status, user } = response.data;
         if (status) {
           setCurrentUser(user._id);
@@ -26,7 +28,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/myConnections${currentUser}`);
+        const response = await axios.get(`BASH_URL/api/myConnections${currentUser}`);
         setUsers(response.data);
         // setSelectedUser(users[0]); 
       } catch (error) {
