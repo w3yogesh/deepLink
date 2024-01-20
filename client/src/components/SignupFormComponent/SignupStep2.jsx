@@ -1,8 +1,6 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import { useEffect } from "react";
-const SignupStep2 = ({ formData, updateForm }) => {
+import React, { useEffect } from "react";
 
+const SignupStep2 = ({ formData, updateForm }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     updateForm({ [name]: value });
@@ -18,18 +16,16 @@ const SignupStep2 = ({ formData, updateForm }) => {
 
   return (
     <div>
-      <TextField
-        label="First Name"
-        variant="outlined"
-        fullWidth
+      <label>First Name</label>
+      <input
+        type="text"
         name="firstName"
         value={formData.firstName}
         onChange={handleChange}
       />
-      <TextField
-        label="Last Name"
-        variant="outlined"
-        fullWidth
+      <label>Last Name</label>
+      <input
+        type="text"
         name="lastName"
         value={formData.lastName}
         onChange={handleChange}

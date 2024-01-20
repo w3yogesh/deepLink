@@ -15,8 +15,6 @@ import MyConnections from "../components/MyConnections";
 
 
 import Navbar from "../components/Navbar";
-
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
@@ -115,7 +113,7 @@ const Profile = () => {
         </div>
 
         <div className="actions">
-          <Button
+          <button
             variant="contained"
             onClick={() => {
               setShowAllUser(!showAllUser);
@@ -123,10 +121,10 @@ const Profile = () => {
           >
             {" "}
             All User{" "}
-          </Button>
+          </button>
           {showAllUser && <UserListComponent senderId={userProfile._id} />}
 
-          <Button
+          <button
             variant="contained"
             onClick={() => {
               setShowConnectionRequest(!showConnectionRequest);
@@ -134,12 +132,12 @@ const Profile = () => {
           >
             {" "}
             recieved{" "}
-          </Button>
+          </button>
           {showConnectionRequest && (
             <ConnectionRequest senderId={userProfile._id} />
           )}
 
-          <Button
+          <button
             variant="contained"
             onClick={() => {
               setShowConnectionSent(!showConnectionSent);
@@ -147,17 +145,17 @@ const Profile = () => {
           >
             {" "}
             sent{" "}
-          </Button>
+          </button>
           {showConnectionSent && <ConnectionSent senderId={userProfile._id} />}
 
-          <Button
+          <button
             variant="contained"
             onClick={() => {
               setShowMyConnections(!showMyConnections);
             }}
           >
             Connections
-          </Button>
+          </button>
           {showMyConnections && <MyConnections senderId={userProfile._id} />}
         </div>
       </div>

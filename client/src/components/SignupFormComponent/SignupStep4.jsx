@@ -1,12 +1,6 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+
 const SignupStep4 = ({ formData, updateForm }) => {
-  
   const handleChange = (event) => {
     const { name, value } = event.target;
     updateForm({
@@ -17,11 +11,9 @@ const SignupStep4 = ({ formData, updateForm }) => {
     });
   };
 
-
   useEffect(() => {
-    
     document.body.classList.add("login-body");
-  
+
     return () => {
       document.body.classList.remove("login-body");
     };
@@ -29,37 +21,47 @@ const SignupStep4 = ({ formData, updateForm }) => {
 
   return (
     <div>
-      <TextField
-        label="Institution Name"
-        variant="outlined"
-        fullWidth
+      <label>Institution Name</label>
+      <input
+        type="text"
         name="institution"
         value={formData.education.institution}
         onChange={handleChange}
       />
-      <TextField
-        label="Degree"
-        variant="outlined"
-        fullWidth
+      <label>Degree</label>
+      <input
+        type="text"
         name="degree"
         value={formData.education.degree}
         onChange={handleChange}
       />
-      <TextField
-        label="Field of study"
-        variant="outlined"
-        fullWidth
+      <label>Field of study</label>
+      <input
+        type="text"
         name="field"
         value={formData.education.field}
         onChange={handleChange}
       />
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label={'Starting Date'} views={["month", "year"]} />
-          <DatePicker label={'Ending Date'} views={["month", "year"]} />
-        </DemoContainer>
-      </LocalizationProvider>
+      <div>
+        <label>Starting Date</label>
+        <input
+          type="date"
+          name="startDate"
+          value={formData.education.startDate}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <label>Ending Date</label>
+        <input
+          type="date"
+          name="endDate"
+          value={formData.education.endDate}
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
 };

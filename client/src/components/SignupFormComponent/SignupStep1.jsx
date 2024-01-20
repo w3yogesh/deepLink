@@ -1,7 +1,6 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+
 const SignupStep1 = ({ formData, updateForm }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -9,7 +8,6 @@ const SignupStep1 = ({ formData, updateForm }) => {
   };
 
   useEffect(() => {
-   
     document.body.classList.add("login-body");
 
     return () => {
@@ -19,35 +17,30 @@ const SignupStep1 = ({ formData, updateForm }) => {
 
   return (
     <div>
-      <TextField
-        label="Email"
-        variant="outlined"
-        fullWidth
+      <label>Email</label>
+      <input
+        type="text"
         name="email"
         value={formData.email}
         onChange={handleChange}
       />
-      <TextField
-        label="Password"
+      <label>Password</label>
+      <input
         type="password"
-        variant="outlined"
-        fullWidth
         name="password"
         value={formData.password}
         onChange={handleChange}
       />
-      <TextField
-        label="Password"
+      <label>Confirm Password</label>
+      <input
         type="password"
-        variant="outlined"
-        fullWidth
         name="confirm_password"
         value={formData.confirm_password}
         onChange={handleChange}
       />
-       <span>
-          Already have an account? <Link to={"/login"}>Login</Link>
-        </span>
+      <span>
+        Already have an account? <Link to={"/login"}>Login</Link>
+      </span>
     </div>
   );
 };
