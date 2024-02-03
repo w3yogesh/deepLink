@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
 
 const AppliedUser = ({ companyId }) => {
   const [jobs, setAppliedUsers] = useState([]);
@@ -36,10 +36,10 @@ const AppliedUser = ({ companyId }) => {
       };
     });
 
-    const ws = XLSX.utils.json_to_sheet(usersData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Users");
-    XLSX.writeFile(wb, `${job.title}_Users.xlsx`);
+    // const ws = XLSX.utils.json_to_sheet(usersData);
+    // const wb = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(wb, ws, "Users");
+    // XLSX.writeFile(wb, `${job.title}_Users.xlsx`);
   };
   console.log(jobs);
   return (
