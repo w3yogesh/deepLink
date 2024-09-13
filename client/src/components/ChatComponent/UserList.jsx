@@ -35,7 +35,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await apiget(`/api/myConnections${currentUser}`);
+        const response = await api.get(`/api/myConnections${currentUser}`);
         setUsers(response.data);
         // setSelectedUser(users[0]); 
       } catch (error) {
