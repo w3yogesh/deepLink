@@ -159,7 +159,7 @@ export const JobListing = ({ myId, toast }) => {
               onMouseLeave={() => setShowJobDes(null)} 
               key={job._id}>
               <div className="job-list-logo">
-                <img src={job.postedBy.logo ?`/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
+                <img src={job.postedBy.logo ?`${apiUrl}/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
               </div>
               <div className="job-list-title">
                 <h3>{job.title}</h3>

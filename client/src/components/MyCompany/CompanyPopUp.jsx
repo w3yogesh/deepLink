@@ -70,11 +70,11 @@ const handleSuccess = (msg) =>
               src={
                 isBack
                   ? company.cover
-                    ? `/fetchCompanyImage/${company.cover}`
+                    ? `${apiUrl}/fetchCompanyImage/${company.cover}`
                     : `/images/company_cover.jpg`
                   : company.logo
-                    ? `/fetchCompanyImage/${company.logo}`
-                    : `/images/user-profile-photo.png`
+                    ? `${apiUrl}/fetchCompanyImage/${company.logo}`
+                    : `$/images/user-profile-photo.png`
               }
               alt={`Company ${isBack ? "Cover" : "Logo"} image`}
               />

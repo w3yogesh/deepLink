@@ -67,7 +67,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
                       <img
                         src={
                           user.profileImage
-                            ? `/fetchProfileImage/${user.profileImage}`
+                            ? `${apiUrl}/fetchProfileImage/${user.profileImage}`
                             : "/images/user-profile-photo.svg"
                         }
                         alt=""

@@ -108,7 +108,7 @@ const MyProfile = () => {
             <img
               src={
                 userData.backgroundImage
-                  ? `/fetchProfileImage/${userData.backgroundImage}`
+                  ? `${apiUrl}/fetchProfileImage/${userData.backgroundImage}`
                   : `images/user-background-photo.jpg`
               }
               alt="User background Photo"

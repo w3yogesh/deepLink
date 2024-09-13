@@ -93,7 +93,7 @@ const MyCompanies = () => {
                           <img
                             src={
                               company.logo
-                                ? `/fetchCompanyImage/${company.logo}`
+                                ? `${apiUrl}/fetchCompanyImage/${company.logo}`
                                 : "/images/user-profile-photo.svg"
                             }
                           />

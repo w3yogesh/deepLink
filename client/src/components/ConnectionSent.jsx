@@ -56,7 +56,7 @@ function ConnectionSent({senderId, handleError,handleSuccess}) {
             <div className="user-card">
               <div className="user-card-meta">
                 <div className="user-card-img profile-photo img">
-                  <img src={user.profileImage ? `/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
+                  <img src={user.profileImage ? `${apiUrl}/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
                 </div>
                 <div className="user-card-info">
                 <Link to={`/userprofileview/${user._id}`}>   <span className="user-card-name">

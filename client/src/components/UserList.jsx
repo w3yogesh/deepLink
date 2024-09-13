@@ -62,7 +62,7 @@ function UserList({senderId, handleError,handleSuccess, usersNotConnected}) {
               <div className="user-card-meta">
                 <div className="user-card-img profile-photo img">
                   <img
-                    src={user.profileImage ? `/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"}
+                    src={user.profileImage ? `${apiUrl}/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"}
                   />
                 </div>
                 <div className="user-card-info">

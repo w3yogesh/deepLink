@@ -207,7 +207,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
         <a href={`http://localhost:3000/company/${postObj.company._id}`}>
           {postObj.company.logo ? (
             <img
-              src={`/fetchCompanyImage/${postObj.company.logo}`}
+              src={`${apiUrl}/fetchCompanyImage/${postObj.company.logo}`}
               alt="user post"
             />
           ) : (
@@ -237,7 +237,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
             " "
           )}
           <img
-            src={`/fetchCompanyPostImage/${postObj.image}`}
+            src={`${apiUrl}/fetchCompanyPostImage/${postObj.image}`}
             alt="user post"
           />
         </div>

@@ -150,10 +150,10 @@ export default function CompanyDetail2() {
       <div className="company-container">
         <div className="company-main-card">
           <div className="company-background">
-          <img src={company.cover ? `/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
+          <img src={company.cover ? `${apiUrl}/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
           </div>
           <div className="company-logo">
-            <img src={company.logo ? `/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
+            <img src={company.logo ? `${apiUrl}/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
           </div>
           <div className="company-meta">
             <div className="company-title">

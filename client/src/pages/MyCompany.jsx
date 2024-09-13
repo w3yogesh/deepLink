@@ -179,7 +179,7 @@ export default function CompanyDetail() {
               <img
                 src={
                   company.cover
-                    ? `/fetchCompanyImage/${company.cover}`
+                    ? `${apiUrl}/fetchCompanyImage/${company.cover}`
                     : "/images/company_cover.jpg"
                 }
                 alt="company cover photo"
@@ -194,7 +194,7 @@ export default function CompanyDetail() {
               <img
                 src={
                   company.logo
-                    ? `/fetchCompanyImage/${company.logo}`
+                    ? `${apiUrl}/fetchCompanyImage/${company.logo}`
                     : "/images/user-profile-photo.png"
                 }
                 alt="company logo"

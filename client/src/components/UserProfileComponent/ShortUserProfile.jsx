@@ -118,7 +118,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
           <img
             src={
               userData.profileImage
-                ? `/fetchProfileImage/${userData.profileImage}`
+                ? `${apiUrl}/fetchProfileImage/${userData.profileImage}`
                 : `images/user-background-photo.jpg`
             }
             alt="User background Photo"

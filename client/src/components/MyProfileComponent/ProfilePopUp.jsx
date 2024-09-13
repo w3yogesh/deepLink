@@ -69,10 +69,10 @@ const handleSuccess = (msg) =>
               src={
                 isBack
                   ? userData.backgroundImage
-                    ? `/fetchProfileImage/${userData.backgroundImage}`
+                    ? `${apiUrl}/fetchProfileImage/${userData.backgroundImage}`
                     : `/images/user-background-photo.jpg`
                   : userData.profileImage
-                    ? `/fetchProfileImage/${userData.profileImage}`
+                    ? `${apiUrl}/fetchProfileImage/${userData.profileImage}`
                     : `/images/user-profile-photo.png`
               }
               alt={`User ${isBack ? "Background" : "Profile"} Photo`}

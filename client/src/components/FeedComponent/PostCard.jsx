@@ -208,7 +208,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
           <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}>
             {postObj.user.profileImage ? (
               <img
-                src={`/fetchProfileImage/${postObj.user.profileImage}`}
+                src={`${apiUrl}/fetchProfileImage/${postObj.user.profileImage}`}
                 alt="user post"
               />
             ) : (
