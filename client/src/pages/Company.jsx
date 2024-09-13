@@ -138,7 +138,7 @@ export default function CompanyDetail2() {
                 className={`item-link ${
                   activeTab === "jobpost" ? "active" : ""
                 }`}
-              ><a href="http://localhost:3000/mycompanies">
+              ><a href="/mycompanies">
                 <div class="itme-svg"></div>
                 <span>Post a job</span>
                 </a>

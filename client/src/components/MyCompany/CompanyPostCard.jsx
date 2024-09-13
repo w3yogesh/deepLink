@@ -204,7 +204,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   return (
     <div className="post-items">
       <div className="post-meta">
-        <a href={`http://localhost:3000/company/${postObj.company._id}`}>
+        <a href={`/company/${postObj.company._id}`}>
           {postObj.company.logo ? (
             <img
               src={`${apiUrl}/fetchCompanyImage/${postObj.company.logo}`}

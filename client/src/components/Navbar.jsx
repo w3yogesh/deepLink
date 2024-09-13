@@ -66,7 +66,7 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
             <a href="/">
               <img
                 className="header-logo"
-                src="http://localhost:3000/images/DeepLink_logo.png"
+                src="/images/DeepLink_logo.png"
                 alt="deeplink"
               />
             </a>

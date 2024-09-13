@@ -205,7 +205,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     <div className="post-items">
       <div className="post-meta">
         <div className="user-info">
-          <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}>
+          <a href={`/userprofileview/${postObj.user._id}`}>
             {postObj.user.profileImage ? (
               <img
                 src={`${apiUrl}/fetchProfileImage/${postObj.user.profileImage}`}
@@ -241,7 +241,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
             ""
           )}
           <img
-            src={`/fetchUserPostImage/${postObj.image}`}
+            src={`${apiUrl}/fetchUserPostImage/${postObj.image}`}
             alt="user post"
           />
         </div>
@@ -381,7 +381,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
               <li className="post-comment" key={index}>
                 <div className="comment-author-info">
                   <a
-                    href={`http://localhost:3000/userprofileview/${
+                    href={`/userprofileview/${
                       Postcomment?.userId?._id ?? Postcomment.user
                     }`}
                   >
