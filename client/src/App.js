@@ -22,7 +22,7 @@ import {
   ThemeProvider,
   createMuiTheme,
   makeStyles,
-} from "@material-ui/core/styles";
+} from "@mui/styles";
 
 const theme = createMuiTheme();
 
