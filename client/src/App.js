@@ -1,16 +1,14 @@
+import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import { Login, Signup, Home } from "./pages";
 import Profile from "./pages/Profile";
-
 import MyProfile from "./pages/MyProfile";
 import Feed from "./pages/Feed";
 import MyTimeLine from "./pages/MyTimeline";
-
 import MyNetwork from "./pages/MyNetwork";
 import Chat from "./pages/Chat";
 import UserProfileView from "./pages/UserProfileView";
 import CompanyForm from "./pages/CompanyForm";
-
 import CompanyList from "./pages/CompanyList";
 import MyCompany from "./pages/MyCompany";
 import Company from "./pages/Company";
@@ -18,50 +16,44 @@ import AllJobs from "./pages/AllJobs";
 import MyCompaniesList from "./pages/MyCompaniesList";
 import Notification from "./pages/Notification";
 
-import {
-  ThemeProvider,
-  createMuiTheme,
-  makeStyles,
-} from "@mui/styles";
+// Import ThemeProvider and createTheme from @mui/material/styles
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+// Import makeStyles from @mui/styles
+import { makeStyles } from "@mui/styles";
 
-const theme = createMuiTheme();
+// Create the MUI theme using createTheme
+const theme = createTheme();
 
-const useStyles = makeStyles((theme) => {
+// Define your styles with makeStyles
+const useStyles = makeStyles((theme) => ({
   root: {
-    // some css that access to theme
-  }
-});
+    // Your CSS styles here, which can access the theme
+  },
+}));
 
 function App() {
   const classes = useStyles();
+  
   return (
     <div className="App">
+      {/* Wrap your application with the ThemeProvider */}
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/mytimeline" element={<MyTimeLine />} />
-
           <Route path="/mynetwork" element={<MyNetwork />} />
-
           <Route path="/feed" element={<Feed />} />
           <Route path="/chat" element={<Chat />} />
-
-          <Route
-            path="/userprofileview/:userId"
-            element={<UserProfileView />}
-          />
-
+          <Route path="/userprofileview/:userId" element={<UserProfileView />} />
           <Route path="/createcompany" element={<CompanyForm />} />
           <Route path="/companylist" element={<CompanyList />} />
           <Route path="/mycompany/:companyId" element={<MyCompany />} />
           <Route path="/company/:companyId" element={<Company />} />
           <Route path="/jobs" element={<AllJobs />} />
-
           <Route path="/mycompanies" element={<MyCompaniesList />} />
           <Route path="/notifications" element={<Notification />} />
         </Routes>
