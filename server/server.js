@@ -21,7 +21,7 @@ connectDB()
     // Attach Socket.io to the HTTP server
     const io = require("socket.io")(server, {
       cors: {
-        origin: ["https://deeplink-u52t.onrender.com", "http://localhost:3000/"],
+        origin: ["https://deeplink-u52t.onrender.com", "http://localhost:3000"],
         methods: ["GET", "POST"],
         credentials: true,
       },
@@ -59,9 +59,9 @@ connectDB()
     credentials: true, // Allow credentials (cookies, authorization headers)
   }));
 
-  app.use('/', (req, res) => 
-    res.send("Api is running")
-  );
+  // app.use('/', (req, res) => 
+  //   res.send("Api is running")
+  // );
 
 app.use('/fetchImage', express.static('uploads'));
 app.use('/fetchUserPostImage', express.static('uploads/user/post'));
