@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
+
 export default function CompanyList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [allCompanies, setAllCompanies] = useState([]);
@@ -12,7 +21,7 @@ export default function CompanyList() {
     // Fetch all companies when the component mounts
     const fetchAllCompanies = async () => {
       try {
-        const response = await axios.get('/companies');
+        const response = await api.get('/companies');
         setAllCompanies(response.data.companies);
         setFilteredCompanies(response.data.companies);
       } catch (error) {

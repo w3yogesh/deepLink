@@ -1,5 +1,14 @@
 import React,{ useEffect, useState} from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import io from "socket.io-client";
 
 
@@ -51,7 +60,7 @@ export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,set
     inputRef.current.focus();
 
     try {
-        const response = await axios.post('/messaging', {
+        const response = await api.post('/messaging', {
         myId,
         requestId,
         messageInput,

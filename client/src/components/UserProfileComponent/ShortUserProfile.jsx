@@ -1,6 +1,15 @@
 //SideBar user Profile
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +22,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
   const navigate = useNavigate();
 
   // const handleAuth = async () => {
-  //     const { data } = await axios.post(
+  //     const { data } = await api.post(
   //       "/",
   //       {},
   //       { withCredentials: true }
@@ -52,7 +61,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
     // console.log("hello")
     if (senderId) {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `/api/connect/${senderId}/${recipientId}`
         );
         const { status, message } = response.data;
@@ -86,7 +95,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
 
   const handleEndorseSkill = async (skillId) => {
     try {
-      const response = await axios.put(
+      const response = await api.put(
         `/endorsement/${skillId}/${senderId}`
       );
       const { status, message } = response.data;

@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import PostCard from "../components/FeedComponent/PostCard";
 import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import Navbar from '../components/Navbar';
@@ -21,7 +30,7 @@ const MyTimeLine = () => {
     useEffect(() => {
         const fetchPosts = async () => {
           try {
-            const auth = await axios.post(
+            const auth = await api.post(
               "/",
               {},
               { withCredentials: true }
@@ -37,7 +46,7 @@ const MyTimeLine = () => {
               }, 1);
             } else {
               setUserData(user);
-              const response = await axios.get(
+              const response = await api.get(
                 `/api/fetchpost/${userId}`
               );
               const postsData = response.data;

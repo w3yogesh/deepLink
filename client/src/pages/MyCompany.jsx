@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import AppliedUser from "../components/MyCompany/AppliedUser";
 import Navbar from "../components/Navbar";
 import JobList from "../components/MyCompany/JobList";
@@ -51,7 +60,7 @@ export default function CompanyDetail() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const auth = await axios.post(
+        const auth = await api.post(
           "/",
           {},
           { withCredentials: true }
@@ -71,7 +80,7 @@ export default function CompanyDetail() {
           }, 1);
         }else {
           setUserData(user);
-          const response = await axios.get(
+          const response = await api.get(
             `/api/fetchcompanypost/${companyId}`
           );
           const postsData = response.data;
@@ -92,7 +101,7 @@ export default function CompanyDetail() {
 
     const fetchCompanyDetails = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `/company/${companyId}`
         );
         setCompany(response.data.company);

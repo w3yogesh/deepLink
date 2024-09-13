@@ -8,6 +8,15 @@ import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
 import axios from 'axios';
 
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
+
 
 
 export default function Navbar() {
@@ -26,7 +35,7 @@ export default function Navbar() {
   useEffect(() => {
     const checkUnreadNotifications = async () => {
       try {
-        const response = await axios.get("/hasUnreadNotifications", { withCredentials: true });
+        const response = await api.get("/hasUnreadNotifications", { withCredentials: true });
         const unreadCount = response.data;
         setHasUnreadNotifications(unreadCount);
       } catch (error) {

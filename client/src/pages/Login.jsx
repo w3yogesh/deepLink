@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
+
 import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from "react";
 import "../styles/LoginForm.css";
@@ -33,7 +43,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
+      const { data } = await api.post(
         "/login",
         {
           ...inputValue,
@@ -63,7 +73,7 @@ const Login = () => {
 
   // const handleGoogleLogin = async(email, firstName, lastName)=> {
   //   try {
-  //     const { data } = await axios.post(
+  //     const { data } = await api.post(
   //       "/LoginWithGoogle",
   //       {
   //         email, firstName, lastName

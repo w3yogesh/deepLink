@@ -4,7 +4,16 @@ import "../styles/userProfile.css";
 import ShortUserProfile from "../components/UserProfileComponent/ShortUserProfile";
 import MainUserProfile from "../components/UserProfileComponent/MainUserProfile";
 import { useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import Loading from "../components/Loading";
 import { useParams } from "react-router-dom";
 
@@ -17,7 +26,7 @@ const UserDetails = () => {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `/userprofile/${userId}`
       );
       setUser(response.data.user);
@@ -28,7 +37,7 @@ const UserDetails = () => {
   };
 
   const handleAuth = async () => {
-    const { data } = await axios.post(
+    const { data } = await api.post(
       "/",
       {},
       { withCredentials: true }

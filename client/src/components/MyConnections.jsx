@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import LoadingForComponent from "./LoadingForComponent";
 import { Link } from "react-router-dom";
 
@@ -9,7 +18,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
 
   const handleDeleteMyConnection = async (receiverId) => {
     try {
-      const response = await axios.delete(
+      const response = await api.delete(
         `/api/deleteMyConnection/${senderId}/${receiverId}`
       );
       const { status, message } = response.data;
@@ -29,7 +38,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
   useEffect(() => {
     const fetchMyConnections = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `/api/myConnections/${senderId}`
         );
         setUsers(response.data);

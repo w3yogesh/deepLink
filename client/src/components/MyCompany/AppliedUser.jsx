@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { Link } from "react-router-dom";
 import * as XLSX from "xlsx";
 
@@ -9,7 +18,7 @@ const AppliedUser = ({ companyId }) => {
   useEffect(() => {
     const fetchAppliedUsers = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `/appliedusers/${companyId}`
         );
         console.log(response.data);

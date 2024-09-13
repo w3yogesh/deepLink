@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PostCard from "../components/FeedComponent/PostCard";
 import FeedSidebar from "../components/FeedComponent/FeedSidebar";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import PostComponent from "../components/FeedComponent/PostComponent";
@@ -24,7 +33,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const auth = await axios.post(
+        const auth = await api.post(
           "/",
           {},
           { withCredentials: true }
@@ -38,7 +47,7 @@ const Feed = () => {
           setUserData(user);
           setUserId(user._id);
           setUserName(user.firstName);
-          const response = await axios.get(
+          const response = await api.get(
             "/api/fetchposts"
           );
           // const postsData = response.data;
@@ -53,7 +62,7 @@ const Feed = () => {
 
     const fetchCompanyPost = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `/api/fetchcompanyposts`
         );
         // setCompanyPost(response.data);

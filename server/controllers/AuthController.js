@@ -22,7 +22,7 @@ module.exports.Signup = async (req, res, next) => {
       education: { institution, degree, field, startDate, endDate },
     } = req.body.formData;
 
-    // const emailValidationResponse = await axios.get(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${API_KEY}`);
+    // const emailValidationResponse = await api.get(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${API_KEY}`);
     
     // console.log('emailValidationResponse : ' , emailValidationResponse.data);
 

@@ -1,5 +1,14 @@
 import { React, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { toast } from "react-toastify";
 import {EditIcon, SaveIcon} from "../MySVGIcons.jsx";
 
@@ -64,7 +73,7 @@ const BasicDetails = ({ userData, setUserData }) => {
     setIsEditMode(!isEditMode);
     if (isEditMode) {
       try {
-        const response = await axios.put(
+        const response = await api.put(
           "/updateUserProfile",
           {
             userId: userData._id,

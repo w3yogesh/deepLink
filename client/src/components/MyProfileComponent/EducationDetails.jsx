@@ -7,7 +7,16 @@ import {
   EditIcon,
   AddIcon,
 } from "../MySVGIcons";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 
 const EducationDetails = ({ userData, setUserData }) => {
   function formatDateFromLong(dateInLong, updateMode) {
@@ -68,7 +77,7 @@ const EducationDetails = ({ userData, setUserData }) => {
     }
 
     if (updateMode) {
-      const response = await axios.put("/editEducation", {
+      const response = await api.put("/editEducation", {
         eduId: newEducation._id,
         institution: newEducation.institution,
         degree: newEducation.degree,
@@ -95,7 +104,7 @@ const EducationDetails = ({ userData, setUserData }) => {
         handleError(message);
       }
     } else {
-      const response = await axios.put("/addEducation", {
+      const response = await api.put("/addEducation", {
         userId: userData._id,
         institution: newEducation.institution,
         degree: newEducation.degree,
@@ -118,7 +127,7 @@ const EducationDetails = ({ userData, setUserData }) => {
   };
 
   const handleDeleteEducation = async (eduId) => {
-    const response = await axios.delete(
+    const response = await api.delete(
       `/deleteEducation${eduId}`
     );
     if (response.data.success) {

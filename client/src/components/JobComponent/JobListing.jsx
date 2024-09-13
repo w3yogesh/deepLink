@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { Link } from "react-router-dom";
 
 export const JobListing = ({ myId, toast }) => {
@@ -13,7 +22,7 @@ export const JobListing = ({ myId, toast }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("/jobs");
+        const response = await api.get("/jobs");
         setJobs(response.data.jobs);
       } catch (error) {
         console.error("Error fetching jobs:", error.message);
@@ -24,7 +33,7 @@ export const JobListing = ({ myId, toast }) => {
 
   const applyNow = async (jobId) => {
     try {
-      const response = await axios.post("/apply", {
+      const response = await api.post("/apply", {
         jobId,
         myId,
       });
@@ -44,7 +53,7 @@ export const JobListing = ({ myId, toast }) => {
 
   const withdraw = async (jobId) => {
     try {
-      const response = await axios.post("/withdraw", {
+      const response = await api.post("/withdraw", {
         jobId,
         myId,
       });

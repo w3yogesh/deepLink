@@ -3,7 +3,16 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { ToastContainer, toast } from "react-toastify";
 
 import UserListComponent from "../components/UserList";
@@ -34,7 +43,7 @@ const Profile = () => {
       if (!cookies.token) {
         navigate("/login");
       }
-      const { data } = await axios.post(
+      const { data } = await api.post(
         "/profile",
         {},
         { withCredentials: true }
@@ -75,7 +84,7 @@ const Profile = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `/search?query=${searchTerm}`
       );
 

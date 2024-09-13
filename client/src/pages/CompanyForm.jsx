@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -25,7 +34,7 @@ export default function CompanyForm() {
   useEffect(() => {
     const userAuth = async () => {
       try {
-        const response = await axios.post(
+        const response = await api.post(
           "/",
           {},
           { withCredentials: true }
@@ -56,7 +65,7 @@ export default function CompanyForm() {
     }
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `/createCompany/${myId}`,
         data
       );
@@ -118,7 +127,7 @@ export default function CompanyForm() {
                   const newInputValue = e.target.value;
                   if (newInputValue) {
                     try {
-                      const response = await axios.get(
+                      const response = await api.get(
                         `http://api.geonames.org/searchJSON?q=${newInputValue}&maxRows=15&username=jeet24`
                       );
                       const newOptions = response.data.geonames.map(

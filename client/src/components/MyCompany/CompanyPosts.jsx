@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import "../../styles/PostComponent.css";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ImageIcon } from '../MySVGIcons';
@@ -31,7 +40,7 @@ const CompanyPosts = ({companyId}) => {
     data.append('company', company);
     if (content.length > 0 || photo) {
       try {
-        const response = await axios.post("/companypost",data);
+        const response = await api.post("/companypost",data);
 
         // console.log(response);
         toast.success("Post submitted successfully");

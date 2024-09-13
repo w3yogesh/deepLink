@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import Navbar from "../components/Navbar";
 import JobList from "../components/MyCompany/JobList";
 import ServiceList from "../components/MyCompany/ServiceList";
@@ -37,7 +46,7 @@ export default function CompanyDetail2() {
 
     const fetchPosts = async () => {
       try {
-        const auth = await axios.post(
+        const auth = await api.post(
           "/",
           {},
           { withCredentials: true }
@@ -53,7 +62,7 @@ export default function CompanyDetail2() {
           }, 1);
         } else {
           setUserData(user);
-          const response = await axios.get(
+          const response = await api.get(
             `/api/fetchcompanypost/${companyId}`
           );
           const postsData = response.data;
@@ -73,7 +82,7 @@ export default function CompanyDetail2() {
   const handleFollowToggle = async () => {
     try {
 
-      const response = await axios.post(`/followCompany/${companyId}`, {
+      const response = await api.post(`/followCompany/${companyId}`, {
         userId: userId,
       });
       console.log(`hello`);
@@ -81,7 +90,7 @@ export default function CompanyDetail2() {
       setIsFollowing(!isFollowing);
 
 
-      const updatedCompanyResponse = await axios.get(`/getCompanyrefresh/${companyId}`);
+      const updatedCompanyResponse = await api.get(`/getCompanyrefresh/${companyId}`);
       setCompany(updatedCompanyResponse.data.company);
     } catch (error) {
       console.error('Error toggling follow:', error.message);
@@ -95,7 +104,7 @@ export default function CompanyDetail2() {
    
     const fetchCompanyDetails = async () => {
       try {
-        const response = await axios.get(`/company/${companyId}`);
+        const response = await api.get(`/company/${companyId}`);
         setCompany(response.data.company);
       } catch (error) {
         console.error('Error fetching company details:', error.message);

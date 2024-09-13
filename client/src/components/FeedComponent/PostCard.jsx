@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import "../../styles/Feed/postCard.css";
 import { LikeIcon, CommentIcon, UserIcon } from "../MySVGIcons";
 import { toast } from "react-toastify";
@@ -32,7 +41,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     if (isLiked) {
       setLikeColor("red");
       const likeId = isLiked._id;
-      const response = await axios.get(
+      const response = await api.get(
         `/api/fetchlike/${likeId}`
       );
       // console.log(`response` , response.data);
@@ -53,7 +62,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const handleLikes = async (postId) => {
     if (likeColor === "red") {
       try {
-        const response = await axios.delete(
+        const response = await api.delete(
           `/api/removePostLike/${userId}/${postId}`
         );
         const { status, message } = response.data;
@@ -70,7 +79,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       }
     } else {
       try {
-        const response = await axios.put("/api/postLike", {
+        const response = await api.put("/api/postLike", {
           userId,
           postId,
         });
@@ -92,7 +101,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const handleReactions = async (postId, reactionType) => {
     // no reaction set only set new reaction
     if (likeColor === "blue") {
-      const response = await axios.put(
+      const response = await api.put(
         "/api/postReaction",
         {
           userId,
@@ -113,7 +122,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
 
     // remove reaction
     else if (likeColor === "red" && reactionType === reactions) {
-      const response = await axios.delete(
+      const response = await api.delete(
         `/api/removePostReaction/${userId}/${postId}`
       );
       const { status, message } = response.data;
@@ -131,7 +140,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     else {
       const isLiked = postObj.likes.find((item) => item.userId === userId);
       const likeId = isLiked._id;
-      const response = await axios.put(
+      const response = await api.put(
         `/api/updateReaction/${likeId}/${reactionType}`
       );
       const { status, message } = response.data;
@@ -147,7 +156,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
 
   const handleDelete = async (postId) => {
     try {
-      const response = await axios.delete(
+      const response = await api.delete(
         `/api/deletePost/${userId}/${postId}`
       );
       const { status, message } = response.data;
@@ -172,7 +181,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     if (newComment.trim() !== "" && userId) {
       const comment = newComment.trim();
       try {
-        const response = await axios.put(
+        const response = await api.put(
           "/api/postComment",
           { userId, postId, comment }
         );

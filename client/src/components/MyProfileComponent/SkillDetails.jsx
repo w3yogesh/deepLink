@@ -1,5 +1,14 @@
 import { React, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { toast } from "react-toastify";
 import {
   ArrowDown,
@@ -39,7 +48,7 @@ const SkillDetails = ({ userData, setUserData }) => {
     if (newSkill.skillName === "" || newSkill.skillLevel === "") return;
     
    if(updateMode){
-    const response = await axios.put("/editSkill", {
+    const response = await api.put("/editSkill", {
       skillId: newSkill._id,
       skillName: newSkill.skillName,
       skillLevel: newSkill.skillLevel,
@@ -50,7 +59,7 @@ const SkillDetails = ({ userData, setUserData }) => {
       handleError(response.data.message);
     }
    }else{
-    const response = await axios.put("/addSkill", {
+    const response = await api.put("/addSkill", {
       userId: userData._id,
       skillName: newSkill.skillName,
       skillLevel: newSkill.skillLevel,
@@ -68,7 +77,7 @@ const SkillDetails = ({ userData, setUserData }) => {
    }
 
   const handleDeleteSkill = async (skillId) => {
-    const response = await axios.delete(
+    const response = await api.delete(
       `/deleteSkill${skillId}`
     );
     //console.log(response.data);

@@ -1,6 +1,15 @@
 // UserList.js
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { Link } from "react-router-dom";
 import LoadingForComponent from "./LoadingForComponent";
 
@@ -17,7 +26,7 @@ function UserList({senderId, handleError,handleSuccess, usersNotConnected}) {
   function handleSendConnectRequest(senderId, recipientId) {
     const sendConnectRequest = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `/api/connect/${senderId}/${recipientId}`,
           { withCredentials: true }
         );

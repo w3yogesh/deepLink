@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
+
 const ServiceForm = ({companyId}) => {
     // const companyId = props;
   const [formData, setFormData] = useState({
@@ -22,7 +31,7 @@ const ServiceForm = ({companyId}) => {
     e.preventDefault();
     try {
       console.log(formData);
-      const response = await axios.post('/createService', formData);
+      const response = await api.post('/createService', formData);
 
       console.log('response:', response.data.message);
 

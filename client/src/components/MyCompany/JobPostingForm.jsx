@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { ToastContainer, toast } from "react-toastify";
 
 const JobPostingForm = ({companyId}) => {
@@ -24,7 +33,7 @@ const JobPostingForm = ({companyId}) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/jobposting', jobData);
+      const response = await api.post('/jobposting', jobData);
       const {status, message} = response.data;
 
       if(status){

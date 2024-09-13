@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
@@ -14,7 +23,7 @@ const AllJobs = () => {
   useEffect(() => {
     const userAuth = async () => {
       try {
-        const response = await axios.post(
+        const response = await api.post(
           "/",
           {},
           { withCredentials: true }

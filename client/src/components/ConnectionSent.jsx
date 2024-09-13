@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 import { Link } from "react-router-dom";
 function ConnectionSent({senderId, handleError,handleSuccess}) {
     const [users, setUsers] = useState([]);
@@ -8,7 +17,7 @@ function ConnectionSent({senderId, handleError,handleSuccess}) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`/api/sentConnections${userId}`);
+        const response = await api.get(`/api/sentConnections${userId}`);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -19,7 +28,7 @@ function ConnectionSent({senderId, handleError,handleSuccess}) {
 
   const handleDropConnection = async (senderId, receiverId)=> {
     try {
-      const response = await axios.post('/api/drop-connection',{senderId, receiverId});
+      const response = await api.post('/api/drop-connection',{senderId, receiverId});
       const {status, message} = response.data;
       if (status) {
         console.log(message);
