@@ -136,8 +136,8 @@ router.get("/chats/:userId/:requestId",fetchMessages);
 
 //Notifications
 
-router.get("/getNotifications/:userId",Notification);
-router.get("/hasUnreadNotifications",isAuthenticated,hasUnreadNotifications);
+// router.get("/getNotifications/:userId",Notification);
+// router.get("/hasUnreadNotifications",isAuthenticated,hasUnreadNotifications);
 
 const companyImages = multer.diskStorage({
   destination: "./uploads/company",
