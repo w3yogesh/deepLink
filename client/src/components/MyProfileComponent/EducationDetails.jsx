@@ -8,7 +8,6 @@ import {
   AddIcon,
 } from "../MySVGIcons";
 import axios from 'axios';
-
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
@@ -17,7 +16,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-
 const EducationDetails = ({ userData, setUserData }) => {
   function formatDateFromLong(dateInLong, updateMode) {
     const date = new Date(dateInLong);

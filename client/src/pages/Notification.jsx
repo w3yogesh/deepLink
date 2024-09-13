@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
+import NotificationList from './NotificationList';
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -12,8 +13,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import NotificationList from './NotificationList';
-
 const Notification = () => {
 
     const [userData, setUserData] = useState("");

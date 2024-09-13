@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-
-// Retrieve the API URL from environment variables
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
-// Create an Axios instance with the base 
-const api = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true, // Include cookies if needed
-});
 import { ToastContainer, toast } from "react-toastify";
 import {
   Button,
@@ -24,6 +15,15 @@ import SignupStep1 from "../components/SignupFormComponent/SignupStep1";
 import SignupStep2 from "../components/SignupFormComponent/SignupStep2";
 import SignupStep3 from "../components/SignupFormComponent/SignupStep3";
 
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

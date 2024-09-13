@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-
+import { Link } from "react-router-dom";
+import * as XLSX from "xlsx";
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
@@ -9,9 +10,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import { Link } from "react-router-dom";
-import * as XLSX from "xlsx";
-
 const AppliedUser = ({ companyId }) => {
   const [jobs, setAppliedUsers] = useState([]);
 

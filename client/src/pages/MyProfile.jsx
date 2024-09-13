@@ -2,15 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
-
-// Retrieve the API URL from environment variables
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
-// Create an Axios instance with the base 
-const api = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true, // Include cookies if needed
-});
 import { ToastContainer } from "react-toastify";
 import { CameraIcon } from "../components/MySVGIcons";
 
@@ -24,6 +15,15 @@ import ExperienceDetails from "../components/MyProfileComponent/ExperienceDetail
 import ProfilePopUp from "../components/MyProfileComponent/ProfilePopUp";
 import Loading from "../components/Loading";
 
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 
 const YourComponent = ({ activeTab, userData, setUserData }) => {
   return (

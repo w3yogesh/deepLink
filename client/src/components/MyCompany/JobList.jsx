@@ -9,7 +9,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-
 const JobList = ({ companyId }) => {
   function formatDateFromLong(dateInLong) {
     const date = new Date(dateInLong);

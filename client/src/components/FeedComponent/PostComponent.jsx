@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import "../../styles/PostComponent.css";
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ImageIcon } from '../MySVGIcons';
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -10,9 +13,7 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ImageIcon } from '../MySVGIcons';
+
 const PostComponent = (props) => {
   const [content, setContent] = useState('');
   const [photo, setPhoto] = useState('');

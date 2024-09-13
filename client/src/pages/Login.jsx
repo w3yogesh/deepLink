@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
+import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
+import "../styles/LoginForm.css";
+import GoogleSignup from "../components/SignupFormComponent/GoogleSignup";
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
@@ -10,12 +14,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-
-import { ToastContainer, toast } from "react-toastify";
-import { useEffect } from "react";
-import "../styles/LoginForm.css";
-import GoogleSignup from "../components/SignupFormComponent/GoogleSignup";
-
 const Login = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({

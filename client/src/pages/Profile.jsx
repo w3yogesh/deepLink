@@ -4,15 +4,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
-
-// Retrieve the API URL from environment variables
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
-// Create an Axios instance with the base 
-const api = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true, // Include cookies if needed
-});
 import { ToastContainer, toast } from "react-toastify";
 
 import UserListComponent from "../components/UserList";
@@ -28,6 +19,15 @@ import Navbar from "../components/Navbar";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
+
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 const Profile = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);

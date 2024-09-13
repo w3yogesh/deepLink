@@ -1,6 +1,12 @@
 // Chat.js
 import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios';
+import UserList from "../components/ChatComponent/UserList";
+import MessageBox from "../components/ChatComponent/MessageBox";
+import { useNavigate } from "react-router-dom";
+import "../styles/chat.css";
+import { ChatBox } from "../components/ChatComponent/ChatBox";
+import Navbar from "../components/Navbar"
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -10,13 +16,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import UserList from "../components/ChatComponent/UserList";
-import MessageBox from "../components/ChatComponent/MessageBox";
-import { useNavigate } from "react-router-dom";
-import "../styles/chat.css";
-import { ChatBox } from "../components/ChatComponent/ChatBox";
-import Navbar from "../components/Navbar"
-
 const Chat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([""]);

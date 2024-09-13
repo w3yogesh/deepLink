@@ -1,14 +1,5 @@
 import { React, useState } from "react";
 import axios from 'axios';
-
-// Retrieve the API URL from environment variables
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
-// Create an Axios instance with the base 
-const api = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true, // Include cookies if needed
-});
 import { toast } from "react-toastify";
 import {
   ArrowDown,
@@ -18,7 +9,14 @@ import {
   EditIcon,
   AddIcon,
 } from "../MySVGIcons";
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 const SkillDetails = ({ userData, setUserData }) => {
   const [showForm, setShowForm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);

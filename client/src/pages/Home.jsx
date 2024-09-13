@@ -3,6 +3,9 @@ import "../styles/home.css";
 import { Link } from "react-router-dom";
 import React, { useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { HomeImage } from "../components/MySVGIcons";
+import "../styles/Navbar.css";
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -12,11 +15,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import { useNavigate } from "react-router-dom";
-import { HomeImage } from "../components/MySVGIcons";
-import "../styles/Navbar.css";
-
-
 const Home = () => {
   const navigate = useNavigate();
   useEffect(() => {

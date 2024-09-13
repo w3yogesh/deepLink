@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-
-// Retrieve the API URL from environment variables
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
-// Create an Axios instance with the base 
-const api = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true, // Include cookies if needed
-});
 import AppliedUser from "../components/MyCompany/AppliedUser";
 import Navbar from "../components/Navbar";
 import JobList from "../components/MyCompany/JobList";
@@ -25,6 +16,14 @@ import { useNavigate } from "react-router-dom";
 import CompanyPostCard from '../components/MyCompany/CompanyPostCard';
 import CompanyPosts from "../components/MyCompany/CompanyPosts";
 
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 const CompanyComponent = ({ activeTab, companyId }) => {
   return (
     <div className="company-main-wrapper">

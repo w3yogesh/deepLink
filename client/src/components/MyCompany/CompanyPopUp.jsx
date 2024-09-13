@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { toast } from "react-toastify";
+import { CancelIcon } from "../MySVGIcons";
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -9,9 +11,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import { toast } from "react-toastify";
-import { CancelIcon } from "../MySVGIcons";
-
 const CompanyPopUp = ({ closePopup, isBack, company }) => {
   const [photo, setPhoto] = useState(null);
   const [showSave, setShowSave] = useState(false);

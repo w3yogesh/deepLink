@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import Navbar from "../components/Navbar";
+import { JobListing } from "../components/JobComponent/JobListing";
+import { BookMarkIcon , ClipCheckIcon, PostIcon } from "../components/MySVGIcons";
+import "../styles/AllJobs.css"
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -9,13 +15,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import Navbar from "../components/Navbar";
-import { JobListing } from "../components/JobComponent/JobListing";
-import { BookMarkIcon , ClipCheckIcon, PostIcon } from "../components/MySVGIcons";
-import "../styles/AllJobs.css"
-
 const AllJobs = () => {
   const [myId, setMyId] = useState("");
   const navigate = useNavigate();

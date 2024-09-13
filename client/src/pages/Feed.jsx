@@ -2,15 +2,6 @@ import React, { useState, useEffect } from "react";
 import PostCard from "../components/FeedComponent/PostCard";
 import FeedSidebar from "../components/FeedComponent/FeedSidebar";
 import axios from 'axios';
-
-// Retrieve the API URL from environment variables
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
-// Create an Axios instance with the base 
-const api = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true, // Include cookies if needed
-});
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import PostComponent from "../components/FeedComponent/PostComponent";
@@ -19,7 +10,14 @@ import Loading from "../components/Loading";
 
 import "../styles/Feed/Feed.css";
 import CompanyPostCard from "../components/MyCompany/CompanyPostCard";
+// Retrieve the API URL from environment variables
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
+// Create an Axios instance with the base 
+const api = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true, // Include cookies if needed
+});
 const Feed = () => {
   const navigate = useNavigate();
   const [allPostObj, setPosts] = useState([]);

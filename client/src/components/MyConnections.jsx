@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import LoadingForComponent from "./LoadingForComponent";
+import { Link } from "react-router-dom";
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
@@ -9,9 +11,6 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import LoadingForComponent from "./LoadingForComponent";
-import { Link } from "react-router-dom";
-
 function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

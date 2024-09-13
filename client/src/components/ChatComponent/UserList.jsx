@@ -1,10 +1,10 @@
 import axios from 'axios';
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
 // Create an Axios instance with the base URL
 const api = axios.create({
   baseURL: apiUrl,
@@ -18,7 +18,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const userAuth = async () => {
       try {
-        const response = await api.post('/', {}, { withCredentials: true });
+        const response = await apipost('/', {}, { withCredentials: true });
         const { status, user } = response.data;
         if (status) {
           setCurrentUser(user._id);
@@ -35,7 +35,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get(`/api/myConnections${currentUser}`);
+        const response = await apiget(`/api/myConnections${currentUser}`);
         setUsers(response.data);
         // setSelectedUser(users[0]); 
       } catch (error) {
