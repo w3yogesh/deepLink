@@ -74,6 +74,7 @@ module.exports.Signup = async (req, res, next) => {
         maxAge: 6000 * 1000,
         secure: process.env.NODE_ENV === "production",
         httpOnly: true,
+        partitioned: true,
       });
       res
         .status(201)
@@ -108,6 +109,7 @@ module.exports.Login = async (req, res, next) => {
       maxAge: 6000 * 1000,
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
+      partitioned: true,
     });
     //const email = user.email;
     res
