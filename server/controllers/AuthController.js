@@ -3,10 +3,9 @@ const Address = require("../models/AddressModel");
 const Education = require("../models/EducationModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
-const {API_KEY} = process.env;
+const { API_KEY } = process.env;
 require("dotenv").config();
-const axios = require('axios');
-
+const axios = require("axios");
 
 // signup
 module.exports.Signup = async (req, res, next) => {
@@ -23,7 +22,7 @@ module.exports.Signup = async (req, res, next) => {
     } = req.body.formData;
 
     // const emailValidationResponse = await api.get(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${API_KEY}`);
-    
+
     // console.log('emailValidationResponse : ' , emailValidationResponse.data);
 
     // if(emailValidationResponse.data.data.status !== "valid")  {
@@ -64,16 +63,17 @@ module.exports.Signup = async (req, res, next) => {
         username,
         firstName,
         lastName,
-        password : hashedPassword,
+        password: hashedPassword,
         education: educationId,
         address: addressId,
         createdAt,
       });
       const token = createSecretToken(user._id);
       res.cookie("token", token, {
-        maxAge: 60 * 1000, // in sec
-        withCredentials: true,
-        httpOnly: false,
+        sameSite: "None",
+        maxAge: 6000 * 1000,
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
       });
       res
         .status(201)
@@ -104,9 +104,9 @@ module.exports.Login = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
-      sameSite: 'None',
-      maxAge: 6000 * 1000, // in sec
-      withCredentials: true,
+      sameSite: "None",
+      maxAge: 6000 * 1000,
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
     });
     //const email = user.email;
@@ -139,9 +139,10 @@ module.exports.LoginWithGoogle = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
-      maxAge: 6000 * 1000, // in sec
-      withCredentials: true,
-      httpOnly: false,
+      sameSite: "None",
+      maxAge: 6000 * 1000,
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
     });
     //const email = user.email;
     res
