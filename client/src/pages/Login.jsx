@@ -127,9 +127,9 @@ const Login = () => {
        
       </form>
 
-      <div className="google-login">
+      {/* <div className="google-login">
       <GoogleSignup handleGoogleLogin={handleGoogleLogin}/>
-      </div>
+      </div> */}
 
     </div>
     </div>
