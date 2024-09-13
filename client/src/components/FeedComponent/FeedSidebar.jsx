@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/MyProfileComponent/ShortProfile.css";
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 const FeedSidebar = ({userData}) => {
   return (
     <div className="feed-container">

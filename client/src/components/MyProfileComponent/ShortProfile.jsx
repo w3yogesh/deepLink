@@ -5,6 +5,8 @@ import "../../styles/MyProfileComponent/ShortProfile.css";
 import { CameraIcon } from "../MySVGIcons";
 import ProfilePopUp from "./ProfilePopUp";
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
 const ShortProfile = ({ userData }) => {
   const [showPopup, setShowPopup] = useState(false);
 
