@@ -61,30 +61,30 @@ const Login = () => {
     });
   };
 
-  const handleGoogleLogin = async(email, firstName, lastName)=> {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:4000/LoginWithGoogle",
-        {
-          email, firstName, lastName
-        },
-        { withCredentials: true }
-      );
+  // const handleGoogleLogin = async(email, firstName, lastName)=> {
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:4000/LoginWithGoogle",
+  //       {
+  //         email, firstName, lastName
+  //       },
+  //       { withCredentials: true }
+  //     );
       
-      const { success, message } = data;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/myprofile");
+  //     const { success, message } = data;
+  //     if (success) {
+  //       handleSuccess(message);
+  //       setTimeout(() => {
+  //         navigate("/myprofile");
           
-        }, 1000);
-      } else {
-        handleError(message);
-      }
-    } catch (error) {
+  //       }, 1000);
+  //     } else {
+  //       handleError(message);
+  //     }
+  //   } catch (error) {
       
-    }
-  }
+  //   }
+  // }
   useEffect(() => {
     document.body.classList.add("login-body");
     return () => {
