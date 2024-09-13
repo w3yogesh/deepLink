@@ -1,15 +1,15 @@
 import axios from 'axios';
 
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 // Retrieve the API URL from environment variables
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
-
 // Create an Axios instance with the base URL
 const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId, handleUserClick,noti,notiId }) => {
   const [currentUser, setCurrentUser] = useState(null);
