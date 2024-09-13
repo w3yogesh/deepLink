@@ -18,7 +18,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const userAuth = async () => {
       try {
-        const response = await apipost('/', {}, { withCredentials: true });
+        const response = await api.post('/', {}, { withCredentials: true });
         const { status, user } = response.data;
         if (status) {
           setCurrentUser(user._id);
