@@ -31,7 +31,7 @@ const PostComponent = (props) => {
     data.append('user', user);
     if (content.length > 0 || photo) {
       try {
-        const response = await axios.post("http://localhost:4000/createPost", data);
+        const response = await axios.post("/createPost", data);
         toast.success("Post submitted successfully");
       } catch (error) {
         console.log(error);

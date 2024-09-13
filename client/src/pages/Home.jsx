@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const userAuth = async () => {
       const response = await axios.post(
-        "http://localhost:4000",
+        "/",
         {},
         { withCredentials: true }
       );

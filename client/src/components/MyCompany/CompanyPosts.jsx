@@ -31,7 +31,7 @@ const CompanyPosts = ({companyId}) => {
     data.append('company', company);
     if (content.length > 0 || photo) {
       try {
-        const response = await axios.post("http://localhost:4000/companypost",data);
+        const response = await axios.post("/companypost",data);
 
         // console.log(response);
         toast.success("Post submitted successfully");

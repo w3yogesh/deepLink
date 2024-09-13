@@ -61,7 +61,7 @@ const ExperienceDetails = ({ userData, setUserData }) => {
       return;
 
     if (updateMode) {
-      const response = await axios.put("http://localhost:4000/editExperience", {
+      const response = await axios.put("/editExperience", {
         expId: newExperience._id,
         companyName: newExperience.companyName,
         employmentType: newExperience.employmentType,
@@ -78,7 +78,7 @@ const ExperienceDetails = ({ userData, setUserData }) => {
         handleError(message);
       }
     } else {
-      const response = await axios.put("http://localhost:4000/addExperience", {
+      const response = await axios.put("/addExperience", {
         userId: userData._id,
         companyName: newExperience.companyName,
         employmentType: newExperience.employmentType,
@@ -101,7 +101,7 @@ const ExperienceDetails = ({ userData, setUserData }) => {
   };
   const handleDeleteExperience = async (expId) => {
     const response = await axios.delete(
-      `http://localhost:4000/deleteExperience${expId}`
+      `/deleteExperience${expId}`
     );
     if (response.data.success) {
       handleSuccess(response.data.message);

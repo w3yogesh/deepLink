@@ -29,8 +29,8 @@ const handleSuccess = (msg) =>
     data.append("userId", userId);
     const response = await axios.post(
       isBack
-        ? "http://localhost:4000/uploadBackground"
-        : "http://localhost:4000/uploadUserProfile",
+        ? "/uploadBackground"
+        : "/uploadUserProfile",
       data
     );
     const {status, message} = response.data;
@@ -62,10 +62,10 @@ const handleSuccess = (msg) =>
               src={
                 isBack
                   ? userData.backgroundImage
-                    ? `http://localhost:4000/fetchProfileImage/${userData.backgroundImage}`
+                    ? `/fetchProfileImage/${userData.backgroundImage}`
                     : `/images/user-background-photo.jpg`
                   : userData.profileImage
-                    ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
+                    ? `/fetchProfileImage/${userData.profileImage}`
                     : `/images/user-profile-photo.png`
               }
               alt={`User ${isBack ? "Background" : "Profile"} Photo`}

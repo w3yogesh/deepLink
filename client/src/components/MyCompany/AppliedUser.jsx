@@ -10,7 +10,7 @@ const AppliedUser = ({ companyId }) => {
     const fetchAppliedUsers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/appliedusers/${companyId}`
+          `/appliedusers/${companyId}`
         );
         console.log(response.data);
         setAppliedUsers(response.data.jobs);

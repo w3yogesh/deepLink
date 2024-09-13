@@ -14,7 +14,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
 
   // const handleAuth = async () => {
   //     const { data } = await axios.post(
-  //       "http://localhost:4000",
+  //       "/",
   //       {},
   //       { withCredentials: true }
   //     );
@@ -53,7 +53,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
     if (senderId) {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/connect/${senderId}/${recipientId}`
+          `/api/connect/${senderId}/${recipientId}`
         );
         const { status, message } = response.data;
         if (status) {
@@ -87,7 +87,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
   const handleEndorseSkill = async (skillId) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/endorsement/${skillId}/${senderId}`
+        `/endorsement/${skillId}/${senderId}`
       );
       const { status, message } = response.data;
       if (status) {
@@ -110,7 +110,7 @@ const ShortUserProfile = ({ userData, senderId }) => {
           <img
             src={
               userData.profileImage
-                ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
+                ? `/fetchProfileImage/${userData.profileImage}`
                 : `images/user-background-photo.jpg`
             }
             alt="User background Photo"

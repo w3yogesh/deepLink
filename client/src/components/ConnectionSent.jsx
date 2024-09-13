@@ -8,7 +8,7 @@ function ConnectionSent({senderId, handleError,handleSuccess}) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/sentConnections${userId}`);
+        const response = await axios.get(`/api/sentConnections${userId}`);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -19,7 +19,7 @@ function ConnectionSent({senderId, handleError,handleSuccess}) {
 
   const handleDropConnection = async (senderId, receiverId)=> {
     try {
-      const response = await axios.post('http://localhost:4000/api/drop-connection',{senderId, receiverId});
+      const response = await axios.post('/api/drop-connection',{senderId, receiverId});
       const {status, message} = response.data;
       if (status) {
         console.log(message);
@@ -48,7 +48,7 @@ function ConnectionSent({senderId, handleError,handleSuccess}) {
             <div className="user-card">
               <div className="user-card-meta">
                 <div className="user-card-img profile-photo img">
-                  <img src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
+                  <img src={user.profileImage ? `/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
                 </div>
                 <div className="user-card-info">
                 <Link to={`/userprofileview/${user._id}`}>   <span className="user-card-name">

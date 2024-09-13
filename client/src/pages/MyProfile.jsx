@@ -53,7 +53,7 @@ const MyProfile = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:4000/profile",
+          "/profile",
           {},
           { withCredentials: true }
         );
@@ -99,7 +99,7 @@ const MyProfile = () => {
             <img
               src={
                 userData.backgroundImage
-                  ? `http://localhost:4000/fetchProfileImage/${userData.backgroundImage}`
+                  ? `/fetchProfileImage/${userData.backgroundImage}`
                   : `images/user-background-photo.jpg`
               }
               alt="User background Photo"

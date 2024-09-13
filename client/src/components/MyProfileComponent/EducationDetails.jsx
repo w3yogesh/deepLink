@@ -68,7 +68,7 @@ const EducationDetails = ({ userData, setUserData }) => {
     }
 
     if (updateMode) {
-      const response = await axios.put("http://localhost:4000/editEducation", {
+      const response = await axios.put("/editEducation", {
         eduId: newEducation._id,
         institution: newEducation.institution,
         degree: newEducation.degree,
@@ -95,7 +95,7 @@ const EducationDetails = ({ userData, setUserData }) => {
         handleError(message);
       }
     } else {
-      const response = await axios.put("http://localhost:4000/addEducation", {
+      const response = await axios.put("/addEducation", {
         userId: userData._id,
         institution: newEducation.institution,
         degree: newEducation.degree,
@@ -119,7 +119,7 @@ const EducationDetails = ({ userData, setUserData }) => {
 
   const handleDeleteEducation = async (eduId) => {
     const response = await axios.delete(
-      `http://localhost:4000/deleteEducation${eduId}`
+      `/deleteEducation${eduId}`
     );
     if (response.data.success) {
       handleSuccess(response.data.message);

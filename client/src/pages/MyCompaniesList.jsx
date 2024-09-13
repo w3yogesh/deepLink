@@ -15,7 +15,7 @@ const MyCompanies = () => {
     const userAuth = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:4000",
+          "/",
           {},
           { withCredentials: true }
         );
@@ -40,7 +40,7 @@ const MyCompanies = () => {
       try {
         const promises = userCompanies.map(async (companyId) => {
           const response = await axios.get(
-            `http://localhost:4000/mycompanies/${companyId}`
+            `/mycompanies/${companyId}`
           );
           return response.data; // Assuming the response contains the details of the company
         });
@@ -84,7 +84,7 @@ const MyCompanies = () => {
                           <img
                             src={
                               company.logo
-                                ? `http://localhost:4000/fetchCompanyImage/${company.logo}`
+                                ? `/fetchCompanyImage/${company.logo}`
                                 : "/images/user-profile-photo.svg"
                             }
                           />

@@ -11,7 +11,7 @@ export const JobSidebar = ({ myId, toast }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/jobs");
+        const response = await axios.get("/jobs");
         setJobs(response.data.jobs);
       } catch (error) {
         console.error("Error fetching jobs:", error.message);
@@ -22,7 +22,7 @@ export const JobSidebar = ({ myId, toast }) => {
 
   const applyNow = async (jobId) => {
     try {
-      const response = await axios.post("http://localhost:4000/apply", {
+      const response = await axios.post("/apply", {
         jobId,
         myId,
       });
@@ -48,7 +48,7 @@ export const JobSidebar = ({ myId, toast }) => {
   const withdraw = async(jobId)=> {
 
     try {
-      const response = await axios.post("http://localhost:4000/withdraw", {
+      const response = await axios.post("/withdraw", {
         jobId,
         myId,
       });

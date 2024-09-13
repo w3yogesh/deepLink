@@ -13,7 +13,7 @@ export const JobListing = ({ myId, toast }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/jobs");
+        const response = await axios.get("/jobs");
         setJobs(response.data.jobs);
       } catch (error) {
         console.error("Error fetching jobs:", error.message);
@@ -24,7 +24,7 @@ export const JobListing = ({ myId, toast }) => {
 
   const applyNow = async (jobId) => {
     try {
-      const response = await axios.post("http://localhost:4000/apply", {
+      const response = await axios.post("/apply", {
         jobId,
         myId,
       });
@@ -44,7 +44,7 @@ export const JobListing = ({ myId, toast }) => {
 
   const withdraw = async (jobId) => {
     try {
-      const response = await axios.post("http://localhost:4000/withdraw", {
+      const response = await axios.post("/withdraw", {
         jobId,
         myId,
       });
@@ -150,7 +150,7 @@ export const JobListing = ({ myId, toast }) => {
               onMouseLeave={() => setShowJobDes(null)} 
               key={job._id}>
               <div className="job-list-logo">
-                <img src={job.postedBy.logo ?`http://localhost:4000/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
+                <img src={job.postedBy.logo ?`/fetchCompanyImage/${job.postedBy.logo}` : `/images/company_logo.png`} alt="" />
               </div>
               <div className="job-list-title">
                 <h3>{job.title}</h3>

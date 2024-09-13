@@ -23,7 +23,7 @@ const Chat = () => {
     const userAuth = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:4000",
+          "/",
           {},
           { withCredentials: true }
         );
@@ -46,7 +46,7 @@ const Chat = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:4000/chats/${myId}/${user._id}`
+        `/chats/${myId}/${user._id}`
       );
       setMessages(response.data);
       inputRef.current.focus();

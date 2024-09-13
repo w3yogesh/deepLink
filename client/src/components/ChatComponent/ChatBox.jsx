@@ -9,7 +9,7 @@ export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,set
  
 
   useEffect(() => {
-    const socketIO = io("http://localhost:4000", {
+    const socketIO = io("/", {
         query: { userId: myId },
       });
       setSocket(socketIO);
@@ -51,7 +51,7 @@ export const ChatBox = ({ inputRef, myId,requestId, setMessages,setNoti,noti,set
     inputRef.current.focus();
 
     try {
-        const response = await axios.post('http://localhost:4000/messaging', {
+        const response = await axios.post('/messaging', {
         myId,
         requestId,
         messageInput,

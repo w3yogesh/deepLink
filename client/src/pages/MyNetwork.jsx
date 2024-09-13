@@ -49,7 +49,7 @@ const MyNetwork = () => {
   useEffect(() => {
     const userAuth = async () => {
       const response = await axios.post(
-        "http://localhost:4000",
+        "/",
         {},
         { withCredentials: true }
       );
@@ -69,8 +69,8 @@ const MyNetwork = () => {
     const fetchData = async () => {
       try {
         const [allUsersResponse, myConnectionsResponse] = await Promise.all([
-          axios.get("http://localhost:4000/api/users"),
-          axios.get(`http://localhost:4000/api/myConnections${myId}`)
+          axios.get("/api/users"),
+          axios.get(`/api/myConnections${myId}`)
         ]);
   
         const allUsers = allUsersResponse.data;

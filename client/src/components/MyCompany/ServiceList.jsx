@@ -7,7 +7,7 @@ const ServiceList = ({ companyId }) => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/service/${companyId}`);
+        const response = await axios.get(`/service/${companyId}`);
         setServices(response.data.services);
       } catch (error) {
         console.error('Error fetching services:', error.message);

@@ -22,7 +22,7 @@ const MyTimeLine = () => {
         const fetchPosts = async () => {
           try {
             const auth = await axios.post(
-              "http://localhost:4000",
+              "/",
               {},
               { withCredentials: true }
             );
@@ -38,7 +38,7 @@ const MyTimeLine = () => {
             } else {
               setUserData(user);
               const response = await axios.get(
-                `http://localhost:4000/api/fetchpost/${userId}`
+                `/api/fetchpost/${userId}`
               );
               const postsData = response.data;
               setPosts(postsData);

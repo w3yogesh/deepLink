@@ -36,7 +36,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
       const likeId = isLiked._id;
       // console.log(likeId)
       const response = await axios.get(
-        `http://localhost:4000/api/fetchlike/${likeId}`
+        `/api/fetchlike/${likeId}`
       );
       // console.log(`response` , response.data);
       setReactions(response.data.reaction);
@@ -57,7 +57,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
     // console.log(postId);
     if (likeColor === "red") {
       const response = await axios.delete(
-        `http://localhost:4000/api/removecompanyPostLike/${userId}/${postId}`
+        `/api/removecompanyPostLike/${userId}/${postId}`
       );
       const { status, message } = response.data;
       // console.log(postId);
@@ -71,7 +71,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
       console.log(message);
     } else {
       const response = await axios.put(
-        "http://localhost:4000/api/companypostLike",
+        "/api/companypostLike",
         {
           userId,
           postId,
@@ -96,7 +96,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
     // no reaction set only set new reaction
     if (likeColor === "blue") {
       const response = await axios.put(
-        "http://localhost:4000/api/postReaction",
+        "/api/postReaction",
         {
           userId,
           postId,
@@ -118,7 +118,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
     // remove reaction
     else if (likeColor === "red" && reactionType === reactions) {
       const response = await axios.delete(
-        `http://localhost:4000/api/removePostReaction/${userId}/${postId}`
+        `/api/removePostReaction/${userId}/${postId}`
       );
       const { status, message } = response.data;
       // console.log(postId);
@@ -137,7 +137,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
       const isLiked = postObj.likes.find((item) => item.userId === userId);
       const likeId = isLiked._id;
       const response = await axios.put(
-        `http://localhost:4000/api/updateReaction/${likeId}/${reactionType}`
+        `/api/updateReaction/${likeId}/${reactionType}`
       );
       const { status, message } = response.data;
       // console.log(postId);
@@ -153,7 +153,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
   const handleDelete = async (postId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/deleteCompanyPost/${companyId}/${postId}`
+        `/api/deleteCompanyPost/${companyId}/${postId}`
       );
       const { status, message } = response.data;
 
@@ -178,7 +178,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
       if (newComment.trim() !== "" && userId) {
         const comment = newComment.trim();
         const response = await axios.put(
-          "http://localhost:4000/api/postcompanyComment",
+          "/api/postcompanyComment",
           { userId, postId, comment }
         );
         console.log(response.data);
@@ -199,7 +199,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
         <a href={`http://localhost:3000/company/${postObj.company._id}`}>
           {postObj.company.logo ? (
             <img
-              src={`http://localhost:4000/fetchCompanyImage/${postObj.company.logo}`}
+              src={`/fetchCompanyImage/${postObj.company.logo}`}
               alt="user post"
             />
           ) : (
@@ -229,7 +229,7 @@ const CompanyPostCard = ({ postObj, userId, userName }) => {
             " "
           )}
           <img
-            src={`http://localhost:4000/fetchCompanyPostImage/${postObj.image}`}
+            src={`/fetchCompanyPostImage/${postObj.image}`}
             alt="user post"
           />
         </div>

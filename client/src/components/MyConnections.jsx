@@ -10,7 +10,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
   const handleDeleteMyConnection = async (receiverId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/deleteMyConnection/${senderId}/${receiverId}`
+        `/api/deleteMyConnection/${senderId}/${receiverId}`
       );
       const { status, message } = response.data;
       if (status) {
@@ -30,7 +30,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
     const fetchMyConnections = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/myConnections/${senderId}`
+          `/api/myConnections/${senderId}`
         );
         setUsers(response.data);
         setIsLoading(false);
@@ -59,7 +59,7 @@ function MyConnections({ senderId, handleError, handleSuccess, connectedUser }) 
                       <img
                         src={
                           user.profileImage
-                            ? `http://localhost:4000/fetchProfileImage/${user.profileImage}`
+                            ? `/fetchProfileImage/${user.profileImage}`
                             : "/images/user-profile-photo.svg"
                         }
                         alt=""

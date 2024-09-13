@@ -38,7 +38,7 @@ export default function CompanyDetail2() {
     const fetchPosts = async () => {
       try {
         const auth = await axios.post(
-          "http://localhost:4000",
+          "/",
           {},
           { withCredentials: true }
         );
@@ -54,7 +54,7 @@ export default function CompanyDetail2() {
         } else {
           setUserData(user);
           const response = await axios.get(
-            `http://localhost:4000/api/fetchcompanypost/${companyId}`
+            `/api/fetchcompanypost/${companyId}`
           );
           const postsData = response.data;
           setPosts(postsData);
@@ -73,7 +73,7 @@ export default function CompanyDetail2() {
   const handleFollowToggle = async () => {
     try {
 
-      const response = await axios.post(`http://localhost:4000/followCompany/${companyId}`, {
+      const response = await axios.post(`/followCompany/${companyId}`, {
         userId: userId,
       });
       console.log(`hello`);
@@ -81,7 +81,7 @@ export default function CompanyDetail2() {
       setIsFollowing(!isFollowing);
 
 
-      const updatedCompanyResponse = await axios.get(`http://localhost:4000/getCompanyrefresh/${companyId}`);
+      const updatedCompanyResponse = await axios.get(`/getCompanyrefresh/${companyId}`);
       setCompany(updatedCompanyResponse.data.company);
     } catch (error) {
       console.error('Error toggling follow:', error.message);
@@ -95,7 +95,7 @@ export default function CompanyDetail2() {
    
     const fetchCompanyDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/company/${companyId}`);
+        const response = await axios.get(`/company/${companyId}`);
         setCompany(response.data.company);
       } catch (error) {
         console.error('Error fetching company details:', error.message);
@@ -143,10 +143,10 @@ export default function CompanyDetail2() {
       <div className="company-container">
         <div className="company-main-card">
           <div className="company-background">
-          <img src={company.cover ? `http://localhost:4000/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
+          <img src={company.cover ? `/fetchCompanyImage/${company.cover}`: "/images/company_cover.jpg"} alt="company cover photo" />
           </div>
           <div className="company-logo">
-            <img src={company.logo ? `http://localhost:4000/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
+            <img src={company.logo ? `/fetchCompanyImage/${company.logo}`: "/images/user-profile-photo.png"} alt="company logo" />
           </div>
           <div className="company-meta">
             <div className="company-title">

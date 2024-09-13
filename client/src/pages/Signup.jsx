@@ -106,7 +106,7 @@ const Signup = () => {
     console.log("Submitting form data to the backend:", formData);
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/signup",
+        "/signup",
         {
           formData,
         },

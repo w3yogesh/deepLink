@@ -35,7 +35,7 @@ const Profile = () => {
         navigate("/login");
       }
       const { data } = await axios.post(
-        "http://localhost:4000/profile",
+        "/profile",
         {},
         { withCredentials: true }
       );
@@ -76,7 +76,7 @@ const Profile = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/search?query=${searchTerm}`
+        `/search?query=${searchTerm}`
       );
 
       if (response.data.success) {

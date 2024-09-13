@@ -8,7 +8,7 @@ function ConnectionRequest({senderId,handleError,handleSuccess}) {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/getConnections${userId}`
+          `/api/getConnections${userId}`
         );
         console.log(response.data);
         setUsers(response.data);
@@ -22,7 +22,7 @@ function ConnectionRequest({senderId,handleError,handleSuccess}) {
   const handleRequestAccept = async (senderId, receiverId) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/accept-connection/${senderId}/${receiverId}`
+        `/api/accept-connection/${senderId}/${receiverId}`
       );
       const { status, message } = response.data;
 
@@ -42,7 +42,7 @@ function ConnectionRequest({senderId,handleError,handleSuccess}) {
   const handleRequestIgnore = async (receiverId, senderId) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/ignore-connection",
+        "/api/ignore-connection",
         { receiverId, senderId }
       );
       const {status, message} = response.data;
@@ -69,7 +69,7 @@ function ConnectionRequest({senderId,handleError,handleSuccess}) {
             <div className="user-card">
               <div className="user-card-meta">
                 <div className="user-card-img profile-photo img">
-                  <img src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
+                  <img src={user.profileImage ? `/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"} alt="" />
                 </div>
                 <div className="user-card-info">
                 <Link to={`/userprofileview/${user._id}`}><span className="user-card-name">

@@ -25,7 +25,7 @@ const Feed = () => {
     const fetchPosts = async () => {
       try {
         const auth = await axios.post(
-          "http://localhost:4000",
+          "/",
           {},
           { withCredentials: true }
         );
@@ -39,7 +39,7 @@ const Feed = () => {
           setUserId(user._id);
           setUserName(user.firstName);
           const response = await axios.get(
-            "http://localhost:4000/api/fetchposts"
+            "/api/fetchposts"
           );
           // const postsData = response.data;
           // setPosts(postsData);
@@ -54,7 +54,7 @@ const Feed = () => {
     const fetchCompanyPost = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/fetchcompanyposts`
+          `/api/fetchcompanyposts`
         );
         // setCompanyPost(response.data);
         setEveryPost(prevEveryPost => [...prevEveryPost, ...response.data]);

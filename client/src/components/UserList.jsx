@@ -18,7 +18,7 @@ function UserList({senderId, handleError,handleSuccess, usersNotConnected}) {
     const sendConnectRequest = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/connect/${senderId}/${recipientId}`,
+          `/api/connect/${senderId}/${recipientId}`,
           { withCredentials: true }
         );
         const { status, message } = response.data;
@@ -55,7 +55,7 @@ function UserList({senderId, handleError,handleSuccess, usersNotConnected}) {
               <div className="user-card-meta">
                 <div className="user-card-img profile-photo img">
                   <img
-                    src={user.profileImage ? `http://localhost:4000/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"}
+                    src={user.profileImage ? `/fetchProfileImage/${user.profileImage}` : "/images/user-profile-photo.svg"}
                   />
                 </div>
                 <div className="user-card-info">

@@ -9,7 +9,7 @@ export const HeaderSearch = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/search?query=${searchTerm}`
+        `/search?query=${searchTerm}`
       );
 
       if (response.data.success) {

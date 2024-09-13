@@ -32,7 +32,7 @@ const ShortProfile = ({ userData }) => {
           <img
             src={
               userData.profileImage
-                ? `http://localhost:4000/fetchProfileImage/${userData.profileImage}`
+                ? `/fetchProfileImage/${userData.profileImage}`
                 : `/images/user-profile-photo.png`
             }
             alt="User Profile Photo"

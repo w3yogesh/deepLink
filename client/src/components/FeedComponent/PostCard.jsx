@@ -33,7 +33,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       setLikeColor("red");
       const likeId = isLiked._id;
       const response = await axios.get(
-        `http://localhost:4000/api/fetchlike/${likeId}`
+        `/api/fetchlike/${likeId}`
       );
       // console.log(`response` , response.data);
       setReactions(response.data.reaction);
@@ -54,7 +54,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     if (likeColor === "red") {
       try {
         const response = await axios.delete(
-          `http://localhost:4000/api/removePostLike/${userId}/${postId}`
+          `/api/removePostLike/${userId}/${postId}`
         );
         const { status, message } = response.data;
 
@@ -70,7 +70,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       }
     } else {
       try {
-        const response = await axios.put("http://localhost:4000/api/postLike", {
+        const response = await axios.put("/api/postLike", {
           userId,
           postId,
         });
@@ -93,7 +93,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     // no reaction set only set new reaction
     if (likeColor === "blue") {
       const response = await axios.put(
-        "http://localhost:4000/api/postReaction",
+        "/api/postReaction",
         {
           userId,
           postId,
@@ -114,7 +114,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
     // remove reaction
     else if (likeColor === "red" && reactionType === reactions) {
       const response = await axios.delete(
-        `http://localhost:4000/api/removePostReaction/${userId}/${postId}`
+        `/api/removePostReaction/${userId}/${postId}`
       );
       const { status, message } = response.data;
       if (status) {
@@ -132,7 +132,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       const isLiked = postObj.likes.find((item) => item.userId === userId);
       const likeId = isLiked._id;
       const response = await axios.put(
-        `http://localhost:4000/api/updateReaction/${likeId}/${reactionType}`
+        `/api/updateReaction/${likeId}/${reactionType}`
       );
       const { status, message } = response.data;
       // console.log(postId);
@@ -148,7 +148,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const handleDelete = async (postId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/deletePost/${userId}/${postId}`
+        `/api/deletePost/${userId}/${postId}`
       );
       const { status, message } = response.data;
 
@@ -173,7 +173,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
       const comment = newComment.trim();
       try {
         const response = await axios.put(
-          "http://localhost:4000/api/postComment",
+          "/api/postComment",
           { userId, postId, comment }
         );
         console.log(response.data);
@@ -199,7 +199,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
           <a href={`http://localhost:3000/userprofileview/${postObj.user._id}`}>
             {postObj.user.profileImage ? (
               <img
-                src={`http://localhost:4000/fetchProfileImage/${postObj.user.profileImage}`}
+                src={`/fetchProfileImage/${postObj.user.profileImage}`}
                 alt="user post"
               />
             ) : (
@@ -232,7 +232,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
             ""
           )}
           <img
-            src={`http://localhost:4000/fetchUserPostImage/${postObj.image}`}
+            src={`/fetchUserPostImage/${postObj.image}`}
             alt="user post"
           />
         </div>

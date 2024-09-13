@@ -10,7 +10,7 @@ const NotificationList = ({ userId }) => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/getNotifications/${userId}`);
+      const response = await axios.get(`/getNotifications/${userId}`);
       const data = response.data;
       setNotifications(data);
     } catch (error) {

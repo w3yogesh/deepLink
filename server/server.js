@@ -59,6 +59,9 @@ connectDB()
     credentials: true, // Allow credentials (cookies, authorization headers)
   }));
 
+  app.use('/', (req, res) => 
+    res.send("Api is running")
+  );
 
 app.use('/fetchImage', express.static('uploads'));
 app.use('/fetchUserPostImage', express.static('uploads/user/post'));

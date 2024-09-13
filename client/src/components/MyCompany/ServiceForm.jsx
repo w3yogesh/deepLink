@@ -22,7 +22,7 @@ const ServiceForm = ({companyId}) => {
     e.preventDefault();
     try {
       console.log(formData);
-      const response = await axios.post('http://localhost:4000/createService', formData);
+      const response = await axios.post('/createService', formData);
 
       console.log('response:', response.data.message);
 

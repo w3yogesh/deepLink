@@ -26,7 +26,7 @@ export default function CompanyForm() {
     const userAuth = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:4000",
+          "/",
           {},
           { withCredentials: true }
         );
@@ -57,7 +57,7 @@ export default function CompanyForm() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/createCompany/${myId}`,
+        `/createCompany/${myId}`,
         data
       );
       const{status, message} = response.data;

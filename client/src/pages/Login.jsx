@@ -34,7 +34,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/login",
+        "/login",
         {
           ...inputValue,
         },
@@ -64,7 +64,7 @@ const Login = () => {
   // const handleGoogleLogin = async(email, firstName, lastName)=> {
   //   try {
   //     const { data } = await axios.post(
-  //       "http://localhost:4000/LoginWithGoogle",
+  //       "/LoginWithGoogle",
   //       {
   //         email, firstName, lastName
   //       },

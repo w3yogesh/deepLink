@@ -39,7 +39,7 @@ const SkillDetails = ({ userData, setUserData }) => {
     if (newSkill.skillName === "" || newSkill.skillLevel === "") return;
     
    if(updateMode){
-    const response = await axios.put("http://localhost:4000/editSkill", {
+    const response = await axios.put("/editSkill", {
       skillId: newSkill._id,
       skillName: newSkill.skillName,
       skillLevel: newSkill.skillLevel,
@@ -50,7 +50,7 @@ const SkillDetails = ({ userData, setUserData }) => {
       handleError(response.data.message);
     }
    }else{
-    const response = await axios.put("http://localhost:4000/addSkill", {
+    const response = await axios.put("/addSkill", {
       userId: userData._id,
       skillName: newSkill.skillName,
       skillLevel: newSkill.skillLevel,
@@ -69,7 +69,7 @@ const SkillDetails = ({ userData, setUserData }) => {
 
   const handleDeleteSkill = async (skillId) => {
     const response = await axios.delete(
-      `http://localhost:4000/deleteSkill${skillId}`
+      `/deleteSkill${skillId}`
     );
     //console.log(response.data);
     const { success, message } = response.data;

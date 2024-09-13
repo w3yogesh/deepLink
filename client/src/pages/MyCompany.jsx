@@ -52,7 +52,7 @@ export default function CompanyDetail() {
     const fetchPosts = async () => {
       try {
         const auth = await axios.post(
-          "http://localhost:4000",
+          "/",
           {},
           { withCredentials: true }
         );
@@ -72,7 +72,7 @@ export default function CompanyDetail() {
         }else {
           setUserData(user);
           const response = await axios.get(
-            `http://localhost:4000/api/fetchcompanypost/${companyId}`
+            `/api/fetchcompanypost/${companyId}`
           );
           const postsData = response.data;
           setPosts(postsData);
@@ -93,7 +93,7 @@ export default function CompanyDetail() {
     const fetchCompanyDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/company/${companyId}`
+          `/company/${companyId}`
         );
         setCompany(response.data.company);
       } catch (error) {
@@ -171,7 +171,7 @@ export default function CompanyDetail() {
               <img
                 src={
                   company.cover
-                    ? `http://localhost:4000/fetchCompanyImage/${company.cover}`
+                    ? `/fetchCompanyImage/${company.cover}`
                     : "/images/company_cover.jpg"
                 }
                 alt="company cover photo"
@@ -186,7 +186,7 @@ export default function CompanyDetail() {
               <img
                 src={
                   company.logo
-                    ? `http://localhost:4000/fetchCompanyImage/${company.logo}`
+                    ? `/fetchCompanyImage/${company.logo}`
                     : "/images/user-profile-photo.png"
                 }
                 alt="company logo"

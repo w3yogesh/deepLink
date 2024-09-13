@@ -29,8 +29,8 @@ const handleSuccess = (msg) =>
     data.append("companyId", companyId);
     const response = await axios.post(
       isBack
-        ? "http://localhost:4000/uploadCover"
-        : "http://localhost:4000/uploadLogo",
+        ? "/uploadCover"
+        : "/uploadLogo",
       data
     );
     const {status, message} = response.data;
@@ -62,10 +62,10 @@ const handleSuccess = (msg) =>
               src={
                 isBack
                   ? company.cover
-                    ? `http://localhost:4000/fetchCompanyImage/${company.cover}`
+                    ? `/fetchCompanyImage/${company.cover}`
                     : `/images/company_cover.jpg`
                   : company.logo
-                    ? `http://localhost:4000/fetchCompanyImage/${company.logo}`
+                    ? `/fetchCompanyImage/${company.logo}`
                     : `/images/user-profile-photo.png`
               }
               alt={`Company ${isBack ? "Cover" : "Logo"} image`}

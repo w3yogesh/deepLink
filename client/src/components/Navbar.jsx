@@ -26,7 +26,7 @@ export default function Navbar() {
   useEffect(() => {
     const checkUnreadNotifications = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/hasUnreadNotifications", { withCredentials: true });
+        const response = await axios.get("/hasUnreadNotifications", { withCredentials: true });
         const unreadCount = response.data;
         setHasUnreadNotifications(unreadCount);
       } catch (error) {

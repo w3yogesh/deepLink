@@ -24,7 +24,7 @@ const JobPostingForm = ({companyId}) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:4000/jobposting', jobData);
+      const response = await axios.post('/jobposting', jobData);
       const {status, message} = response.data;
 
       if(status){

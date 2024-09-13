@@ -9,7 +9,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const userAuth = async () => {
       try {
-        const response = await axios.post('http://localhost:4000', {}, { withCredentials: true });
+        const response = await axios.post('/', {}, { withCredentials: true });
         const { status, user } = response.data;
         if (status) {
           setCurrentUser(user._id);
@@ -26,7 +26,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, setRequestId
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/myConnections${currentUser}`);
+        const response = await axios.get(`/api/myConnections${currentUser}`);
         setUsers(response.data);
         // setSelectedUser(users[0]); 
       } catch (error) {

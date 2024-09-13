@@ -65,7 +65,7 @@ const BasicDetails = ({ userData, setUserData }) => {
     if (isEditMode) {
       try {
         const response = await axios.put(
-          "http://localhost:4000/updateUserProfile",
+          "/updateUserProfile",
           {
             userId: userData._id,
             firstName: userData.firstName,
