@@ -39,9 +39,9 @@ const Feed = () => {
         const { status, user } = auth.data;
         console.log(status);
         if (!status) {
-          setTimeout(() => {
-            navigate("/login");
-          }, 1000);
+          // setTimeout(() => {
+          //   navigate("/login");
+          // }, 1000);
         } else {
           setUserData(user);
           setUserId(user._id);
