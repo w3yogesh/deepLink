@@ -21,7 +21,7 @@ connectDB()
     // Attach Socket.io to the HTTP server
     const io = require("socket.io")(server, {
       cors: {
-        origin: ["https://deeplink-u52t.onrender.com", "http://localhost:3000"],
+        origin: ["https://deeplink.w3yogesh.com", "http://localhost:3000"],
         methods: ["GET", "POST"],
         credentials: true,
       },
@@ -54,7 +54,7 @@ connectDB()
   });
 
   app.use(cors({
-    origin: ['https://deeplink-u52t.onrender.com', 'http://localhost:3000'], // List of allowed origins
+    origin: ['https://deeplink.w3yogesh.com', 'http://localhost:3000'], // List of allowed origins
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // Allow credentials (cookies, authorization headers)
   }));
