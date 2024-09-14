@@ -105,12 +105,11 @@ module.exports.Login = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
-      // sameSite: "None",
+      sameSite: "None",
       maxAge: 6000 * 1000,
-      // secure: process.env.NODE_ENV === "production",
-      // httpOnly: true,
-      // partitioned: true,
-      // Domain: process.env.NODE_ENV === 'production' ? 'deeplink-u52t.onrender.com' : 'localhost'
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      partitioned: true,
     });
     //const email = user.email;
     res
