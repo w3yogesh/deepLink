@@ -70,11 +70,16 @@ module.exports.Signup = async (req, res, next) => {
       });
       const token = createSecretToken(user._id);
       res.cookie("token", token, {
-        sameSite: "None",
-        maxAge: 6000 * 1000,
+        // sameSite: "None",
+        // maxAge: 6000 * 1000,
+        // secure: process.env.NODE_ENV === "production",
+        // httpOnly: true,
+        // partitioned: true,
+
+        httpOnly: true ,
         secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-        partitioned: true,
+        sameSite: 'None',
+        domain: 'apidl.w3yogesh.com',
       });
       res
         .status(201)
@@ -105,11 +110,16 @@ module.exports.Login = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
-      sameSite: "None",
-      maxAge: 6000 * 1000,
-      secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-      partitioned: true,
+      // sameSite: "None",
+      // maxAge: 6000 * 1000,
+      // secure: process.env.NODE_ENV === "production",
+      // httpOnly: true,
+      // partitioned: true,
+
+        httpOnly: true ,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'None',
+        domain: 'apidl.w3yogesh.com',
     });
     //const email = user.email;
     res
