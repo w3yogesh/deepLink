@@ -17,6 +17,7 @@ const api = axios.create({
   baseURL: apiUrl,
   withCredentials: true, // Include cookies if needed
 });
+
 export default function Navbar() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,20 +31,19 @@ export default function Navbar() {
 
 
 
-  useEffect(() => {
-    const checkUnreadNotifications = async () => {
-      try {
-        const response = await api.get("/hasUnreadNotifications", { withCredentials: true });
-        const unreadCount = response.data;
-        setHasUnreadNotifications(unreadCount);
-      } catch (error) {
-        console.error('Error checking unread notifications:', error);
-      }
-    };
-    checkUnreadNotifications();
-  }, []);
+  // useEffect(() => {
+  //   const checkUnreadNotifications = async () => {
+  //     try {
+  //       const response = await api.get("/hasUnreadNotifications", { withCredentials: true });
+  //       const unreadCount = response.data;
+  //       setHasUnreadNotifications(unreadCount);
+  //     } catch (error) {
+  //       console.error('Error checking unread notifications:', error);
+  //     }
+  //   };
+  //   checkUnreadNotifications();
+  // }, []);
 
-console.log(`number of unread : ${hasUnreadNotifications}`);
   const [cookies, removeCookie] = useCookies([]);
 
 
@@ -86,11 +86,11 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
               <li className="nav-menu-item">
                 <a href="/chat">Messages</a>
               </li>
-              <li className="nav-menu-item" onClick={handleNotiToggle}>
-              <a  className={hasUnreadNotifications>0? 'unread' : ''}>
+              {/* <li className="nav-menu-item" onClick={handleNotiToggle}>
+              <a  className={hasUnreadNotifications> 0 ? 'unread' : ''}>
             Notification {hasUnreadNotifications}
           </a>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="user-menu-icon">
@@ -119,7 +119,7 @@ console.log(`number of unread : ${hasUnreadNotifications}`);
           </div>
         </div>
         <div className={`drop-menu ${isNotiOpen ? 'show' : ''}`}>
-          <Notification/>
+          {/* <Notification/> */}
         </div>
         </div>
       </header>

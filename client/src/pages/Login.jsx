@@ -48,13 +48,11 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      console.log(data);
       const { success, message } = data;
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
           navigate("/feed");
-          
         }, 1000);
       } else {
         handleError(message);

@@ -70,11 +70,14 @@ module.exports.Signup = async (req, res, next) => {
       });
       const token = createSecretToken(user._id);
       res.cookie("token", token, {
-        sameSite: "None",
-        maxAge: 6000 * 1000,
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         secure: process.env.NODE_ENV === "production",
         httpOnly: true,
-        partitioned: true,
+        // sameSite: "None",
+        // maxAge: 6000 * 1000,
+        // secure: process.env.NODE_ENV === "production",
+        // httpOnly: true,
+        // partitioned: true,
         // httpOnly: true ,
         // secure: process.env.NODE_ENV === "production",
         // sameSite: 'None',
@@ -112,7 +115,7 @@ module.exports.Login = async (req, res, next) => {
     res.cookie("token", token, {
       // sameSite: "None",
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      // secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       // partitioned: true,
 
