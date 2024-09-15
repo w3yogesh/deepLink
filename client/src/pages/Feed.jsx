@@ -32,7 +32,7 @@ const Feed = () => {
     const fetchPosts = async () => {
       try {
         const auth = await axios.post(
-          "http://localhost:4000/",
+          apiUrl,
           {},
           { withCredentials: true }
         );
