@@ -3,11 +3,11 @@
 
 # Deeplink
 
-Welcome to Deeplink, our JobSearch Portal! This platform is designed to help job seekers find exciting career opportunities and connect with potential employers. Whether you are actively searching for a new job or looking to explore new career paths, our portal provides a user-friendly and efficient experience.
+Welcome to [DeepLink](https://deeplink.w3yogesh.com), our JobSearch Portal! This platform is designed to help job seekers find exciting career opportunities and connect with potential employers. Whether you are actively searching for a new job or looking to explore new career paths, our portal provides a user-friendly and efficient experience. 
 
 ## Demo
+- [Live](https://deeplink.w3yogesh.com)
 - [video1](https://youtu.be/uPnz75CTgHY?si=xNZg6UEpCGEjMaNc)
-- [video2](https://youtu.be/WaHqghgq9Es?si=HG43dJSAK6ktDu-u)
 - [PPT](https://www.canva.com/design/DAF1vlYIRmY/gHViKNpxz8bSNl9IWp_miw/edit)
 
 
