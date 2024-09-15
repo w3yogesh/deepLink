@@ -111,7 +111,7 @@ module.exports.Login = async (req, res, next) => {
 
     res.cookie("token", token, {
       // sameSite: "None",
-      maxAge: 6000 * 1000,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       // secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       // partitioned: true,
