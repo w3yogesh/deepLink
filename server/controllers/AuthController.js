@@ -108,10 +108,11 @@ module.exports.Login = async (req, res, next) => {
       return res.json({ message: "Incorrect password or email" });
     }
     const token = createSecretToken(user._id);
+
     res.cookie("token", token, {
-      sameSite: "None",
+      // sameSite: "None",
       maxAge: 6000 * 1000,
-      secure: process.env.NODE_ENV === "production",
+      // secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       // partitioned: true,
 
