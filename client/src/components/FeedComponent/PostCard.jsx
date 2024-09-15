@@ -70,7 +70,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
         if (status) {
           setLikes(likes - 1);
           setLikeColor("blue");
-          console.log(message);
+          // console.log(message);
         } else {
           console.log(message);
         }
@@ -185,7 +185,7 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
           "/api/postComment",
           { userId, postId, comment }
         );
-        console.log(response.data);
+        // console.log(response.data);
         setComments([...comments, { user: userName, content: newComment }]);
         setNewComment("");
         setTotalComment(totalComment + 1);
@@ -200,7 +200,6 @@ const PostCard = ({ postObj, userId, userName, onPostDelete }) => {
   const reversedComments = Array.isArray(comments)
     ? [...comments].reverse()
     : [];
-  console.log(userId);
   return (
     <div className="post-items">
       <div className="post-meta">

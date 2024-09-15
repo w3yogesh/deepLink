@@ -56,9 +56,9 @@ const MyProfile = () => {
 
   useEffect(() => {
     const loadProfileData = async () => {
-      if (!cookies.token) {
-        navigate("/login");
-      }
+      // if (!cookies.token) {
+      //   navigate("/login");
+      // }
 
       try {
         const response = await api.post(

@@ -37,7 +37,6 @@ const Feed = () => {
           { withCredentials: true }
         );
         const { status, user } = auth.data;
-        console.log(status);
         if (!status) {
           setTimeout(() => {
             navigate("/login");

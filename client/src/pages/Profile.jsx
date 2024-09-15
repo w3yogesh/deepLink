@@ -91,7 +91,7 @@ const Profile = () => {
       if (response.data.success) {
         setSearchResults(response.data.results);
       } else {
-        console.log(response.data.message);
+        // console.log(response.data.message);
         toast(response.data.message, {
           position: "top-right",
         });

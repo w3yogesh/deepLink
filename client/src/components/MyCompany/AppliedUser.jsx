@@ -19,7 +19,7 @@ const AppliedUser = ({ companyId }) => {
         const response = await api.get(
           `/appliedusers/${companyId}`
         );
-        console.log(response.data);
+        // console.log(response.data);
         setAppliedUsers(response.data.jobs);
       } catch (error) {
         console.error("Error fetching applied users:", error);
@@ -48,7 +48,7 @@ const AppliedUser = ({ companyId }) => {
     XLSX.utils.book_append_sheet(wb, ws, "Users");
     XLSX.writeFile(wb, `${job.title}_Users.xlsx`);
   };
-  console.log(jobs);
+  // console.log(jobs);
   return (
     <div className="all-aplieds">
       <h2>Applied Users</h2>

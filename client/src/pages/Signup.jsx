@@ -112,7 +112,7 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Submitting form data to the backend:", formData);
+    console.log("Submited:");
     try {
       const { data } = await api.post(
         "/signup",
@@ -121,7 +121,6 @@ const Signup = () => {
         },
         { withCredentials: true }
       );
-      console.log("After Api");
       const { success, message } = data;
       if (success) {
         handleSuccess(message);
